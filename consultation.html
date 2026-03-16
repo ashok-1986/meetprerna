@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Tattoo Consultation — Book with Prerna, Navi Mumbai</title>
+  <meta name="description" content="Book your free tattoo consultation with Prerna, female custom tattoo artist in Navi Mumbai and Mumbai. Share your story and let's design something meaningful together."/>
+  <meta name="keywords" content="book tattoo consultation Navi Mumbai, free tattoo consultation Mumbai, custom tattoo booking Mumbai, female tattoo artist appointment Navi Mumbai"/>
+  <link rel="canonical" href="https://meetprerna.com/consultation/"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    /* HERO */
+    .consult-hero{padding:14rem 4rem 7rem;max-width:1200px;margin:0 auto;text-align:center}
+    .consult-title{font-family:var(--serif);font-weight:400;font-size:clamp(4rem,8vw,9rem);line-height:.9;letter-spacing:-.02em;margin-bottom:2.5rem}
+    .consult-title em{font-style:italic;color:var(--green);display:block}
+    .consult-sub{font-size:.95rem;line-height:1.85;color:rgba(253,255,233,.45);max-width:540px;margin:0 auto;font-weight:300}
+
+    /* TRUST SIGNALS */
+    .trust-bar{display:flex;justify-content:center;gap:0;border-top:1px solid rgba(253,255,233,.07);border-bottom:1px solid rgba(253,255,233,.07);margin:5rem 0}
+    .trust-item{flex:1;max-width:300px;padding:2.5rem 2rem;text-align:center;border-right:1px solid rgba(253,255,233,.07);position:relative}
+    .trust-item:last-child{border-right:none}
+    .trust-icon{font-size:1.5rem;margin-bottom:1rem;color:var(--green)}
+    .trust-label{font-family:var(--serif);font-size:1.1rem;font-weight:400;margin-bottom:.4rem}
+    .trust-note{font-size:.78rem;color:rgba(253,255,233,.35);font-weight:300;line-height:1.6}
+
+    /* WHAT TO EXPECT */
+    .expect{padding:6rem 4rem;max-width:1200px;margin:0 auto}
+    .expect-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:4rem}
+    .expect-step{padding:2.5rem 2rem;background:rgba(253,255,233,.025);border:1px solid rgba(253,255,233,.07);transition:border-color .3s}
+    .expect-step:hover{border-color:rgba(196,255,97,.2)}
+    .expect-n{font-family:var(--serif);font-size:4rem;font-weight:700;color:rgba(253,255,233,.06);line-height:1;margin-bottom:1.5rem}
+    .expect-title{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:.75rem}
+    .expect-body{font-size:.82rem;line-height:1.8;color:rgba(253,255,233,.38);font-weight:300}
+
+    /* FORM SECTION */
+    .form-section{padding:2rem 4rem 10rem;max-width:1000px;margin:0 auto}
+    .form-head{text-align:center;margin-bottom:4rem}
+    .form-head h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,4rem);font-weight:400;line-height:1.1}
+    .form-head h2 em{font-style:italic;color:var(--green)}
+    .form-head p{font-size:.9rem;color:rgba(253,255,233,.4);margin-top:1rem;line-height:1.8;font-weight:300}
+    .fillout-embed{border:1px solid rgba(253,255,233,.08);overflow:hidden;background:#1c1c1c;position:relative;min-height:700px}
+    .fillout-embed iframe{width:100%;min-height:700px;border:none;display:block}
+    .form-note{text-align:center;font-size:.72rem;color:rgba(253,255,233,.18);margin-top:1.5rem;letter-spacing:.05em;line-height:1.8}
+
+    /* TESTIMONIAL STRIP */
+    .testi-strip{padding:8rem 4rem;background:rgba(253,255,233,.018);border-top:1px solid rgba(253,255,233,.06)}
+    .testi-strip-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:center}
+    .testi-strip-left h2{font-family:var(--serif);font-size:clamp(2rem,3vw,3rem);font-weight:400;line-height:1.15}
+    .testi-strip-left h2 em{font-style:italic;color:var(--green)}
+    .testi-strip-left p{font-size:.85rem;color:rgba(253,255,233,.4);margin-top:1rem;font-weight:300;line-height:1.8}
+    .testi-mini{display:flex;flex-direction:column;gap:1.5rem}
+    .testi-mini-card{border-left:2px solid rgba(196,255,97,.3);padding:1.25rem 1.5rem;background:rgba(253,255,233,.02)}
+    .testi-mini-text{font-family:var(--serif);font-style:italic;font-size:1rem;line-height:1.65;color:rgba(253,255,233,.65);margin-bottom:.6rem;font-weight:400}
+    .testi-mini-name{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green)}
+
+    @media(max-width:1024px){
+      .consult-hero{padding:11rem 2rem 5rem}
+      .trust-bar{flex-wrap:wrap}
+      .trust-item{border-right:none;border-bottom:1px solid rgba(253,255,233,.07);max-width:100%}
+      .expect{padding:5rem 2rem}
+      .expect-grid{grid-template-columns:1fr 1fr}
+      .form-section{padding:2rem 2rem 7rem}
+      .testi-strip{padding:6rem 2rem}
+      .testi-strip-inner{grid-template-columns:1fr}
+    }
+    @media(max-width:640px){
+      .consult-title{font-size:clamp(3rem,13vw,5rem)}
+      .expect-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<div class="loader" role="status">
+  <div class="loader-word"><span>Book</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <p class="loader-sub">Free Consultation · Your Story Starts Here</p>
+</div>
+
+<div class="nav-drawer" id="drawer">
+  <a href="index.html">Home</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="consultation.html" class="btn-primary" style="margin-top:1rem">Book Consultation →</a>
+</div>
+
+<nav aria-label="Primary navigation">
+  <a href="index.html" class="nav-logo" aria-label="Meet Prerna — Home"><img src="assets/logo.png" alt="Meet Prerna logo" style="height:34px;width:auto;mix-blend-mode:lighten;object-fit:contain"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="tel:+917738147935" class="nav-contact">+91 77381 47935</a>
+    <a href="consultation.html" class="nav-cta" style="background:var(--yellow);color:var(--black)">Book Now</a>
+  </div>
+  <button class="nav-hamburger" aria-label="Open menu" aria-controls="drawer"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<header class="consult-hero" aria-labelledby="consult-h">
+  <p class="section-eyebrow reveal" style="justify-content:center">Free Consultation</p>
+  <h1 id="consult-h" class="consult-title reveal">
+    Get your<br>
+    <em>free consultation now</em>
+  </h1>
+  <p class="consult-sub reveal">No commitment required. Share your idea, your story, and your vision — and Prerna will design something that's entirely, permanently yours.</p>
+</header>
+
+<!-- TRUST SIGNALS -->
+<div class="trust-bar stagger-parent" role="list">
+  <div class="trust-item stagger-child" role="listitem">
+    <div class="trust-icon">✦</div>
+    <div class="trust-label">Completely Free</div>
+    <div class="trust-note">No charge for the consultation. No pressure to commit.</div>
+  </div>
+  <div class="trust-item stagger-child" role="listitem">
+    <div class="trust-icon">✦</div>
+    <div class="trust-label">100% Custom</div>
+    <div class="trust-note">Every design is created from scratch — no flash, no templates.</div>
+  </div>
+  <div class="trust-item stagger-child" role="listitem">
+    <div class="trust-icon">✦</div>
+    <div class="trust-label">Female-led Studio</div>
+    <div class="trust-note">A safe, comfortable space, especially for first-timers.</div>
+  </div>
+  <div class="trust-item stagger-child" role="listitem">
+    <div class="trust-icon">✦</div>
+    <div class="trust-label">Response in 48 hrs</div>
+    <div class="trust-note">Every enquiry is personally answered by Prerna herself.</div>
+  </div>
+</div>
+
+<!-- WHAT TO EXPECT -->
+<section class="expect" aria-labelledby="expect-h">
+  <p class="section-eyebrow reveal">The Process</p>
+  <h2 id="expect-h" class="section-heading reveal">What happens after<br><em>you hit submit?</em></h2>
+  <div class="expect-grid stagger-parent">
+    <div class="expect-step stagger-child">
+      <div class="expect-n">01</div>
+      <h3 class="expect-title">You Submit</h3>
+      <p class="expect-body">Fill out the form below. Share your idea, your story, placement preference, and any reference images you love.</p>
+    </div>
+    <div class="expect-step stagger-child">
+      <div class="expect-n">02</div>
+      <h3 class="expect-title">Prerna Responds</h3>
+      <p class="expect-body">Within 48 hours, Prerna personally reviews your submission and reaches out to schedule a consultation call or meeting.</p>
+    </div>
+    <div class="expect-step stagger-child">
+      <div class="expect-n">03</div>
+      <h3 class="expect-title">Design Created</h3>
+      <p class="expect-body">Based on the consultation, a custom design is created exclusively for you. No one else will ever get the same tattoo.</p>
+    </div>
+    <div class="expect-step stagger-child">
+      <div class="expect-n">04</div>
+      <h3 class="expect-title">Your Session</h3>
+      <p class="expect-body">A calm, clean, guided tattoo session at the Navi Mumbai studio. You set the pace. Prerna handles everything else.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FILLOUT FORM -->
+<section class="form-section" aria-labelledby="form-h">
+  <div class="form-head reveal">
+    <p class="section-eyebrow" style="justify-content:center">Book Your Slot</p>
+    <h2 id="form-h">Tell me your <em>story.</em></h2>
+    <p>Fill in as much or as little as you like. There are no wrong answers here — every idea is a starting point.</p>
+  </div>
+  <div class="fillout-embed reveal-scale">
+    <iframe
+      src="https://meetprerna.fillout.com/book"
+      title="Book a free tattoo consultation with Prerna — Navi Mumbai"
+      allow="forms"
+      loading="lazy"
+      aria-label="Free tattoo consultation booking form"
+    ></iframe>
+  </div>
+  <p class="form-note">
+    By submitting this form you agree to be contacted by Prerna regarding your tattoo enquiry.<br>
+    Navi Mumbai · By Appointment Only · prerna@meetprerna.com · +91 77381 47935
+  </p>
+</section>
+
+<!-- TESTIMONIAL STRIP -->
+<section class="testi-strip" aria-labelledby="tstrip-h">
+  <div class="testi-strip-inner">
+    <div class="reveal">
+      <h2 id="tstrip-h">What clients say<br>about their <em>experience</em></h2>
+      <p>Every consultation becomes a collaboration. Every collaboration becomes a tattoo. Every tattoo becomes a story worn forever.</p>
+      <div style="margin-top:2.5rem">
+        <a href="portfolio.html" class="btn-outline">View the Work →</a>
+      </div>
+    </div>
+    <div class="testi-mini stagger-parent">
+      <div class="testi-mini-card stagger-child">
+        <p class="testi-mini-text">Totally indecisive, yet the experience was still a 10. I could not have asked for a better artist for my first tattoo. Great precision, pain-free, and exactly what I envisioned.</p>
+        <div class="testi-mini-name">Pramayee Bhaware</div>
+      </div>
+      <div class="testi-mini-card stagger-child">
+        <p class="testi-mini-text">The place was very hygienic and Prerna went through the entire process with me. I got the exact tattoo I asked for. It turned out beautiful!</p>
+        <div class="testi-mini-name">Rutuja Babar</div>
+      </div>
+      <div class="testi-mini-card stagger-child">
+        <p class="testi-mini-text">This was my first tattoo. Prerna made the process so much less scary than I'd imagined. The result was beautiful and done so efficiently.</p>
+        <div class="testi-mini-name">Amala James</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="f-logo"><img src="assets/logo.png" alt="Meet Prerna" style="height:28px;width:auto;mix-blend-mode:lighten;opacity:.7"></div><p>Female custom tattoo artist based in Navi Mumbai. Creating meaningful, story-driven tattoos by appointment only.</p><div class="f-social"><a href="https://instagram.com/meetprerna" target="_blank" rel="noopener">Instagram</a><a href="https://pinterest.com/meetprerna" target="_blank" rel="noopener">Pinterest</a></div></div>
+    <div class="footer-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About Prerna</a></li><li><a href="contact.html">Contact</a></li><li><a href="consultation.html">Book Consultation</a></li></ul></div>
+    <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+917738147935">+91 77381 47935</a></li><li><a href="mailto:prerna@meetprerna.com">prerna@meetprerna.com</a></li><li><a>Navi Mumbai, Maharashtra</a></li></ul></div>
+    <div class="footer-col"><h5>Studio</h5><ul><li><a href="portfolio.html">View Work</a></li><li><a href="consultation.html">Free Consultation</a></li><li><a href="about.html">Meet Prerna</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 Meet Prerna. All rights reserved. Navi Mumbai, India.</p><p class="footer-credit">Built by <a href="https://alchemetryx.com" target="_blank" rel="noopener">Alchemetryx</a></p></div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+function pageInit(lenis) {
+  gsap.from('.consult-title', { y:60, opacity:0, duration:1.2, ease:'expo.out', delay:.3 });
+  gsap.from('.consult-sub',   { y:30, opacity:0, duration:1,   ease:'expo.out', delay:.6 });
+}
+</script>
+</body>
+</html>

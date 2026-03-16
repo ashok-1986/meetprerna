@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Custom Tattoo Artist in Mumbai & Navi Mumbai | Prerna</title>
+  <meta name="description" content="Prerna is a female custom tattoo artist in Navi Mumbai & Mumbai, specialising in meaningful, story-driven tattoos. Appointments only. Book your free consultation."/>
+  <meta name="keywords" content="female tattoo artist Mumbai, custom tattoo artist Navi Mumbai, meaningful tattoo Mumbai, tattoo studio Navi Mumbai, best tattoo artist Mumbai women"/>
+  <link rel="canonical" href="https://meetprerna.com/"/>
+  <meta property="og:title" content="Custom Tattoo Artist Mumbai & Navi Mumbai | Prerna"/>
+  <meta property="og:description" content="Meaningful custom tattoos that turn your journey into art. Female tattoo artist, Navi Mumbai."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://meetprerna.com/"/>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"Meet Prerna — Custom Tattoo Artist","description":"Female custom tattoo artist in Navi Mumbai and Mumbai specialising in meaningful, story-driven tattoo designs.","url":"https://meetprerna.com","telephone":"+917738147935","email":"prerna@meetprerna.com","address":{"@type":"PostalAddress","addressLocality":"Navi Mumbai","addressRegion":"Maharashtra","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":19.0330,"longitude":73.0297}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    .hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+    .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:0 4rem 7rem 4rem;position:relative;z-index:2}
+    .hero-eyebrow{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:1rem;margin-bottom:2rem;font-family:var(--sans)}
+    .hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--green)}
+    .hero-title{font-family:var(--serif);font-weight:400;font-size:clamp(4.2rem,8vw,10rem);line-height:.92;letter-spacing:-.02em;color:var(--ivory)}
+    .hero-title em{font-style:italic;color:var(--green)}
+    .title-line{display:block;overflow:hidden}
+    .title-inner{display:block;transform:translateY(105%)}
+    .hero-sub{margin-top:2.5rem;font-size:.9rem;font-weight:300;color:rgba(253,255,233,.45);max-width:300px;line-height:1.85;opacity:0}
+    .hero-actions{margin-top:3.5rem;display:flex;gap:1.25rem;align-items:center;opacity:0;flex-wrap:wrap}
+    .hero-right{position:relative;overflow:hidden}
+    .hero-img-wrap{position:absolute;inset:0;background:#242424}
+    .hero-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--black) 0%,transparent 35%);pointer-events:none}
+    .hero-img-wrap img{object-position:center top;transform:scale(1.06);transition:transform 8s ease}
+    .img-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;color:rgba(253,255,233,.12);font-family:var(--sans)}
+    .img-ph svg{width:44px;height:44px;opacity:.2}
+    .img-ph span{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase}
+    .hero-bg-num{position:absolute;bottom:4rem;left:3.5rem;font-family:var(--serif);font-size:9rem;font-weight:700;color:rgba(253,255,233,.035);line-height:1;pointer-events:none;z-index:1}
+    .hero-scroll{position:absolute;right:3rem;bottom:3rem;writing-mode:vertical-rl;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(253,255,233,.28);display:flex;align-items:center;gap:1rem;z-index:3;opacity:0}
+    .hero-scroll::after{content:'';width:1px;height:52px;background:linear-gradient(to bottom,var(--green),transparent);animation:sp 2.2s ease-in-out infinite}
+    @keyframes sp{0%,100%{opacity:1}50%{opacity:.25}}
+
+    /* INTRO */
+    .intro{padding:11rem 4rem;max-width:1400px;margin:0 auto}
+    .intro-headline{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,4.5vw,5.2rem);line-height:1.1;letter-spacing:-.01em;max-width:860px}
+    .intro-headline em{font-style:italic;color:var(--green)}
+    .intro-cols{display:grid;grid-template-columns:1fr 1fr;gap:6rem;margin-top:6rem;align-items:start}
+    .intro-body{font-size:.92rem;line-height:1.95;color:rgba(253,255,233,.5);font-weight:300}
+    .intro-stats{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+    .stat{border-top:1px solid rgba(253,255,233,.1);padding-top:1.5rem}
+    .stat-num{font-family:var(--serif);font-size:clamp(2.8rem,4vw,4rem);font-weight:400;line-height:1;color:var(--ivory)}
+    .stat-num em{font-style:normal;color:var(--green)}
+    .stat-lbl{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:.5rem}
+
+    /* PROCESS */
+    .process{padding:10rem 4rem;background:rgba(253,255,233,.018);border-top:1px solid rgba(253,255,233,.06);border-bottom:1px solid rgba(253,255,233,.06)}
+    .process-inner{max-width:1400px;margin:0 auto}
+    .process-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6rem}
+    .process-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+    .process-card{padding:3rem 2.5rem 3.5rem;border-right:1px solid rgba(253,255,233,.07);position:relative;overflow:hidden;transition:background .4s}
+    .process-card:last-child{border-right:none}
+    .process-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--green),var(--yellow));transition:width .5s var(--ease-out)}
+    .process-card:hover::after{width:100%}
+    .process-card:hover{background:rgba(196,255,97,.025)}
+    .process-n{font-family:var(--serif);font-size:5.5rem;font-weight:700;color:rgba(253,255,233,.05);line-height:1;margin-bottom:2rem}
+    .process-name{font-family:var(--serif);font-size:1.8rem;font-weight:400;margin-bottom:1rem;color:var(--ivory)}
+    .process-desc{font-size:.84rem;line-height:1.85;color:rgba(253,255,233,.38);font-weight:300}
+
+    /* PORTFOLIO */
+    .portfolio-preview{padding:10rem 4rem;max-width:1400px;margin:0 auto}
+    .portfolio-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4.5rem}
+    .view-all{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.75rem;transition:color .25s}
+    .view-all::after{content:'→';transition:transform .25s}
+    .view-all:hover{color:var(--green)}
+    .view-all:hover::after{transform:translateX(5px)}
+    .p-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;grid-template-rows:auto auto;gap:1.25rem}
+    .p-item{position:relative;overflow:hidden;cursor:pointer}
+    .p-item:first-child{grid-row:span 2}
+    .p-img{width:100%;background:#232323;overflow:hidden;aspect-ratio:3/4;position:relative}
+    .p-item:first-child .p-img{aspect-ratio:auto;height:100%;min-height:560px}
+    .p-img img{transition:transform .9s cubic-bezier(.25,.46,.45,.94)}
+    .p-item:hover .p-img img{transform:scale(1.07)}
+    .p-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,.9) 0%,transparent 55%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:1.75rem}
+    .p-item:hover .p-overlay{opacity:1}
+    .p-title{font-family:var(--serif);font-size:1.35rem;font-weight:400;color:var(--ivory);transform:translateY(8px);transition:transform .4s}
+    .p-item:hover .p-title{transform:translateY(0)}
+    .p-tag{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:.4rem}
+
+    /* PHILOSOPHY */
+    .philosophy{padding:11rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center;max-width:1400px;margin:0 auto}
+    .phil-img{position:relative;overflow:hidden;background:#242424;aspect-ratio:3/4}
+    .phil-img::before{content:'';position:absolute;top:-1.5rem;left:-1.5rem;right:1.5rem;bottom:1.5rem;border:1px solid rgba(196,255,97,.15);z-index:1;pointer-events:none}
+    .phil-quote{font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(2rem,3.2vw,3rem);line-height:1.25;margin-bottom:2.5rem}
+    .phil-quote em{font-style:normal;color:var(--green)}
+    .phil-body{font-size:.9rem;line-height:1.95;color:rgba(253,255,233,.45);font-weight:300;margin-bottom:3.5rem}
+
+    /* TESTIMONIALS */
+    .testi-section{padding:10rem 0;background:rgba(253,255,233,.018);border-top:1px solid rgba(253,255,233,.06);overflow:hidden}
+    .testi-head{padding:0 4rem;margin-bottom:5rem}
+    .testi-scroll{display:flex;gap:1.75rem;padding:0 4rem 2rem;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none}
+    .testi-scroll::-webkit-scrollbar{display:none}
+    .testi-card{flex-shrink:0;width:clamp(300px,32vw,460px);border:1px solid rgba(253,255,233,.08);padding:3rem;scroll-snap-align:start;transition:border-color .3s}
+    .testi-card:hover{border-color:rgba(196,255,97,.2)}
+    .testi-mark{font-family:var(--serif);font-size:4.5rem;line-height:.55;color:var(--green);opacity:.3;margin-bottom:1.5rem}
+    .testi-text{font-family:var(--serif);font-size:1.1rem;font-weight:400;font-style:italic;line-height:1.75;color:rgba(253,255,233,.7);margin-bottom:2rem}
+    .testi-name{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--green)}
+    .testi-nav{display:flex;gap:1rem;padding:2.5rem 4rem 0}
+    .testi-nav button{width:44px;height:44px;background:transparent;border:1px solid rgba(253,255,233,.12);color:var(--ivory);font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+    .testi-nav button:hover{border-color:var(--green);color:var(--green)}
+
+    /* CTA */
+    .cta-band{padding:14rem 4rem;text-align:center;position:relative;overflow:hidden}
+    .cta-bg-word{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--serif);font-size:clamp(12rem,24vw,28rem);font-weight:700;color:rgba(253,255,233,.022);white-space:nowrap;pointer-events:none;letter-spacing:-.05em;line-height:1}
+    .cta-eyebrow{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--green);font-family:var(--sans);margin-bottom:2.5rem}
+    .cta-title{font-family:var(--serif);font-weight:400;font-size:clamp(4rem,8vw,9.5rem);line-height:.92;margin-bottom:3rem;position:relative}
+    .cta-title em{font-style:italic;color:var(--green)}
+    .cta-sub{font-size:.88rem;color:rgba(253,255,233,.38);max-width:380px;margin:0 auto 4rem;line-height:1.85;font-weight:300}
+    .cta-btns{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
+
+    @media(max-width:1024px){
+      .hero{grid-template-columns:1fr;min-height:100svh}
+      .hero-left{padding:9rem 2rem 6rem;justify-content:center}
+      .hero-right{display:none}
+      .intro{padding:7rem 2rem}
+      .intro-cols{grid-template-columns:1fr;gap:4rem}
+      .process{padding:7rem 2rem}
+      .process-head{flex-direction:column;align-items:flex-start;gap:1rem;margin-bottom:4rem}
+      .process-grid{grid-template-columns:1fr 1fr}
+      .process-card{border-right:none;border-bottom:1px solid rgba(253,255,233,.07)}
+      .portfolio-preview{padding:7rem 2rem}
+      .portfolio-head{flex-direction:column;align-items:flex-start;gap:1rem}
+      .p-grid{grid-template-columns:1fr 1fr}
+      .p-item:first-child{grid-column:span 2;grid-row:span 1}
+      .p-item:first-child .p-img{min-height:340px;aspect-ratio:16/9}
+      .philosophy{grid-template-columns:1fr;gap:4rem;padding:7rem 2rem}
+      .testi-head{padding:0 2rem}
+      .testi-scroll{padding:0 2rem 2rem}
+      .testi-nav{padding:2rem 2rem 0}
+      .cta-band{padding:9rem 2rem}
+    }
+    @media(max-width:640px){
+      .hero-title{font-size:clamp(3.5rem,13vw,5.5rem)}
+      .hero-left{padding:8rem 1.5rem 5rem}
+      .process-grid{grid-template-columns:1fr}
+      .p-grid{grid-template-columns:1fr}
+      .p-item:first-child{grid-column:auto}
+      .p-item:first-child .p-img{min-height:280px}
+      .intro-stats{grid-template-columns:1fr 1fr}
+      .cta-title{font-size:clamp(3rem,12vw,5rem)}
+    }
+  </style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<div class="loader" role="status">
+  <div class="loader-word"><span>Prerna</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <p class="loader-sub">Navi Mumbai · By Appointment</p>
+</div>
+
+<div class="nav-drawer" id="drawer" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="consultation.html" class="btn-primary" style="margin-top:1rem">Book Consultation →</a>
+</div>
+
+<nav aria-label="Primary navigation">
+  <a href="index.html" class="nav-logo" aria-label="Meet Prerna — Home">
+    <img src="assets/logo.png" alt="Meet Prerna — Custom Tattoo Artist, Navi Mumbai" style="height:36px;width:auto;mix-blend-mode:lighten;object-fit:contain;object-position:left center">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="tel:+917738147935" class="nav-contact">+91 77381 47935</a>
+    <a href="consultation.html" class="nav-cta">Book Now</a>
+  </div>
+  <button class="nav-hamburger" aria-label="Open menu" aria-controls="drawer">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-label="Hero — Ink that resonates">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Female Tattoo Artist · Navi Mumbai</p>
+    <h1 class="hero-title" aria-label="Ink that resonates">
+      <span class="title-line"><span class="title-inner">Ink that</span></span>
+      <span class="title-line"><span class="title-inner"><em>resonates</em></span></span>
+    </h1>
+    <p class="hero-sub">Custom tattoos that turn your journey into a masterpiece. Let's create something meaningful together.</p>
+    <div class="hero-actions">
+      <a href="consultation.html" class="btn-primary">Begin Your Story <span class="arr">→</span></a>
+      <a href="portfolio.html" class="btn-outline">View Work</a>
+    </div>
+  </div>
+  <div class="hero-right" aria-hidden="true">
+    <div class="hero-img-wrap">
+      <img src="assets/prerna-bw-studio.jpg"
+           alt="Prerna, female custom tattoo artist in Navi Mumbai and Mumbai"
+           loading="eager" fetchpriority="high"
+           style="object-position:center top">
+    </div>
+  </div>
+  <div class="hero-bg-num" aria-hidden="true">01</div>
+  <div class="hero-scroll" aria-hidden="true">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-text">Custom Tattoos</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Navi Mumbai</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Mumbai</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">By Appointment</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Ink Your Journey</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Female Artist</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Story-Driven Design</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Custom Tattoos</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Navi Mumbai</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Mumbai</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">By Appointment</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Ink Your Journey</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Female Artist</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span class="marquee-text">Story-Driven Design</span><span class="marquee-sep"></span></div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="intro" aria-labelledby="intro-h">
+  <p class="section-eyebrow reveal">The Philosophy</p>
+  <h2 id="intro-h" class="intro-headline reveal">Tattooing is a quiet form of<br><em>meditation and healing.</em></h2>
+  <div class="intro-cols">
+    <p class="intro-body reveal">Each session creates space to slow down, breathe, and be present. Like therapy, it allows stories, emotions, and memories to surface without judgement. The process isn't rushed or mechanical — it's intentional. Every line is drawn with care, turning ink into a gentle reminder of growth, release, and self-acceptance.</p>
+    <div class="intro-stats stagger-parent">
+      <div class="stat stagger-child">
+        <div class="stat-num"><span class="counter" data-target="120">0</span><em>+</em></div>
+        <div class="stat-lbl">Tattoos Completed</div>
+      </div>
+      <div class="stat stagger-child">
+        <div class="stat-num"><span class="counter" data-target="98">0</span><em>%</em></div>
+        <div class="stat-lbl">Client Satisfaction</div>
+      </div>
+      <div class="stat stagger-child">
+        <div class="stat-num"><span class="counter" data-target="5">0</span><em>+</em></div>
+        <div class="stat-lbl">Years of Practice</div>
+      </div>
+      <div class="stat stagger-child">
+        <div class="stat-num">100<em>%</em></div>
+        <div class="stat-lbl">Custom Design</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" aria-labelledby="process-h">
+  <div class="process-inner">
+    <div class="process-head">
+      <div class="reveal">
+        <p class="section-eyebrow">How It Works</p>
+        <h2 id="process-h" class="section-heading">Your tattoo comes<br><em>to life in four steps</em></h2>
+      </div>
+    </div>
+    <div class="process-grid stagger-parent">
+      <div class="process-card stagger-child"><div class="process-n">01</div><h3 class="process-name">Consult</h3><p class="process-desc">Share your idea, your story, your meaning. A conversation, not a transaction.</p></div>
+      <div class="process-card stagger-child"><div class="process-n">02</div><h3 class="process-name">Design</h3><p class="process-desc">A custom piece made just for you — no flash, no templates. Pure original art.</p></div>
+      <div class="process-card stagger-child"><div class="process-n">03</div><h3 class="process-name">Ink</h3><p class="process-desc">A calm, clean, guided session. You set the pace. Comfort comes first.</p></div>
+      <div class="process-card stagger-child"><div class="process-n">04</div><h3 class="process-name">Aftercare</h3><p class="process-desc">Simple, clear aftercare guidance for smooth healing and lasting vibrancy.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO PREVIEW -->
+<section class="portfolio-preview" aria-labelledby="port-h">
+  <div class="portfolio-head">
+    <div class="reveal">
+      <p class="section-eyebrow">Selected Work</p>
+      <h2 id="port-h" class="section-heading">Stories<br><em>etched in skin</em></h2>
+    </div>
+    <a href="portfolio.html" class="view-all reveal-right">View Full Portfolio</a>
+  </div>
+  <div class="p-grid">
+    <div class="p-item reveal-scale">
+      <div class="p-img">
+        <!-- Geometric wolf — red & black -->
+        <img src="assets/tattoo-01-wolf-red.jpg" alt="Geometric wolf tattoo with red accents by Prerna, Navi Mumbai" loading="lazy">
+        <div class="p-overlay"><div class="p-tag">Geometric</div><div class="p-title">Your Story, Etched in Skin</div></div>
+      </div>
+    </div>
+    <div class="p-item reveal">
+      <div class="p-img">
+        <img src="assets/tattoo-02-butterfly-back.jpg" alt="Abstract butterfly back piece tattoo by Prerna, Navi Mumbai" loading="lazy">
+        <div class="p-overlay"><div class="p-tag">Illustrative</div><div class="p-title">Etched Journey</div></div>
+      </div>
+    </div>
+    <div class="p-item reveal">
+      <div class="p-img">
+        <img src="assets/tattoo-03-brushstroke-heart.jpg" alt="Brushstroke heart shoulder tattoo by Prerna, Mumbai" loading="lazy">
+        <div class="p-overlay"><div class="p-tag">Fine Line</div><div class="p-title">The Ascent</div></div>
+      </div>
+    </div>
+    <div class="p-item reveal">
+      <div class="p-img">
+        <img src="assets/tattoo-04-eye-triangle.jpg" alt="All-seeing eye geometric triangle tattoo by Prerna, Navi Mumbai" loading="lazy">
+        <div class="p-overlay"><div class="p-tag">Minimalist</div><div class="p-title">Custom Work</div></div>
+      </div>
+    </div>
+    <div class="p-item reveal">
+      <div class="p-img">
+        <img src="assets/tattoo-05-wolf-geometric.jpg" alt="Geometric wolf upper arm tattoo by Prerna, Navi Mumbai" loading="lazy">
+        <div class="p-overlay"><div class="p-tag">Custom</div><div class="p-title">Your Narrative</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" aria-labelledby="phil-h">
+  <div class="phil-img reveal-scale">
+    <img src="assets/prerna-contemplative.jpg"
+         alt="Prerna, female custom tattoo artist, Navi Mumbai"
+         loading="lazy" data-parallax="0.12"
+         style="object-position:center top">
+  </div>
+  <div>
+    <p class="section-eyebrow reveal">The Artist</p>
+    <blockquote id="phil-h" class="phil-quote reveal">"Like meditation, it asks you to be still. Like therapy, it lets you <em>feel.</em>"</blockquote>
+    <p class="phil-body reveal">Leaving home at 17, facing a new city alone, surviving the pandemic — Prerna's journey to tattooing wasn't linear. What began as a fear of needles became a path to transformation. Every session she runs today carries the weight of that journey.</p>
+    <a href="about.html" class="btn-outline reveal">Meet Prerna <span>→</span></a>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section style="padding:0 4rem 10rem;max-width:1400px;margin:0 auto" aria-labelledby="vid-h">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem">
+    <div class="reveal">
+      <p class="section-eyebrow">Watch</p>
+      <h2 id="vid-h" class="section-heading" style="font-size:clamp(2rem,3vw,3.2rem)">The artist<br><em>in motion</em></h2>
+    </div>
+  </div>
+  <div style="position:relative;overflow:hidden;background:#1a1a1a;border:1px solid rgba(253,255,233,.06)" class="reveal-scale">
+    <video
+      src="assets/intro-video.mp4"
+      poster="assets/prerna-bw-studio.jpg"
+      controls
+      muted
+      playsinline
+      preload="none"
+      style="width:100%;display:block;max-height:80vh;object-fit:cover"
+      aria-label="Prerna — tattoo artist introduction video, Navi Mumbai"
+    ></video>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section" aria-labelledby="testi-h">
+  <div class="testi-head reveal">
+    <p class="section-eyebrow">Client Voices</p>
+    <h2 id="testi-h" class="section-heading">Inked with meaning:<br><em>voices of transformation</em></h2>
+  </div>
+  <div class="testi-scroll" id="testiScroll" role="list">
+    <div class="testi-card" role="listitem"><div class="testi-mark">"</div><p class="testi-text">Totally indecisive, yet the experience was still a 10. I could not have asked for a better artist for my first tattoo. Great precision in customisation, and an overall pain-free experience.</p><div class="testi-name">Pramayee Bhaware</div></div>
+    <div class="testi-card" role="listitem"><div class="testi-mark">"</div><p class="testi-text">I couldn't be happier with the result. Prerna's attention to detail and artistic skill truly shine through. She took the time to understand exactly what I wanted.</p><div class="testi-name">Sambhav Chathly</div></div>
+    <div class="testi-card" role="listitem"><div class="testi-mark">"</div><p class="testi-text">This was my first tattoo and I was super nervous. But Prerna did a great job — it didn't hurt as much as I'd assumed. The tattoo came out exactly how I wanted.</p><div class="testi-name">Amala James</div></div>
+    <div class="testi-card" role="listitem"><div class="testi-mark">"</div><p class="testi-text">The place was very hygienic. Prerna went through the entire process with me and I got the exact tattoo I asked for. It turned out beautiful!</p><div class="testi-name">Rutuja Babar</div></div>
+    <div class="testi-card" role="listitem"><div class="testi-mark">"</div><p class="testi-text">Very welcoming, professional, and sanitised. We got two tattoos — one for me and one for my mum — and both turned out really pretty.</p><div class="testi-name">Prisha Nayak</div></div>
+  </div>
+  <div class="testi-nav">
+    <button id="testiPrev" aria-label="Previous testimonial">←</button>
+    <button id="testiNext" aria-label="Next testimonial">→</button>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band" aria-labelledby="cta-h">
+  <div class="cta-bg-word" aria-hidden="true">INK</div>
+  <p class="cta-eyebrow reveal">Ready to Begin?</p>
+  <h2 id="cta-h" class="cta-title reveal">Your story<br><em>deserves</em><br>to be worn.</h2>
+  <p class="cta-sub reveal">Every tattoo starts with a conversation. Book your free consultation and let's create something that's entirely yours.</p>
+  <div class="cta-btns reveal">
+    <a href="consultation.html" class="btn-primary">Book Free Consultation <span class="arr">→</span></a>
+    <a href="portfolio.html" class="btn-outline">Explore Portfolio</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="f-logo"><img src="assets/logo.png" alt="Meet Prerna" style="height:28px;width:auto;mix-blend-mode:lighten;opacity:.7"></div>
+      <p>Female custom tattoo artist based in Navi Mumbai. Creating meaningful, story-driven tattoos by appointment only.</p>
+      <div class="f-social">
+        <a href="https://instagram.com/meetprerna" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://pinterest.com/meetprerna" target="_blank" rel="noopener">Pinterest</a>
+        <a href="https://facebook.com/meetprerna" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+    <div class="footer-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About Prerna</a></li><li><a href="contact.html">Contact</a></li><li><a href="consultation.html">Book Consultation</a></li></ul></div>
+    <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+917738147935">+91 77381 47935</a></li><li><a href="mailto:prerna@meetprerna.com">prerna@meetprerna.com</a></li><li><a>By Appointment Only</a></li><li><a>Navi Mumbai, Maharashtra</a></li></ul></div>
+    <div class="footer-col"><h5>Studio</h5><ul><li><a href="portfolio.html">View My Work</a></li><li><a href="consultation.html">Free Consultation</a></li><li><a href="about.html">My Story</a></li><li><a href="about.html#aftercare">Aftercare Guide</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Meet Prerna. All rights reserved. Navi Mumbai, India.</p>
+    <p class="footer-credit">Built by <a href="https://alchemetryx.com" target="_blank" rel="noopener">Alchemetryx</a></p>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+function pageInit(lenis) {
+  // Hero title reveal
+  gsap.to('.title-inner', { y:'0%', duration:1.2, ease:'expo.out', stagger:.18, delay:.1 });
+  gsap.to('.hero-sub',    { opacity:1, y:0, duration:1, ease:'expo.out', delay:.7 });
+  gsap.to('.hero-actions',{ opacity:1, y:0, duration:1, ease:'expo.out', delay:.9 });
+  gsap.to('.hero-scroll', { opacity:1, duration:1, delay:1.4 });
+
+  // Counters
+  document.querySelectorAll('.counter').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    ScrollTrigger.create({
+      trigger: el, start:'top 85%', once:true,
+      onEnter: () => {
+        gsap.to({val:0},{val:target,duration:1.8,ease:'power3.out',
+          onUpdate(){ el.textContent = Math.round(this.targets()[0].val); }
+        });
+      }
+    });
+  });
+
+  // Testimonials scroll nav
+  const track = document.getElementById('testiScroll');
+  const cw = () => (track.querySelector('.testi-card')?.offsetWidth || 340) + 28;
+  document.getElementById('testiNext').addEventListener('click', () => track.scrollBy({left:cw(),behavior:'smooth'}));
+  document.getElementById('testiPrev').addEventListener('click', () => track.scrollBy({left:-cw(),behavior:'smooth'}));
+
+  // CTA word parallax
+  gsap.to('.cta-bg-word',{y:'-14%',ease:'none',scrollTrigger:{trigger:'.cta-band',start:'top bottom',end:'bottom top',scrub:true}});
+
+  // Phil image parallax
+  const philImg = document.querySelector('.phil-img img');
+  if(philImg) gsap.to(philImg,{yPercent:12,ease:'none',scrollTrigger:{trigger:'.philosophy',start:'top bottom',end:'bottom top',scrub:true}});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tattoo Portfolio | Meaningful Custom Tattoos by Prerna, Navi Mumbai</title>
+  <meta name="description" content="Explore Prerna's custom tattoo portfolio — geometric, fine line, illustrative and minimalist tattoos created in Navi Mumbai and Mumbai. Every piece tells a story."/>
+  <meta name="keywords" content="tattoo portfolio Mumbai, custom tattoo designs Navi Mumbai, geometric tattoo Mumbai, fine line tattoo Navi Mumbai, female tattoo artist portfolio"/>
+  <link rel="canonical" href="https://meetprerna.com/portfolio/"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    /* PAGE HERO */
+    .page-hero{padding:14rem 4rem 7rem;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:flex-end}
+    .page-hero-left{}
+    .page-title{font-family:var(--serif);font-weight:400;font-size:clamp(4rem,8vw,9rem);line-height:.9;letter-spacing:-.02em}
+    .page-title em{font-style:italic;color:var(--green);display:block}
+    .page-hero-right{padding-bottom:.5rem}
+    .page-hero-text{font-size:.92rem;line-height:1.9;color:rgba(253,255,233,.45);font-weight:300;max-width:380px}
+
+    /* FILTER BAR */
+    .filter-bar{padding:0 4rem 5rem;max-width:1400px;margin:0 auto}
+    .filter-inner{display:flex;gap:.5rem;flex-wrap:wrap;border-bottom:1px solid rgba(253,255,233,.07);padding-bottom:2.5rem}
+    .filter-btn{font-family:var(--sans);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(253,255,233,.4);background:transparent;border:1px solid transparent;padding:.6rem 1.4rem;cursor:pointer;transition:all .25s}
+    .filter-btn:hover{color:var(--ivory);border-color:rgba(253,255,233,.15)}
+    .filter-btn.active{color:var(--black);background:var(--green);border-color:var(--green)}
+
+    /* GRID */
+    .port-grid{padding:0 4rem 10rem;max-width:1400px;margin:0 auto}
+    .masonry{columns:3;gap:1.5rem;column-fill:balance}
+    .m-item{break-inside:avoid;margin-bottom:1.5rem;position:relative;overflow:hidden;cursor:pointer;background:#232323}
+    .m-item img{width:100%;height:auto;display:block;transition:transform .9s cubic-bezier(.25,.46,.45,.94)}
+    .m-item:hover img{transform:scale(1.05)}
+    /* placeholder */
+    .m-ph{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:rgba(253,255,233,.12);font-family:var(--sans);padding:4rem 2rem}
+    .m-ph svg{width:36px;height:36px;opacity:.2}
+    .m-ph span{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;text-align:center}
+    .m-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,.92) 0%,transparent 60%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:1.75rem}
+    .m-item:hover .m-overlay{opacity:1}
+    .m-tag{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:.35rem}
+    .m-title{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--ivory);transform:translateY(6px);transition:transform .4s}
+    .m-item:hover .m-title{transform:translateY(0)}
+
+    /* LIGHTBOX */
+    .lightbox{position:fixed;inset:0;z-index:800;background:rgba(26,26,26,.97);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;padding:2rem}
+    .lightbox.open{opacity:1;pointer-events:all}
+    .lb-inner{max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .lb-img{position:relative;overflow:hidden;max-height:90vh}
+    .lb-img img{width:100%;height:auto;max-height:85vh;object-fit:contain}
+    .lb-ph{width:100%;min-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;color:rgba(253,255,233,.15);background:#252525;font-family:var(--sans)}
+    .lb-ph svg{width:48px;height:48px;opacity:.2}
+    .lb-ph span{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase}
+    .lb-content{}
+    .lb-tag{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:1.25rem}
+    .lb-title{font-family:var(--serif);font-size:clamp(2rem,3.5vw,3.2rem);font-weight:400;line-height:1.1;margin-bottom:2rem}
+    .lb-text{font-size:.9rem;line-height:1.9;color:rgba(253,255,233,.45);font-weight:300;margin-bottom:3rem}
+    .lb-close{position:absolute;top:2rem;right:2.5rem;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(253,255,233,.4);background:transparent;border:1px solid rgba(253,255,233,.12);padding:.6rem 1.2rem;cursor:pointer;transition:all .25s}
+    .lb-close:hover{border-color:var(--green);color:var(--green)}
+    .lb-nav{display:flex;gap:1rem;margin-top:2rem}
+    .lb-nav button{width:44px;height:44px;background:transparent;border:1px solid rgba(253,255,233,.12);color:var(--ivory);font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .25s;cursor:pointer}
+    .lb-nav button:hover{border-color:var(--green);color:var(--green)}
+
+    /* VIDEO SECTION */
+    .video-section{padding:8rem 4rem;max-width:1400px;margin:0 auto}
+    .video-wrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#1e1e1e;cursor:pointer}
+    /* REPLACE: add <video> or <iframe> inside .video-wrap */
+    .video-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;color:rgba(253,255,233,.18)}
+    .video-ph svg{width:56px;height:56px;opacity:.25}
+    .video-play{width:72px;height:72px;border-radius:50%;border:1px solid rgba(253,255,233,.2);display:flex;align-items:center;justify-content:center;transition:all .3s}
+    .video-wrap:hover .video-play{border-color:var(--green);background:rgba(196,255,97,.08)}
+    .video-ph span{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;font-family:var(--sans)}
+    .video-overlay-bar{display:flex;justify-content:space-between;align-items:center;margin-top:2rem}
+    .video-label .section-eyebrow{margin-bottom:.5rem}
+    .video-title{font-family:var(--serif);font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:400}
+
+    /* CTA ROW */
+    .port-cta{padding:0 4rem 10rem;max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(253,255,233,.07);padding-top:6rem}
+    .port-cta-text .section-heading{font-size:clamp(2rem,3.5vw,3.5rem)}
+    .port-cta-text .section-heading em{display:block}
+
+    @media(max-width:1024px){
+      .page-hero{grid-template-columns:1fr;gap:3rem;padding:11rem 2rem 5rem}
+      .filter-bar{padding:0 2rem 4rem}
+      .port-grid{padding:0 2rem 7rem}
+      .masonry{columns:2}
+      .video-section{padding:6rem 2rem}
+      .port-cta{flex-direction:column;align-items:flex-start;gap:3rem;padding:4rem 2rem 7rem}
+    }
+    @media(max-width:640px){
+      .page-title{font-size:clamp(3rem,13vw,5rem)}
+      .masonry{columns:1}
+      .lb-inner{grid-template-columns:1fr}
+      .lb-content{display:none}
+    }
+  </style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<div class="loader" role="status">
+  <div class="loader-word"><span>Portfolio</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <p class="loader-sub">Selected Works · Navi Mumbai</p>
+</div>
+
+<div class="nav-drawer" id="drawer">
+  <a href="index.html">Home</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="consultation.html" class="btn-primary" style="margin-top:1rem">Book Consultation →</a>
+</div>
+
+<nav aria-label="Primary navigation">
+  <a href="index.html" class="nav-logo" aria-label="Meet Prerna — Home"><img src="assets/logo.png" alt="Meet Prerna logo" style="height:34px;width:auto;mix-blend-mode:lighten;object-fit:contain"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="portfolio.html" class="active">Portfolio</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="tel:+917738147935" class="nav-contact">+91 77381 47935</a>
+    <a href="consultation.html" class="nav-cta">Book Now</a>
+  </div>
+  <button class="nav-hamburger" aria-label="Open menu" aria-controls="drawer"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="page-hero-left">
+    <p class="section-eyebrow reveal">Selected Works</p>
+    <h1 class="page-title reveal">
+      Stories<br>
+      <em>etched in skin</em>
+    </h1>
+  </div>
+  <div class="page-hero-right">
+    <p class="page-hero-text reveal">Every piece in this portfolio began as a conversation. A story shared, a meaning uncovered, a design born from who you are — not from a catalogue.</p>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" role="navigation" aria-label="Portfolio filter">
+  <div class="filter-inner" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All Work</button>
+    <button class="filter-btn" data-filter="geometric">Geometric</button>
+    <button class="filter-btn" data-filter="fine-line">Fine Line</button>
+    <button class="filter-btn" data-filter="illustrative">Illustrative</button>
+    <button class="filter-btn" data-filter="minimalist">Minimalist</button>
+    <button class="filter-btn" data-filter="custom">Custom</button>
+  </div>
+</div>
+
+<!-- MASONRY GRID -->
+<main class="port-grid" id="portGrid" aria-label="Portfolio gallery">
+  <div class="masonry" id="masonry">
+
+    <div class="m-item" data-category="geometric" data-index="0"
+         data-title="Your Story, Etched in Skin"
+         data-tag="Geometric"
+         data-desc="A geometric wolf — a powerful emblem of inner strength and untamed spirit. Piercing blue eyes reflect deep intuition and resilience, while sharp angles symbolise life's journey and growth.">
+      <img src="assets/tattoo-01-wolf-red.jpg" alt="Geometric wolf tattoo with red accents by Prerna, Navi Mumbai" loading="lazy">
+      <div class="m-overlay"><div class="m-tag">Geometric</div><div class="m-title">Your Story, Etched in Skin</div></div>
+    </div>
+
+    <div class="m-item" data-category="illustrative" data-index="1"
+         data-title="The Butterfly — A Back Piece"
+         data-tag="Illustrative"
+         data-desc="An abstract butterfly rendered across the full back — fluid, organic lines that move with the body. Part of a larger piece, this captures the moment of transformation mid-flight.">
+      <img src="assets/tattoo-02-butterfly-back.jpg" alt="Abstract butterfly back piece tattoo by Prerna, Navi Mumbai" loading="lazy">
+      <div class="m-overlay"><div class="m-tag">Illustrative</div><div class="m-title">The Butterfly</div></div>
+    </div>
+
+    <div class="m-item" data-category="fine-line" data-index="2"
+         data-title="Brushstroke Heart — Shoulder Piece"
+         data-tag="Fine Line"
+         data-desc="A brushstroke-style heart with a single red dot — bold gestural energy meets precision placement. The red circle anchors the composition, making it unmistakable. Placed across the shoulder blade.">
+      <img src="assets/tattoo-03-brushstroke-heart.jpg" alt="Brushstroke heart shoulder tattoo by Prerna, Mumbai" loading="lazy">
+      <div class="m-overlay"><div class="m-tag">Fine Line</div><div class="m-title">Brushstroke Heart</div></div>
+    </div>
+
+    <div class="m-item" data-category="geometric" data-index="3"
+         data-title="All-Seeing Eye — Triangle Geometric"
+         data-tag="Geometric"
+         data-desc="A layered triangle geometric with a hyper-detailed eye at its centre — precision dotwork and fine line combined. Placed on the inner forearm, it catches light from every angle.">
+      <img src="assets/tattoo-04-eye-triangle.jpg" alt="All-seeing eye geometric triangle tattoo by Prerna, Navi Mumbai" loading="lazy">
+      <div class="m-overlay"><div class="m-tag">Geometric</div><div class="m-title">All-Seeing Eye</div></div>
+    </div>
+
+    <div class="m-item" data-category="geometric" data-index="4"
+         data-title="Geometric Wolf — Upper Arm"
+         data-tag="Geometric"
+         data-desc="A wolf face fragmented through geometric triangles and grid lines — split and reconstructed. Black and grey realism meets architectural structure. Upper arm placement.">
+      <img src="assets/tattoo-05-wolf-geometric.jpg" alt="Geometric wolf upper arm tattoo in black and grey by Prerna, Navi Mumbai" loading="lazy">
+      <div class="m-overlay"><div class="m-tag">Geometric</div><div class="m-title">Geometric Wolf</div></div>
+    </div>
+
+    <div class="m-item" data-category="illustrative" data-index="5"
+         data-title="Custom Illustrative"
+         data-tag="Illustrative"
+         data-desc="Fully custom illustrative work — designed around the client's story and vision.">
+      <!-- REPLACE: <img src="assets/tattoo-06.jpg" alt="Custom illustrative tattoo by Prerna, Navi Mumbai" loading="lazy"> -->
+      <div class="m-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>[TATTOO-06] — Drop image here</span></div>
+      <div class="m-overlay"><div class="m-tag">Illustrative</div><div class="m-title">Custom Work</div></div>
+    </div>
+
+    <div class="m-item" data-category="fine-line" data-index="6"
+         data-title="Fine Line Custom"
+         data-tag="Fine Line"
+         data-desc="Delicate fine line work with intentional negative space.">
+      <!-- REPLACE: <img src="assets/tattoo-07.jpg" alt="Fine line tattoo by Prerna, Navi Mumbai" loading="lazy"> -->
+      <div class="m-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>[TATTOO-07] — Drop image here</span></div>
+      <div class="m-overlay"><div class="m-tag">Fine Line</div><div class="m-title">Fine Line Work</div></div>
+    </div>
+
+    <div class="m-item" data-category="minimalist" data-index="7"
+         data-title="Minimalist Piece"
+         data-tag="Minimalist"
+         data-desc="Maximum meaning in minimum form.">
+      <!-- REPLACE: <img src="assets/tattoo-08.jpg" alt="Minimalist tattoo by Prerna, Mumbai" loading="lazy"> -->
+      <div class="m-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>[TATTOO-08] — Drop image here</span></div>
+      <div class="m-overlay"><div class="m-tag">Minimalist</div><div class="m-title">Minimalist Piece</div></div>
+    </div>
+
+    <div class="m-item" data-category="custom" data-index="8"
+         data-title="Custom Narrative"
+         data-tag="Custom"
+         data-desc="A story becomes skin — the most intimate form of self-expression.">
+      <!-- REPLACE: <img src="assets/tattoo-09.jpg" alt="Custom tattoo by Prerna, Navi Mumbai" loading="lazy"> -->
+      <div class="m-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>[TATTOO-09] — Drop image here</span></div>
+      <div class="m-overlay"><div class="m-tag">Custom</div><div class="m-title">Custom Narrative</div></div>
+    </div>
+
+    <div class="m-item" data-category="custom" data-index="9"
+         data-title="Custom Work"
+         data-tag="Custom"
+         data-desc="Fully custom, no flash, no templates.">
+      <!-- REPLACE: <img src="assets/tattoo-10.jpg" alt="Custom tattoo by Prerna, Mumbai" loading="lazy"> -->
+      <div class="m-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>[TATTOO-10] — Drop image here</span></div>
+      <div class="m-overlay"><div class="m-tag">Custom</div><div class="m-title">Custom Work</div></div>
+    </div>
+
+  </div><!-- end masonry -->
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Tattoo detail">
+  <button class="lb-close" id="lbClose">Close ✕</button>
+  <div class="lb-inner">
+    <div class="lb-img" id="lbImg">
+      <div class="lb-ph" id="lbPh">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Image Preview</span>
+      </div>
+    </div>
+    <div class="lb-content">
+      <div class="lb-tag" id="lbTag"></div>
+      <div class="lb-title" id="lbTitle"></div>
+      <div class="lb-text" id="lbText"></div>
+      <a href="consultation.html" class="btn-primary">Begin Your Story <span class="arr">→</span></a>
+      <div class="lb-nav">
+        <button id="lbPrev" aria-label="Previous">←</button>
+        <button id="lbNext" aria-label="Next">→</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO SECTION -->
+<section class="video-section" aria-labelledby="video-h">
+  <div class="reveal">
+    <p class="section-eyebrow">Behind the Needle</p>
+    <div class="video-overlay-bar" style="margin-bottom:2.5rem">
+      <h2 id="video-h" class="section-heading" style="font-size:clamp(2rem,3vw,3rem)">Watch the <em>process</em></h2>
+    </div>
+  </div>
+  <div class="video-wrap reveal-scale">
+    <video
+      src="assets/reel.mp4"
+      poster="assets/tattoo-01-wolf-red.jpg"
+      controls
+      muted
+      playsinline
+      preload="none"
+      style="width:100%;height:100%;display:block;object-fit:cover"
+      aria-label="Prerna tattoo process reel — Navi Mumbai studio"
+    ></video>
+  </div>
+</section>
+
+<!-- CTA ROW -->
+<div class="port-cta">
+  <div class="port-cta-text reveal">
+    <p class="section-eyebrow">Your turn</p>
+    <h2 class="section-heading">Your story is<br><em>next.</em></h2>
+  </div>
+  <a href="consultation.html" class="btn-primary reveal-right">Book Free Consultation <span class="arr">→</span></a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="f-logo"><img src="assets/logo.png" alt="Meet Prerna" style="height:28px;width:auto;mix-blend-mode:lighten;opacity:.7"></div><p>Female custom tattoo artist based in Navi Mumbai. Creating meaningful, story-driven tattoos by appointment only.</p><div class="f-social"><a href="https://instagram.com/meetprerna" target="_blank" rel="noopener">Instagram</a><a href="https://pinterest.com/meetprerna" target="_blank" rel="noopener">Pinterest</a><a href="https://facebook.com/meetprerna" target="_blank" rel="noopener">Facebook</a></div></div>
+    <div class="footer-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About Prerna</a></li><li><a href="contact.html">Contact</a></li><li><a href="consultation.html">Book Consultation</a></li></ul></div>
+    <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+917738147935">+91 77381 47935</a></li><li><a href="mailto:prerna@meetprerna.com">prerna@meetprerna.com</a></li><li><a>By Appointment Only</a></li><li><a>Navi Mumbai, Maharashtra</a></li></ul></div>
+    <div class="footer-col"><h5>Styles</h5><ul><li><a href="portfolio.html">All Work</a></li><li><a href="portfolio.html">Geometric</a></li><li><a href="portfolio.html">Fine Line</a></li><li><a href="portfolio.html">Illustrative</a></li><li><a href="portfolio.html">Minimalist</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 Meet Prerna. All rights reserved.</p><p class="footer-credit">Built by <a href="https://alchemetryx.com" target="_blank" rel="noopener">Alchemetryx</a></p></div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+// Portfolio data (mirrors the DOM — populate once images are real)
+const items = Array.from(document.querySelectorAll('.m-item'));
+
+function pageInit(lenis) {
+  // Stagger grid reveal
+  gsap.fromTo(items,
+    { opacity:0, y:30 },
+    { opacity:1, y:0, duration:.8, ease:'expo.out', stagger:.08,
+      scrollTrigger:{ trigger:'#masonry', start:'top 85%', once:true } }
+  );
+
+  // Filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      items.forEach(item => {
+        const show = f === 'all' || item.dataset.category === f;
+        gsap.to(item, { opacity: show?1:0, scale: show?1:.95, duration:.4, ease:'expo.out',
+          onComplete(){ item.style.display = show?'block':'none'; }
+        });
+        if(show) item.style.display = 'block';
+      });
+    });
+  });
+
+  // Lightbox open
+  let currentIdx = 0;
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => openLb(i));
+  });
+
+  function openLb(idx) {
+    currentIdx = idx;
+    const item = items[idx];
+    document.getElementById('lbTag').textContent   = item.dataset.tag;
+    document.getElementById('lbTitle').textContent = item.dataset.title;
+    document.getElementById('lbText').textContent  = item.dataset.desc;
+    // Sync image if present
+    const src = item.querySelector('img');
+    const ph  = document.getElementById('lbPh');
+    const lbImg = document.getElementById('lbImg');
+    lbImg.querySelectorAll('img').forEach(el => el.remove());
+    if(src){
+      const clone = src.cloneNode();
+      clone.style.cssText = 'width:100%;max-height:85vh;object-fit:contain';
+      lbImg.prepend(clone);
+      ph.style.display = 'none';
+    } else { ph.style.display = 'flex'; }
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLb() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if(e.target === document.getElementById('lightbox')) closeLb();
+  });
+  document.getElementById('lbNext').addEventListener('click', () => {
+    openLb((currentIdx + 1) % items.length);
+  });
+  document.getElementById('lbPrev').addEventListener('click', () => {
+    openLb((currentIdx - 1 + items.length) % items.length);
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') closeLb();
+    if(e.key === 'ArrowRight') openLb((currentIdx+1) % items.length);
+    if(e.key === 'ArrowLeft')  openLb((currentIdx-1+items.length) % items.length);
+  });
+}
+</script>
+</body>
+</html>
