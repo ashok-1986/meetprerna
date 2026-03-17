@@ -15,14 +15,14 @@ import './globals.css';
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-serif',
-  weights: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
-  weights: ['300', '400', '500'],
+  weight: ['300', '400', '500'],
   display: 'swap',
 });
 
@@ -132,7 +132,6 @@ export default function RootLayout({
       <body className="min-h-screen bg-black text-ivory antialiased">
         <Grain />
         <CustomCursor />
-        <Loader onComplete={() => {}} />
         <Nav />
         <LenisProvider>
           <PageWrapper>{children}</PageWrapper>

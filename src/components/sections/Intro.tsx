@@ -39,7 +39,7 @@ export function Intro() {
             ease: 'power2.out',
             snap: { textContent: 1 },
             onUpdate: function () {
-              counter.textContent = Math.round(counter.textContent) + suffix;
+              counter.textContent = Math.round(Number(counter.textContent)) + suffix;
             },
           }
         );

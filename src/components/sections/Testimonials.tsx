@@ -24,7 +24,7 @@ export function Testimonials() {
 
     animate(container.scrollLeft, newScrollLeft, {
       duration: 0.5,
-      ease: 'power2.inOut',
+      ease: [0.33, 1, 0.68, 1], // power2.inOut equivalent bezier
       onUpdate: (value) => {
         container.scrollLeft = value;
         setScrollProgress(

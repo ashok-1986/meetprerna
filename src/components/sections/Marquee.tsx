@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Marquee Section Component
  * Infinite horizontal scrolling text band with brand keywords
@@ -33,7 +35,7 @@ export function Marquee() {
       </div>
 
       {/* Inline styles for marquee animation */}
-      <style jsx>{`
+      <style>{`
         @keyframes marquee {
           0% {
             transform: translateX(0);

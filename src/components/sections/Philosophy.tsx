@@ -29,7 +29,7 @@ export function Philosophy() {
           <motion.div
             ref={imageRef}
             className="relative"
-            style={{ yPercent }}
+            style={{ y: yPercent }}
           >
             <div className="relative aspect-[3/4]">
               <Image
