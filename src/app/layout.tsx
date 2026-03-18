@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     siteName: 'Meet Prerna',
     images: [
       {
-        url: '/assets/og-image.jpg',
+        url: '/assets/logo.png',
         width: 1200,
         height: 630,
         alt: 'Meet Prerna - Custom Tattoo Artist',

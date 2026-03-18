@@ -57,7 +57,7 @@ export const PORTFOLIO_ITEMS = [
   },
   {
     id: 6,
-    src: '/assets/tattoo-06-placeholder.jpg',
+    src: '/assets/tattoo-06.jpg',
     alt: 'Custom tattoo design by Prerna, Navi Mumbai',
     title: 'Custom Design',
     tag: 'Custom',
@@ -66,7 +66,7 @@ export const PORTFOLIO_ITEMS = [
   },
   {
     id: 7,
-    src: '/assets/tattoo-07-placeholder.jpg',
+    src: '/assets/tattoo-07.jpg',
     alt: 'Minimalist tattoo by Prerna, Navi Mumbai',
     title: 'Minimalist Line',
     tag: 'Minimalist',
@@ -75,7 +75,7 @@ export const PORTFOLIO_ITEMS = [
   },
   {
     id: 8,
-    src: '/assets/tattoo-08-placeholder.jpg',
+    src: '/assets/tattoo-08.jpg',
     alt: 'Floral tattoo by Prerna, Navi Mumbai',
     title: 'Botanical Study',
     tag: 'Illustrative',
@@ -84,7 +84,7 @@ export const PORTFOLIO_ITEMS = [
   },
   {
     id: 9,
-    src: '/assets/tattoo-09-placeholder.jpg',
+    src: '/assets/tattoo-09.jpg',
     alt: 'Script tattoo by Prerna, Navi Mumbai',
     title: 'Sacred Script',
     tag: 'Fine Line',
@@ -93,7 +93,7 @@ export const PORTFOLIO_ITEMS = [
   },
   {
     id: 10,
-    src: '/assets/tattoo-10-placeholder.jpg',
+    src: '/assets/tattoo-10.jpg',
     alt: 'Ornamental tattoo by Prerna, Navi Mumbai',
     title: 'Ornamental Flow',
     tag: 'Custom',
