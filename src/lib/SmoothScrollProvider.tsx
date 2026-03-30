@@ -25,9 +25,17 @@ export default function SmoothScrollProvider({
         // Framer Motion's useScroll reads window.scrollY by default.
         // Lenis uses its own virtual scroll position.
         // This bridge keeps them in sync so useScroll hooks still work.
-        lenis.on("scroll", () => {
-            // Dispatch a native scroll event so Framer Motion picks it up
+        lenis.on("scroll", (e: { scroll: number }) => {
+            // 1. Native event for Framer Motion's useScroll
             window.dispatchEvent(new Event("scroll"));
+
+            // 2. Also manually sync document.documentElement.scrollTop
+            // This is what Framer Motion actually reads internally
+            Object.defineProperty(window, 'scrollY', {
+                value: e.scroll,
+                writable: true,
+                configurable: true,
+            });
         });
 
         // ── RAF loop — Lenis requires this to run ───────────────────

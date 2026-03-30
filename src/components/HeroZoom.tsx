@@ -47,9 +47,11 @@ export default function HeroZoom() {
   return (
     <section
       ref={containerRef}
-      style={{ height: "300vh", position: "relative" }}
+      data-hero-section
+      style={{ height: "300vh", position: "relative", display: "block" }}
     >
       <div
+        data-hero-sticky
         style={{
           position: "sticky",
           top: 0,
@@ -143,6 +145,7 @@ export default function HeroZoom() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            paddingTop: "80px",
             opacity: textOpacity,
             y: textY,
             willChange: "transform, opacity",
