@@ -17,26 +17,32 @@ export default function HeroZoom() {
   // Scale: 1x at top → 3.5x at bottom of scroll zone
   const scale = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [1, 1] : [1, 3.5]);
 
-  // Text overlay: fully visible at top, gone by 35% scroll
-  const textOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.35], [0, -40]);
+  // Text overlay: fully visible until 40%, faded by 55%
+  const textOpacity = useTransform(scrollYProgress, [0, 0.4, 0.55], [1, 1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.55], [0, -30]);
 
-  // Dark vignette: invisible until 30% scroll, fully opaque by 85%
-  const vignetteOpacity = useTransform(scrollYProgress, [0, 0.3, 0.85], [0, 0, 1]);
+  // Dark vignette: nearly invisible until 50%, then darkens to 85% by 90%
+  const vignetteOpacity = useTransform(scrollYProgress, [0, 0.5, 0.9], [0, 0.3, 0.85]);
 
   return (
     // 300vh parent — creates the scroll distance
     <section ref={containerRef} className="relative h-[300vh]">
 
-      {/* Sticky viewport-height container */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#1A1A1A]">
+      {/* Sticky viewport-height container with GPU compositing */}
+      <div
+        className="sticky top-0 h-screen w-full overflow-hidden bg-[#1A1A1A]"
+        style={{ transform: "translateZ(0)" }}
+      >
 
         {/* Zoom layer — image scales here */}
         <motion.div
           className="absolute inset-0 will-change-transform"
           style={{
             scale: prefersReducedMotion ? 1 : scale,
-            transformOrigin: "40% 65%",
+            transformOrigin: "50% 25%",
+            willChange: "transform",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
           }}
         >
           <Image
@@ -45,7 +51,8 @@ export default function HeroZoom() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-top"
+            style={{ willChange: "transform" }}
           />
         </motion.div>
 
