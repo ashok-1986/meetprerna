@@ -1,17 +1,23 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import Image from "next/image";
 import { useReducedMotion } from "framer-motion";
 
 export default function HeroZoom() {
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [scrollProgress, setScrollProgress] = useRef(0);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
+  });
+
+  // Track scroll progress for indicator fade
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setScrollProgress.current = latest;
   });
 
   // Clamp scrollYProgress to prevent values > 1.0 causing snap-back
@@ -24,8 +30,11 @@ export default function HeroZoom() {
   const textOpacity = useTransform(clampedProgress, [0, 0.4, 0.55, 1.05], [1, 1, 0, 0]);
   const textY = useTransform(clampedProgress, [0, 0.55, 1.05], [0, -30, -30]);
 
-  // Dark vignette: nearly invisible until 50%, then darkens to 85% by 90%, held through 1.05
-  const vignetteOpacity = useTransform(clampedProgress, [0, 0.5, 0.9, 1.05], [0, 0.3, 0.85, 0.85]);
+  // Dark vignette: reaches FULL opacity by 95% so hero bleeds seamlessly into about
+  const vignetteOpacity = useTransform(clampedProgress, [0, 0.5, 0.95, 1.05], [0, 0.3, 1, 1]);
+
+  // Scroll indicator opacity: fades out by 10% scroll
+  const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   return (
     // 300vh parent — creates the scroll distance
@@ -59,7 +68,7 @@ export default function HeroZoom() {
           />
         </motion.div>
 
-        {/* Dark vignette overlay — fades in as zoom progresses */}
+        {/* Dark vignette overlay — fades in as zoom progresses, reaches FULL black */}
         <motion.div
           className="absolute inset-0 bg-[#1A1A1A] pointer-events-none"
           style={{ opacity: vignetteOpacity }}
@@ -129,37 +138,35 @@ export default function HeroZoom() {
           </p>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator — fades out by 10% scroll */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+          style={{ opacity: indicatorOpacity }}
+          className="absolute bottom-[40px] left-1/2 -translate-x-1/2 z-10 pointer-events-none"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center gap-2"
-          >
+          <div className="flex flex-col items-center gap-3">
+            {/* SCROLL text */}
             <span
               style={{
                 fontFamily: "'Lato', sans-serif",
-                fontSize: "0.75rem",
-                color: "#FDFFE9",
-                letterSpacing: "0.1em",
+                fontSize: "0.65rem",
+                color: "#C4FF61",
+                letterSpacing: "0.2em",
                 textTransform: "uppercase",
+                opacity: 0.7,
               }}
             >
               Scroll
             </span>
-            <div className="w-6 h-10 border-2 border-[#FDFFE9]/50 rounded-full flex items-start justify-center p-2">
+            {/* Animated bouncing line with dot */}
+            <div className="relative w-[2px] h-[40px] bg-[#C4FF61]">
               <motion.div
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-1.5 h-1.5 bg-[#C4FF61] rounded-full"
+                initial={{ y: 0, opacity: 1 }}
+                animate={{ y: [0, 12, 0], opacity: [1, 1, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-0 left-1/2 -translate-x-1/2 w-[6px] h-[6px] bg-[#C4FF61] rounded-full"
               />
             </div>
-          </motion.div>
+          </div>
         </motion.div>
 
       </div>
