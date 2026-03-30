@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import LineReveal from "@/components/ui/LineReveal";
 
 export default function CTA() {
   return (
@@ -32,29 +33,35 @@ export default function CTA() {
       </motion.p>
 
       {/* Massive CTA headline */}
-      <motion.h2
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        viewport={{ once: true }}
-        style={{
-          fontFamily: "'Times New Roman', serif",
-          fontSize: "clamp(3rem, 7vw, 7.5rem)",
-          fontWeight: 700,
-          color: "#FDFFE9",
-          lineHeight: 0.92,
-          letterSpacing: "-0.03em",
-          maxWidth: "900px",
-          margin: "0 auto 64px",
-        }}
-      >
-        Begin the<br />
-        <span
-          style={{ color: "#C4FF61", fontStyle: "italic" }}
-        >
-          conversation.
-        </span>
-      </motion.h2>
+      <div style={{ margin: "0 auto 64px", maxWidth: "900px" }}>
+        <LineReveal
+          text="Begin the"
+          tag="h2"
+          delay={0}
+          style={{
+            fontFamily: "'Times New Roman', serif",
+            fontSize: "clamp(3rem, 7vw, 7.5rem)",
+            fontWeight: 700,
+            color: "#FDFFE9",
+            lineHeight: 0.92,
+            letterSpacing: "-0.03em",
+          }}
+        />
+        <LineReveal
+          text="conversation."
+          tag="h2"
+          delay={0.15}
+          style={{
+            fontFamily: "'Times New Roman', serif",
+            fontSize: "clamp(3rem, 7vw, 7.5rem)",
+            fontWeight: 700,
+            fontStyle: "italic",
+            color: "#C4FF61",
+            lineHeight: 0.92,
+            letterSpacing: "-0.03em",
+          }}
+        />
+      </div>
 
       {/* Body text */}
       <motion.p

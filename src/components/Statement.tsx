@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import LineReveal from "@/components/ui/LineReveal";
+import WordReveal from "@/components/ui/WordReveal";
 
 export default function Statement() {
   return (
@@ -59,35 +61,46 @@ export default function Statement() {
         >
           {/* LEFT — Headline */}
           <div>
-            {[
-              "She didn't plan to",
-              "become a tattoo artist.",
-              "She became one anyway.",
-            ].map((line, i) => (
-              <motion.h2
-                key={i}
-                initial={{ opacity: 0, y: 80 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 1.1,
-                  delay: i * 0.15,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                viewport={{ once: true, margin: "-40px" }}
-                style={{
-                  fontFamily: "'Times New Roman', serif",
-                  fontSize: "clamp(2.2rem, 4.5vw, 4rem)",
-                  fontWeight: 700,
-                  lineHeight: 1.05,
-                  letterSpacing: "-0.02em",
-                  margin: "0 0 4px 0",
-                  color: i === 2 ? "#C4FF61" : "#FDFFE9",
-                  fontStyle: i === 2 ? "italic" : "normal",
-                }}
-              >
-                {line}
-              </motion.h2>
-            ))}
+            <LineReveal
+              text="She didn't plan to"
+              tag="h2"
+              delay={0}
+              style={{
+                fontFamily: "'Times New Roman', serif",
+                fontSize: "clamp(2.2rem, 4.5vw, 4rem)",
+                fontWeight: 700,
+                color: "#FDFFE9",
+                lineHeight: 1.05,
+                margin: "0 0 4px 0",
+              }}
+            />
+            <LineReveal
+              text="become a tattoo artist."
+              tag="h2"
+              delay={0.12}
+              style={{
+                fontFamily: "'Times New Roman', serif",
+                fontSize: "clamp(2.2rem, 4.5vw, 4rem)",
+                fontWeight: 700,
+                color: "#FDFFE9",
+                lineHeight: 1.05,
+                margin: "0 0 4px 0",
+              }}
+            />
+            <LineReveal
+              text="She became one anyway."
+              tag="h2"
+              delay={0.24}
+              style={{
+                fontFamily: "'Times New Roman', serif",
+                fontSize: "clamp(2.2rem, 4.5vw, 4rem)",
+                fontWeight: 700,
+                fontStyle: "italic",
+                color: "#C4FF61",
+                lineHeight: 1.05,
+                margin: "0 0 4px 0",
+              }}
+            />
 
             <motion.hr
               initial={{ scaleX: 0, opacity: 0 }}
@@ -109,37 +122,47 @@ export default function Statement() {
           </div>
 
           {/* RIGHT — Body text */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 1,
-              delay: 0.35,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            viewport={{ once: true, margin: "-40px" }}
-            style={{ paddingTop: "8px" }}
-          >
-            {[
-              "Prerna grew up making things with her hands — sketching at margins, filling notebooks, watching the world like it owed her an explanation.",
-              "She left familiar ground to follow something she couldn't name yet. What she found was a needle, ink, and the realisation that the body is the oldest canvas there is.",
-              "Her practice is rooted in stillness. Every consultation begins with listening — not to what you want, but to what you're carrying.",
-            ].map((para, i) => (
-              <p
-                key={i}
-                style={{
-                  fontFamily: "Lato, sans-serif",
-                  fontSize: "1rem",
-                  lineHeight: 1.85,
-                  color: "rgba(253,255,233,0.6)",
-                  maxWidth: "420px",
-                  marginBottom: "28px",
-                }}
-              >
-                {para}
-              </p>
-            ))}
-          </motion.div>
+          <div style={{ paddingTop: "8px" }}>
+            <WordReveal
+              text="Prerna grew up making things with her hands — sketching at margins, filling notebooks, watching the world like it owed her an explanation."
+              delay={0.35}
+              stagger={0.028}
+              style={{
+                fontFamily: "Lato, sans-serif",
+                fontSize: "1rem",
+                lineHeight: 1.85,
+                color: "rgba(253,255,233,0.6)",
+                maxWidth: "420px",
+                marginBottom: "28px",
+              }}
+            />
+            <WordReveal
+              text="She left familiar ground to follow something she couldn't name yet. What she found was a needle, ink, and the realisation that the body is the oldest canvas there is."
+              delay={0.5}
+              stagger={0.028}
+              style={{
+                fontFamily: "Lato, sans-serif",
+                fontSize: "1rem",
+                lineHeight: 1.85,
+                color: "rgba(253,255,233,0.6)",
+                maxWidth: "420px",
+                marginBottom: "28px",
+              }}
+            />
+            <WordReveal
+              text="Her practice is rooted in stillness. Every consultation begins with listening — not to what you want, but to what you're carrying."
+              delay={0.65}
+              stagger={0.028}
+              style={{
+                fontFamily: "Lato, sans-serif",
+                fontSize: "1rem",
+                lineHeight: 1.85,
+                color: "rgba(253,255,233,0.6)",
+                maxWidth: "420px",
+                marginBottom: "28px",
+              }}
+            />
+          </div>
         </div>
 
         {/* Pull quote */}

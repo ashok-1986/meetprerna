@@ -57,6 +57,27 @@ section { margin: 0; }
 /* Horizontal scroll — prevent body overflow during portfolio section */
 body { overflow-x: hidden; }
 
+/* Lenis */
+html.lenis, html.lenis body {
+  height: auto;
+  overflow: auto;  /* Lenis manages scroll — not CSS */
+}
+
+/* Lenis smooths the scroll container */
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+  /* Disable native smooth scroll — Lenis replaces it */
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Keep portfolio horizontal scroll working */
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 /* Selection colour */
 ::selection {
   background: #C4FF61;

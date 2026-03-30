@@ -53,6 +53,7 @@ export default function Portfolio() {
       >
         {/* Sticky viewport */}
         <div
+          data-lenis-prevent
           style={{
             position: "sticky",
             top: 0,

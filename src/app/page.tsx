@@ -5,6 +5,7 @@ import Marquee from "@/components/Marquee";
 import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
 import Stats from "@/components/Stats";
+import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
@@ -19,6 +20,7 @@ export default function Home() {
         <Portfolio />
         <Process />
         <Stats />
+        <Testimonials />
         <CTA />
       </main>
       <Footer />

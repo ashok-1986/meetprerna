@@ -10,6 +10,8 @@ export default function HeroZoom() {
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
+    // @ts-expect-error layoutEffect is a valid framer-motion option for preventing native scroll mismatches
+    layoutEffect: false,
   });
 
   // Clamp scrollYProgress to prevent values > 1.0
@@ -61,7 +63,7 @@ export default function HeroZoom() {
         <motion.div
           style={{
             position: "absolute",
-            inset: "-20% 0",
+            inset: "0 0 -25% 0",
             scale: imageScale,
             y: imageY,
             transformOrigin: "50% 30%",

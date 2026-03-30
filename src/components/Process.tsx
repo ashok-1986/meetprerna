@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import LineReveal from "@/components/ui/LineReveal";
+import WordReveal from "@/components/ui/WordReveal";
 
 const steps = [
   {
@@ -102,7 +104,10 @@ export default function Process() {
 
           {/* Title + subtitle */}
           <div>
-            <h3
+            <LineReveal
+              text={step.title}
+              tag="h3"
+              delay={i * 0.12}
               style={{
                 fontFamily: "'Times New Roman', serif",
                 fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)",
@@ -112,9 +117,7 @@ export default function Process() {
                 lineHeight: 1.1,
                 transition: "color 0.3s",
               }}
-            >
-              {step.title}
-            </h3>
+            />
             <p
               style={{
                 fontFamily: "Lato, sans-serif",
@@ -130,7 +133,10 @@ export default function Process() {
           </div>
 
           {/* Description */}
-          <p
+          <WordReveal
+            text={step.description}
+            delay={i * 0.15}
+            stagger={0.02}
             style={{
               fontFamily: "Lato, sans-serif",
               fontSize: "0.9rem",
@@ -139,9 +145,7 @@ export default function Process() {
               maxWidth: "400px",
               margin: "4px 0 0 auto",
             }}
-          >
-            {step.description}
-          </p>
+          />
         </motion.div>
       ))}
 

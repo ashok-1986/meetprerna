@@ -25,6 +25,8 @@ export const metadata: Metadata = {
   keywords: ["tattoo artist mumbai", "custom tattoo india", "meet prerna"],
 };
 
+import SmoothScrollProvider from "@/lib/SmoothScrollProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,7 +38,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${lato.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-lato">
-        {children}
+        <SmoothScrollProvider>
+          {children}
+        </SmoothScrollProvider>
         <CustomCursor />
       </body>
     </html>
