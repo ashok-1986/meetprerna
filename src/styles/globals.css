@@ -28,6 +28,15 @@ body {
   min-height: 100vh;
 }
 
+/* Font utility classes */
+.font-lato {
+  font-family: var(--font-lato), sans-serif;
+}
+
+.font-serif {
+  font-family: "Times New Roman", Times, serif;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: "Times New Roman", Times, serif;
 }
