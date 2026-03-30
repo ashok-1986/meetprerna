@@ -22,7 +22,7 @@ export default function HeroZoom() {
 
   // Text overlay: fully visible until 40%, faded by 55%, held at 0 through 1.05
   const textOpacity = useTransform(clampedProgress, [0, 0.4, 0.55, 1.05], [1, 1, 0, 0]);
-  const textY = useTransform(clampedProgress, [0, 0.55, 1.05], [0, -30]);
+  const textY = useTransform(clampedProgress, [0, 0.55, 1.05], [0, -30, -30]);
 
   // Dark vignette: nearly invisible until 50%, then darkens to 85% by 90%, held through 1.05
   const vignetteOpacity = useTransform(clampedProgress, [0, 0.5, 0.9, 1.05], [0, 0.3, 0.85, 0.85]);
