@@ -40,7 +40,7 @@ export default function HeroZoom() {
       <section ref={containerRef} className="relative h-screen w-full bg-[#1A1A1A]">
         <div className="relative h-full w-full overflow-hidden">
           <Image
-            src="/hero/prerna-hero.jpg"
+            src="/hero/prerna-hero.png"
             alt="Prerna - Custom Tattoo Artist"
             fill
             className="object-cover"
@@ -68,7 +68,7 @@ export default function HeroZoom() {
           className="absolute inset-0"
         >
           <Image
-            src="/hero/prerna-hero.jpg"
+            src="/hero/prerna-hero.png"
             alt="Prerna - Custom Tattoo Artist"
             fill
             className="object-cover"
