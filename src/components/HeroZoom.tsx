@@ -14,24 +14,27 @@ export default function HeroZoom() {
     offset: ["start start", "end start"],
   });
 
-  // Scale: 1x at top → 3.5x at bottom of scroll zone
-  const scale = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [1, 1] : [1, 3.5]);
+  // Clamp scrollYProgress to prevent values > 1.0 causing snap-back
+  const clampedProgress = useTransform(scrollYProgress, [0, 1], [0, 1], { clamp: true });
 
-  // Text overlay: fully visible until 40%, faded by 55%
-  const textOpacity = useTransform(scrollYProgress, [0, 0.4, 0.55], [1, 1, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.55], [0, -30]);
+  // Scale: 1x at top → 3.5x at bottom, extended to 1.05 to absorb scroll overshoot
+  const scale = useTransform(clampedProgress, [0, 1.05], [1, 3.5]);
 
-  // Dark vignette: nearly invisible until 50%, then darkens to 85% by 90%
-  const vignetteOpacity = useTransform(scrollYProgress, [0, 0.5, 0.9], [0, 0.3, 0.85]);
+  // Text overlay: fully visible until 40%, faded by 55%, held at 0 through 1.05
+  const textOpacity = useTransform(clampedProgress, [0, 0.4, 0.55, 1.05], [1, 1, 0, 0]);
+  const textY = useTransform(clampedProgress, [0, 0.55, 1.05], [0, -30, -30]);
+
+  // Dark vignette: nearly invisible until 50%, then darkens to 85% by 90%, held through 1.05
+  const vignetteOpacity = useTransform(clampedProgress, [0, 0.5, 0.9, 1.05], [0, 0.3, 0.85, 0.85]);
 
   return (
     // 300vh parent — creates the scroll distance
     <section ref={containerRef} className="relative h-[300vh]">
 
-      {/* Sticky viewport-height container with GPU compositing */}
+      {/* Sticky viewport-height container with GPU compositing and isolation */}
       <div
         className="sticky top-0 h-screen w-full overflow-hidden bg-[#1A1A1A]"
-        style={{ transform: "translateZ(0)" }}
+        style={{ transform: "translateZ(0)", isolation: "isolate" }}
       >
 
         {/* Zoom layer — image scales here */}
