@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+
 const steps = [
   {
     number: "01",
@@ -25,84 +30,125 @@ const steps = [
     title: "Aftercare",
     subtitle: "The work doesn't end when the needle does.",
     description:
-      "Healing is tended to with the same care as the design. You leave with guidance, a follow-up check-in, and a piece that will age the way good things do — with character.",
+      "Healing is tended to with the same care as the design. You leave with guidance, a follow-up check-in, and a piece that ages with character.",
   },
 ];
 
 export default function Process() {
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
+
   return (
-    <section id="process" className="relative py-24 px-6 bg-[#1A1A1A] border-t border-[#3A3A3A]">
-      <div className="max-w-7xl mx-auto">
-        {/* Section header */}
-        <h2
-          className="text-center mb-16"
+    <section
+      style={{
+        background: "#111111",
+        padding: "120px 64px",
+        borderTop: "1px solid rgba(253,255,233,0.05)",
+      }}
+    >
+      {/* Section label */}
+      <motion.p
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true }}
+        style={{
+          fontFamily: "Lato, sans-serif",
+          fontSize: "0.65rem",
+          letterSpacing: "0.25em",
+          color: "#C4FF61",
+          textTransform: "uppercase",
+          marginBottom: "80px",
+        }}
+      >
+        · How it works
+      </motion.p>
+
+      {/* Steps list */}
+      {steps.map((step, i) => (
+        <motion.div
+          key={step.number}
+          onHoverStart={() => setHoveredStep(i)}
+          onHoverEnd={() => setHoveredStep(null)}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: i * 0.12,
+            duration: 0.8,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          viewport={{ once: true }}
           style={{
-            color: "#FDFFE9",
-            fontFamily: "'Times New Roman', Times, serif",
-            fontSize: "clamp(2rem, 4vw, 3rem)",
-            fontWeight: 700,
+            display: "grid",
+            gridTemplateColumns: "64px 1fr 1fr",
+            gap: "40px",
+            padding: "40px 0",
+            borderTop: "1px solid rgba(253,255,233,0.07)",
+            alignItems: "start",
+            cursor: "default",
           }}
         >
-          The Process
-        </h2>
+          {/* Number */}
+          <span
+            style={{
+              fontFamily: "Lato, sans-serif",
+              fontSize: "0.7rem",
+              letterSpacing: "0.1em",
+              color: "rgba(196,255,97,0.5)",
+              paddingTop: "6px",
+            }}
+          >
+            {step.number}
+          </span>
 
-        {/* Steps grid */}
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-          {steps.map((step) => (
-            <div key={step.number} className="space-y-4">
-              {/* Step number */}
-              <span
-                className="block text-[#C4FF61]"
-                style={{
-                  fontFamily: "'Lato', sans-serif",
-                  fontSize: "0.875rem",
-                  fontWeight: 400,
-                  letterSpacing: "0.1em",
-                }}
-              >
-                {step.number}
-              </span>
+          {/* Title + subtitle */}
+          <div>
+            <h3
+              style={{
+                fontFamily: "'Times New Roman', serif",
+                fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)",
+                fontWeight: 700,
+                color: hoveredStep === i ? "#C4FF61" : "#FDFFE9",
+                margin: "0 0 12px 0",
+                lineHeight: 1.1,
+                transition: "color 0.3s",
+              }}
+            >
+              {step.title}
+            </h3>
+            <p
+              style={{
+                fontFamily: "Lato, sans-serif",
+                fontSize: "0.85rem",
+                fontStyle: "italic",
+                color: "#C4FF61",
+                margin: 0,
+                opacity: 0.8,
+              }}
+            >
+              {step.subtitle}
+            </p>
+          </div>
 
-              {/* Title */}
-              <h3
-                className="text-[#FDFFE9]"
-                style={{
-                  fontFamily: "'Times New Roman', Times, serif",
-                  fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
-                  fontWeight: 700,
-                }}
-              >
-                {step.title}
-              </h3>
+          {/* Description */}
+          <p
+            style={{
+              fontFamily: "Lato, sans-serif",
+              fontSize: "0.9rem",
+              lineHeight: 1.75,
+              color: "rgba(253,255,233,0.5)",
+              maxWidth: "400px",
+              margin: "4px 0 0 auto",
+            }}
+          >
+            {step.description}
+          </p>
+        </motion.div>
+      ))}
 
-              {/* Subtitle */}
-              <p
-                className="text-[#C4FF61]"
-                style={{
-                  fontFamily: "'Lato', sans-serif",
-                  fontSize: "1rem",
-                  fontWeight: 400,
-                  lineHeight: 1.5,
-                }}
-              >
-                {step.subtitle}
-              </p>
-
-              {/* Description */}
-              <p
-                className="text-[#FDFFE9]/80"
-                style={{
-                  fontFamily: "'Lato', sans-serif",
-                  fontSize: "0.9375rem",
-                  lineHeight: 1.7,
-                }}
-              >
-                {step.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Bottom border */}
+      <div
+        style={{ borderBottom: "1px solid rgba(253,255,233,0.07)" }}
+      />
     </section>
   );
 }

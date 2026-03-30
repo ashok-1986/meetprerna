@@ -1,57 +1,70 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useReducedMotion } from "framer-motion";
 
 export default function HeroZoom() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
-  const [scrollProgress, setScrollProgress] = useRef(0);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  // Track scroll progress for indicator fade
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    setScrollProgress.current = latest;
-  });
+  // Clamp scrollYProgress to prevent values > 1.0
+  const clampedProgress = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, 1],
+    { clamp: true }
+  );
 
-  // Clamp scrollYProgress to prevent values > 1.0 causing snap-back
-  const clampedProgress = useTransform(scrollYProgress, [0, 1], [0, 1], { clamp: true });
+  // ── LAYER 1: Image (slowest) — upward drift + zoom ──────────────────
+  const imageScale = useTransform(clampedProgress, [0, 1.05], [1, 2.8]);
+  const imageY = useTransform(clampedProgress, [0, 1], ["0%", "-15%"]);
 
-  // Scale: 1x at top → 3.5x at bottom, extended to 1.05 to absorb scroll overshoot
-  const scale = useTransform(clampedProgress, [0, 1.05], [1, 3.5]);
+  // ── LAYER 2: Vignette (static — no movement) ───────────────────────
+  const vignetteOpacity = useTransform(
+    clampedProgress,
+    [0, 0.5, 0.9, 1.05],
+    [0, 0.3, 1, 1]
+  );
 
-  // Text overlay: fully visible until 40%, faded by 55%, held at 0 through 1.05
-  const textOpacity = useTransform(clampedProgress, [0, 0.4, 0.55, 1.05], [1, 1, 0, 0]);
-  const textY = useTransform(clampedProgress, [0, 0.55, 1.05], [0, -30, -30]);
+  // ── LAYER 3: Text (fastest — exits first) ──────────────────────────
+  const textOpacity = useTransform(clampedProgress, [0, 0.3, 0.45, 1.05], [1, 1, 0, 0]);
+  const textY = useTransform(clampedProgress, [0, 0.45, 1.05], ["0%", "-8%", "-8%"]);
 
-  // Dark vignette: reaches FULL opacity by 95% so hero bleeds seamlessly into about
-  const vignetteOpacity = useTransform(clampedProgress, [0, 0.5, 0.95, 1.05], [0, 0.3, 1, 1]);
-
-  // Scroll indicator opacity: fades out by 10% scroll
-  const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  // ── Scroll indicator ───────────────────────────────────────────────
+  const scrollIndicatorOpacity = useTransform(
+    clampedProgress,
+    [0, 0.06, 0.08],
+    [1, 1, 0]
+  );
 
   return (
-    // 300vh parent — creates the scroll distance
-    <section ref={containerRef} className="relative h-[300vh]">
-
-      {/* Sticky viewport-height container with GPU compositing and isolation */}
+    <section
+      ref={containerRef}
+      style={{ height: "300vh", position: "relative" }}
+    >
       <div
-        className="sticky top-0 h-screen w-full overflow-hidden bg-[#1A1A1A]"
-        style={{ transform: "translateZ(0)", isolation: "isolate" }}
+        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          width: "100%",
+          overflow: "hidden",
+          background: "#0D0D0D",
+        }}
       >
-
-        {/* Zoom layer — image scales here */}
+        {/* ── LAYER 1: Image (slowest) ── */}
         <motion.div
-          className="absolute inset-0 will-change-transform"
           style={{
-            scale: prefersReducedMotion ? 1 : scale,
-            transformOrigin: "50% 25%",
+            position: "absolute",
+            inset: "-20% 0",
+            scale: imageScale,
+            y: imageY,
+            transformOrigin: "50% 30%",
             willChange: "transform",
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
@@ -59,116 +72,206 @@ export default function HeroZoom() {
         >
           <Image
             src="/hero/prerna-hero.jpg"
-            alt="Prerna - Custom Tattoo Artist Mumbai"
+            alt="Prerna — Custom Tattoo Artist Mumbai"
             fill
             priority
             sizes="100vw"
-            className="object-cover object-top"
-            style={{ willChange: "transform" }}
+            style={{
+              objectFit: "cover",
+              objectPosition: "center top",
+              filter: "grayscale(15%) contrast(1.1) brightness(0.7)",
+            }}
           />
         </motion.div>
 
-        {/* Dark vignette overlay — fades in as zoom progresses, reaches FULL black */}
-        <motion.div
-          className="absolute inset-0 bg-[#1A1A1A] pointer-events-none"
-          style={{ opacity: vignetteOpacity }}
+        {/* ── LAYER 2: Atmospheric vignettes (static) ── */}
+        {/* Top vignette */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none" as const,
+            zIndex: 2,
+            background:
+              "linear-gradient(to bottom, rgba(13,13,13,0.75) 0%, transparent 30%)",
+          }}
+        />
+        {/* Bottom vignette */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none" as const,
+            zIndex: 2,
+            background:
+              "linear-gradient(to top, rgba(13,13,13,0.95) 0%, transparent 45%)",
+          }}
+        />
+        {/* Radial edge vignette */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none" as const,
+            zIndex: 2,
+            background:
+              "radial-gradient(ellipse at center, transparent 35%, rgba(13,13,13,0.65) 100%)",
+          }}
         />
 
-        {/* Text overlay — editorial headline layout */}
+        {/* ── SCROLL-LINKED vignette (goes to full black) ── */}
         <motion.div
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 px-6"
           style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none" as const,
+            background: "#0D0D0D",
+            opacity: vignetteOpacity,
+            zIndex: 3,
+          }}
+        />
+
+        {/* ── LAYER 3: Text (fastest — exits first) ── */}
+        <motion.div
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
             opacity: textOpacity,
             y: textY,
+            willChange: "transform, opacity",
           }}
         >
-          {/* H1 — Brand name */}
-          <h1
-            className="text-center"
-            style={{
-              color: "#FDFFE9",
-              fontFamily: "'Times New Roman', Times, serif",
-              fontSize: "clamp(3.5rem, 8vw, 8rem)",
-              fontWeight: 700,
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
-            }}
-          >
-            meet prerna
-          </h1>
-
-          {/* Editorial headline — two lines, Times New Roman italic */}
-          <div
-            className="text-center"
-            style={{
-              color: "#FDFFE9",
-              fontFamily: "'Times New Roman', Times, serif",
-              fontStyle: "italic",
-              fontSize: "clamp(1.25rem, 2.5vw, 2rem)",
-              lineHeight: 1.4,
-              fontWeight: 400,
-            }}
-          >
-            Ink drawn from<br />the inside out.
-          </div>
-
-          {/* Thin horizontal rule */}
-          <hr
-            style={{
-              width: "80px",
-              border: "none",
-              borderTop: "1px solid #C4FF61",
-              margin: "0",
-            }}
-          />
-
-          {/* Subtext — Lato, lime green */}
+          {/* City label */}
           <p
-            className="text-center"
             style={{
+              fontFamily: "Lato, sans-serif",
+              fontSize: "0.65rem",
+              letterSpacing: "0.3em",
               color: "#C4FF61",
-              fontFamily: "'Lato', sans-serif",
-              fontSize: "0.875rem",
-              fontWeight: 400,
-              letterSpacing: "0.08em",
-              lineHeight: 1.6,
+              opacity: 0.7,
+              marginBottom: "32px",
+              textTransform: "uppercase",
             }}
           >
-            Every mark she makes began as something she lived through first.
+            Mumbai · Tattoo Artist
+          </p>
+
+          {/* H1 line 1 */}
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "'Times New Roman', Times, serif",
+              fontSize: "clamp(4.5rem, 11vw, 10rem)",
+              fontWeight: 700,
+              color: "rgba(253,255,233,0.85)",
+              lineHeight: 0.88,
+              letterSpacing: "-0.03em",
+              margin: 0,
+              textAlign: "center" as const,
+            }}
+          >
+            meet
+          </motion.h1>
+
+          {/* H1 line 2 — offset right */}
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "'Times New Roman', Times, serif",
+              fontSize: "clamp(4.5rem, 11vw, 10rem)",
+              fontWeight: 700,
+              color: "rgba(253,255,233,0.85)",
+              lineHeight: 0.88,
+              letterSpacing: "-0.03em",
+              marginLeft: "clamp(2rem, 5vw, 6rem)",
+              textAlign: "center" as const,
+            }}
+          >
+            prerna
+          </motion.h1>
+
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 1.5 }}
+            style={{
+              fontFamily: "'Times New Roman', Times, serif",
+              fontSize: "clamp(0.9rem, 1.5vw, 1.3rem)",
+              fontStyle: "italic",
+              color: "rgba(253,255,233,0.4)",
+              marginTop: "40px",
+              letterSpacing: "0.02em",
+              textAlign: "center" as const,
+            }}
+          >
+            Ink drawn from the inside out.
+          </motion.p>
+        </motion.div>
+
+        {/* ── Scroll indicator ── */}
+        <motion.div
+          style={{
+            position: "absolute",
+            bottom: "40px",
+            left: "64px",
+            zIndex: 10,
+            opacity: scrollIndicatorOpacity,
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "Lato",
+              fontSize: "0.6rem",
+              letterSpacing: "0.25em",
+              color: "rgba(253,255,233,0.4)",
+              textTransform: "uppercase",
+              margin: 0,
+            }}
+          >
+            + Scroll down
           </p>
         </motion.div>
 
-        {/* Scroll indicator — fades out by 10% scroll */}
-        <motion.div
-          style={{ opacity: indicatorOpacity }}
-          className="absolute bottom-[40px] left-1/2 -translate-x-1/2 z-10 pointer-events-none"
+        {/* ── Om symbol ── */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "24px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 10,
+            fontFamily: "'Times New Roman', serif",
+            fontSize: "1.4rem",
+            color: "rgba(196,255,97,0.15)",
+            userSelect: "none" as const,
+            pointerEvents: "none" as const,
+          }}
         >
-          <div className="flex flex-col items-center gap-3">
-            {/* SCROLL text */}
-            <span
-              style={{
-                fontFamily: "'Lato', sans-serif",
-                fontSize: "0.65rem",
-                color: "#C4FF61",
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                opacity: 0.7,
-              }}
-            >
-              Scroll
-            </span>
-            {/* Animated bouncing line with dot */}
-            <div className="relative w-[2px] h-[40px] bg-[#C4FF61]">
-              <motion.div
-                initial={{ y: 0, opacity: 1 }}
-                animate={{ y: [0, 12, 0], opacity: [1, 1, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-[6px] h-[6px] bg-[#C4FF61] rounded-full"
-              />
-            </div>
-          </div>
-        </motion.div>
+          ॐ
+        </div>
 
+        {/* ── Grain overlay (topmost, z-index 20) ── */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 20,
+            pointerEvents: "none" as const,
+            opacity: 0.04,
+            mixBlendMode: "overlay" as const,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          }}
+        />
       </div>
     </section>
   );

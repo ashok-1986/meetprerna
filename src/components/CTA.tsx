@@ -1,57 +1,134 @@
-import Link from "next/link";
+"use client";
+
+import { motion } from "framer-motion";
 
 export default function CTA() {
   return (
-    <section id="contact" className="relative py-24 px-6 bg-[#1A1A1A] border-t border-[#3A3A3A]">
-      <div className="max-w-4xl mx-auto text-center space-y-8">
-        {/* Headline */}
-        <h2
-          className="text-[#FDFFE9]"
+    <section
+      style={{
+        background: "#0D0D0D",
+        padding: "160px 64px",
+        textAlign: "center",
+        borderTop: "1px solid rgba(253,255,233,0.05)",
+      }}
+    >
+      {/* Label */}
+      <motion.p
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true }}
+        style={{
+          fontFamily: "Lato, sans-serif",
+          fontSize: "0.65rem",
+          letterSpacing: "0.3em",
+          color: "#C4FF61",
+          textTransform: "uppercase",
+          marginBottom: "48px",
+          opacity: 0.8,
+        }}
+      >
+        · Ready to wear your story?
+      </motion.p>
+
+      {/* Massive CTA headline */}
+      <motion.h2
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true }}
+        style={{
+          fontFamily: "'Times New Roman', serif",
+          fontSize: "clamp(3rem, 7vw, 7.5rem)",
+          fontWeight: 700,
+          color: "#FDFFE9",
+          lineHeight: 0.92,
+          letterSpacing: "-0.03em",
+          maxWidth: "900px",
+          margin: "0 auto 64px",
+        }}
+      >
+        Begin the<br />
+        <span
+          style={{ color: "#C4FF61", fontStyle: "italic" }}
+        >
+          conversation.
+        </span>
+      </motion.h2>
+
+      {/* Body text */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 1 }}
+        style={{
+          fontFamily: "Lato, sans-serif",
+          fontSize: "1rem",
+          lineHeight: 1.75,
+          color: "rgba(253,255,233,0.45)",
+          maxWidth: "420px",
+          margin: "0 auto 64px",
+        }}
+      >
+        Prerna takes limited appointments each month. Each one begins with a
+        conversation, not a price list.
+      </motion.p>
+
+      {/* Buttons */}
+      <div
+        style={{
+          display: "flex",
+          gap: "16px",
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        {/* Primary */}
+        <a
+          href="https://meetprerna.fillout.com/book"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cta-button-primary"
           style={{
-            fontFamily: "'Times New Roman', Times, serif",
-            fontSize: "clamp(2rem, 4vw, 3.5rem)",
+            fontFamily: "Lato, sans-serif",
             fontWeight: 700,
-            lineHeight: 1.2,
+            fontSize: "0.75rem",
+            letterSpacing: "0.12em",
+            color: "#1A1A1A",
+            background: "#C4FF61",
+            padding: "16px 40px",
+            borderRadius: "100px",
+            textDecoration: "none",
+            textTransform: "uppercase",
+            transition: "background 0.3s, transform 0.2s",
+            display: "inline-block",
           }}
         >
-          Your story deserves a shape.
-        </h2>
+          Book a consultation
+        </a>
 
-        {/* Sub-headline */}
-        <p
-          className="max-w-[500px] mx-auto text-[#FDFFE9]"
+        {/* Secondary */}
+        <a
+          href="#portfolio"
+          className="cta-button-secondary"
           style={{
-            fontFamily: "'Lato', sans-serif",
-            fontSize: "1rem",
+            fontFamily: "Lato, sans-serif",
             fontWeight: 400,
-            lineHeight: 1.6,
+            fontSize: "0.75rem",
+            letterSpacing: "0.12em",
+            color: "rgba(253,255,233,0.6)",
+            background: "transparent",
+            padding: "16px 40px",
+            borderRadius: "100px",
+            border: "1px solid rgba(253,255,233,0.2)",
+            textDecoration: "none",
+            textTransform: "uppercase",
+            transition: "border-color 0.3s, color 0.3s",
+            display: "inline-block",
           }}
         >
-          Prerna takes limited appointments each month.
-          Each one begins with a conversation, not a price list.
-          If you&apos;re ready to wear something real — start here.
-        </p>
-
-        {/* CTA buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-          {/* Primary CTA */}
-          <Link
-            href="https://meetprerna.fillout.com/book"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-8 py-4 bg-[#C4FF61] text-[#1A1A1A] font-lato font-medium text-base rounded-full transition-colors duration-300 hover:bg-[#EAFF27]"
-          >
-            Begin the conversation
-          </Link>
-
-          {/* Secondary CTA */}
-          <Link
-            href="#portfolio"
-            className="inline-flex items-center justify-center px-8 py-4 border border-[#C4FF61] text-[#C4FF61] font-lato font-medium text-base rounded-full transition-colors duration-300 hover:bg-[#C4FF61]/10"
-          >
-            See the work first
-          </Link>
-        </div>
+          See the work
+        </a>
       </div>
     </section>
   );

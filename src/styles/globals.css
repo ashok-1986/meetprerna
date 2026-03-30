@@ -19,6 +19,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  cursor: none;
 }
 
 body {
@@ -26,6 +27,7 @@ body {
   color: #FDFFE9;
   font-family: var(--font-lato), sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Font utility classes */
@@ -39,4 +41,102 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Times New Roman", Times, serif;
+}
+
+/* Hide default cursor sitewide */
+* { cursor: none; }
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
+
+/* Remove default margins between sections */
+section, main > * { margin: 0; padding-top: 0; }
+main > * { margin-top: 0 !important; margin-bottom: 0 !important; }
+section { margin: 0; }
+
+/* Horizontal scroll — prevent body overflow during portfolio section */
+body { overflow-x: hidden; }
+
+/* Selection colour */
+::selection {
+  background: #C4FF61;
+  color: #1A1A1A;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #1A1A1A; }
+::-webkit-scrollbar-thumb { background: #C4FF61; border-radius: 2px; }
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+/* Grain animation for film-like texture */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  20% { transform: translate(3%, 2%); }
+  30% { transform: translate(-1%, 4%); }
+  40% { transform: translate(4%, -1%); }
+  50% { transform: translate(-3%, 3%); }
+  60% { transform: translate(2%, -4%); }
+  70% { transform: translate(-4%, 1%); }
+  80% { transform: translate(1%, 3%); }
+  90% { transform: translate(3%, -2%); }
+}
+
+/* Global grain overlay on body */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9998;
+  animation: grain 0.5s steps(1) infinite;
+}
+
+/* Custom cursor z-index fix — ensure cursor is above all stacking contexts */
+.cursor-dot, .cursor-ring {
+  z-index: 99999 !important;
+  isolation: auto !important;
+}
+
+/* Marquee animation */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.marquee-track > div:hover img {
+  filter: grayscale(0%) contrast(1.05) !important;
+  transform: scale(1.04);
+}
+
+/* Portfolio card hover */
+.portfolio-card:hover {
+  box-shadow: inset 0 0 0 1px rgba(196,255,97,0.4);
+}
+
+/* CTA button hover states */
+.cta-button-primary:hover {
+  background: #EAFF27 !important;
+  transform: scale(1.03);
+}
+
+.cta-button-secondary:hover {
+  border-color: rgba(253,255,233,0.6) !important;
+  color: #FDFFE9 !important;
 }

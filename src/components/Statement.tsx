@@ -1,0 +1,170 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+export default function Statement() {
+  return (
+    <section
+      style={{
+        background: "#0D0D0D",
+        padding: "0 64px 140px",
+        margin: 0,
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Fade-in gradient at the very top of Statement */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "200px",
+          background: "linear-gradient(to bottom, #0D0D0D 0%, transparent 100%)",
+          pointerEvents: "none",
+          zIndex: 1,
+        }}
+      />
+
+      {/* All content: position relative, zIndex 2 */}
+      <div style={{ position: "relative", zIndex: 2, paddingTop: "160px" }}>
+        {/* Section label */}
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-60px" }}
+          style={{
+            fontFamily: "Lato, sans-serif",
+            fontSize: "0.65rem",
+            letterSpacing: "0.25em",
+            color: "#C4FF61",
+            opacity: 0.8,
+            textTransform: "uppercase",
+            marginBottom: "64px",
+          }}
+        >
+          · The Artist
+        </motion.p>
+
+        {/* Two-column grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "55% 45%",
+            gap: "64px",
+            alignItems: "start",
+          }}
+        >
+          {/* LEFT — Headline */}
+          <div>
+            {[
+              "She didn't plan to",
+              "become a tattoo artist.",
+              "She became one anyway.",
+            ].map((line, i) => (
+              <motion.h2
+                key={i}
+                initial={{ opacity: 0, y: 80 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 1.1,
+                  delay: i * 0.15,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                viewport={{ once: true, margin: "-40px" }}
+                style={{
+                  fontFamily: "'Times New Roman', serif",
+                  fontSize: "clamp(2.2rem, 4.5vw, 4rem)",
+                  fontWeight: 700,
+                  lineHeight: 1.05,
+                  letterSpacing: "-0.02em",
+                  margin: "0 0 4px 0",
+                  color: i === 2 ? "#C4FF61" : "#FDFFE9",
+                  fontStyle: i === 2 ? "italic" : "normal",
+                }}
+              >
+                {line}
+              </motion.h2>
+            ))}
+
+            <motion.hr
+              initial={{ scaleX: 0, opacity: 0 }}
+              whileInView={{ scaleX: 1, opacity: 0.6 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.5,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              viewport={{ once: true }}
+              style={{
+                width: "48px",
+                border: "none",
+                borderTop: "1px solid #C4FF61",
+                margin: "48px 0 0",
+                transformOrigin: "left",
+              }}
+            />
+          </div>
+
+          {/* RIGHT — Body text */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1,
+              delay: 0.35,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            viewport={{ once: true, margin: "-40px" }}
+            style={{ paddingTop: "8px" }}
+          >
+            {[
+              "Prerna grew up making things with her hands — sketching at margins, filling notebooks, watching the world like it owed her an explanation.",
+              "She left familiar ground to follow something she couldn't name yet. What she found was a needle, ink, and the realisation that the body is the oldest canvas there is.",
+              "Her practice is rooted in stillness. Every consultation begins with listening — not to what you want, but to what you're carrying.",
+            ].map((para, i) => (
+              <p
+                key={i}
+                style={{
+                  fontFamily: "Lato, sans-serif",
+                  fontSize: "1rem",
+                  lineHeight: 1.85,
+                  color: "rgba(253,255,233,0.6)",
+                  maxWidth: "420px",
+                  marginBottom: "28px",
+                }}
+              >
+                {para}
+              </p>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Pull quote */}
+        <motion.blockquote
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true }}
+          style={{
+            fontFamily: "'Times New Roman', serif",
+            fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)",
+            fontStyle: "italic",
+            color: "rgba(253,255,233,0.3)",
+            textAlign: "center",
+            maxWidth: "800px",
+            margin: "100px auto 0",
+            lineHeight: 1.3,
+            letterSpacing: "-0.01em",
+            border: "none",
+            padding: 0,
+          }}
+        >
+          &ldquo;I don&apos;t tattoo skin. I tattoo what&apos;s underneath it.&rdquo;
+        </motion.blockquote>
+      </div>
+    </section>
+  );
+}

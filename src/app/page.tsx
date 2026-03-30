@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import HeroZoom from "@/components/HeroZoom";
-import About from "@/components/About";
+import Statement from "@/components/Statement";
+import Marquee from "@/components/Marquee";
+import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
 import Stats from "@/components/Stats";
 import CTA from "@/components/CTA";
@@ -10,11 +12,15 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <HeroZoom />
-      <About />
-      <Process />
-      <Stats />
-      <CTA />
+      <main style={{ margin: 0, padding: 0 }}>
+        <HeroZoom />
+        <Statement />
+        <Marquee />
+        <Portfolio />
+        <Process />
+        <Stats />
+        <CTA />
+      </main>
       <Footer />
     </>
   );

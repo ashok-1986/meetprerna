@@ -1,127 +1,155 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
-const navLinks = [
-  { href: "#portfolio", label: "Portfolio" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
-];
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-[#1A1A1A]/90 backdrop-blur-md"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="relative z-50 block">
-          <Image
-            src="/logo/meetprerna_logo_100525_1@2x.png"
-            alt="meet prerna"
-            width={176}
-            height={44}
-            className="h-[44px] w-auto"
-            priority
-            style={{ display: "block" }}
-          />
-        </Link>
+    <>
+      {/* Ashfall-style navbar: fixed, transparent, 4-corner layout */}
+      <nav
+        className="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-0"
+        style={{ padding: "24px 32px" }}
+      >
+        <div className="relative w-full">
+          {/* TOP-LEFT: MEET PRERNA text */}
+          <Link href="/" className="absolute top-0 left-0">
+            <span
+              style={{
+                fontFamily: "Lato, sans-serif",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                letterSpacing: "0.25em",
+                color: "rgba(253, 255, 233, 0.6)",
+                textTransform: "uppercase",
+              }}
+            >
+              MEET PRERNA
+            </span>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+          {/* TOP-CENTRE: Stacked navigation (hidden on mobile) */}
+          <div className="hidden md:flex absolute top-0 left-1/2 -translate-x-1/2 flex-col gap-2.5">
             <Link
-              key={link.href}
-              href={link.href}
-              className="relative font-lato text-[#FDFFE9] text-base hover:text-[#C4FF61] transition-colors duration-300 group"
+              href="#portfolio"
+              className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
             >
-              {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C4FF61] transition-all duration-300 group-hover:w-full" />
+              <span style={{ opacity: 0.4 }}>· </span>HOME
             </Link>
-          ))}
-        </div>
-
-        {/* Mobile Hamburger */}
-        <div className="md:hidden relative z-50">
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <button
-                aria-label="Open menu"
-                className="text-[#FDFFE9] hover:text-[#C4FF61] transition-colors"
-              >
-                <Menu size={28} />
-              </button>
-            </SheetTrigger>
-            <SheetContent
-              side="right"
-              className="w-full h-full bg-[#1A1A1A] border-none p-0"
+            <Link
+              href="#portfolio"
+              className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
             >
-              <MobileMenu links={navLinks} onClose={() => setOpen(false)} />
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </motion.nav>
-  );
-}
+              <span style={{ opacity: 0.4 }}>· </span>PORTFOLIO
+            </Link>
+            <Link
+              href="#about"
+              className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
+            >
+              <span style={{ opacity: 0.4 }}>· </span>ABOUT
+            </Link>
+            <Link
+              href="#contact"
+              className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
+            >
+              <span style={{ opacity: 0.4 }}>· </span>CONTACT
+            </Link>
+          </div>
 
-function MobileMenu({
-  links,
-  onClose,
-}: {
-  links: typeof navLinks;
-  onClose: () => void;
-}) {
-  return (
-    <div className="flex flex-col items-center justify-center h-full gap-8">
-      <AnimatePresence>
-        {links.map((link, index) => (
-          <motion.div
-            key={link.href}
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+          {/* TOP-RIGHT: BOOK NOW + (desktop) */}
+          <a
+            href="https://meetprerna.fillout.com/book"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:block absolute top-0 right-0"
           >
-            <Link
-              href={link.href}
-              onClick={onClose}
-              className="font-lato text-3xl text-[#FDFFE9] hover:text-[#C4FF61] transition-colors duration-300 relative group"
+            <span
+              style={{
+                fontFamily: "Lato, sans-serif",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                letterSpacing: "0.25em",
+                color: "rgba(253, 255, 233, 0.6)",
+                textTransform: "uppercase",
+                transition: "color 0.3s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#C4FF61")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(253, 255, 233, 0.6)")}
             >
-              {link.label}
-              <span className="absolute -bottom-2 left-0 w-0 h-1 bg-[#C4FF61] transition-all duration-300 group-hover:w-full" />
-            </Link>
+              BOOK NOW +
+            </span>
+          </a>
+
+          {/* TOP-RIGHT: Hamburger (mobile) */}
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="md:hidden absolute top-0 right-0 flex flex-col gap-1.5"
+            aria-label="Toggle menu"
+          >
+            <div className="w-5 h-0.5 bg-[rgba(253,255,233,0.6)]"></div>
+            <div className="w-5 h-0.5 bg-[rgba(253,255,233,0.6)]"></div>
+            <div className="w-5 h-0.5 bg-[rgba(253,255,233,0.6)]"></div>
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            className="fixed inset-0 bg-[#1A1A1A] z-[100] flex flex-col items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute top-6 right-6 text-[rgba(253,255,233,0.6)] text-2xl"
+              aria-label="Close menu"
+            >
+              ×
+            </button>
+
+            <div className="flex flex-col items-center gap-8">
+              <Link
+                href="#portfolio"
+                className="font-serif text-3xl text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] transition-colors duration-300"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Portfolio
+              </Link>
+              <Link
+                href="#about"
+                className="font-serif text-3xl text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] transition-colors duration-300"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link
+                href="#contact"
+                className="font-serif text-3xl text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] transition-colors duration-300"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </Link>
+
+              {/* CTA Button for mobile */}
+              <a
+                href="https://meetprerna.fillout.com/book"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-[#C4FF61] text-[#C4FF61] bg-transparent rounded-full px-6 py-2.5 font-lato font-bold text-xs tracking-[0.1em] transition-all duration-300 hover:bg-[#C4FF61] hover:text-[#1A1A1A] mt-4"
+              >
+                Book now
+              </a>
+            </div>
           </motion.div>
-        ))}
+        )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }
