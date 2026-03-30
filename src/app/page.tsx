@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import HeroZoom from "@/components/HeroZoom";
+import HeroReveal from "@/components/HeroReveal";
 import Statement from "@/components/Statement";
 import Marquee from "@/components/Marquee";
 import Portfolio from "@/components/Portfolio";
@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <Navbar />
       <main style={{ margin: 0, padding: 0 }}>
-        <HeroZoom />
+        <HeroReveal />
         <Statement />
         <Marquee />
         <Portfolio />

@@ -1,10 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import LineReveal from "@/components/ui/LineReveal";
 import WordReveal from "@/components/ui/WordReveal";
 
 export default function Statement() {
+  const imageRef = useRef<HTMLDivElement>(null);
+  const imageInView = useInView(imageRef, { once: true, margin: "-100px" });
+
   return (
     <section
       style={{
@@ -162,6 +166,51 @@ export default function Statement() {
                 marginBottom: "28px",
               }}
             />
+
+            {/* Image reveal block */}
+            <div ref={imageRef} style={{ marginTop: "48px" }}>
+              <motion.div
+                initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+                animate={imageInView
+                  ? { clipPath: "inset(0% 0% 0% 0%)" }
+                  : { clipPath: "inset(100% 0% 0% 0%)" }
+                }
+                transition={{
+                  duration: 1.2,
+                  ease: [0.76, 0, 0.24, 1],
+                  delay: 0.5,
+                }}
+                style={{
+                  overflow: "hidden",
+                  borderRadius: "3px",
+                }}
+              >
+                <img
+                  src="/hero/prerna-hero.jpg"
+                  alt="Prerna at work"
+                  style={{
+                    width: "100%",
+                    height: "360px",
+                    objectFit: "cover",
+                    objectPosition: "center top",
+                    display: "block",
+                    filter: "grayscale(20%) contrast(1.05)",
+                  }}
+                />
+              </motion.div>
+
+              {/* Caption below image */}
+              <p style={{
+                fontFamily: "Lato, sans-serif",
+                fontSize: "0.7rem",
+                letterSpacing: "0.12em",
+                color: "rgba(253,255,233,0.25)",
+                marginTop: "12px",
+                textTransform: "uppercase",
+              }}>
+                Mumbai Studio · By appointment only
+              </p>
+            </div>
           </div>
         </div>
 

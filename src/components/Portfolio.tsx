@@ -114,84 +114,7 @@ export default function Portfolio() {
             }}
           >
             {portfolioItems.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: i * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                viewport={{ once: true }}
-                className="portfolio-card"
-                onClick={() =>
-                  setLightbox({
-                    isOpen: true,
-                    image: item.image,
-                    style: item.style,
-                    caption: item.caption,
-                  })
-                }
-                data-cursor="hover"
-                style={{
-                  width: "90vw",
-                  height: "90vh",
-                  flexShrink: 0,
-                  borderRadius: "4px",
-                  overflow: "hidden",
-                  position: "relative",
-                  cursor: "pointer",
-                }}
-              >
-                <Image
-                  src={item.image}
-                  alt={item.caption}
-                  fill
-                  className="object-cover"
-                  style={{
-                    transition: "transform 0.7s ease",
-                    filter: "grayscale(10%) contrast(1.05)",
-                  }}
-                />
-
-                {/* Bottom overlay */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    padding: "32px",
-                    background:
-                      "linear-gradient(to top, rgba(13,13,13,0.95) 0%, transparent 100%)",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontFamily: "Lato, sans-serif",
-                      fontSize: "0.6rem",
-                      letterSpacing: "0.2em",
-                      color: "#C4FF61",
-                      textTransform: "uppercase",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    {item.style}
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: "'Times New Roman', serif",
-                      fontSize: "1.05rem",
-                      fontStyle: "italic",
-                      color: "rgba(253,255,233,0.85)",
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {item.caption}
-                  </p>
-                </div>
-              </motion.div>
+              <PortfolioCard key={item.id} item={item} i={i} setLightbox={setLightbox} />
             ))}
           </motion.div>
 
@@ -256,5 +179,98 @@ export default function Portfolio() {
         caption={lightbox.caption}
       />
     </>
+  );
+}
+
+function PortfolioCard({ item, i, setLightbox }: { item: any; i: number; setLightbox: any }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.8,
+        delay: i * 0.08,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      viewport={{ once: true }}
+      className="portfolio-card"
+      onClick={() =>
+        setLightbox({
+          isOpen: true,
+          image: item.image,
+          style: item.style,
+          caption: item.caption,
+        })
+      }
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      data-cursor="hover"
+      style={{
+        width: "90vw",
+        height: "90vh",
+        flexShrink: 0,
+        borderRadius: "4px",
+        overflow: "hidden",
+        position: "relative",
+        cursor: "pointer",
+        clipPath: hovered
+          ? "inset(3% 3% 3% 3% round 2px)"
+          : "inset(0% 0% 0% 0% round 0px)",
+        transition: "clip-path 0.5s cubic-bezier(0.76, 0, 0.24, 1)",
+      }}
+    >
+      <Image
+        src={item.image}
+        alt={item.caption}
+        fill
+        className="object-cover"
+        style={{
+          transform: hovered ? "scale(1.06)" : "scale(1)",
+          filter: hovered
+            ? "grayscale(0%) contrast(1.1)"
+            : "grayscale(15%) contrast(1.05)",
+          transition: "transform 0.7s ease, filter 0.5s ease",
+        }}
+      />
+
+      {/* Bottom overlay */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: "32px",
+          background:
+            "linear-gradient(to top, rgba(13,13,13,0.95) 0%, transparent 100%)",
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "Lato, sans-serif",
+            fontSize: "0.6rem",
+            letterSpacing: "0.2em",
+            color: "#C4FF61",
+            textTransform: "uppercase",
+            marginBottom: "8px",
+          }}
+        >
+          {item.style}
+        </p>
+        <p
+          style={{
+            fontFamily: "'Times New Roman', serif",
+            fontSize: "1.05rem",
+            fontStyle: "italic",
+            color: "rgba(253,255,233,0.85)",
+            lineHeight: 1.3,
+          }}
+        >
+          {item.caption}
+        </p>
+      </div>
+    </motion.div>
   );
 }

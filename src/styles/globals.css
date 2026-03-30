@@ -135,8 +135,8 @@ html.lenis body {
   border-radius: 2px;
 }
 
-/* Marquee animation */
-@keyframes marquee {
+/* Marquee dual track animation */
+@keyframes marqueeLeft {
   0% {
     transform: translateX(0);
   }
@@ -146,7 +146,22 @@ html.lenis body {
   }
 }
 
-.marquee-content:hover {
+@keyframes marqueeRight {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Pause both tracks on hover */
+section:hover .marquee-track-1 {
+  animation-play-state: paused;
+}
+
+section:hover .marquee-track-2 {
   animation-play-state: paused;
 }
 
@@ -214,25 +229,7 @@ body::after {
   isolation: auto !important;
 }
 
-/* Marquee animation */
-@keyframes marqueeScroll {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
-.marquee-track>div:hover img {
-  filter: grayscale(0%) contrast(1.05) !important;
-  transform: scale(1.04);
-}
+/* Cleaned redundant CSS */
 
 /* Portfolio card hover */
 .portfolio-card:hover {

@@ -1,96 +1,113 @@
 "use client";
 
-import Image from "next/image";
+// Two tracks moving in OPPOSITE directions — creates depth
+// Track 1: left to right (slower)
+// Track 2: right to left (faster)
 
-const PLACEHOLDER = "/hero/prerna-hero.jpg";
+const TRACK_1_WORDS = [
+  "CUSTOM", "·", "INTENTIONAL", "·", "MUMBAI", "·",
+  "HAND-DRAWN", "·", "PERMANENT", "·", "YOURS", "·",
+  "CUSTOM", "·", "INTENTIONAL", "·", "MUMBAI", "·",
+  "HAND-DRAWN", "·", "PERMANENT", "·", "YOURS", "·",
+];
 
-const portfolioImages = Array(8).fill({
-  src: PLACEHOLDER,
-  alt: "Prerna tattoo work",
-});
+const TRACK_2_WORDS = [
+  "STILLNESS", "·", "INK", "·", "RESILIENCE", "·",
+  "SPIRITUAL", "·", "BOLD", "·", "STORY", "·",
+  "STILLNESS", "·", "INK", "·", "RESILIENCE", "·",
+  "SPIRITUAL", "·", "BOLD", "·", "STORY", "·",
+];
 
 export default function Marquee() {
   return (
-    <section
-      style={{
-        background: "#111111",
-        padding: "0",
-        overflow: "hidden",
-        borderTop: "1px solid rgba(253,255,233,0.05)",
-        borderBottom: "1px solid rgba(253,255,233,0.05)",
-      }}
-    >
-      {/* Top label row */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "32px 64px",
-          borderBottom: "1px solid rgba(253,255,233,0.05)",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "Lato, sans-serif",
-            fontSize: "0.65rem",
-            letterSpacing: "0.25em",
-            color: "rgba(253,255,233,0.35)",
-            textTransform: "uppercase",
-          }}
-        >
-          · Selected Work
-        </span>
-        <span
-          style={{
-            fontFamily: "Lato, sans-serif",
-            fontSize: "0.65rem",
-            letterSpacing: "0.25em",
-            color: "rgba(253,255,233,0.35)",
-            textTransform: "uppercase",
-          }}
-        >
-          Custom Tattoos · Mumbai
-        </span>
-      </div>
+    <section style={{
+      background: "#0D0D0D",
+      padding: "48px 0",
+      overflow: "hidden",
+      borderTop: "1px solid rgba(253,255,233,0.05)",
+      borderBottom: "1px solid rgba(253,255,233,0.05)",
+      position: "relative",
+    }}>
 
-      {/* Scrolling track */}
-      <div
-        className="marquee-track"
-        style={{
-          display: "flex",
-          gap: "16px",
-          padding: "24px 0",
-          width: "max-content",
-          animation: "marqueeScroll 35s linear infinite",
-        }}
-      >
-        {[...portfolioImages, ...portfolioImages].map((img, i) => (
-          <div
+      {/* ── TRACK 1: moves LEFT (standard direction) ── */}
+      <div className="marquee-track-1" style={{
+        display: "flex",
+        gap: "0",
+        marginBottom: "16px",
+        // CSS animation — no JS, no Lenis conflict
+        animation: "marqueeLeft 25s linear infinite",
+        width: "max-content",
+      }}>
+        {TRACK_1_WORDS.map((word, i) => (
+          <span
             key={i}
-            className="marquee-card"
             style={{
-              width: "260px",
-              height: "360px",
-              flexShrink: 0,
-              borderRadius: "3px",
-              overflow: "hidden",
-              position: "relative",
+              fontFamily: "'Times New Roman', Times, serif",
+              fontSize: "clamp(1rem, 2vw, 1.4rem)",
+              fontWeight: word === "·" ? 400 : 700,
+              fontStyle: word === "·" ? "normal" : "italic",
+              color: word === "·"
+                ? "rgba(196,255,97,0.4)"       // · in lime
+                : "rgba(253,255,233,0.12)",     // words very subtle
+              letterSpacing: "0.15em",
+              paddingRight: "32px",
+              whiteSpace: "nowrap",
+              textTransform: "uppercase",
+              transition: "color 0.3s",
             }}
           >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              fill
-              className="object-cover"
-              style={{
-                filter: "grayscale(20%) contrast(1.05)",
-                transition: "filter 0.5s ease, transform 0.5s ease",
-              }}
-            />
-          </div>
+            {word}
+          </span>
         ))}
       </div>
+
+      {/* ── TRACK 2: moves RIGHT (reverse) ── */}
+      <div className="marquee-track-2" style={{
+        display: "flex",
+        gap: "0",
+        // Reverse direction + slightly different speed
+        animation: "marqueeRight 20s linear infinite",
+        width: "max-content",
+      }}>
+        {TRACK_2_WORDS.map((word, i) => (
+          <span
+            key={i}
+            style={{
+              fontFamily: "Lato, sans-serif",
+              fontSize: "clamp(0.65rem, 1.2vw, 0.85rem)",
+              fontWeight: 700,
+              color: word === "·"
+                ? "rgba(196,255,97,0.25)"
+                : "rgba(253,255,233,0.07)",
+              letterSpacing: "0.3em",
+              paddingRight: "40px",
+              whiteSpace: "nowrap",
+              textTransform: "uppercase",
+            }}
+          >
+            {word}
+          </span>
+        ))}
+      </div>
+
+      {/* Left + right fade masks — creates depth at edges */}
+      <div style={{
+        position: "absolute",
+        top: 0, bottom: 0, left: 0,
+        width: "120px",
+        background: "linear-gradient(to right, #0D0D0D, transparent)",
+        zIndex: 2,
+        pointerEvents: "none",
+      }} />
+      <div style={{
+        position: "absolute",
+        top: 0, bottom: 0, right: 0,
+        width: "120px",
+        background: "linear-gradient(to left, #0D0D0D, transparent)",
+        zIndex: 2,
+        pointerEvents: "none",
+      }} />
+
     </section>
   );
 }
