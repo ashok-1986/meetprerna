@@ -1,11 +1,11 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
+import HeroZoom from "@/components/HeroZoom";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <Hero />
+      <HeroZoom />
     </>
   );
 }
