@@ -39,14 +39,15 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="relative z-50">
+        <Link href="/" className="relative z-50 block">
           <Image
             src="/logo/meetprerna_logo_100525_1@2x.png"
             alt="meet prerna"
-            width={160}
-            height={40}
-            className="h-10 w-auto"
+            width={176}
+            height={44}
+            className="h-[44px] w-auto"
             priority
+            style={{ display: "block" }}
           />
         </Link>
 

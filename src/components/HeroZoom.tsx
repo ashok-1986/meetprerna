@@ -21,8 +21,8 @@ export default function HeroZoom() {
   const textOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 0.35], [0, -40]);
 
-  // Dark vignette: starts fading in at 30% scroll, fully black by 85%
-  const vignetteOpacity = useTransform(scrollYProgress, [0.3, 0.85], [0, 1]);
+  // Dark vignette: invisible until 30% scroll, fully opaque by 85%
+  const vignetteOpacity = useTransform(scrollYProgress, [0, 0.3, 0.85], [0, 0, 1]);
 
   return (
     // 300vh parent — creates the scroll distance
@@ -36,7 +36,7 @@ export default function HeroZoom() {
           className="absolute inset-0 will-change-transform"
           style={{
             scale: prefersReducedMotion ? 1 : scale,
-            transformOrigin: "40% 65%", // ← TATTOO ZONE: adjust these % values
+            transformOrigin: "40% 65%",
           }}
         >
           <Image
@@ -64,8 +64,9 @@ export default function HeroZoom() {
           }}
         >
           <h1
-            className="text-center text-[#FDFFE9]"
+            className="text-center"
             style={{
+              color: "#FDFFE9",
               fontFamily: "'Times New Roman', Times, serif",
               fontSize: "clamp(3.5rem, 8vw, 8rem)",
               fontWeight: 700,
@@ -78,10 +79,10 @@ export default function HeroZoom() {
           <p
             className="text-center"
             style={{
+              color: "#C4FF61",
               fontFamily: "'Lato', sans-serif",
               fontSize: "clamp(1rem, 2vw, 1.5rem)",
               fontWeight: 400,
-              color: "#C4FF61",
               letterSpacing: "0.05em",
             }}
           >
