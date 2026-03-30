@@ -133,58 +133,60 @@ export default function HeroReveal() {
                     Mumbai · Tattoo Artist
                 </motion.p>
 
-                {/* H1 "meet" */}
-                <div style={{ overflow: "hidden" }}>
-                    <motion.h1
-                        initial={{ y: "110%" }}
-                        animate={{ y: "0%" }}
-                        transition={{
-                            delay: 0.5,
-                            duration: 1.2,
-                            ease: [0.16, 1, 0.3, 1],
-                        }}
-                        style={{
-                            fontFamily: "'Times New Roman', Times, serif",
-                            fontSize: "clamp(4.5rem, 11vw, 10rem)",
-                            fontWeight: 700,
-                            color: "rgba(253,255,233,0.85)",
-                            lineHeight: 0.88,
-                            letterSpacing: "-0.03em",
-                            margin: 0,
-                            display: "block",
-                        }}
-                    >
-                        meet
-                    </motion.h1>
-                </div>
+                <h1 style={{ margin: 0, padding: 0 }}>
+                    {/* H1 "meet" */}
+                    <div style={{ overflow: "hidden" }}>
+                        <motion.span
+                            initial={{ y: "110%" }}
+                            animate={{ y: "0%" }}
+                            transition={{
+                                delay: 0.5,
+                                duration: 1.2,
+                                ease: [0.16, 1, 0.3, 1],
+                            }}
+                            style={{
+                                fontFamily: "'Times New Roman', Times, serif",
+                                fontSize: "clamp(4.5rem, 11vw, 10rem)",
+                                fontWeight: 700,
+                                color: "rgba(253,255,233,0.85)",
+                                lineHeight: 0.88,
+                                letterSpacing: "-0.03em",
+                                margin: 0,
+                                display: "block",
+                            }}
+                        >
+                            meet
+                        </motion.span>
+                    </div>
 
-                {/* H1 "prerna" — offset right */}
-                <div style={{ overflow: "hidden" }}>
-                    <motion.h1
-                        initial={{ y: "110%" }}
-                        animate={{ y: "0%" }}
-                        transition={{
-                            delay: 0.65,
-                            duration: 1.2,
-                            ease: [0.16, 1, 0.3, 1],
-                        }}
-                        style={{
-                            fontFamily: "'Times New Roman', Times, serif",
-                            fontSize: "clamp(4.5rem, 11vw, 10rem)",
-                            fontWeight: 700,
-                            color: "rgba(253,255,233,0.85)",
-                            lineHeight: 0.88,
-                            letterSpacing: "-0.03em",
-                            marginLeft: "clamp(2rem, 5vw, 6rem)",
-                            marginRight: 0,
-                            marginTop: 0,
-                            marginBottom: 0,
-                            display: "block",
-                        }}
-                    >
-                        prerna
-                    </motion.h1>
-                </div>
+                    {/* H1 "prerna" — offset right */}
+                    <div style={{ overflow: "hidden" }}>
+                        <motion.span
+                            initial={{ y: "110%" }}
+                            animate={{ y: "0%" }}
+                            transition={{
+                                delay: 0.65,
+                                duration: 1.2,
+                                ease: [0.16, 1, 0.3, 1],
+                            }}
+                            style={{
+                                fontFamily: "'Times New Roman', Times, serif",
+                                fontSize: "clamp(4.5rem, 11vw, 10rem)",
+                                fontWeight: 700,
+                                color: "rgba(253,255,233,0.85)",
+                                lineHeight: 0.88,
+                                letterSpacing: "-0.03em",
+                                marginLeft: "clamp(2rem, 5vw, 6rem)",
+                                marginRight: 0,
+                                marginTop: 0,
+                                marginBottom: 0,
+                                display: "block",
+                            }}
+                        >
+                            prerna
+                        </motion.span>
+                    </div>
+                </h1>
 
                 {/* Tagline */}
                 <motion.p

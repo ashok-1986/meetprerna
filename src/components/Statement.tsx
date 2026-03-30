@@ -204,7 +204,7 @@ export default function Statement() {
                 fontFamily: "Lato, sans-serif",
                 fontSize: "0.7rem",
                 letterSpacing: "0.12em",
-                color: "rgba(253,255,233,0.25)",
+                color: "rgba(253,255,233,0.5)",
                 marginTop: "12px",
                 textTransform: "uppercase",
               }}>

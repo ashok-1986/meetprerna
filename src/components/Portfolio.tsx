@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import Lightbox from "./Lightbox";
@@ -30,26 +30,33 @@ export default function Portfolio() {
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
+    // @ts-ignore: Lenis compatibility
+    layoutEffect: false,
   });
 
-  // Horizontal scroll: map vertical scroll to horizontal movement
-  // For 6 cards at 90vw + 32px gap each
+  const CARD_COUNT = portfolioItems.length; // 6
+  const CARD_WIDTH_VW = 90;
+  const GAP_PX = 32;
+  const PADDING_LEFT_VW = 5;
+
+  const xEnd = `-${(CARD_COUNT - 1) * CARD_WIDTH_VW + PADDING_LEFT_VW}vw`;
+
   const x = useTransform(
     scrollYProgress,
     [0, 1],
-    ["0vw", `-${(portfolioItems.length - 1) * 92}vw`]
+    ["0vw", xEnd]
   );
 
-  // Update active card based on scroll position
-  scrollYProgress.on("change", (latest) => {
-    setActiveCard(Math.round(latest * (portfolioItems.length - 1)));
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const index = Math.round(latest * (portfolioItems.length - 1));
+    setActiveCard(Math.min(index, portfolioItems.length - 1));
   });
 
   return (
     <>
       <section
         ref={containerRef}
-        style={{ height: "600vh", position: "relative" }}
+        style={{ height: "700vh", position: "relative" }}
       >
         {/* Sticky viewport */}
         <div
@@ -58,6 +65,7 @@ export default function Portfolio() {
             position: "sticky",
             top: 0,
             height: "100vh",
+            width: "100vw",
             overflow: "hidden",
             background: "#0D0D0D",
             display: "flex",
@@ -102,15 +110,16 @@ export default function Portfolio() {
             </span>
           </div>
 
-          {/* Horizontal track */}
           <motion.div
             style={{
               display: "flex",
-              gap: "32px",
-              paddingLeft: "5vw",
+              gap: `${GAP_PX}px`,
+              paddingLeft: `${PADDING_LEFT_VW}vw`,
+              paddingRight: `${PADDING_LEFT_VW}vw`,
               x,
               willChange: "transform",
               alignItems: "center",
+              height: "100%",
             }}
           >
             {portfolioItems.map((item, i) => (
@@ -196,6 +205,8 @@ function PortfolioCard({ item, i, setLightbox }: { item: any; i: number; setLigh
       }}
       viewport={{ once: true }}
       className="portfolio-card"
+      role="button"
+      tabIndex={0}
       onClick={() =>
         setLightbox({
           isOpen: true,
@@ -204,6 +215,17 @@ function PortfolioCard({ item, i, setLightbox }: { item: any; i: number; setLigh
           caption: item.caption,
         })
       }
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setLightbox({
+            isOpen: true,
+            image: item.image,
+            style: item.style,
+            caption: item.caption,
+          });
+        }
+      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       data-cursor="hover"
@@ -211,6 +233,7 @@ function PortfolioCard({ item, i, setLightbox }: { item: any; i: number; setLigh
         width: "90vw",
         height: "90vh",
         flexShrink: 0,
+        minWidth: "90vw",
         borderRadius: "4px",
         overflow: "hidden",
         position: "relative",

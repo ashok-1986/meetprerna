@@ -93,8 +93,9 @@ html.lenis body {
   /* Disable native smooth scroll — Lenis replaces it */
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
+[data-lenis-prevent] {
   overscroll-behavior: contain;
+  overflow: hidden;
 }
 
 /* Keep portfolio horizontal scroll working */
