@@ -234,7 +234,7 @@ export default function Statement() {
             padding: 0,
           }}
         >
-          &ldquo;I don&apos;t tattoo skin. I tattoo what&apos;s underneath it.&rdquo;
+          {"“I don't tattoo skin. I tattoo what's underneath it.”"}
         </motion.blockquote>
       </div>
     </section>

@@ -1,79 +1,132 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
+import { useRef, useState, useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import Lightbox from "./Lightbox";
 
-const PLACEHOLDER = "/hero/prerna-hero.jpg";
-
+const CARD_COUNT = 6;
 const portfolioItems = [
-  { id: 1, image: PLACEHOLDER, style: "Blackwork", caption: "A story etched in dark lines." },
-  { id: 2, image: PLACEHOLDER, style: "Fine Line", caption: "Delicate. Deliberate. Yours." },
-  { id: 3, image: PLACEHOLDER, style: "Geometric", caption: "Structure found from within." },
-  { id: 4, image: PLACEHOLDER, style: "Realism", caption: "What the eye remembers." },
-  { id: 5, image: PLACEHOLDER, style: "Illustrative", caption: "Art that moves with you." },
-  { id: 6, image: PLACEHOLDER, style: "Script", caption: "Words worth wearing forever." },
+  { id: 1, image: "/hero/prerna-hero.jpg", style: "Blackwork", caption: "A story etched in dark lines." },
+  { id: 2, image: "/hero/prerna-hero.jpg", style: "Fine Line", caption: "Delicate. Deliberate. Yours." },
+  { id: 3, image: "/hero/prerna-hero.jpg", style: "Geometric", caption: "Structure found from within." },
+  { id: 4, image: "/hero/prerna-hero.jpg", style: "Realism", caption: "What the eye remembers." },
+  { id: 5, image: "/hero/prerna-hero.jpg", style: "Illustrative", caption: "Art that moves with you." },
+  { id: 6, image: "/hero/prerna-hero.jpg", style: "Script", caption: "Words worth wearing forever." },
 ];
 
 export default function Portfolio() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeCard, setActiveCard] = useState(0);
-  const [lightbox, setLightbox] = useState<{
-    isOpen: boolean;
-    image: string;
-    style: string;
-    caption: string;
-  }>({ isOpen: false, image: "", style: "", caption: "" });
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-    // @ts-ignore: Lenis compatibility
-    layoutEffect: false,
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [lightbox, setLightbox] = useState({
+    isOpen: false,
+    image: "",
+    style: "",
+    caption: "",
   });
 
-  const CARD_COUNT = portfolioItems.length; // 6
-  const CARD_WIDTH_VW = 90;
-  const GAP_PX = 32;
-  const PADDING_LEFT_VW = 5;
-
-  const xEnd = `-${(CARD_COUNT - 1) * CARD_WIDTH_VW + PADDING_LEFT_VW}vw`;
-
-  const x = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["0vw", xEnd]
-  );
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const index = Math.round(latest * (portfolioItems.length - 1));
-    setActiveCard(Math.min(index, portfolioItems.length - 1));
+  // Motion value for horizontal position
+  const x = useMotionValue(0);
+  // Spring for smooth movement
+  const xSpring = useSpring(x, {
+    stiffness: 80,
+    damping: 20,
+    mass: 0.5,
   });
+
+  useEffect(() => {
+    const sticky = stickyRef.current;
+    const section = sectionRef.current;
+    if (!sticky || !section) return;
+
+    // Calculate max scroll distance
+    // Each card: 90vw + 32px gap. Last card centres at (50vw - 45vw) = 5vw from left
+    const getMaxScroll = () => {
+      const vw = window.innerWidth;
+      const cardWidth = vw * 0.9;
+      const gap = 32;
+      return (CARD_COUNT - 1) * (cardWidth + gap);
+    };
+
+    let currentX = 0;
+    let isInSection = false;
+
+    // Intersection observer — detect when section is in view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInSection = entry.isIntersecting;
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(section);
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!isInSection) return;
+
+      const maxScroll = getMaxScroll();
+      const newX = currentX - e.deltaY;
+
+      // If trying to scroll right of start — let page scroll up
+      if (newX > 0) {
+        isInSection = false;
+        return;
+      }
+
+      // If trying to scroll past last card — let page scroll down
+      if (newX < -maxScroll) {
+        isInSection = false;
+        return;
+      }
+
+      // Otherwise: prevent vertical scroll, move cards
+      e.preventDefault();
+      e.stopPropagation();
+
+      currentX = newX;
+      x.set(currentX);
+
+      // Update active card index
+      const vw = window.innerWidth;
+      const cardWidth = vw * 0.9 + 32;
+      const index = Math.round(Math.abs(currentX) / cardWidth);
+      setActiveIndex(Math.min(index, CARD_COUNT - 1));
+    };
+
+    // Use passive: false to allow preventDefault
+    window.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      observer.disconnect();
+    };
+  }, [x]);
 
   return (
     <>
       <section
-        ref={containerRef}
-        style={{ height: "700vh", position: "relative" }}
+        ref={sectionRef}
+        style={{
+          position: "relative",
+          height: "100vh", // section is just viewport height
+          background: "#0D0D0D",
+          borderTop: "1px solid rgba(253,255,233,0.05)",
+        }}
       >
-        {/* Sticky viewport */}
+        {/* Sticky container */}
         <div
-          data-lenis-prevent
+          ref={stickyRef}
+          // Removed data-lenis-prevent as per new architecture
           style={{
             position: "sticky",
             top: 0,
             height: "100vh",
-            width: "100vw",
+            width: "100%",
             overflow: "hidden",
-            background: "#0D0D0D",
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {/* Section header */}
+          {/* Section label + counter */}
           <div
             style={{
               position: "absolute",
@@ -82,7 +135,6 @@ export default function Portfolio() {
               right: "64px",
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "center",
               zIndex: 10,
             }}
           >
@@ -105,25 +157,113 @@ export default function Portfolio() {
                 color: "rgba(253,255,233,0.3)",
               }}
             >
-              {String(activeCard + 1).padStart(2, "0")} /{" "}
-              {String(portfolioItems.length).padStart(2, "0")}
+              {String(activeIndex + 1).padStart(2, "0")} /
+              {String(CARD_COUNT).padStart(2, "0")}
             </span>
           </div>
 
+          {/* Horizontal track */}
           <motion.div
             style={{
               display: "flex",
-              gap: `${GAP_PX}px`,
-              paddingLeft: `${PADDING_LEFT_VW}vw`,
-              paddingRight: `${PADDING_LEFT_VW}vw`,
-              x,
+              gap: "32px",
+              paddingLeft: "5vw",
+              paddingRight: "5vw",
+              x: xSpring,
               willChange: "transform",
               alignItems: "center",
               height: "100%",
             }}
           >
             {portfolioItems.map((item, i) => (
-              <PortfolioCard key={item.id} item={item} i={i} setLightbox={setLightbox} />
+              <div
+                key={item.id}
+                onClick={() =>
+                  setLightbox({
+                    isOpen: true,
+                    image: item.image,
+                    style: item.style,
+                    caption: item.caption,
+                  })
+                }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setLightbox({
+                      isOpen: true,
+                      image: item.image,
+                      style: item.style,
+                      caption: item.caption,
+                    });
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                data-cursor="hover"
+                className="portfolio-card"
+                style={{
+                  width: "90vw",
+                  minWidth: "90vw",
+                  height: "90vh",
+                  flexShrink: 0,
+                  borderRadius: "4px",
+                  overflow: "hidden",
+                  position: "relative",
+                  cursor: "pointer",
+                }}
+              >
+                {/* Notice: since Image component syntax changes might need layout imports, using the user's explicit img here */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.image}
+                  alt={item.caption}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "center top",
+                    filter: "grayscale(15%) contrast(1.05)",
+                    transition: "transform 0.7s ease, filter 0.5s ease",
+                    display: "block",
+                  }}
+                />
+                {/* Bottom overlay */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    padding: "40px",
+                    background:
+                      "linear-gradient(to top, rgba(13,13,13,0.95), transparent)",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "Lato, sans-serif",
+                      fontSize: "0.6rem",
+                      letterSpacing: "0.2em",
+                      color: "#C4FF61",
+                      textTransform: "uppercase",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {item.style}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "'Times New Roman', serif",
+                      fontSize: "1.1rem",
+                      fontStyle: "italic",
+                      color: "rgba(253,255,233,0.85)",
+                      margin: 0,
+                    }}
+                  >
+                    {item.caption}
+                  </p>
+                </div>
+              </div>
             ))}
           </motion.div>
 
@@ -146,22 +286,21 @@ export default function Portfolio() {
                 background: "rgba(253,255,233,0.08)",
                 position: "relative",
                 overflow: "hidden",
-                borderRadius: "1px",
               }}
             >
-              <motion.div
+              <div
                 style={{
                   position: "absolute",
                   top: 0,
                   left: 0,
                   bottom: 0,
                   background: "#C4FF61",
-                  scaleX: scrollYProgress,
-                  transformOrigin: "left",
+                  width: `${(activeIndex / (CARD_COUNT - 1)) * 100}%`,
+                  transition: "width 0.4s ease",
                 }}
               />
             </div>
-            <Link
+            <a
               href="/portfolio"
               style={{
                 fontFamily: "Lato, sans-serif",
@@ -171,129 +310,21 @@ export default function Portfolio() {
                 textDecoration: "none",
                 textTransform: "uppercase",
                 whiteSpace: "nowrap",
-                transition: "color 0.3s",
               }}
             >
               All work →
-            </Link>
+            </a>
           </div>
         </div>
       </section>
 
       <Lightbox
         isOpen={lightbox.isOpen}
-        onClose={() => setLightbox((prev) => ({ ...prev, isOpen: false }))}
+        onClose={() => setLightbox((p) => ({ ...p, isOpen: false }))}
         image={lightbox.image}
         style={lightbox.style}
         caption={lightbox.caption}
       />
     </>
-  );
-}
-
-function PortfolioCard({ item, i, setLightbox }: { item: any; i: number; setLightbox: any }) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.8,
-        delay: i * 0.08,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      viewport={{ once: true }}
-      className="portfolio-card"
-      role="button"
-      tabIndex={0}
-      onClick={() =>
-        setLightbox({
-          isOpen: true,
-          image: item.image,
-          style: item.style,
-          caption: item.caption,
-        })
-      }
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          setLightbox({
-            isOpen: true,
-            image: item.image,
-            style: item.style,
-            caption: item.caption,
-          });
-        }
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      data-cursor="hover"
-      style={{
-        width: "90vw",
-        height: "90vh",
-        flexShrink: 0,
-        minWidth: "90vw",
-        borderRadius: "4px",
-        overflow: "hidden",
-        position: "relative",
-        cursor: "pointer",
-        clipPath: hovered
-          ? "inset(3% 3% 3% 3% round 2px)"
-          : "inset(0% 0% 0% 0% round 0px)",
-        transition: "clip-path 0.5s cubic-bezier(0.76, 0, 0.24, 1)",
-      }}
-    >
-      <Image
-        src={item.image}
-        alt={item.caption}
-        fill
-        className="object-cover"
-        style={{
-          transform: hovered ? "scale(1.06)" : "scale(1)",
-          filter: hovered
-            ? "grayscale(0%) contrast(1.1)"
-            : "grayscale(15%) contrast(1.05)",
-          transition: "transform 0.7s ease, filter 0.5s ease",
-        }}
-      />
-
-      {/* Bottom overlay */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: "32px",
-          background:
-            "linear-gradient(to top, rgba(13,13,13,0.95) 0%, transparent 100%)",
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "Lato, sans-serif",
-            fontSize: "0.6rem",
-            letterSpacing: "0.2em",
-            color: "#C4FF61",
-            textTransform: "uppercase",
-            marginBottom: "8px",
-          }}
-        >
-          {item.style}
-        </p>
-        <p
-          style={{
-            fontFamily: "'Times New Roman', serif",
-            fontSize: "1.05rem",
-            fontStyle: "italic",
-            color: "rgba(253,255,233,0.85)",
-            lineHeight: 1.3,
-          }}
-        >
-          {item.caption}
-        </p>
-      </div>
-    </motion.div>
   );
 }
