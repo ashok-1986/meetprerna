@@ -63,18 +63,27 @@ export default function HeroReveal() {
                         willChange: "transform",
                     }}
                 >
-                    <img
-                        src="/hero/prerna-hero.jpg"
-                        alt="Prerna — Custom Tattoo Artist Mumbai"
+                    <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
                         style={{
                             width: "100%",
-                            height: "130%",  // extra height absorbs parallax travel
+                            height: "130%",
                             objectFit: "cover",
                             objectPosition: "center top",
                             filter: "grayscale(15%) contrast(1.1) brightness(0.65)",
                             display: "block",
                         }}
-                    />
+                    >
+                        <source src="/videos/hero-loop.mp4" type="video/mp4" />
+                        <img
+                            src="/hero/prerna-hero.jpg"
+                            alt="Prerna — Custom Tattoo Artist Mumbai"
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                    </video>
                 </div>
             </motion.div>
 
@@ -129,7 +138,7 @@ export default function HeroReveal() {
                         marginBottom: "32px",
                     }}
                 >
-                    Mumbai · Tattoo Artist
+                    Mumbai · Creative & Tattoo Artist
                 </motion.p>
 
                 <h1 style={{ margin: 0, padding: 0 }}>
@@ -246,6 +255,6 @@ export default function HeroReveal() {
                 ॐ
             </div>
 
-        </section>
+        </section >
     );
 }

@@ -35,68 +35,70 @@ export default function Portfolio() {
   });
 
   useEffect(() => {
-    const sticky = stickyRef.current;
     const section = sectionRef.current;
-    if (!sticky || !section) return;
+    if (!section) return;
 
-    // Calculate max scroll distance
-    // Each card: 90vw + 32px gap. Last card centres at (50vw - 45vw) = 5vw from left
     const getMaxScroll = () => {
       const vw = window.innerWidth;
-      const cardWidth = vw * 0.9;
-      const gap = 32;
-      return (CARD_COUNT - 1) * (cardWidth + gap);
+      return (CARD_COUNT - 1) * (vw * 0.9 + 32);
     };
 
     let currentX = 0;
     let isInSection = false;
 
-    // Intersection observer — detect when section is in view
     const observer = new IntersectionObserver(
       ([entry]) => {
-        isInSection = entry.isIntersecting;
+        isInSection = entry.isIntersecting &&
+          entry.intersectionRatio >= 0.9;
       },
-      { threshold: 0.1 }
+      { threshold: 0.9 }
     );
     observer.observe(section);
 
     const handleWheel = (e: WheelEvent) => {
+      // Only act when section is 90% visible
       if (!isInSection) return;
 
       const maxScroll = getMaxScroll();
       const newX = currentX - e.deltaY;
 
-      // If trying to scroll right of start — let page scroll up
-      if (newX > 0) {
-        isInSection = false;
-        return;
-      }
+      // At start boundary — let Lenis handle upward scroll
+      if (newX > 0 && currentX === 0) return;
 
-      // If trying to scroll past last card — let page scroll down
-      if (newX < -maxScroll) {
-        isInSection = false;
-        return;
-      }
+      // At end boundary — let Lenis handle downward scroll
+      if (newX < -maxScroll && currentX === -maxScroll) return;
 
-      // Otherwise: prevent vertical scroll, move cards
+      // Clamp within bounds
+      const clampedX = Math.min(0, Math.max(-maxScroll, newX));
+
+      // Intercept — prevent Lenis from seeing this event
       e.preventDefault();
-      e.stopPropagation();
+      e.stopImmediatePropagation();
 
-      currentX = newX;
+      currentX = clampedX;
       x.set(currentX);
 
-      // Update active card index
+      // Update active index
       const vw = window.innerWidth;
       const cardWidth = vw * 0.9 + 32;
-      const index = Math.round(Math.abs(currentX) / cardWidth);
-      setActiveIndex(Math.min(index, CARD_COUNT - 1));
+      const index = Math.min(
+        Math.round(Math.abs(currentX) / cardWidth),
+        CARD_COUNT - 1
+      );
+      setActiveIndex(index);
     };
 
-    // Use passive: false to allow preventDefault
-    window.addEventListener("wheel", handleWheel, { passive: false });
+    // capture: true — fires before Lenis bubble listener
+    // passive: false — allows preventDefault
+    window.addEventListener("wheel", handleWheel, {
+      passive: false,
+      capture: true,
+    });
 
     return () => {
-      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("wheel", handleWheel, {
+        capture: true,
+      } as EventListenerOptions);
       observer.disconnect();
     };
   }, [x]);

@@ -12,7 +12,7 @@ const TRACK_1_WORDS = [
 ];
 
 const TRACK_2_WORDS = [
-  "STILLNESS", "·", "INK", "·", "RESILIENCE", "·",
+  "WITNESSED", "·", "STILLNESS", "·", "INK", "·", "RESILIENCE", "·",
   "SPIRITUAL", "·", "BOLD", "·", "STORY", "·",
   "STILLNESS", "·", "INK", "·", "RESILIENCE", "·",
   "SPIRITUAL", "·", "BOLD", "·", "STORY", "·",

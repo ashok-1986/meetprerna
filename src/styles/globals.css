@@ -19,7 +19,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  cursor: none !important;
 }
 
 body {
@@ -48,9 +47,35 @@ h6 {
   font-family: "Times New Roman", Times, serif;
 }
 
-/* Hide default cursor sitewide */
-* {
+/* Hide system cursor globally */
+*,
+*::before,
+*::after {
   cursor: none !important;
+}
+
+/* Restore pointer on interactive elements visually
+   (our custom cursor handles the visual) */
+a,
+button,
+[data-cursor="hover"] {
+  cursor: none !important;
+}
+
+/* Hide cursor on mobile — touch devices don't need it */
+@media (hover: none) and (pointer: coarse) {
+
+  div[style*="2147483644"],
+  canvas[style*="2147483645"],
+  div[style*="2147483646"] {
+    display: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
+  }
 }
 
 /* Smooth scroll */

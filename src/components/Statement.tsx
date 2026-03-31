@@ -128,7 +128,7 @@ export default function Statement() {
           {/* RIGHT — Body text */}
           <div style={{ paddingTop: "8px" }}>
             <WordReveal
-              text="Prerna grew up making things with her hands — sketching at margins, filling notebooks, watching the world like it owed her an explanation."
+              text="Prerna grew up making things. Sketching at margins. Planning performances. Beating fears one stage at a time. The awards came — but what stayed was the discovery that courage lives on the other side of discomfort."
               delay={0.35}
               stagger={0.028}
               style={{
@@ -141,7 +141,7 @@ export default function Statement() {
               }}
             />
             <WordReveal
-              text="She left familiar ground to follow something she couldn't name yet. What she found was a needle, ink, and the realisation that the body is the oldest canvas there is."
+              text="She left home twice to chase the life she dreamed of. At 17, alone in a new city, she navigated the pandemic by herself — and found that mastering small, everyday things can be life's greatest achievement."
               delay={0.5}
               stagger={0.028}
               style={{
@@ -154,7 +154,7 @@ export default function Statement() {
               }}
             />
             <WordReveal
-              text="Her practice is rooted in stillness. Every consultation begins with listening — not to what you want, but to what you're carrying."
+              text="She became a tattoo artist to beat her fear of needles. What she found instead was her medium — and a way to give other people's stories the permanent shape they had always deserved."
               delay={0.65}
               stagger={0.028}
               style={{

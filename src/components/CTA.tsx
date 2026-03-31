@@ -81,6 +81,21 @@ export default function CTA() {
         conversation, not a price list.
       </motion.p>
 
+      <p style={{
+        fontFamily: "'Times New Roman', serif",
+        fontSize: "clamp(1.2rem, 2vw, 1.7rem)",
+        fontStyle: "italic",
+        color: "rgba(253,255,233,0.4)",
+        textAlign: "center",
+        maxWidth: "560px",
+        margin: "0 auto 48px",
+        lineHeight: 1.4,
+      }}>
+        She turns scars into art.
+        <br />
+        Yours is next, if you're ready.
+      </p>
+
       {/* Buttons */}
       <div
         style={{

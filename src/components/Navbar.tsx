@@ -46,7 +46,7 @@ export default function Navbar() {
               <span style={{ opacity: 0.4 }}>· </span>PORTFOLIO
             </Link>
             <Link
-              href="#about"
+              href="/about"
               className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
             >
               <span style={{ opacity: 0.4 }}>· </span>ABOUT
@@ -123,7 +123,7 @@ export default function Navbar() {
                 Portfolio
               </Link>
               <Link
-                href="#about"
+                href="/about"
                 className="font-serif text-3xl text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] transition-colors duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
