@@ -73,11 +73,8 @@ export default function AboutCTA() {
                 }}
             >
                 <a
-                    href="https://meetprerna.fillout.com/book"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/#portfolio"
                     className="cta-button-primary"
-                    data-cursor="book"
                     style={{
                         fontFamily: "Lato, sans-serif",
                         fontWeight: 700,
@@ -93,12 +90,15 @@ export default function AboutCTA() {
                         display: "inline-block",
                     }}
                 >
-                    Begin the conversation
+                    See the work →
                 </a>
 
                 <a
-                    href="/#portfolio"
+                    href="https://meetprerna.fillout.com/book"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="cta-button-secondary"
+                    data-cursor="book"
                     style={{
                         fontFamily: "Lato, sans-serif",
                         fontWeight: 400,
@@ -115,7 +115,7 @@ export default function AboutCTA() {
                         display: "inline-block",
                     }}
                 >
-                    See the work
+                    Begin the conversation
                 </a>
             </div>
 

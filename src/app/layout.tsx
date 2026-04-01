@@ -20,12 +20,13 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "meet prerna | Custom Tattoo Artist in Mumbai",
-  description: "Meaningful custom tattoos that translate your story into permanent art. Based in Mumbai. Appointments only.",
-  keywords: ["tattoo artist mumbai", "custom tattoo india", "meet prerna"],
+  title: "meet prerna | Artist & Creator based in Mumbai",
+  description: "meet prerna — Artist & Creator based in Mumbai. Tattoo, illustration, painting, wall art, vitiligo art, and permanent art. Custom commissions. By appointment.",
+  keywords: ["artist mumbai", "custom tattoo india", "vitiligo art", "meet prerna"],
 };
 
 import SmoothScrollProvider from "@/lib/SmoothScrollProvider";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export default function RootLayout({
   children,
@@ -39,6 +40,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-lato">
         <SmoothScrollProvider>
+          <ScrollProgress />
           {children}
         </SmoothScrollProvider>
         <CustomCursor />

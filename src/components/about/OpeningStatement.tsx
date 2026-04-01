@@ -14,15 +14,15 @@ export default function OpeningStatement() {
                 margin: '0 auto',
             }}>
                 <WordReveal
-                    text="Most people who come to Prerna don't know exactly what they want tattooed. They know how they feel. They know what they've been through. They know the thing they've been carrying that finally deserves a shape. That's enough. She takes it from there."
+                    text="She was always an artist. She just kept finding new ways to make that permanent."
                     delay={0.2}
                     stagger={0.03}
                     style={{
                         fontFamily: "'Times New Roman', serif",
-                        fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
+                        fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
                         fontWeight: 400,
                         color: "#FDFFE9",
-                        lineHeight: 1.6,
+                        lineHeight: 1.4,
                         marginBottom: '64px',
                     }}
                 />

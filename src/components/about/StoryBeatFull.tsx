@@ -86,11 +86,9 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                         maxWidth: '600px',
                         margin: '0 auto',
                     }}>
-                        <WordReveal text="At 17, she packed her life into what she could carry and moved to a new city alone. Not running from something. Running toward a version of herself that didn't exist yet." delay={0.5} stagger={0.02} />
+                        <WordReveal text="At 17, she packed her life and moved to a new city alone." delay={0.5} stagger={0.02} />
                         <br /><br />
-                        <WordReveal text="Then the pandemic arrived. She navigated it by herself — cooking her own meals, learning to be still, discovering that mastering the small, everyday things can be life's greatest achievement." delay={0.65} stagger={0.02} />
-                        <br /><br />
-                        <WordReveal text="She didn't perform resilience. She lived it, quietly, in an apartment by herself, in a city that didn't owe her anything." delay={0.8} stagger={0.02} />
+                        <WordReveal text="She navigated the pandemic by herself, finding that mastering small, everyday things can be life's greatest achievement." delay={0.65} stagger={0.02} />
                     </div>
 
                     <motion.div
@@ -154,9 +152,9 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                 </p>
 
                 <div style={{ marginBottom: '24px' }}>
-                    <LineReveal text="Today she turns what" tag="h2" delay={0.2} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 700, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
-                    <LineReveal text="people carry into" tag="h2" delay={0.3} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 700, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
-                    <LineReveal text="what they wear." tag="h2" delay={0.4} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 700, color: "#FDFFE9", margin: 0, lineHeight: 1.0 }} />
+                    <LineReveal text="Today she works in" tag="h2" delay={0.2} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 700, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
+                    <LineReveal text="every medium that" tag="h2" delay={0.3} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 700, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
+                    <LineReveal text="matters to her." tag="h2" delay={0.4} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 700, color: "#FDFFE9", margin: 0, lineHeight: 1.0 }} />
                 </div>
 
                 <motion.div
@@ -172,10 +170,9 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                         maxWidth: '480px',
                     }}
                 >
-                    <p style={{ margin: '0 0 16px 0' }}>She is a creative and tattoo artist based in Mumbai.</p>
-                    <p style={{ margin: '0 0 16px 0' }}>But those are just the words for it.</p>
+                    <p style={{ margin: '0 0 16px 0' }}>Tattoo. Illustration. Painting. Wall art. Vitiligo art. Permanent makeup. Restoration.</p>
                     <p style={{ margin: 0 }}>
-                        What she actually does is listen — until she understands what someone means, not just what they say. Then she translates it. Into something permanent. A scar into art. A chapter into a symbol. A feeling into a form that will be with you for life.
+                        Whatever the story calls for — she finds the right surface for it.
                     </p>
                 </motion.div>
             </div>

@@ -29,7 +29,7 @@ export default function CTA() {
           opacity: 0.8,
         }}
       >
-        · Ready to wear your story?
+        · Ready to make something?
       </motion.p>
 
       {/* Massive CTA headline */}
@@ -77,8 +77,9 @@ export default function CTA() {
           margin: "0 auto 64px",
         }}
       >
-        Prerna takes limited appointments each month. Each one begins with a
-        conversation, not a price list.
+        She takes a small number of commissions each month.
+        Each one begins with a conversation about what you want
+        to make — not a price list.
       </motion.p>
 
       <p style={{
@@ -126,12 +127,12 @@ export default function CTA() {
             display: "inline-block",
           }}
         >
-          Book a consultation
+          Start a commission
         </a>
 
         {/* Secondary */}
         <a
-          href="#portfolio"
+          href="/work"
           className="cta-button-secondary"
           style={{
             fontFamily: "Lato, sans-serif",
@@ -149,7 +150,7 @@ export default function CTA() {
             display: "inline-block",
           }}
         >
-          See the work
+          View the work
         </a>
       </div>
     </section>

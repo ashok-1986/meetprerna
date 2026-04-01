@@ -138,7 +138,7 @@ export default function HeroReveal() {
                         marginBottom: "32px",
                     }}
                 >
-                    Mumbai · Creative & Tattoo Artist
+                    Mumbai · Artist & Creator
                 </motion.p>
 
                 <h1 style={{ margin: 0, padding: 0 }}>
@@ -211,7 +211,7 @@ export default function HeroReveal() {
                         textAlign: "center",
                     }}
                 >
-                    Ink drawn from the inside out.
+                    Every medium. One creative vision.
                 </motion.p>
             </div>
 
@@ -235,7 +235,7 @@ export default function HeroReveal() {
                     textTransform: "uppercase",
                     margin: 0,
                 }}>
-                    + Scroll down
+                    ↓ Scroll
                 </p>
             </motion.div>
 

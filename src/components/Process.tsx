@@ -8,31 +8,23 @@ import WordReveal from "@/components/ui/WordReveal";
 const steps = [
   {
     number: "01",
-    title: "Consult",
-    subtitle: "We begin with your story, not your reference image.",
-    description:
-      "Before any design happens, Prerna listens. What brought you here. What you're ready to wear permanently. What you've been carrying that deserves a shape.",
+    title: "The Conversation",
+    subtitle: "We begin with what you're carrying, not what you want.",
   },
   {
     number: "02",
-    title: "Design",
-    subtitle: "The sketch comes from you, not Pinterest.",
-    description:
-      "Every design is drawn from scratch. No templates. No recycled motifs. What emerges is yours alone — refined until it feels inevitable.",
+    title: "The Translation",
+    subtitle: "From feeling into form. From story into shape.",
   },
   {
     number: "03",
-    title: "Ink",
-    subtitle: "This part asks you to be still. So does meditation.",
-    description:
-      "In a clean, calm studio environment, the design becomes permanent. Prerna works with precision and patience. The process is part of the ritual.",
+    title: "The Ritual",
+    subtitle: "The needle asks you to be still. So does meditation.",
   },
   {
     number: "04",
-    title: "Aftercare",
+    title: "The Tending",
     subtitle: "The work doesn't end when the needle does.",
-    description:
-      "Healing is tended to with the same care as the design. You leave with guidance, a follow-up check-in, and a piece that ages with character.",
   },
 ];
 
@@ -42,7 +34,7 @@ export default function Process() {
   return (
     <section
       style={{
-        background: "#111111",
+        background: "#1A1A1A",
         padding: "120px 64px",
         borderTop: "1px solid rgba(253,255,233,0.05)",
       }}
@@ -62,7 +54,7 @@ export default function Process() {
           marginBottom: "80px",
         }}
       >
-        · How it works
+        · The Process
       </motion.p>
 
       {/* Steps list */}
@@ -81,7 +73,7 @@ export default function Process() {
           viewport={{ once: true }}
           style={{
             display: "grid",
-            gridTemplateColumns: "64px 1fr 1fr",
+            gridTemplateColumns: "64px 1fr",
             gap: "40px",
             padding: "40px 0",
             borderTop: "1px solid rgba(253,255,233,0.07)",
@@ -131,21 +123,6 @@ export default function Process() {
               {step.subtitle}
             </p>
           </div>
-
-          {/* Description */}
-          <WordReveal
-            text={step.description}
-            delay={i * 0.15}
-            stagger={0.02}
-            style={{
-              fontFamily: "Lato, sans-serif",
-              fontSize: "0.9rem",
-              lineHeight: 1.75,
-              color: "rgba(253,255,233,0.5)",
-              maxWidth: "400px",
-              margin: "4px 0 0 auto",
-            }}
-          />
         </motion.div>
       ))}
 
@@ -153,6 +130,6 @@ export default function Process() {
       <div
         style={{ borderBottom: "1px solid rgba(253,255,233,0.07)" }}
       />
-    </section>
+    </section >
   );
 }

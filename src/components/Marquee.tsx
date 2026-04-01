@@ -21,7 +21,7 @@ const TRACK_2_WORDS = [
 export default function Marquee() {
   return (
     <section style={{
-      background: "#0D0D0D",
+      background: "#111111",
       padding: "48px 0",
       overflow: "hidden",
       borderTop: "1px solid rgba(253,255,233,0.05)",
@@ -95,7 +95,7 @@ export default function Marquee() {
         position: "absolute",
         top: 0, bottom: 0, left: 0,
         width: "120px",
-        background: "linear-gradient(to right, #0D0D0D, transparent)",
+        background: "linear-gradient(to right, #111111, transparent)",
         zIndex: 2,
         pointerEvents: "none",
       }} />
@@ -103,7 +103,7 @@ export default function Marquee() {
         position: "absolute",
         top: 0, bottom: 0, right: 0,
         width: "120px",
-        background: "linear-gradient(to left, #0D0D0D, transparent)",
+        background: "linear-gradient(to left, #111111, transparent)",
         zIndex: 2,
         pointerEvents: "none",
       }} />

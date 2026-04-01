@@ -15,8 +15,8 @@ export default function StoryBeat({ beat, imageRight, imageLeft }: StoryBeatProp
 
     const isO1 = beat === "01";
     const numLabel = isO1 ? "· 01  Origin" : "· 03  The Irony";
-    const h1 = isO1 ? "She started scared." : "She became a tattoo artist";
-    const h2 = isO1 ? "Then she performed anyway." : "to beat her fear of needles.";
+    const h1 = isO1 ? "She started scared." : "She picked the hardest";
+    const h2 = isO1 ? "Then she performed anyway." : "medium she could find. On purpose.";
 
     const textColumn = (
         <div style={{
@@ -76,48 +76,15 @@ export default function StoryBeat({ beat, imageRight, imageLeft }: StoryBeatProp
             }}>
                 {isO1 ? (
                     <>
-                        <WordReveal text="Shy. Quiet. Terrified of stages." delay={0.4} stagger={0.028} />
-                        <br />
-                        <WordReveal text="But somewhere between the fear and the first performance was a version of herself she wanted to meet. So she kept showing up. She planned school events. Organised dance performances. Won awards she never chased." delay={0.5} stagger={0.028} />
-                        <br />
-                        <WordReveal text="The trophies were never the point." delay={0.6} stagger={0.028} />
-                        <br />
-                        <WordReveal text="Learning that courage lives on the other side of discomfort — that was the lesson that stayed. It still is." delay={0.7} stagger={0.028} />
+                        <WordReveal text="Somewhere between the fear and the performance was a version of herself she wanted to meet." delay={0.4} stagger={0.02} />
+                        <br /><br />
+                        <WordReveal text="Learning that courage lives on the other side of discomfort — that was the lesson that stayed." delay={0.6} stagger={0.02} />
                     </>
                 ) : (
                     <>
-                        <WordReveal text="She could have chosen safety. A salary. A clear path." delay={0.4} stagger={0.028} />
-                        <br />
-                        <WordReveal text="Instead she chose commission. Uncertainty. And a needle she was genuinely afraid of." delay={0.5} stagger={0.028} />
-                        <br />
-                        <WordReveal text="She built a studio from scratch — learning client management, marketing, and operations as she went. Building confidence not from training, but from the daily decision to keep going anyway." delay={0.6} stagger={0.028} />
-
-                        <motion.div
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.8, duration: 0.6 }}
-                            style={{
-                                borderLeft: '2px solid #C4FF61',
-                                paddingLeft: '20px',
-                                margin: '32px 0',
-                                display: 'block',
-                            }}
-                        >
-                            <p style={{
-                                fontFamily: "'Times New Roman', serif",
-                                fontStyle: 'italic',
-                                fontSize: '1.1rem',
-                                color: '#C4FF61',
-                                margin: 0,
-                            }}>
-                                "She was afraid of needles. Now she uses one to help people stop being afraid of their stories."
-                            </p>
-                        </motion.div>
-
-                        <WordReveal text="What pulled her through was never the business." delay={0.9} stagger={0.028} />
-                        <br />
-                        <WordReveal text="It was the stories. Every client carried one. She wanted to give those stories the only thing she had ever found truly permanent." delay={1.0} stagger={0.028} />
+                        <WordReveal text="She could have stayed in safer, cleaner disciplines." delay={0.4} stagger={0.02} />
+                        <br /><br />
+                        <WordReveal text="Instead she chose the one that required the most courage — the medium you can't undo, on the canvas you can't replace." delay={0.6} stagger={0.02} />
                     </>
                 )}
             </div>

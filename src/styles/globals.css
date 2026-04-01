@@ -29,6 +29,12 @@ body {
   overflow-x: hidden;
 }
 
+@media (max-width: 768px) {
+  .disciplines-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
 /* Font utility classes */
 .font-lato {
   font-family: var(--font-lato), sans-serif;

@@ -23,8 +23,8 @@ export default function PhilosophyStrip() {
 
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr 1fr',
-                gap: '48px',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: '32px',
             }}>
 
                 {/* Column 1 */}
@@ -64,7 +64,7 @@ export default function PhilosophyStrip() {
                 </div>
 
                 {/* Column 3 */}
-                <div>
+                <div style={{ paddingRight: '32px', borderRight: '1px solid rgba(253,255,233,0.06)' }}>
                     <p style={{
                         fontFamily: 'Lato, sans-serif',
                         fontSize: '0.65rem',
@@ -80,6 +80,25 @@ export default function PhilosophyStrip() {
                     <LineReveal text="like appointments." tag="p" delay={0.5} style={quoteStyle} />
                     <LineReveal text="They feel like conversations" tag="p" delay={0.6} style={quoteStyle} />
                     <LineReveal text="that happened to end in ink." tag="p" delay={0.7} style={quoteStyle} />
+                </div>
+
+                {/* Column 4 */}
+                <div>
+                    <p style={{
+                        fontFamily: 'Lato, sans-serif',
+                        fontSize: '0.65rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.2em',
+                        color: '#C4FF61',
+                        textTransform: 'uppercase',
+                        marginBottom: '24px',
+                    }}>
+                        On medium
+                    </p>
+                    <LineReveal text="She doesn't choose a medium" tag="p" delay={0.5} style={quoteStyle} />
+                    <LineReveal text="because it's expected." tag="p" delay={0.6} style={quoteStyle} />
+                    <LineReveal text="She chooses it because the" tag="p" delay={0.7} style={quoteStyle} />
+                    <LineReveal text="story demands it." tag="p" delay={0.8} style={quoteStyle} />
                 </div>
 
             </div>

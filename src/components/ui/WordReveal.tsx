@@ -1,16 +1,16 @@
-// File: src/components/ui/WordReveal.tsx
 "use client";
 
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 interface WordRevealProps {
     text: string;
-    delay?: number;          // delay before first word animates
-    stagger?: number;        // delay between each word (default 0.04s)
-    duration?: number;       // per-word duration (default 0.5)
+    delay?: number;
+    stagger?: number;
+    duration?: number;
     className?: string;
     style?: React.CSSProperties;
+    as?: React.ElementType;
 }
 
 export default function WordReveal({
@@ -20,36 +20,31 @@ export default function WordReveal({
     duration = 0.5,
     className,
     style,
+    as: Tag = "p",
 }: WordRevealProps) {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, margin: "-60px" });
-
     const words = text.split(" ");
 
     return (
-        <div
-            ref={ref}
-            style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "0.25em",  // word spacing
-                ...style,
-            }}
+        <Tag
+            ref={ref as any}
             className={className}
+            style={{ display: "block", ...style }}
         >
             {words.map((word, i) => (
-                // Each word is clipped independently
                 <span
                     key={i}
-                    style={{ overflow: "hidden", display: "inline-block" }}
+                    style={{
+                        display: "inline-block",
+                        overflow: "hidden",
+                        verticalAlign: "bottom",
+                        marginRight: i < words.length - 1 ? "0.28em" : 0,
+                    }}
                 >
                     <motion.span
                         initial={{ y: "110%", opacity: 0 }}
-                        animate={
-                            isInView
-                                ? { y: "0%", opacity: 1 }
-                                : { y: "110%", opacity: 0 }
-                        }
+                        animate={isInView ? { y: "0%", opacity: 1 } : {}}
                         transition={{
                             duration,
                             delay: delay + i * stagger,
@@ -61,6 +56,6 @@ export default function WordReveal({
                     </motion.span>
                 </span>
             ))}
-        </div>
+        </Tag>
     );
 }

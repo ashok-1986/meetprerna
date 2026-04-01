@@ -40,19 +40,19 @@ export default function Navbar() {
               <span style={{ opacity: 0.4 }}>· </span>HOME
             </Link>
             <Link
-              href="#portfolio"
+              href="/work"
               className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
             >
-              <span style={{ opacity: 0.4 }}>· </span>PORTFOLIO
+              <span style={{ opacity: 0.4 }}>· </span>WORK
             </Link>
             <Link
-              href="/about"
+              href="/story"
               className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
             >
-              <span style={{ opacity: 0.4 }}>· </span>ABOUT
+              <span style={{ opacity: 0.4 }}>· </span>STORY
             </Link>
             <Link
-              href="#contact"
+              href="/contact"
               className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
             >
               <span style={{ opacity: 0.4 }}>· </span>CONTACT
@@ -79,7 +79,7 @@ export default function Navbar() {
               onMouseEnter={(e) => (e.currentTarget.style.color = "#C4FF61")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(253, 255, 233, 0.6)")}
             >
-              BOOK NOW +
+              COMMISSION +
             </span>
           </a>
 
@@ -116,21 +116,21 @@ export default function Navbar() {
 
             <div className="flex flex-col items-center gap-8">
               <Link
-                href="#portfolio"
+                href="/work"
                 className="font-serif text-3xl text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] transition-colors duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Portfolio
+                Work
               </Link>
               <Link
-                href="/about"
+                href="/story"
                 className="font-serif text-3xl text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] transition-colors duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
-                About
+                Story
               </Link>
               <Link
-                href="#contact"
+                href="/contact"
                 className="font-serif text-3xl text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] transition-colors duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -144,7 +144,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="border border-[#C4FF61] text-[#C4FF61] bg-transparent rounded-full px-6 py-2.5 font-lato font-bold text-xs tracking-[0.1em] transition-all duration-300 hover:bg-[#C4FF61] hover:text-[#1A1A1A] mt-4"
               >
-                Book now
+                COMMISSION +
               </a>
             </div>
           </motion.div>
