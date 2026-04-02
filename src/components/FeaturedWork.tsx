@@ -12,7 +12,6 @@ const FEATURED = [
         title: "Permanent stories on skin.",
         description: "Custom tattoos designed from your story — not from a catalogue.",
         image: "/work/featured-tattoo.jpg",
-        placeholder: "/hero/prerna-hero.jpg",
         tags: ["Custom", "Fine Line", "Blackwork", "Geometric"],
     },
     {
@@ -21,7 +20,6 @@ const FEATURED = [
         title: "Hand-drawn worlds.",
         description: "Original illustrations that live on paper, walls, and skin.",
         image: "/work/featured-illustration.jpg",
-        placeholder: "/hero/prerna-hero.jpg",
         tags: ["Original", "Hand-drawn", "Commission"],
     },
     {
@@ -30,7 +28,6 @@ const FEATURED = [
         title: "Beauty in difference.",
         description: "Vitiligo art, scar cover, and tattoo restoration — healing through art.",
         image: "/work/featured-restoration.jpg",
-        placeholder: "/hero/prerna-hero.jpg",
         tags: ["Vitiligo Art", "Restoration", "Scar Cover"],
     },
     {
@@ -39,7 +36,6 @@ const FEATURED = [
         title: "Every medium. One vision.",
         description: "Painting, wall art, permanent makeup — art in every form.",
         image: "/work/featured-permanent.jpg",
-        placeholder: "/hero/prerna-hero.jpg",
         tags: ["Painting", "Wall Art", "Permanent Makeup"],
     },
 ];
@@ -238,7 +234,7 @@ function FeaturedCard({
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     >
                         <Image
-                            src={item.placeholder}
+                            src={item.image}
                             alt={item.title}
                             fill
                             sizes="100vw"
