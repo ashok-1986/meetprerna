@@ -46,7 +46,7 @@ export default function StoryBeat({ beat, imageRight, imageLeft }: StoryBeatProp
                     style={{
                         fontFamily: "'Times New Roman', serif",
                         fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                        fontWeight: 700,
+                        fontWeight: 500,
                         color: "#FDFFE9",
                         margin: "0 0 8px 0",
                         lineHeight: 1.1,
@@ -59,7 +59,7 @@ export default function StoryBeat({ beat, imageRight, imageLeft }: StoryBeatProp
                     style={{
                         fontFamily: "'Times New Roman', serif",
                         fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                        fontWeight: 700,
+                        fontWeight: 500,
                         color: "#FDFFE9",
                         margin: 0,
                         lineHeight: 1.1,

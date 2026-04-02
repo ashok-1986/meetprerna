@@ -167,7 +167,7 @@ export default function Testimonials() {
                                     duration={0.7}
                                     style={{
                                         fontFamily: "Lato, sans-serif",
-                                        fontWeight: 700,
+                                        fontWeight: 500,
                                         fontSize: "0.85rem",
                                         letterSpacing: "0.1em",
                                         color: "#FDFFE9",
@@ -294,7 +294,7 @@ export default function Testimonials() {
                 transform: "translateY(-50%)",
                 fontFamily: "'Times New Roman', serif",
                 fontSize: "clamp(8rem, 15vw, 14rem)",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "rgba(196,255,97,0.03)",
                 userSelect: "none",
                 pointerEvents: "none",

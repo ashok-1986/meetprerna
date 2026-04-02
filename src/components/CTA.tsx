@@ -41,7 +41,7 @@ export default function CTA() {
           style={{
             fontFamily: "'Times New Roman', serif",
             fontSize: "clamp(3rem, 7vw, 7.5rem)",
-            fontWeight: 700,
+            fontWeight: 500,
             color: "#FDFFE9",
             lineHeight: 0.92,
             letterSpacing: "-0.03em",
@@ -54,7 +54,7 @@ export default function CTA() {
           style={{
             fontFamily: "'Times New Roman', serif",
             fontSize: "clamp(3rem, 7vw, 7.5rem)",
-            fontWeight: 700,
+            fontWeight: 500,
             fontStyle: "italic",
             color: "#C4FF61",
             lineHeight: 0.92,

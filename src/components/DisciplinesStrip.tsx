@@ -144,7 +144,7 @@ export default function DisciplinesStrip() {
                         <p style={{
                             fontFamily: "'Times New Roman', Times, serif",
                             fontSize: "clamp(1rem, 1.4vw, 1.2rem)",
-                            fontWeight: 700,
+                            fontWeight: 500,
                             color: d.accent ? "#C4FF61" : "#FDFFE9",
                             margin: 0,
                             lineHeight: 1.2,

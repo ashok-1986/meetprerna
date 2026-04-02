@@ -47,7 +47,7 @@ export default function AboutHero() {
                             style={{
                                 fontFamily: "'Times New Roman', serif",
                                 fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-                                fontWeight: 700,
+                                fontWeight: 500,
                                 color: "#FDFFE9",
                                 lineHeight: 1.05,
                                 margin: "0 0 8px 0",
@@ -60,7 +60,7 @@ export default function AboutHero() {
                             style={{
                                 fontFamily: "'Times New Roman', serif",
                                 fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-                                fontWeight: 700,
+                                fontWeight: 500,
                                 color: "#FDFFE9",
                                 lineHeight: 1.05,
                                 margin: "0 0 8px 0",
@@ -73,7 +73,7 @@ export default function AboutHero() {
                             style={{
                                 fontFamily: "'Times New Roman', serif",
                                 fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-                                fontWeight: 700,
+                                fontWeight: 500,
                                 color: "#FDFFE9",
                                 lineHeight: 1.05,
                                 margin: 0,

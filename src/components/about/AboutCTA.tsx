@@ -126,7 +126,7 @@ export default function AboutCTA() {
 const headlineStyle = {
     fontFamily: "'Times New Roman', serif",
     fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-    fontWeight: 700,
+    fontWeight: 500,
     color: "#FDFFE9",
     margin: "0 0 4px 0",
 };

@@ -26,7 +26,7 @@ export default function ContactSection() {
                         style={{
                             fontFamily: "'Times New Roman', serif",
                             fontSize: "clamp(3rem, 6vw, 5rem)",
-                            fontWeight: 700,
+                            fontWeight: 500,
                             color: "#FDFFE9",
                             lineHeight: 1.1,
                             letterSpacing: "-0.02em",

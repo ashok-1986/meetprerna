@@ -4,14 +4,32 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Lightbox from "./Lightbox";
 
-const CARD_COUNT = 6;
+const CARD_COUNT = 4;
 const portfolioItems = [
-  { id: 1, image: "/hero/prerna-hero.jpg", style: "Blackwork", caption: "A story etched in dark lines." },
-  { id: 2, image: "/hero/prerna-hero.jpg", style: "Fine Line", caption: "Delicate. Deliberate. Yours." },
-  { id: 3, image: "/hero/prerna-hero.jpg", style: "Geometric", caption: "Structure found from within." },
-  { id: 4, image: "/hero/prerna-hero.jpg", style: "Realism", caption: "What the eye remembers." },
-  { id: 5, image: "/hero/prerna-hero.jpg", style: "Illustrative", caption: "Art that moves with you." },
-  { id: 6, image: "/hero/prerna-hero.jpg", style: "Script", caption: "Words worth wearing forever." },
+  {
+    id: 1,
+    image: "/hero/prerna-hero.jpg",
+    style: "Tattoo",
+    caption: "A story etched in dark lines.",
+  },
+  {
+    id: 2,
+    image: "/hero/prerna-hero.jpg",
+    style: "Illustration",
+    caption: "Hand-drawn worlds.",
+  },
+  {
+    id: 3,
+    image: "/hero/prerna-hero.jpg",
+    style: "Vitiligo Art",
+    caption: "Beauty in difference.",
+  },
+  {
+    id: 4,
+    image: "/hero/prerna-hero.jpg",
+    style: "Restoration",
+    caption: "Second chances in ink.",
+  },
 ];
 
 export default function Portfolio() {
@@ -303,7 +321,7 @@ export default function Portfolio() {
               />
             </div>
             <a
-              href="/portfolio"
+              href="/work"
               style={{
                 fontFamily: "Lato, sans-serif",
                 fontSize: "0.7rem",

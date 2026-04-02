@@ -58,7 +58,7 @@ export default function WorkingSection() {
                     <h3 style={{
                         fontFamily: "'Times New Roman', serif",
                         fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
-                        fontWeight: 700,
+                        fontWeight: 500,
                         color: '#FDFFE9',
                         lineHeight: 1.1,
                         margin: '0 0 24px 0',
@@ -85,7 +85,7 @@ export default function WorkingSection() {
                     <h3 style={{
                         fontFamily: "'Times New Roman', serif",
                         fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
-                        fontWeight: 700,
+                        fontWeight: 500,
                         color: '#FDFFE9',
                         lineHeight: 1.1,
                         margin: '0 0 24px 0',

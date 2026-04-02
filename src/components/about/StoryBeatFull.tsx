@@ -27,7 +27,7 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     fontFamily: "'Times New Roman', serif",
-                    fontWeight: 700,
+                    fontWeight: 500,
                     fontSize: '22rem',
                     color: 'rgba(196,255,97,0.025)',
                     lineHeight: 1,
@@ -59,7 +59,7 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                             style={{
                                 fontFamily: "'Times New Roman', serif",
                                 fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-                                fontWeight: 700,
+                                fontWeight: 500,
                                 color: "#FDFFE9",
                                 margin: "0 0 8px 0",
                             }}
@@ -71,7 +71,7 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                             style={{
                                 fontFamily: "'Times New Roman', serif",
                                 fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-                                fontWeight: 700,
+                                fontWeight: 500,
                                 color: "#FDFFE9",
                                 margin: 0,
                             }}
@@ -152,9 +152,9 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                 </p>
 
                 <div style={{ marginBottom: '24px' }}>
-                    <LineReveal text="Today she works in" tag="h2" delay={0.2} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 700, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
-                    <LineReveal text="every medium that" tag="h2" delay={0.3} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 700, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
-                    <LineReveal text="matters to her." tag="h2" delay={0.4} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 700, color: "#FDFFE9", margin: 0, lineHeight: 1.0 }} />
+                    <LineReveal text="Today she works in" tag="h2" delay={0.2} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
+                    <LineReveal text="every medium that" tag="h2" delay={0.3} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
+                    <LineReveal text="matters to her." tag="h2" delay={0.4} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, color: "#FDFFE9", margin: 0, lineHeight: 1.0 }} />
                 </div>
 
                 <motion.div

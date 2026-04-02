@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
@@ -9,91 +10,98 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Ashfall-style navbar: fixed, transparent, 4-corner layout */}
-      <nav
-        className="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-0"
-        style={{ padding: "24px 32px" }}
-      >
-        <div className="relative w-full">
-          {/* TOP-LEFT: MEET PRERNA text */}
-          <Link href="/" className="absolute top-0 left-0">
-            <span
+      {/* NAV LAYOUT — full navbar: */}
+      <nav style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        zIndex: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "28px 48px",  // 48px from both edges
+        // No background — transparent always
+      }}>
+
+        {/* LEFT: Logo */}
+        <Link href="/" style={{ display: "flex", alignItems: "center" }}>
+          <Image
+            src="/logo/meetprerna_logo_100525_1@2x.png"
+            alt="meet prerna"
+            height={36}
+            width={120}
+            style={{ objectFit: "contain", objectPosition: "left" }}
+            priority
+          />
+        </Link>
+
+        {/* RIGHT: Nav links + CTA — desktop only */}
+        <div className="hidden md:flex" style={{
+          alignItems: "center",
+          gap: "36px",  // 36px between each nav item
+        }}>
+          {/* Nav links */}
+          {[
+            { label: "· Work", href: "/work" },
+            { label: "· Story", href: "/story" },
+            { label: "· Contact", href: "/contact" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
               style={{
                 fontFamily: "Lato, sans-serif",
                 fontSize: "0.65rem",
-                fontWeight: 700,
-                letterSpacing: "0.25em",
-                color: "rgba(253, 255, 233, 0.6)",
-                textTransform: "uppercase",
-              }}
-            >
-              MEET PRERNA
-            </span>
-          </Link>
-
-          {/* TOP-CENTRE: Stacked navigation (hidden on mobile) */}
-          <div className="hidden md:flex absolute top-0 left-1/2 -translate-x-1/2 flex-col gap-2.5">
-            <Link
-              href="#portfolio"
-              className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
-            >
-              <span style={{ opacity: 0.4 }}>· </span>HOME
-            </Link>
-            <Link
-              href="/work"
-              className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
-            >
-              <span style={{ opacity: 0.4 }}>· </span>WORK
-            </Link>
-            <Link
-              href="/story"
-              className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
-            >
-              <span style={{ opacity: 0.4 }}>· </span>STORY
-            </Link>
-            <Link
-              href="/contact"
-              className="font-lato text-[0.65rem] tracking-[0.2em] text-[rgba(253,255,233,0.4)] hover:text-[#FDFFE9] hover:opacity-100 transition-opacity duration-300"
-            >
-              <span style={{ opacity: 0.4 }}>· </span>CONTACT
-            </Link>
-          </div>
-
-          {/* TOP-RIGHT: BOOK NOW + (desktop) */}
-          <a
-            href="https://meetprerna.fillout.com/book"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:block absolute top-0 right-0"
-          >
-            <span
-              style={{
-                fontFamily: "Lato, sans-serif",
-                fontSize: "0.65rem",
-                fontWeight: 700,
-                letterSpacing: "0.25em",
-                color: "rgba(253, 255, 233, 0.6)",
+                letterSpacing: "0.2em",
+                color: "rgba(253,255,233,0.6)",
+                textDecoration: "none",
                 textTransform: "uppercase",
                 transition: "color 0.3s ease",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#C4FF61")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(253, 255, 233, 0.6)")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#FDFFE9")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(253,255,233,0.6)")}
             >
-              COMMISSION +
-            </span>
-          </a>
+              {link.label}
+            </Link>
+          ))}
 
-          {/* TOP-RIGHT: Hamburger (mobile) */}
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="md:hidden absolute top-0 right-0 flex flex-col gap-1.5"
-            aria-label="Toggle menu"
+          {/* Divider */}
+          <div style={{
+            width: "1px",
+            height: "16px",
+            background: "rgba(253,255,233,0.15)",
+          }} />
+
+          {/* Commission CTA */}
+          <a
+            href="https://meetprerna.fillout.com/book"
+            style={{
+              fontFamily: "Lato, sans-serif",
+              fontSize: "0.65rem",
+              letterSpacing: "0.2em",
+              color: "#C4FF61",
+              textDecoration: "none",
+              textTransform: "uppercase",
+              transition: "opacity 0.3s ease",
+            }}
+            data-cursor="book"
           >
-            <div className="w-5 h-0.5 bg-[rgba(253,255,233,0.6)]"></div>
-            <div className="w-5 h-0.5 bg-[rgba(253,255,233,0.6)]"></div>
-            <div className="w-5 h-0.5 bg-[rgba(253,255,233,0.6)]"></div>
-          </button>
+            Commission +
+          </a>
         </div>
+
+        {/* MOBILE: Hamburger — hide desktop nav on mobile */}
+        <button
+          onClick={() => setIsMenuOpen(true)}
+          className="md:hidden flex flex-col gap-1.5"
+          aria-label="Toggle menu"
+          style={{ width: "22px" }}
+        >
+          <div className="w-full h-0.5 bg-[#FDFFE9]"></div>
+          <div className="w-full h-0.5 bg-[#FDFFE9]"></div>
+          <div className="w-full h-0.5 bg-[#FDFFE9]"></div>
+        </button>
       </nav>
 
       {/* Mobile Menu Overlay */}

@@ -28,7 +28,7 @@ export default function About() {
             style={{
               fontFamily: "'Times New Roman', Times, serif",
               fontSize: "clamp(2rem, 4vw, 3.5rem)",
-              fontWeight: 700,
+              fontWeight: 500,
               lineHeight: 1.2,
             }}
           >
@@ -39,7 +39,7 @@ export default function About() {
             style={{
               fontFamily: "'Times New Roman', Times, serif",
               fontSize: "clamp(2rem, 4vw, 3.5rem)",
-              fontWeight: 700,
+              fontWeight: 500,
               fontStyle: "italic",
               lineHeight: 1.2,
             }}

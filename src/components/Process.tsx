@@ -103,7 +103,7 @@ export default function Process() {
               style={{
                 fontFamily: "'Times New Roman', serif",
                 fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: hoveredStep === i ? "#C4FF61" : "#FDFFE9",
                 margin: "0 0 12px 0",
                 lineHeight: 1.1,

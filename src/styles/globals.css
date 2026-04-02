@@ -33,6 +33,16 @@ body {
   .disciplines-grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
+
+  .statement-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .statement-image {
+    min-height: 60vh !important;
+    order: -1;
+    /* image first on mobile */
+  }
 }
 
 /* Font utility classes */
@@ -51,6 +61,7 @@ h4,
 h5,
 h6 {
   font-family: "Times New Roman", Times, serif;
+  font-weight: 500;
 }
 
 /* Hide system cursor globally */

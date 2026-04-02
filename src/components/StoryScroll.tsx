@@ -135,7 +135,7 @@ export default function StoryScroll() {
                                     <h2 style={{
                                         fontFamily: "'Times New Roman', serif",
                                         fontSize: 'clamp(2rem, 3.5vw, 3.2rem)',
-                                        fontWeight: 700,
+                                        fontWeight: 500,
                                         color: '#FDFFE9',
                                         lineHeight: 1.1,
                                         letterSpacing: '-0.02em',

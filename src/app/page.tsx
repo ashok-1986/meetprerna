@@ -3,6 +3,7 @@ import HeroReveal from "@/components/HeroReveal";
 import Statement from "@/components/Statement";
 import Marquee from "@/components/Marquee";
 import DisciplinesStrip from "@/components/DisciplinesStrip";
+import VideoMarquee from "@/components/VideoMarquee";
 import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
 import Testimonials from "@/components/Testimonials";
@@ -16,8 +17,9 @@ export default function Home() {
       <main style={{ margin: 0, padding: 0 }}>
         <HeroReveal />
         <Statement />
-        <Marquee />
+        <VideoMarquee />
         <DisciplinesStrip />
+        <Marquee />
         <Portfolio />
         <Process />
         <Testimonials />
