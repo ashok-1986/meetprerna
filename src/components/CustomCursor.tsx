@@ -38,8 +38,6 @@ export default function CustomCursor() {
   // Springs — smooth, organic movement
   const springX = useSpring(cursorX, { stiffness: 120, damping: 28, mass: 0.8 });
   const springY = useSpring(cursorY, { stiffness: 120, damping: 28, mass: 0.8 });
-  const microSpringX = useSpring(cursorX, { stiffness: 50, damping: 20, mass: 1.2 });
-  const microSpringY = useSpring(cursorY, { stiffness: 50, damping: 20, mass: 1.2 });
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -278,39 +276,6 @@ export default function CustomCursor() {
         </motion.div>
       )}
 
-      {/* ── TRAILING MICRO RING ── */}
-      {/* Smaller, slower ring that follows behind */}
-      {/* Creates depth — two rings at different speeds */}
-      <motion.div
-        style={{
-          position: 'fixed',
-          left: microSpringX,
-          top: microSpringY,
-          width: '16px',
-          height: '16px',
-          marginLeft: '-8px',
-          marginTop: '-8px',
-          pointerEvents: 'none',
-          zIndex: 2147483644,
-          opacity: isHovering ? 0 : 0.35,
-          rotate: rotation,
-          transition: 'opacity 0.3s ease',
-        }}
-      >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 100 100"
-          fill="none"
-        >
-          <path
-            d={RING_PATHS[(pathIndex + 2) % RING_PATHS.length]}
-            stroke="#C4FF61"
-            strokeWidth="4"
-            fill="none"
-          />
-        </svg>
-      </motion.div>
     </>,
     document.body
   );

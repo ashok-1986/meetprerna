@@ -30,7 +30,7 @@ export default function LineReveal({
         // overflow hidden is what creates the "slide from behind" effect
         <div
             ref={ref}
-            style={{ overflow: "hidden", display: "block", ...style }}
+            style={{ overflow: "hidden", display: "block", paddingBottom: "0.15em", marginBottom: "-0.15em", ...style }}
             className={className}
         >
             <motion.div

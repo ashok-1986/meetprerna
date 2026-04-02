@@ -1,10 +1,9 @@
 import Navbar from "@/components/Navbar";
 import HeroReveal from "@/components/HeroReveal";
+import FeaturedWork from "@/components/FeaturedWork";
 import Statement from "@/components/Statement";
-import Marquee from "@/components/Marquee";
 import DisciplinesStrip from "@/components/DisciplinesStrip";
-import VideoMarquee from "@/components/VideoMarquee";
-import Portfolio from "@/components/Portfolio";
+import Marquee from "@/components/Marquee";
 import Process from "@/components/Process";
 import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
@@ -15,15 +14,14 @@ export default function Home() {
     <>
       <Navbar />
       <main style={{ margin: 0, padding: 0 }}>
-        <HeroReveal />
-        <Statement />
-        <VideoMarquee />
-        <DisciplinesStrip />
-        <Marquee />
-        <Portfolio />
-        <Process />
-        <Testimonials />
-        <CTA />
+        <HeroReveal />           {/* Hook */}
+        <FeaturedWork />         {/* Proof of work — Ashfall style */}
+        <Statement />            {/* Identity — why she does it */}
+        <DisciplinesStrip />     {/* Range — discovery moment */}
+        <Marquee />              {/* Rhythm */}
+        <Process />              {/* How — 4 steps */}
+        <Testimonials />         {/* Social proof */}
+        <CTA />                  {/* Conversion */}
       </main>
       <Footer />
     </>
