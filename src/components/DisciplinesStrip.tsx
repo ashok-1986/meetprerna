@@ -5,37 +5,37 @@ import { motion } from "framer-motion";
 const disciplines = [
     {
         name: "Tattoo",
-        descriptor: "Permanent stories on skin",
+        descriptor: "Ink that stays when everything else moves",
         accent: true, // highlights the entry point
     },
     {
         name: "Illustration",
-        descriptor: "Hand-drawn worlds",
+        descriptor: "Drawn from imagination. Kept forever.",
         accent: false,
     },
     {
         name: "Painting",
-        descriptor: "Colour as language",
+        descriptor: "Colour that earns its place",
         accent: false,
     },
     {
         name: "Wall Art",
-        descriptor: "Art at scale",
+        descriptor: "When a room needs to say something",
         accent: false,
     },
     {
         name: "Vitiligo Art",
-        descriptor: "Beauty in difference",
+        descriptor: "She turns difference into the design",
         accent: false,
     },
     {
         name: "Permanent Makeup",
-        descriptor: "Precision as art form",
+        descriptor: "Precision so refined it disappears",
         accent: false,
     },
     {
         name: "Restoration",
-        descriptor: "Second chances in ink",
+        descriptor: "She gives tattoos a second life",
         accent: false,
     },
 ];
@@ -71,7 +71,7 @@ export default function DisciplinesStrip() {
                         margin: 0,
                     }}
                 >
-                    · What she creates
+                    · The mediums she moves through
                 </motion.p>
 
                 <motion.p
@@ -87,7 +87,7 @@ export default function DisciplinesStrip() {
                         margin: 0,
                     }}
                 >
-                    Every medium. One creative vision.
+                    Nomad. Artist. Never the same twice.
                 </motion.p>
             </div>
 

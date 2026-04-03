@@ -5,17 +5,17 @@
 // Track 2: right to left (faster)
 
 const TRACK_1_WORDS = [
-  "CUSTOM", "·", "INTENTIONAL", "·", "MUMBAI", "·",
-  "HAND-DRAWN", "·", "PERMANENT", "·", "YOURS", "·",
-  "CUSTOM", "·", "INTENTIONAL", "·", "MUMBAI", "·",
-  "HAND-DRAWN", "·", "PERMANENT", "·", "YOURS", "·",
+  "ITINERANT", "·", "WITNESSED", "·", "NAVI MUMBAI", "·",
+  "NOMAD", "·", "PERMANENT", "·", "FEMININE", "·",
+  "ITINERANT", "·", "WITNESSED", "·", "NAVI MUMBAI", "·",
+  "NOMAD", "·", "PERMANENT", "·", "FEMININE", "·",
 ];
 
 const TRACK_2_WORDS = [
-  "WITNESSED", "·", "STILLNESS", "·", "INK", "·", "RESILIENCE", "·",
-  "SPIRITUAL", "·", "BOLD", "·", "STORY", "·",
-  "STILLNESS", "·", "INK", "·", "RESILIENCE", "·",
-  "SPIRITUAL", "·", "BOLD", "·", "STORY", "·",
+  "HAND-DRAWN", "·", "MEDITATION", "·", "CUSTOM", "·",
+  "SPIRITUAL", "·", "BOLD", "·", "INTENTIONAL", "·",
+  "HAND-DRAWN", "·", "MEDITATION", "·", "CUSTOM", "·",
+  "SPIRITUAL", "·", "BOLD", "·", "INTENTIONAL", "·",
 ];
 
 export default function Marquee() {

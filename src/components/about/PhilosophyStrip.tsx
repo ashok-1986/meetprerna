@@ -40,9 +40,10 @@ export default function PhilosophyStrip() {
                     }}>
                         On stories
                     </p>
-                    <LineReveal text="Every person carries something" tag="p" delay={0.2} style={quoteStyle} />
-                    <LineReveal text="that deserves a shape." tag="p" delay={0.3} style={quoteStyle} />
-                    <LineReveal text="Her job is to find it." tag="p" delay={0.4} style={quoteStyle} />
+                    <LineReveal text="Every person she meets is" tag="p" delay={0.2} style={quoteStyle} />
+                    <LineReveal text="carrying something." tag="p" delay={0.3} style={quoteStyle} />
+                    <LineReveal text="She can usually tell what it is" tag="p" delay={0.4} style={quoteStyle} />
+                    <LineReveal text="before they say it." tag="p" delay={0.5} style={quoteStyle} />
                 </div>
 
                 {/* Column 2 */}
@@ -58,9 +59,10 @@ export default function PhilosophyStrip() {
                     }}>
                         On permanence
                     </p>
-                    <LineReveal text="She doesn't think of tattoos" tag="p" delay={0.3} style={quoteStyle} />
-                    <LineReveal text="as permanent." tag="p" delay={0.4} style={quoteStyle} />
-                    <LineReveal text="She thinks of them as finally honest." tag="p" delay={0.5} style={quoteStyle} />
+                    <LineReveal text="Permanent isn't the point." tag="p" delay={0.3} style={quoteStyle} />
+                    <LineReveal text="Honest is." tag="p" delay={0.4} style={quoteStyle} />
+                    <LineReveal text="The tattoo is just how honesty" tag="p" delay={0.5} style={quoteStyle} />
+                    <LineReveal text="gets to stay." tag="p" delay={0.6} style={quoteStyle} />
                 </div>
 
                 {/* Column 3 */}
@@ -76,10 +78,10 @@ export default function PhilosophyStrip() {
                     }}>
                         On the work
                     </p>
-                    <LineReveal text="The best sessions don't feel" tag="p" delay={0.4} style={quoteStyle} />
-                    <LineReveal text="like appointments." tag="p" delay={0.5} style={quoteStyle} />
-                    <LineReveal text="They feel like conversations" tag="p" delay={0.6} style={quoteStyle} />
-                    <LineReveal text="that happened to end in ink." tag="p" delay={0.7} style={quoteStyle} />
+                    <LineReveal text="The best sessions —" tag="p" delay={0.4} style={quoteStyle} />
+                    <LineReveal text="she forgets to watch the clock." tag="p" delay={0.5} style={quoteStyle} />
+                    <LineReveal text="The client forgets it hurts." tag="p" delay={0.6} style={quoteStyle} />
+                    <LineReveal text="That's when she knows it was right." tag="p" delay={0.7} style={quoteStyle} />
                 </div>
 
                 {/* Column 4 */}

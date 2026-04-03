@@ -24,9 +24,10 @@ export default function AboutCTA() {
             </p>
 
             <div style={{ marginBottom: '32px' }}>
-                <LineReveal text="If something in this" tag="h2" delay={0.2} style={headlineStyle} />
-                <LineReveal text="page felt familiar —" tag="h2" delay={0.3} style={headlineStyle} />
-                <LineReveal text="that's enough to start." tag="h2" delay={0.4} style={headlineStyle} />
+                <LineReveal text="If reading this felt less like" tag="h2" delay={0.2} style={headlineStyle} />
+                <LineReveal text="learning about someone new" tag="h2" delay={0.3} style={headlineStyle} />
+                <LineReveal text="and more like remembering —" tag="h2" delay={0.4} style={headlineStyle} />
+                <LineReveal text="that's the feeling. Start there." tag="h2" delay={0.5} style={{ ...headlineStyle, fontStyle: 'italic', color: '#C4FF61' }} />
             </div>
 
             <div style={{

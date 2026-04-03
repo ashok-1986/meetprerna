@@ -14,7 +14,7 @@ export default function OpeningStatement() {
                 margin: '0 auto',
             }}>
                 <WordReveal
-                    text="She was always an artist. She just kept finding new ways to make that permanent."
+                    text="Most people who sit with Prerna don't say what they actually want in the first ten minutes. She waits. It comes."
                     delay={0.2}
                     stagger={0.03}
                     style={{

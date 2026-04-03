@@ -9,22 +9,22 @@ const steps = [
   {
     number: "01",
     title: "The Conversation",
-    subtitle: "We begin with what you're carrying, not what you want.",
+    subtitle: "She listens until she hears what you actually mean.",
   },
   {
     number: "02",
     title: "The Translation",
-    subtitle: "From feeling into form. From story into shape.",
+    subtitle: "Your story, drawn from scratch. Nothing borrowed.",
   },
   {
     number: "03",
     title: "The Ritual",
-    subtitle: "The needle asks you to be still. So does meditation.",
+    subtitle: "An hour of absolute stillness. Some people cry. That's fine.",
   },
   {
     number: "04",
     title: "The Tending",
-    subtitle: "The work doesn't end when the needle does.",
+    subtitle: "She doesn't disappear when the session ends.",
   },
 ];
 
@@ -54,7 +54,7 @@ export default function Process() {
           marginBottom: "80px",
         }}
       >
-        · The Process
+        · The ritual, in four movements
       </motion.p>
 
       {/* Steps list */}

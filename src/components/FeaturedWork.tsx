@@ -17,26 +17,26 @@ const FEATURED = [
     {
         id: 2,
         category: "Illustration",
-        title: "Hand-drawn worlds.",
+        title: "Drawn by hand. Felt in the chest.",
         description: "Original illustrations that live on paper, walls, and skin.",
         image: "/work/featured-illustration.jpg",
-        tags: ["Original", "Hand-drawn", "Commission"],
+        tags: ["Original", "Commission", "Hand-drawn", "Narrative"],
     },
     {
         id: 3,
         category: "Vitiligo & Restoration",
-        title: "Beauty in difference.",
+        title: "She finds beauty where others looked away.",
         description: "Vitiligo art, scar cover, and tattoo restoration — healing through art.",
         image: "/work/featured-restoration.jpg",
-        tags: ["Vitiligo Art", "Restoration", "Scar Cover"],
+        tags: ["Vitiligo Art", "Restoration", "Scar Cover", "Healing"],
     },
     {
         id: 4,
         category: "Permanent Art",
-        title: "Every medium. One vision.",
+        title: "Every surface. One restless vision.",
         description: "Painting, wall art, permanent makeup — art in every form.",
         image: "/work/featured-permanent.jpg",
-        tags: ["Painting", "Wall Art", "Permanent Makeup"],
+        tags: ["Painting", "Wall Art", "Permanent Makeup", "Mixed Media"],
     },
 ];
 
@@ -203,7 +203,7 @@ export default function FeaturedWork() {
                             margin: "0 0 8px",
                         }}
                     >
-                        Want to know the artist behind the work?
+                        She has lived in three cities and left her mark on all of them.
                     </p>
                     <Link
                         href="/story"
@@ -217,7 +217,7 @@ export default function FeaturedWork() {
                             transition: "color 0.3s",
                         }}
                     >
-                        Her story →
+                        Read how she got here →
                     </Link>
                 </motion.div>
 

@@ -117,7 +117,7 @@ export default function HeroReveal() {
                         display: "block",
                     }}
                 >
-                    Mumbai · Artist & Creator
+                    Navi Mumbai · Mumbai · Artist & Creator · Itinerant
                 </motion.p>
 
                 {/* Main tagline — NOT the brand name */}
@@ -137,7 +137,7 @@ export default function HeroReveal() {
                             margin: 0,
                         }}
                     >
-                        Like meditation,
+                        She carries no studio.
                     </motion.h1>
                 </div>
 
@@ -156,7 +156,7 @@ export default function HeroReveal() {
                             margin: 0,
                         }}
                     >
-                        it asks you to be still.
+                        Only a needle
                     </motion.h1>
                 </div>
 
@@ -176,8 +176,27 @@ export default function HeroReveal() {
                             margin: 0,
                         }}
                     >
-                        Like therapy, it lets you feel.
+                        and everything she knows.
                     </motion.h1>
+                </div>
+
+                {/* Tagline below headline */}
+                <div style={{ overflow: "hidden", marginBottom: "40px" }}>
+                    <motion.p
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 0.75, y: 0 }}
+                        transition={{ delay: 1.0, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                        style={{
+                            fontFamily: "'Times New Roman', Times, serif",
+                            fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)",
+                            fontStyle: "italic",
+                            color: "rgba(253,255,233,0.55)",
+                            margin: 0,
+                            letterSpacing: "0.01em",
+                        }}
+                    >
+                        Every city. Every skin. Every story — permanent.
+                    </motion.p>
                 </div>
 
                 {/* CTA button */}

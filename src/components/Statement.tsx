@@ -51,7 +51,7 @@ export default function Statement() {
 
         {/* Main statement */}
         <LineReveal
-          text="In the space between"
+          text="She has never done"
           tag="h2"
           delay={0.2}
           style={{
@@ -65,7 +65,7 @@ export default function Statement() {
           }}
         />
         <LineReveal
-          text="needle and skin,"
+          text="the same thing twice."
           tag="h2"
           delay={0.32}
           style={{
@@ -79,7 +79,7 @@ export default function Statement() {
           }}
         />
         <LineReveal
-          text="transformation happens."
+          text="On purpose."
           tag="h2"
           delay={0.44}
           style={{
@@ -108,9 +108,27 @@ export default function Statement() {
             marginBottom: "48px",
           }}
         >
-          Not just on the surface. Deep within.
-          Every piece is a collaboration — a dialogue between
-          artist and client, pain and beauty, memory and art.
+          Prerna moves between cities, mediums, and methods —
+          not because she can't settle, but because she refuses
+          to let her work get comfortable before she does.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9, delay: 0.65 }}
+          style={{
+            fontFamily: "Lato, sans-serif",
+            fontSize: "0.95rem",
+            lineHeight: 1.8,
+            color: "rgba(253,255,233,0.5)",
+            maxWidth: "400px",
+            marginBottom: "48px",
+          }}
+        >
+          What stays constant: the attention she brings to
+          every person who sits across from her.
+          That part has never moved.
         </motion.p>
 
         {/* Link to Story */}
@@ -134,7 +152,7 @@ export default function Statement() {
               transition: "color 0.3s ease",
             }}
           >
-            Her full story →
+            Read her full story →
           </Link>
         </motion.div>
 

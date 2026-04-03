@@ -69,7 +69,7 @@ export default function Footer() {
         {/* Middle - Tagline */}
         <div className="my-12 text-center">
           <p className="font-serif italic text-sm text-[#FDFFE9] opacity-30">
-            Art in every medium. Based in Mumbai.
+            Navi Mumbai · Mumbai · Wherever the work takes her.
           </p>
         </div>
 

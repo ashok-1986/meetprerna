@@ -86,9 +86,9 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                         maxWidth: '600px',
                         margin: '0 auto',
                     }}>
-                        <WordReveal text="At 17, she packed her life and moved to a new city alone." delay={0.5} stagger={0.02} />
+                        <WordReveal text="At 17 she left. Packed what she could carry." delay={0.5} stagger={0.02} />
                         <br /><br />
-                        <WordReveal text="She navigated the pandemic by herself, finding that mastering small, everyday things can be life's greatest achievement." delay={0.65} stagger={0.02} />
+                        <WordReveal text="The pandemic arrived shortly after — and she was alone for it, in a city that didn't owe her anything. She learned to be still. That turned out to matter more than she expected." delay={0.65} stagger={0.02} />
                     </div>
 
                     <motion.div
@@ -152,9 +152,10 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                 </p>
 
                 <div style={{ marginBottom: '24px' }}>
-                    <LineReveal text="Today she works in" tag="h2" delay={0.2} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
-                    <LineReveal text="every medium that" tag="h2" delay={0.3} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
-                    <LineReveal text="matters to her." tag="h2" delay={0.4} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, color: "#FDFFE9", margin: 0, lineHeight: 1.0 }} />
+                    <LineReveal text="She moves between cities." tag="h2" delay={0.2} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
+                    <LineReveal text="Between mediums." tag="h2" delay={0.3} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
+                    <LineReveal text="Between the person she was" tag="h2" delay={0.4} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, color: "#FDFFE9", margin: "0 0 4px 0", lineHeight: 1.0 }} />
+                    <LineReveal text="and the artist she's becoming." tag="h2" delay={0.5} style={{ fontFamily: "'Times New Roman', serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 500, fontStyle: "italic", color: "#C4FF61", margin: 0, lineHeight: 1.0 }} />
                 </div>
 
                 <motion.div
@@ -170,9 +171,9 @@ export default function StoryBeatFull({ beat, fullBleedImage }: StoryBeatFullPro
                         maxWidth: '480px',
                     }}
                 >
-                    <p style={{ margin: '0 0 16px 0' }}>Tattoo. Illustration. Painting. Wall art. Vitiligo art. Permanent makeup. Restoration.</p>
+                    <p style={{ margin: '0 0 16px 0' }}>Tattoo. Illustration. Painting. Wall art. Vitiligo. Permanent makeup. Restoration. She works across Navi Mumbai and Mumbai — and in the cities she hasn't reached yet.</p>
                     <p style={{ margin: 0 }}>
-                        Whatever the story calls for — she finds the right surface for it.
+                        The medium changes. The attention doesn't.
                     </p>
                 </motion.div>
             </div>

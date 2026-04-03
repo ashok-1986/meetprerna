@@ -10,31 +10,31 @@ const testimonials = [
         id: 1,
         quote: "Totally indecisive, yet the experience was still a 10. I could not have asked for a better artist for my first tattoo. Great precision and attention to detail.",
         name: "Pramayee Bhaware",
-        detail: "First tattoo · Custom design",
+        detail: "Mumbai · First tattoo",
     },
     {
         id: 2,
         quote: "Couldn't be happier with the result. Prerna's attention to detail and artistic skill truly shine through. The entire process was comfortable — she took the time to understand exactly what I wanted.",
         name: "Sambhav Chathly",
-        detail: "Custom sleeve · Mumbai",
+        detail: "Mumbai · Custom sleeve",
     },
     {
         id: 3,
         quote: "This was my first tattoo and I was super nervous. But Prerna did a great job — it came out exactly how I wanted. This beautiful art was perfectly done.",
         name: "Amala James",
-        detail: "First tattoo · Fine line",
+        detail: "Mumbai · Fine line",
     },
     {
         id: 4,
         quote: "The place was well sanitised and professional. Prerna is welcoming, precise, and the result was exactly what I had in mind.",
         name: "Prisha Nayak",
-        detail: "Custom design · Mumbai",
+        detail: "Navi Mumbai · Custom design",
     },
     {
         id: 5,
         quote: "I had a really great experience. The place was very hygienic. Prerna went through the entire process with me and I got the exact tattoo I asked for. It turned out beautiful.",
         name: "Rutuja Babar",
-        detail: "Custom design · Studio visit",
+        detail: "Navi Mumbai · Studio visit",
     },
 ];
 
@@ -95,7 +95,7 @@ export default function Testimonials() {
                     opacity: 0.8,
                 }}
             >
-                · Voices
+                · From people who sat with her
             </motion.p>
 
             {/* Quote display area */}

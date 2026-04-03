@@ -15,8 +15,8 @@ export default function StoryBeat({ beat, imageRight, imageLeft }: StoryBeatProp
 
     const isO1 = beat === "01";
     const numLabel = isO1 ? "· 01  Origin" : "· 03  The Irony";
-    const h1 = isO1 ? "She started scared." : "She picked the hardest";
-    const h2 = isO1 ? "Then she performed anyway." : "medium she could find. On purpose.";
+    const h1 = isO1 ? "She started scared." : "She was afraid of needles.";
+    const h2 = isO1 ? "Then she performed anyway." : "She became a tattoo artist anyway.";
 
     const textColumn = (
         <div style={{
@@ -76,15 +76,15 @@ export default function StoryBeat({ beat, imageRight, imageLeft }: StoryBeatProp
             }}>
                 {isO1 ? (
                     <>
-                        <WordReveal text="Somewhere between the fear and the performance was a version of herself she wanted to meet." delay={0.4} stagger={0.02} />
+                        <WordReveal text="She was shy. Genuinely, physically scared of stages." delay={0.4} stagger={0.02} />
                         <br /><br />
-                        <WordReveal text="Learning that courage lives on the other side of discomfort — that was the lesson that stayed." delay={0.6} stagger={0.02} />
+                        <WordReveal text="She performed anyway — and discovered that courage isn't the absence of fear. It's showing up with it." delay={0.6} stagger={0.02} />
                     </>
                 ) : (
                     <>
-                        <WordReveal text="She could have stayed in safer, cleaner disciplines." delay={0.4} stagger={0.02} />
+                        <WordReveal text="Commission instead of salary. Uncertainty instead of safety. A needle she was genuinely afraid of." delay={0.4} stagger={0.02} />
                         <br /><br />
-                        <WordReveal text="Instead she chose the one that required the most courage — the medium you can't undo, on the canvas you can't replace." delay={0.6} stagger={0.02} />
+                        <WordReveal text="What pulled her through wasn't ambition. It was the stories. Every client carried one." delay={0.6} stagger={0.02} />
                     </>
                 )}
             </div>

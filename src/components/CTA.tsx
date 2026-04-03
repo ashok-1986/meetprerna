@@ -29,13 +29,13 @@ export default function CTA() {
           opacity: 0.8,
         }}
       >
-        · Ready to make something?
+        · She takes limited commissions each month
       </motion.p>
 
       {/* Massive CTA headline */}
       <div style={{ margin: "0 auto 64px", maxWidth: "900px" }}>
         <LineReveal
-          text="Begin the"
+          text="You've been carrying"
           tag="h2"
           delay={0}
           style={{
@@ -48,9 +48,22 @@ export default function CTA() {
           }}
         />
         <LineReveal
-          text="conversation."
+          text="this long enough."
           tag="h2"
-          delay={0.15}
+          delay={0.12}
+          style={{
+            fontFamily: "'Times New Roman', serif",
+            fontSize: "clamp(3rem, 7vw, 7.5rem)",
+            fontWeight: 500,
+            color: "#FDFFE9",
+            lineHeight: 0.92,
+            letterSpacing: "-0.03em",
+          }}
+        />
+        <LineReveal
+          text="Let's make it permanent."
+          tag="h2"
+          delay={0.24}
           style={{
             fontFamily: "'Times New Roman', serif",
             fontSize: "clamp(3rem, 7vw, 7.5rem)",
@@ -77,9 +90,9 @@ export default function CTA() {
           margin: "0 auto 64px",
         }}
       >
-        She takes a small number of commissions each month.
-        Each one begins with a conversation about what you want
-        to make — not a price list.
+        She works across Navi Mumbai and Mumbai.
+        Commissions are limited — not because of demand,
+        but because each one deserves full attention.
       </motion.p>
 
       <p style={{
@@ -92,9 +105,9 @@ export default function CTA() {
         margin: "0 auto 48px",
         lineHeight: 1.4,
       }}>
-        She turns scars into art.
+        She has left something permanent in every city she's passed through.
         <br />
-        Yours is next, if you're ready.
+        This could be yours.
       </p>
 
       {/* Buttons */}
