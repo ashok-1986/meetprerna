@@ -235,9 +235,10 @@ function FeaturedCard({
                     >
                         <Image
                             src={item.image}
-                            alt={item.title}
+                            alt={item.category}
                             fill
                             sizes="100vw"
+                            priority={index === 0}
                             style={{
                                 objectFit: "cover",
                                 objectPosition: "center",
