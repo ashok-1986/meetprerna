@@ -50,7 +50,7 @@ export default function HeroReveal() {
             >
                 <div ref={parallaxRef} style={{ position: "absolute", inset: 0 }}>
                     <Image
-                        src="/hero/prerna-portrait.jpg"
+                        src="/hero/prerna-hero.jpg"
                         alt="Prerna — Artist & Creator"
                         fill
                         priority
