@@ -1,13 +1,11 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useScroll, useTransform, motion } from "framer-motion";
 
 const sections = [
   {
     progress: 0,
     align: "center",
-    className: "text-center",
     children: (
       <p style={{
         fontFamily: "Lato, sans-serif",
@@ -25,7 +23,6 @@ const sections = [
   {
     progress: 0.3,
     align: "left",
-    className: "text-left max-w-2xl",
     children: (
       <>
         <motion.h1
@@ -61,7 +58,6 @@ const sections = [
   {
     progress: 0.6,
     align: "left",
-    className: "text-left max-w-xl",
     children: (
       <motion.p
         style={{
@@ -81,7 +77,6 @@ const sections = [
   {
     progress: 0.8,
     align: "right",
-    className: "text-right max-w-md",
     children: (
       <motion.a
         href="https://meetprerna.fillout.com/book"
@@ -112,21 +107,19 @@ const sections = [
 ];
 
 export default function Overlay() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  // Track page scroll progress
   const { scrollYProgress } = useScroll({
-    target: containerRef,
     offset: ["start start", "end start"],
   });
 
   return (
     <div
-      ref={containerRef}
       style={{
         position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
-        height: "350vh",
+        height: "100vh",
         pointerEvents: "none",
         zIndex: 20,
         display: "flex",

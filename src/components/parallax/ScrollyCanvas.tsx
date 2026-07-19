@@ -12,13 +12,13 @@ function getFrameUrl(index: number): string {
 }
 
 export default function ScrollyCanvas() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
+
+  // Track page scroll progress (0 to 1 over 350vh)
   const { scrollYProgress } = useScroll({
-    target: containerRef,
     offset: ["start start", "end start"],
   });
 
@@ -28,6 +28,7 @@ export default function ScrollyCanvas() {
     [0, TOTAL_FRAMES - 1]
   ) as MotionValue<number>;
 
+  // Preload all frames
   useEffect(() => {
     const images: HTMLImageElement[] = [];
     let loaded = 0;
@@ -53,6 +54,7 @@ export default function ScrollyCanvas() {
     };
   }, []);
 
+  // Render loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -62,14 +64,14 @@ export default function ScrollyCanvas() {
     ctxRef.current = ctx;
 
     function resize() {
-      const canvas = canvasRef.current!;
-      const ctx = ctxRef.current!;
+      const canvasEl = canvasRef.current!;
+      const ctxEl = ctxRef.current!;
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      ctx.scale(dpr, dpr);
+      canvasEl.width = window.innerWidth * dpr;
+      canvasEl.height = window.innerHeight * dpr;
+      canvasEl.style.width = `${window.innerWidth}px`;
+      canvasEl.style.height = `${window.innerHeight}px`;
+      ctxEl.scale(dpr, dpr);
     }
 
     resize();
@@ -87,20 +89,20 @@ export default function ScrollyCanvas() {
       const img = imagesRef.current[currentFrame];
 
       if (img && img.complete) {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
+        const canvasEl = canvasRef.current;
+        if (!canvasEl) return;
 
         const ctx = ctxRef.current!;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
 
         const scale = Math.max(
-          canvas.clientWidth / img.width,
-          canvas.clientHeight / img.height
+          canvasEl.clientWidth / img.width,
+          canvasEl.clientHeight / img.height
         );
         const drawWidth = img.width * scale;
         const drawHeight = img.height * scale;
-        const x = (canvas.clientWidth - drawWidth) / 2;
-        const y = (canvas.clientHeight - drawHeight) / 2;
+        const x = (canvasEl.clientWidth - drawWidth) / 2;
+        const y = (canvasEl.clientHeight - drawHeight) / 2;
 
         ctx.drawImage(img, x, y, drawWidth, drawHeight);
       }
@@ -118,13 +120,14 @@ export default function ScrollyCanvas() {
 
   return (
     <div
-      ref={containerRef}
       style={{
-        position: "sticky",
+        position: "fixed",
         top: 0,
-        height: "100vh",
+        left: 0,
         width: "100%",
+        height: "100vh",
         background: "#0D0D0D",
+        zIndex: 1,
         overflow: "hidden",
       }}
     >

@@ -25,8 +25,12 @@ export default function HeroParallax() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
+      {/* This 350vh section creates the scroll space */}
+      
+      {/* Fixed canvas - stays in viewport during scroll */}
       <ScrollyCanvas />
 
+      {/* Fixed overlay text - animates based on page scroll */}
       <Overlay />
 
       {/* Gradient overlays for text legibility */}
