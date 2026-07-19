@@ -2,12 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 const TOTAL_FRAMES = 190;
 const FRAME_BASE_URL = "https://rbbxjambmvhupuwegwls.supabase.co/storage/v1/object/public/meetprerna";
@@ -61,12 +56,14 @@ export default function HeroReveal() {
     ctxRef.current = ctx;
 
     function resize() {
+      const canvasEl = canvasRef.current!;
+      const ctxEl = ctxRef.current!;
       const dpr = window.devicePixelRatio || 1;
-      canvas!.width = window.innerWidth * dpr;
-      canvas!.height = window.innerHeight * dpr;
-      canvas!.style.width = `${window.innerWidth}px`;
-      canvas!.style.height = `${window.innerHeight}px`;
-      ctx!.scale(dpr, dpr);
+      canvasEl.width = window.innerWidth * dpr;
+      canvasEl.height = window.innerHeight * dpr;
+      canvasEl.style.width = `${window.innerWidth}px`;
+      canvasEl.style.height = `${window.innerHeight}px`;
+      ctxEl.scale(dpr, dpr);
     }
 
     resize();
@@ -88,7 +85,6 @@ export default function HeroReveal() {
         const ctx = ctxRef.current!;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Calculate aspect ratio fit (cover)
         const scale = Math.max(
           canvas.clientWidth / img.width,
           canvas.clientHeight / img.height
@@ -324,7 +320,7 @@ export default function HeroReveal() {
         id="hero-canvas"
         style={{
           position: "relative",
-          height: "350vh", // Long scroll canvas
+          height: "350vh",
           background: "#0D0D0D",
         }}
       >
