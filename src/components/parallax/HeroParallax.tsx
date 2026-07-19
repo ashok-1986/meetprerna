@@ -15,6 +15,7 @@ export default function HeroParallax() {
   return (
     <motion.section
       ref={sectionRef}
+      data-lenis-prevent
       style={{
         position: "relative",
         height: "350vh",

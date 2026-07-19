@@ -27,11 +27,6 @@ export default function SmoothScrollProvider({
             infinite: false,
         });
 
-        // Bridge Lenis scroll position to Framer Motion
-        lenis.on("scroll", () => {
-            window.dispatchEvent(new Event("scroll"));
-        });
-
         // Connect Lenis with GSAP ScrollTrigger
         ScrollTrigger.scrollerProxy(document.body, {
             scrollTop(value?: number) {
