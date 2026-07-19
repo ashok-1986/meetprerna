@@ -30,8 +30,8 @@ export default function CustomCursor() {
   const [splatPos, setSplatPos] = useState({ x: 0, y: 0 });
 
   // Motion values for position
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
+  const cursorX = useMotionValue(typeof window !== 'undefined' ? window.innerWidth / 2 : 0);
+  const cursorY = useMotionValue(typeof window !== 'undefined' ? window.innerHeight / 2 : 0);
   const rotation = useMotionValue(0);
   const ringScale = useMotionValue(1);
 
@@ -170,6 +170,7 @@ export default function CustomCursor() {
     <>
       {/* ── MAIN BRUSH RING CURSOR ── */}
       <motion.div
+        className="custom-cursor"
         style={{
           position: 'fixed',
           left: springX,
@@ -247,6 +248,7 @@ export default function CustomCursor() {
       {/* ── CLICK SPLAT ── */}
       {isSplatting && (
         <motion.div
+          className="custom-cursor-splat"
           key={`splat-${splatPos.x}-${splatPos.y}`}
           initial={{ scale: 0, opacity: 0.9 }}
           animate={{ scale: 1.8, opacity: 0 }}

@@ -84,7 +84,7 @@ button,
 
   div[style*="2147483644"],
   canvas[style*="2147483645"],
-  div[style*="2147483646"] {
+  div[style*="2147483646"]:not(.custom-cursor):not(.custom-cursor-splat) {
     display: none !important;
   }
 
