@@ -1,12 +1,16 @@
 "use client";
 
+import { useRef } from "react";
 import ScrollyCanvas from "./ScrollyCanvas";
 import Overlay from "./Overlay";
 import { motion } from "framer-motion";
 
 export default function HeroParallax() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
   return (
     <motion.section
+      ref={sectionRef}
       style={{
         position: "relative",
         height: "350vh",
@@ -17,8 +21,8 @@ export default function HeroParallax() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <ScrollyCanvas />
-      <Overlay />
+      <ScrollyCanvas sectionRef={sectionRef} />
+      <Overlay sectionRef={sectionRef} />
 
       <div
         style={{

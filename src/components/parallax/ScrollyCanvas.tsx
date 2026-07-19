@@ -46,7 +46,6 @@ function loadImageWithTimeout(
       reject(new Error("failed to load"));
     };
 
-    img.crossOrigin = "anonymous";
     img.src = url;
   });
 }
@@ -131,8 +130,7 @@ async function preloadFrames(
   return { images, failedCount, fallback };
 }
 
-export default function ScrollyCanvas() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObject<HTMLDivElement | null> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
@@ -263,7 +261,6 @@ export default function ScrollyCanvas() {
   if (reducedMotion || showFallback) {
     return (
       <div
-        ref={sectionRef}
         style={{
           position: "sticky",
           top: 0,
@@ -301,7 +298,6 @@ export default function ScrollyCanvas() {
 
   return (
     <div
-      ref={sectionRef}
       style={{
         position: "sticky",
         top: 0,

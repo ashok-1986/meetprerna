@@ -106,8 +106,9 @@ const sections = [
   },
 ];
 
-export default function Overlay() {
+export default function Overlay({ sectionRef }: { sectionRef: React.RefObject<HTMLDivElement | null> }) {
   const { scrollYProgress } = useScroll({
+    target: sectionRef,
     offset: ["start start", "end end"],
   });
 
