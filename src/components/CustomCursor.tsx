@@ -39,7 +39,10 @@ export default function CustomCursor() {
   const springX = useSpring(cursorX, { stiffness: 120, damping: 28, mass: 0.8 });
   const springY = useSpring(cursorY, { stiffness: 120, damping: 28, mass: 0.8 });
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (!mounted) return;
@@ -49,20 +52,18 @@ export default function CustomCursor() {
     let velocityY = 0;
     let lastX = 0;
     let lastY = 0;
-    let pathCycleTimer: ReturnType<typeof setInterval>;
-    let idlePulseTimer: ReturnType<typeof setInterval>;
     let isMoving = false;
     let moveTimeout: ReturnType<typeof setTimeout>;
 
     // ── Slowly morph between ring shapes ────────────────────────
     // Creates the "breathing" organic feel
-    pathCycleTimer = setInterval(() => {
+    const pathCycleTimer = setInterval(() => {
       setPathIndex(i => (i + 1) % RING_PATHS.length);
     }, 2000);
 
     // ── Idle pulse ───────────────────────────────────────────────
     // Ring pulses gently when mouse is still
-    idlePulseTimer = setInterval(() => {
+    const idlePulseTimer = setInterval(() => {
       if (!isMoving && !isHovering) {
         animate(ringScale, [1, 1.08, 1], {
           duration: 1.8,
@@ -71,7 +72,7 @@ export default function CustomCursor() {
       }
     }, 2500);
 
-    // ── Mouse move ───────────────────────────────────────────────
+// ── Mouse move ───────────────────────────────────────────────
     const onMouseMove = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
@@ -147,21 +148,21 @@ export default function CustomCursor() {
       });
     };
 
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('click', onClick);
-    window.addEventListener('mouseover', onMouseOver);
-    window.addEventListener('mouseout', onMouseOut);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("click", onClick);
+    window.addEventListener("mouseover", onMouseOver);
+    window.addEventListener("mouseout", onMouseOut);
 
     return () => {
       clearInterval(pathCycleTimer);
       clearInterval(idlePulseTimer);
       clearTimeout(moveTimeout);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('click', onClick);
-      window.removeEventListener('mouseover', onMouseOver);
-      window.removeEventListener('mouseout', onMouseOut);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("click", onClick);
+      window.removeEventListener("mouseover", onMouseOver);
+      window.removeEventListener("mouseout", onMouseOut);
     };
-  }, [mounted, isHovering, cursorX, cursorY, rotation, ringScale]);
+  }, [isHovering]); // Remove motion values from deps to avoid re-creating listeners
 
   if (!mounted) return null;
 

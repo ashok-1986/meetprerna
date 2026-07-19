@@ -10,6 +10,15 @@ if (typeof window !== "undefined") {
   });
 }
 
+// Ensure ScrollTrigger is registered before component renders
+let scrollTriggerRegistered = false;
+if (typeof window !== "undefined" && !scrollTriggerRegistered) {
+  import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+    gsap.registerPlugin(ScrollTrigger);
+    scrollTriggerRegistered = true;
+  });
+}
+
 const TOTAL_FRAMES = 190;
 const FRAME_BASE_URL = "https://rbbxjambmvhupuwegwls.supabase.co/storage/v1/object/public/meetprerna";
 
