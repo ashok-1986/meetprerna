@@ -3,10 +3,14 @@
 import { useRef } from "react";
 import ScrollyCanvas from "./ScrollyCanvas";
 import Overlay from "./Overlay";
-import { motion } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 
 export default function HeroParallax() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
 
   return (
     <motion.section
@@ -21,8 +25,8 @@ export default function HeroParallax() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <ScrollyCanvas sectionRef={sectionRef} />
-      <Overlay sectionRef={sectionRef} />
+      <ScrollyCanvas scrollYProgress={scrollYProgress} />
+      <Overlay scrollYProgress={scrollYProgress} />
 
       <div
         style={{

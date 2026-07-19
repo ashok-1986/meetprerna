@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useScroll, useTransform, MotionValue } from "framer-motion";
+import { useTransform, MotionValue } from "framer-motion";
 
 const TOTAL_FRAMES = 190;
 const FRAME_BASE_URL = "https://rbbxjambmvhupuwegwls.supabase.co/storage/v1/object/public/meetprerna";
@@ -130,12 +130,12 @@ async function preloadFrames(
   return { images, failedCount, fallback };
 }
 
-export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
+export default function ScrollyCanvas({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState<boolean | null>(null);
   const [showFallback, setShowFallback] = useState(false);
 
   useEffect(() => {
@@ -150,11 +150,6 @@ export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObj
     };
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-
   const frameIndex = useTransform(
     scrollYProgress,
     [0, 1],
@@ -162,6 +157,9 @@ export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObj
   ) as MotionValue<number>;
 
   useEffect(() => {
+    if (reducedMotion === null || reducedMotion === true) return;
+
+    let isCancelled = false;
     const urls = Array.from({ length: TOTAL_FRAMES }, (_, i) => getFrameUrl(i + 1));
 
     preloadFrames(urls, {
@@ -176,6 +174,7 @@ export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObj
         console.warn(`[ScrollyCanvas] Frame ${index + 1} failed: ${url} - ${reason}`);
       },
     }).then(({ images, failedCount, fallback }) => {
+      if (isCancelled) return;
       imagesRef.current = images;
       setLoadedCount(TOTAL_FRAMES - images.filter((img) => img === null).length);
       if (fallback) {
@@ -184,6 +183,7 @@ export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObj
     });
 
     return () => {
+      isCancelled = true;
       imagesRef.current.forEach((img) => {
         if (img) {
           img.src = "";
@@ -193,7 +193,7 @@ export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObj
       });
       imagesRef.current = [];
     };
-  }, []);
+  }, [reducedMotion]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -256,7 +256,7 @@ export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObj
       window.removeEventListener("resize", resize);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [frameIndex, showFallback]);
+  }, [frameIndex, showFallback, reducedMotion]);
 
   if (reducedMotion || showFallback) {
     return (

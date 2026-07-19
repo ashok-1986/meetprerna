@@ -1,6 +1,6 @@
 "use client";
 
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useTransform, motion, MotionValue } from "framer-motion";
 
 const sections = [
   {
@@ -106,11 +106,7 @@ const sections = [
   },
 ];
 
-export default function Overlay({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
+export default function Overlay({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
 
   return (
     <div
