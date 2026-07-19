@@ -160,6 +160,8 @@ export default function ScrollyCanvas({ scrollYProgress }: { scrollYProgress: Mo
     if (reducedMotion === null || reducedMotion === true) return;
 
     let isCancelled = false;
+    setLoadedCount(0);
+    setShowFallback(false);
     const urls = Array.from({ length: TOTAL_FRAMES }, (_, i) => getFrameUrl(i + 1));
 
     preloadFrames(urls, {
@@ -192,6 +194,8 @@ export default function ScrollyCanvas({ scrollYProgress }: { scrollYProgress: Mo
         }
       });
       imagesRef.current = [];
+      setLoadedCount(0);
+      setShowFallback(false);
     };
   }, [reducedMotion]);
 
