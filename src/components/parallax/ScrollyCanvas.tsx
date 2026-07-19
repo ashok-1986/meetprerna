@@ -8,27 +8,136 @@ const FRAME_BASE_URL = "https://rbbxjambmvhupuwegwls.supabase.co/storage/v1/obje
 const INITIAL_LOAD = 20;
 const CHUNK_SIZE = 30;
 const IMAGE_TIMEOUT_MS = 8000;
-const MAX_FAILURE_RATE = 0.15; // 15% failure threshold
+const MAX_FAILURE_RATE = 0.15;
+const CONCURRENCY = 12;
+const MAX_RETRIES = 1;
 
 function getFrameUrl(index: number): string {
   const padded = String(index).padStart(3, "0");
   return `${FRAME_BASE_URL}/frame_${padded}_delay-0.041s.webp`;
 }
 
-interface FrameState {
-  loaded: number;
-  failed: number;
-  failedUrls: string[];
+function loadImageWithTimeout(
+  url: string,
+  timeoutMs: number
+): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    let settled = false;
+
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      img.src = "";
+      reject(new Error(`timed out after ${timeoutMs}ms`));
+    }, timeoutMs);
+
+    img.onload = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve(img);
+    };
+
+    img.onerror = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      reject(new Error("failed to load"));
+    };
+
+    img.crossOrigin = "anonymous";
+    img.src = url;
+  });
+}
+
+async function loadFrameWithRetry(
+  index: number,
+  url: string,
+  timeoutMs: number,
+  maxRetries: number,
+  onFrameFailed?: (index: number, url: string, reason: string) => void
+): Promise<{ index: number; status: "success" | "failed"; image?: HTMLImageElement }> {
+  let lastError: string = "unknown";
+
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const image = await loadImageWithTimeout(url, IMAGE_TIMEOUT_MS);
+      return { index, status: "success", image };
+    } catch (err) {
+      lastError = err instanceof Error ? err.message : "unknown error";
+      if (attempt === MAX_RETRIES) {
+        console.warn(`[ScrollyCanvas] Frame ${index} failed after ${MAX_RETRIES + 1} attempts: ${url} - ${lastError}`);
+      }
+    }
+  }
+
+  return { index, status: "failed" };
+}
+
+async function preloadFrames(
+  urls: string[],
+  {
+    concurrency = CONCURRENCY,
+    timeoutMs = IMAGE_TIMEOUT_MS,
+    maxRetries = MAX_RETRIES,
+    failureThreshold = MAX_FAILURE_RATE,
+    onProgress,
+    onFrameFailed,
+  }: {
+    concurrency?: number;
+    timeoutMs?: number;
+    maxRetries?: number;
+    failureThreshold?: number;
+    onProgress?: (loaded: number, total: number) => void;
+    onFrameFailed?: (index: number, url: string, reason: string) => void;
+  } = {}
+): Promise<{
+  images: (HTMLImageElement | null)[];
+  failedCount: number;
+  fallback: boolean;
+}> {
+  const total = urls.length;
+  const images: (HTMLImageElement | null)[] = new Array(total).fill(null);
+  let loadedCount = 0;
+  let failedCount = 0;
+
+  for (let start = 0; start < total; start += concurrency) {
+    const batch = urls.slice(start, start + concurrency);
+
+    const results = await Promise.all(
+      batch.map((url, i) =>
+        loadFrameWithRetry(start + i, url, timeoutMs, maxRetries, onFrameFailed)
+      )
+    );
+
+    for (const result of results) {
+      loadedCount++;
+      if (result.status === "success" && result.image) {
+        images[result.index] = result.image;
+      } else {
+        failedCount++;
+      }
+      onProgress?.(loadedCount, total);
+    }
+
+    if (failedCount / total > failureThreshold) {
+      break;
+    }
+  }
+
+  const fallback = failedCount / total > failureThreshold;
+
+  return { images, failedCount, fallback };
 }
 
 export default function ScrollyCanvas() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
   const [failedCount, setFailedCount] = useState(0);
-  const [failedUrls, setFailedUrls] = useState<string[]>([]);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
 
@@ -52,98 +161,37 @@ export default function ScrollyCanvas() {
   ) as MotionValue<number>;
 
   useEffect(() => {
-    const images: HTMLImageElement[] = [];
-    let loaded = 0;
-    let failed = 0;
-    const failedUrls: string[] = [];
+    const urls = Array.from({ length: TOTAL_FRAMES }, (_, i) => getFrameUrl(i + 1));
 
-    const loadChunk = (start: number, end: number) => {
-      for (let i = start; i <= end; i++) {
-        const url = getFrameUrl(i);
-        const img = new Image();
-        img.crossOrigin = "anonymous"; // Required for Supabase Storage CORS
-        img.loading = "lazy";
-        img.src = url;
-
-        let timeoutId: ReturnType<typeof setTimeout>;
-        let settled = false;
-
-        const settle = (success: boolean) => {
-          if (settled) return;
-          settled = true;
-          clearTimeout(timeoutId);
-          
-          if (success) {
-            loaded++;
-            setLoadedCount(loaded);
-          } else {
-            failed++;
-            failedUrls.push(url);
-            setFailedCount(failed);
-            setFailedUrls([...failedUrls]);
-            console.warn(`[ScrollyCanvas] Frame ${i} failed to load: ${url}`);
-          }
-          
-          // Check failure rate
-          const total = loaded + failed;
-          if (total > 0 && failed / total > MAX_FAILURE_RATE && !showFallback) {
-            console.error(`[ScrollyCanvas] Failure rate exceeded ${MAX_FAILURE_RATE * 100}%. Showing fallback.`);
-            setShowFallback(true);
-          }
-          
-          setLoadedCount(loaded); // Trigger re-render for progress
-        };
-
-        img.onload = () => settle(true);
-        img.onerror = () => settle(false);
-        
-        // Per-image timeout - treat as failure if not loaded in time
-        timeoutId = setTimeout(() => {
-          if (!settled) {
-            console.warn(`[ScrollyCanvas] Frame ${i} timed out after ${IMAGE_TIMEOUT_MS}ms: ${url}`);
-            settle(false);
-          }
-        }, IMAGE_TIMEOUT_MS);
-
-        images.push(img);
-      }
-    };
-
-    const loadInitial = async () => {
-      // Load first chunk with timeout per image
-      loadChunk(1, INITIAL_LOAD);
-      imagesRef.current = images;
-
-      // Load remaining chunks with requestIdleCallback
-      let chunk = 1;
-      const loadNextChunk = () => {
-        const start = INITIAL_LOAD + (chunk - 1) * CHUNK_SIZE + 1;
-        const end = Math.min(start + CHUNK_SIZE - 1, TOTAL_FRAMES);
-        if (start <= TOTAL_FRAMES) {
-          loadChunk(start, end);
-          chunk++;
-          if (typeof requestIdleCallback !== "undefined") {
-            requestIdleCallback(loadNextChunk, { timeout: 500 });
-          } else {
-            setTimeout(loadNextChunk, 100);
-          }
+    preloadFrames(urls, {
+      concurrency: CONCURRENCY,
+      timeoutMs: IMAGE_TIMEOUT_MS,
+      maxRetries: MAX_RETRIES,
+      failureThreshold: MAX_FAILURE_RATE,
+      onProgress: (loaded, total) => {
+        setLoadedCount(loaded);
+        if (loaded / total > 0.85 && !showFallback) {
+          // Check failure rate implicitly via loaded count
         }
-      };
-
-      if (typeof requestIdleCallback !== "undefined") {
-        requestIdleCallback(loadNextChunk, { timeout: 1000 });
-      } else {
-        setTimeout(loadNextChunk, 200);
+      },
+      onFrameFailed: (index, url, reason) => {
+        console.warn(`[ScrollyCanvas] Frame ${index + 1} failed: ${url} - ${reason}`);
+      },
+    }).then(({ images, failedCount, fallback }) => {
+      imagesRef.current = images;
+      setLoadedCount(TOTAL_FRAMES - images.filter((img) => img === null).length);
+      if (fallback) {
+        setShowFallback(true);
       }
-    };
-
-    loadInitial();
+    });
 
     return () => {
-      imagesRef.current.forEach(img => {
-        img.src = "";
-        img.onload = null;
-        img.onerror = null;
+      imagesRef.current.forEach((img) => {
+        if (img) {
+          img.src = "";
+          img.onload = null;
+          img.onerror = null;
+        }
       });
       imagesRef.current = [];
     };
@@ -210,9 +258,8 @@ export default function ScrollyCanvas() {
       window.removeEventListener("resize", resize);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [frameIndex, loadedCount]);
+  }, [frameIndex, showFallback]);
 
-  // Show fallback if too many failures or reduced motion
   if (reducedMotion || showFallback) {
     return (
       <div
@@ -240,12 +287,14 @@ export default function ScrollyCanvas() {
             filter: "grayscale(20%) contrast(1.05) brightness(0.55)",
           }}
         />
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          background: "radial-gradient(ellipse at center, transparent 40%, rgba(13,13,13,0.6) 100%)",
-        }} />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background: "radial-gradient(ellipse at center, transparent 40%, rgba(13,13,13,0.6) 100%)",
+          }}
+        />
       </div>
     );
   }
@@ -273,7 +322,6 @@ export default function ScrollyCanvas() {
         }}
       />
 
-      {/* Subtle vignette for depth */}
       <div
         style={{
           position: "absolute",
@@ -284,7 +332,6 @@ export default function ScrollyCanvas() {
         }}
       />
 
-      {/* Film grain */}
       <div
         style={{
           position: "absolute",
