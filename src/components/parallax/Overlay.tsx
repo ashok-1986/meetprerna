@@ -107,9 +107,8 @@ const sections = [
 ];
 
 export default function Overlay() {
-  // Track page scroll progress
   const { scrollYProgress } = useScroll({
-    offset: ["start start", "end start"],
+    offset: ["start start", "end end"],
   });
 
   return (

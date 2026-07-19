@@ -1,16 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import ScrollyCanvas from "./ScrollyCanvas";
+import Overlay from "./Overlay";
 import { motion } from "framer-motion";
-
-const ScrollyCanvas = dynamic(() => import("@/components/parallax/ScrollyCanvas").then(mod => mod.default), {
-  ssr: false,
-  loading: () => <div style={{ height: "100vh", background: "#0D0D0D" }} />,
-});
-
-const Overlay = dynamic(() => import("@/components/parallax/Overlay").then(mod => mod.default), {
-  ssr: false,
-});
 
 export default function HeroParallax() {
   return (
@@ -25,15 +17,9 @@ export default function HeroParallax() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* This 350vh section creates the scroll space */}
-      
-      {/* Fixed canvas - stays in viewport during scroll */}
       <ScrollyCanvas />
-
-      {/* Fixed overlay text - animates based on page scroll */}
       <Overlay />
 
-      {/* Gradient overlays for text legibility */}
       <div
         style={{
           position: "fixed",
@@ -62,7 +48,6 @@ export default function HeroParallax() {
         }}
       />
 
-      {/* Film grain overlay */}
       <div
         style={{
           position: "fixed",

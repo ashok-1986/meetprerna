@@ -5,6 +5,8 @@ import { useScroll, useTransform, MotionValue } from "framer-motion";
 
 const TOTAL_FRAMES = 190;
 const FRAME_BASE_URL = "https://rbbxjambmvhupuwegwls.supabase.co/storage/v1/object/public/meetprerna";
+const INITIAL_LOAD = 20;
+const CHUNK_SIZE = 30;
 
 function getFrameUrl(index: number): string {
   const padded = String(index).padStart(3, "0");
@@ -12,14 +14,25 @@ function getFrameUrl(index: number): string {
 }
 
 export default function ScrollyCanvas() {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
+  const [currentChunk, setCurrentChunk] = useState(INITIAL_LOAD);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Track page scroll progress (0 to 1 over 350vh)
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
   const { scrollYProgress } = useScroll({
-    offset: ["start start", "end start"],
+    target: sectionRef,
+    offset: ["start start", "end end"],
   });
 
   const frameIndex = useTransform(
@@ -28,33 +41,61 @@ export default function ScrollyCanvas() {
     [0, TOTAL_FRAMES - 1]
   ) as MotionValue<number>;
 
-  // Preload all frames
   useEffect(() => {
     const images: HTMLImageElement[] = [];
     let loaded = 0;
 
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = getFrameUrl(i);
-      img.onload = () => {
-        loaded++;
-        setLoadedCount(loaded);
-      };
-      img.onerror = () => {
-        loaded++;
-        setLoadedCount(loaded);
-      };
-      images.push(img);
-    }
+    const loadChunk = (start: number, end: number) => {
+      for (let i = start; i <= end; i++) {
+        const img = new Image();
+        img.src = getFrameUrl(i);
+        img.loading = "lazy";
+        img.onload = () => {
+          loaded++;
+          setLoadedCount(loaded);
+        };
+        img.onerror = () => {
+          loaded++;
+          setLoadedCount(loaded);
+        };
+        images.push(img);
+      }
+    };
 
+    loadChunk(1, INITIAL_LOAD);
     imagesRef.current = images;
 
+    let chunk = 1;
+    const loadNextChunk = () => {
+      const start = INITIAL_LOAD + (chunk - 1) * CHUNK_SIZE + 1;
+      const end = Math.min(start + CHUNK_SIZE - 1, TOTAL_FRAMES);
+      if (start <= TOTAL_FRAMES) {
+        loadChunk(start, end);
+        chunk++;
+        if (typeof requestIdleCallback !== "undefined") {
+          requestIdleCallback(loadNextChunk, { timeout: 500 });
+        } else {
+          setTimeout(loadNextChunk, 100);
+        }
+      }
+    };
+
+    if (typeof requestIdleCallback !== "undefined") {
+      requestIdleCallback(loadNextChunk, { timeout: 1000 });
+    } else {
+      setTimeout(loadNextChunk, 200);
+    }
+
     return () => {
+      imagesRef.current.forEach(img => {
+        img.src = "";
+        img.onload = null;
+        img.onerror = null;
+      });
       imagesRef.current = [];
     };
   }, []);
 
-  // Render loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -75,7 +116,7 @@ export default function ScrollyCanvas() {
     }
 
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", resize, { passive: true });
 
     let rafId: number;
 
@@ -120,12 +161,12 @@ export default function ScrollyCanvas() {
 
   return (
     <div
+      ref={sectionRef}
       style={{
-        position: "fixed",
+        position: "sticky",
         top: 0,
-        left: 0,
-        width: "100%",
         height: "100vh",
+        width: "100%",
         background: "#0D0D0D",
         zIndex: 1,
         overflow: "hidden",
