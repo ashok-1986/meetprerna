@@ -1,287 +1,411 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+
+if (typeof window !== "undefined") {
+  import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+    gsap.registerPlugin(ScrollTrigger);
+  });
+}
+
+const TOTAL_FRAMES = 190;
+const FRAME_BASE_URL = "https://rbbxjambmvhupuwegwls.supabase.co/storage/v1/object/public/meetprerna";
+
+function getFrameUrl(index: number): string {
+  const padded = String(index).padStart(3, "0");
+  return `${FRAME_BASE_URL}/frame_${padded}_delay-0.041s.webp`;
+}
 
 export default function HeroReveal() {
-    const [revealed, setRevealed] = useState(false);
-    const parallaxRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const [loadedCount, setLoadedCount] = useState(0);
+  const rafRef = useRef<number | undefined>(undefined);
+  const targetFrameRef = useRef(0);
 
-    // Clip-path reveal on load
-    useEffect(() => {
-        const timer = setTimeout(() => setRevealed(true), 200);
-        return () => clearTimeout(timer);
-    }, []);
+  // Preload all frames
+  useEffect(() => {
+    const images: HTMLImageElement[] = [];
+    let loaded = 0;
 
-    // CSS parallax — passive scroll listener, no Framer Motion scroll hooks
-    useEffect(() => {
-        const handleScroll = () => {
-            if (!parallaxRef.current) return;
-            parallaxRef.current.style.transform =
-                `translateY(${window.scrollY * 0.25}px)`;
-        };
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+      const img = document.createElement("img");
+      img.src = getFrameUrl(i);
+      img.onload = () => {
+        loaded++;
+        setLoadedCount(loaded);
+      };
+      img.onerror = () => {
+        loaded++;
+        setLoadedCount(loaded);
+      };
+      images.push(img);
+    }
 
-    return (
-        <section
-            style={{
-                position: "relative",
-                height: "100vh",
-                overflow: "hidden",
-                background: "#0D0D0D",
-            }}
+    imagesRef.current = images;
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  // Render loop
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctxRef.current = ctx;
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas!.width = window.innerWidth * dpr;
+      canvas!.height = window.innerHeight * dpr;
+      canvas!.style.width = `${window.innerWidth}px`;
+      canvas!.style.height = `${window.innerHeight}px`;
+      ctx!.scale(dpr, dpr);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    function render() {
+      if (!ctxRef.current || imagesRef.current.length === 0) {
+        rafRef.current = requestAnimationFrame(render);
+        return;
+      }
+
+      const frameIndex = Math.min(Math.floor(targetFrameRef.current), TOTAL_FRAMES - 1);
+      const img = imagesRef.current[frameIndex];
+
+      if (img && img.complete) {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = ctxRef.current!;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Calculate aspect ratio fit (cover)
+        const scale = Math.max(
+          canvas.clientWidth / img.width,
+          canvas.clientHeight / img.height
+        );
+        const drawWidth = img.width * scale;
+        const drawHeight = img.height * scale;
+        const x = (canvas.clientWidth - drawWidth) / 2;
+        const y = (canvas.clientHeight - drawHeight) / 2;
+
+        ctx.drawImage(img, x, y, drawWidth, drawHeight);
+      }
+
+      rafRef.current = requestAnimationFrame(render);
+    }
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [loadedCount]);
+
+  // GSAP ScrollTrigger - drive frame progression on scroll
+  useGSAP(() => {
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: "#hero-canvas",
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.5,
+        onUpdate: (self) => {
+          targetFrameRef.current = self.progress * (TOTAL_FRAMES - 1);
+        },
+      });
+
+      // Text reveal animations
+      gsap.fromTo(
+        ".hero-label",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 0.7,
+          y: 0,
+          duration: 1.2,
+          ease: "power3.out",
+          delay: 0.4,
+          scrollTrigger: { trigger: "#hero-canvas", start: "top top" },
+        }
+      );
+
+      gsap.fromTo(
+        ".hero-headline",
+        { opacity: 0, y: "110%" },
+        {
+          opacity: 1,
+          y: "0%",
+          duration: 1.4,
+          ease: "expo.out",
+          stagger: 0.15,
+          delay: 0.6,
+          scrollTrigger: { trigger: "#hero-canvas", start: "top top" },
+        }
+      );
+
+      gsap.fromTo(
+        ".hero-tagline",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 0.75,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          delay: 1.3,
+          scrollTrigger: { trigger: "#hero-canvas", start: "top top" },
+        }
+      );
+
+      gsap.fromTo(
+        ".hero-cta",
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "expo.out",
+          delay: 1.7,
+          scrollTrigger: { trigger: "#hero-canvas", start: "top top" },
+        }
+      );
+
+      // Parallax for overlay gradients
+      gsap.to(".hero-gradient-left", {
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#hero-canvas",
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.3,
+        },
+      });
+
+      gsap.to(".hero-gradient-bottom", {
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#hero-canvas",
+          start: "top center",
+          end: "bottom top",
+          scrub: 0.3,
+        },
+      });
+    }, canvasRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <>
+      {/* ── STICKY TEXT OVERLAY ── */}
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          zIndex: 20,
+          pointerEvents: "none",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          paddingBottom: "80px",
+          paddingLeft: "64px",
+          paddingRight: "40%",
+        }}
+      >
+        {/* City / title label */}
+        <p className="hero-label" style={{
+          fontFamily: "Lato, sans-serif",
+          fontSize: "0.65rem",
+          letterSpacing: "0.3em",
+          color: "#C4FF61",
+          textTransform: "uppercase",
+          marginBottom: "24px",
+          display: "block",
+        }}>
+          Navi Mumbai · Mumbai · Artist & Creator · Skin Illustrator
+        </p>
+
+        {/* Main tagline — NOT the brand name */}
+        <div style={{ overflow: "hidden", marginBottom: "8px" }}>
+          <h1 className="hero-headline" style={{
+            fontFamily: "'Times New Roman', Times, serif",
+            fontSize: "clamp(3rem, 6vw, 5.5rem)",
+            fontWeight: 500,
+            color: "rgba(253,255,233,0.92)",
+            lineHeight: 1.0,
+            letterSpacing: "-0.02em",
+            margin: 0,
+          }}>
+            She carries no studio.
+          </h1>
+        </div>
+
+        <div style={{ overflow: "hidden", marginBottom: "8px" }}>
+          <h1 className="hero-headline" style={{
+            fontFamily: "'Times New Roman', Times, serif",
+            fontSize: "clamp(3rem, 6vw, 5.5rem)",
+            fontWeight: 500,
+            color: "rgba(253,255,233,0.92)",
+            lineHeight: 1.0,
+            letterSpacing: "-0.02em",
+            margin: 0,
+          }}>
+            Only a needle
+          </h1>
+        </div>
+
+        <div style={{ overflow: "hidden", marginBottom: "40px" }}>
+          <h1 className="hero-headline" style={{
+            fontFamily: "'Times New Roman', Times, serif",
+            fontSize: "clamp(3rem, 6vw, 5.5rem)",
+            fontWeight: 500,
+            fontStyle: "italic",
+            color: "#C4FF61",
+            lineHeight: 1.0,
+            letterSpacing: "-0.02em",
+            margin: 0,
+          }}>
+            and everything she knows.
+          </h1>
+        </div>
+
+        {/* Tagline below headline */}
+        <div style={{ overflow: "hidden", marginBottom: "40px" }}>
+          <p className="hero-tagline" style={{
+            fontFamily: "'Times New Roman', Times, serif",
+            fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)",
+            fontStyle: "italic",
+            color: "rgba(253,255,233,0.55)",
+            margin: 0,
+            letterSpacing: "0.01em",
+          }}>
+            Every city. Every skin. Every story — permanent.
+          </p>
+        </div>
+
+        {/* CTA button */}
+        <a
+          className="hero-cta"
+          href="https://meetprerna.fillout.com/book"
+          style={{
+            display: "inline-block",
+            fontFamily: "Lato, sans-serif",
+            fontWeight: 700,
+            fontSize: "0.72rem",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "#1A1A1A",
+            background: "#C4FF61",
+            padding: "14px 32px",
+            borderRadius: "100px",
+            textDecoration: "none",
+            transition: "background 0.3s ease, transform 0.2s ease",
+          }}
+          data-cursor="book"
         >
-            {/* ── FULL BLEED PORTRAIT IMAGE ── */}
-            <motion.div
-                initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
-                animate={revealed
-                    ? { clipPath: "inset(0% 0% 0% 0%)" }
-                    : { clipPath: "inset(100% 0% 0% 0%)" }
-                }
-                transition={{ duration: 1.6, ease: [0.76, 0, 0.24, 1] }}
-                style={{
-                    position: "absolute",
-                    inset: "-15% 0",
-                    zIndex: 1,
-                }}
-            >
-                <div ref={parallaxRef} style={{ position: "absolute", inset: 0 }}>
-                    <Image
-                        src="/hero/prerna-hero.jpg"
-                        alt="Prerna — Artist & Creator"
-                        fill
-                        priority
-                        sizes="100vw"
-                        style={{
-                            objectFit: "cover",
-                            objectPosition: "center top",
-                            // Dark treatment — text must be legible over image
-                            filter: "grayscale(20%) contrast(1.05) brightness(0.55)",
-                        }}
-                    />
-                </div>
-            </motion.div>
+          Start your journey
+        </a>
+      </div>
 
-            {/* ── GRADIENT OVERLAYS — ensures text legibility ── */}
-            {/* Left gradient — text lives here */}
-            <div style={{
-                position: "absolute", inset: 0, zIndex: 2,
-                pointerEvents: "none",
-                background: "linear-gradient(to right, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.4) 50%, transparent 100%)",
-            }} />
-            {/* Bottom gradient */}
-            <div style={{
-                position: "absolute", inset: 0, zIndex: 2,
-                pointerEvents: "none",
-                background: "linear-gradient(to top, rgba(13,13,13,0.9) 0%, transparent 50%)",
-            }} />
-            {/* Top gradient — behind navbar */}
-            <div style={{
-                position: "absolute", inset: 0, zIndex: 2,
-                pointerEvents: "none",
-                background: "linear-gradient(to bottom, rgba(13,13,13,0.6) 0%, transparent 25%)",
-            }} />
+      {/* ── CANVAS SECTION: 350vh tall for long scroll ── */}
+      <section
+        id="hero-canvas"
+        style={{
+          position: "relative",
+          height: "350vh", // Long scroll canvas
+          background: "#0D0D0D",
+        }}
+      >
+        {/* Canvas fills viewport, stays fixed via sticky parent context */}
+        <canvas
+          ref={canvasRef}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100vh",
+            zIndex: 1,
+          }}
+        />
 
-            {/* ── GRAIN OVERLAY ── */}
-            <div style={{
-                position: "absolute", inset: 0, zIndex: 3,
-                pointerEvents: "none",
-                opacity: 0.04,
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-            }} />
+        {/* Gradient overlays — ensures text legibility */}
+        <div
+          className="hero-gradient-left"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 2,
+            pointerEvents: "none",
+            background: "linear-gradient(to right, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.4) 50%, transparent 100%)",
+          }}
+        />
+        <div
+          className="hero-gradient-bottom"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 2,
+            pointerEvents: "none",
+            background: "linear-gradient(to top, rgba(13,13,13,0.9) 0%, transparent 50%)",
+          }}
+        />
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 2,
+            pointerEvents: "none",
+            background: "linear-gradient(to bottom, rgba(13,13,13,0.6) 0%, transparent 25%)",
+          }}
+        />
 
-            {/* ── TEXT OVERLAY — bottom left, Ashfall style ── */}
-            <div style={{
-                position: "absolute",
-                bottom: "80px",
-                left: "64px",
-                right: "40%", // text stays in left 60%
-                zIndex: 10,
-            }}>
+        {/* Grain overlay */}
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 3,
+            pointerEvents: "none",
+            opacity: 0.04,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          }}
+        />
 
-                {/* City / title label */}
-                <motion.p
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 0.7, y: 0 }}
-                    transition={{ delay: 0.9, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    style={{
-                        fontFamily: "Lato, sans-serif",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.3em",
-                        color: "#C4FF61",
-                        textTransform: "uppercase",
-                        marginBottom: "24px",
-                        display: "block",
-                    }}
-                >
-                    Navi Mumbai · Mumbai · Artist & Creator · Itinerant
-                </motion.p>
-
-                {/* Main tagline — NOT the brand name */}
-                {/* Brand name is in the logo. Hero carries the idea. */}
-                <div style={{ overflow: "hidden", marginBottom: "8px" }}>
-                    <motion.h1
-                        initial={{ y: "110%" }}
-                        animate={{ y: "0%" }}
-                        transition={{ delay: 0.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                        style={{
-                            fontFamily: "'Times New Roman', Times, serif",
-                            fontSize: "clamp(3rem, 6vw, 5.5rem)",
-                            fontWeight: 500,
-                            color: "rgba(253,255,233,0.92)",
-                            lineHeight: 1.0,
-                            letterSpacing: "-0.02em",
-                            margin: 0,
-                        }}
-                    >
-                        She carries no studio.
-                    </motion.h1>
-                </div>
-
-                <div style={{ overflow: "hidden", marginBottom: "8px" }}>
-                    <motion.h1
-                        initial={{ y: "110%" }}
-                        animate={{ y: "0%" }}
-                        transition={{ delay: 0.65, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                        style={{
-                            fontFamily: "'Times New Roman', Times, serif",
-                            fontSize: "clamp(3rem, 6vw, 5.5rem)",
-                            fontWeight: 500,
-                            color: "rgba(253,255,233,0.92)",
-                            lineHeight: 1.0,
-                            letterSpacing: "-0.02em",
-                            margin: 0,
-                        }}
-                    >
-                        Only a needle
-                    </motion.h1>
-                </div>
-
-                <div style={{ overflow: "hidden", marginBottom: "40px" }}>
-                    <motion.h1
-                        initial={{ y: "110%" }}
-                        animate={{ y: "0%" }}
-                        transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                        style={{
-                            fontFamily: "'Times New Roman', Times, serif",
-                            fontSize: "clamp(3rem, 6vw, 5.5rem)",
-                            fontWeight: 500,
-                            fontStyle: "italic",
-                            color: "#C4FF61",
-                            lineHeight: 1.0,
-                            letterSpacing: "-0.02em",
-                            margin: 0,
-                        }}
-                    >
-                        and everything she knows.
-                    </motion.h1>
-                </div>
-
-                {/* Tagline below headline */}
-                <div style={{ overflow: "hidden", marginBottom: "40px" }}>
-                    <motion.p
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 0.75, y: 0 }}
-                        transition={{ delay: 1.0, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                        style={{
-                            fontFamily: "'Times New Roman', Times, serif",
-                            fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)",
-                            fontStyle: "italic",
-                            color: "rgba(253,255,233,0.55)",
-                            margin: 0,
-                            letterSpacing: "0.01em",
-                        }}
-                    >
-                        Every city. Every skin. Every story — permanent.
-                    </motion.p>
-                </div>
-
-                {/* CTA button */}
-                <motion.a
-                    href="https://meetprerna.fillout.com/book"
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    style={{
-                        display: "inline-block",
-                        fontFamily: "Lato, sans-serif",
-                        fontWeight: 700,
-                        fontSize: "0.72rem",
-                        letterSpacing: "0.15em",
-                        textTransform: "uppercase",
-                        color: "#1A1A1A",
-                        background: "#C4FF61",
-                        padding: "14px 32px",
-                        borderRadius: "100px",
-                        textDecoration: "none",
-                        transition: "background 0.3s ease, transform 0.2s ease",
-                    }}
-                    data-cursor="book"
-                >
-                    Start a commission
-                </motion.a>
-
-            </div>
-
-            {/* ── SCROLL INDICATOR — bottom right ── */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2, duration: 1 }}
-                style={{
-                    position: "absolute",
-                    bottom: "40px",
-                    right: "48px",
-                    zIndex: 10,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "8px",
-                }}
-            >
-                <p style={{
-                    fontFamily: "Lato, sans-serif",
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.25em",
-                    color: "rgba(253,255,233,0.3)",
-                    textTransform: "uppercase",
-                    margin: 0,
-                    writingMode: "vertical-rl",
-                }}>
-                    Scroll
-                </p>
-                {/* Animated line */}
-                <motion.div
-                    animate={{ scaleY: [0.3, 1, 0.3] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    style={{
-                        width: "1px",
-                        height: "48px",
-                        background: "linear-gradient(to bottom, #C4FF61, transparent)",
-                        transformOrigin: "top",
-                    }}
-                />
-            </motion.div>
-
-            {/* ── OM SYMBOL — atmospheric, bottom centre ── */}
-            <div style={{
-                position: "absolute",
-                bottom: "24px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                zIndex: 10,
-                fontFamily: "'Times New Roman', serif",
-                fontSize: "1.2rem",
-                color: "rgba(196,255,97,0.12)",
-                userSelect: "none",
-                pointerEvents: "none",
-            }}>
-                ॐ
-            </div>
-
-        </section>
-    );
+        {/* Loading indicator */}
+        {loadedCount < TOTAL_FRAMES && (
+          <div
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 5,
+              fontFamily: "Lato, sans-serif",
+              fontSize: "0.65rem",
+              letterSpacing: "0.25em",
+              color: "#C4FF61",
+              textTransform: "uppercase",
+              opacity: 0.6,
+            }}
+          >
+            Loading {Math.round((loadedCount / TOTAL_FRAMES) * 100)}%
+          </div>
+        )}
+      </section>
+    </>
+  );
 }
