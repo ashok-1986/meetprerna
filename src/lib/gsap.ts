@@ -1,11 +1,9 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CustomEase } from "gsap/CustomEase";
-import { SplitText } from "gsap/SplitText";
-import { Draggable } from "gsap/Draggable";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, CustomEase, SplitText, Draggable);
+  gsap.registerPlugin(ScrollTrigger, CustomEase);
 
   CustomEase.create("hop", "0.77, 0, 0.175, 1");
   CustomEase.create("smooth", "0.23, 1, 0.32, 1");
@@ -15,4 +13,4 @@ if (typeof window !== "undefined") {
   CustomEase.create("circ", "0.08, 0.82, 0.17, 1");
 }
 
-export { gsap, ScrollTrigger, CustomEase, SplitText, Draggable };
+export { gsap, ScrollTrigger, CustomEase };
