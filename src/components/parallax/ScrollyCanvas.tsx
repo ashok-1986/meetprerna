@@ -258,7 +258,7 @@ export default function ScrollyCanvas({ scrollYProgress }: { scrollYProgress: Mo
     };
   }, [frameIndex, showFallback, reducedMotion]);
 
-  if (reducedMotion || showFallback) {
+  if (reducedMotion !== false || showFallback) {
     return (
       <div
         style={{
