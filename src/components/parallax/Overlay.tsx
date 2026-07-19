@@ -131,15 +131,26 @@ export default function Overlay({ sectionRef }: { sectionRef: React.RefObject<HT
       {sections.map((section, i) => {
         const prevProgress = i > 0 ? sections[i - 1].progress : 0;
         const nextProgress = i < sections.length - 1 ? sections[i + 1].progress : 1;
-        let startFade = prevProgress + (section.progress - prevProgress) * 0.3;
+        const startFade = prevProgress + (section.progress - prevProgress) * 0.3;
         const endFade = section.progress + (nextProgress - section.progress) * 0.3;
 
-        if (startFade === section.progress) {
-          startFade = section.progress - 0.01;
-        }
+        // The first section doesn't fade in, it starts fully visible at progress 0
+        const isFirst = i === 0 && section.progress === 0;
 
-        const opacity = useTransform(scrollYProgress, [startFade, section.progress, endFade], [0, 1, 0]);
-        const y = useTransform(scrollYProgress, [startFade, section.progress, endFade], [40, 0, -40]);
+        const inputRange = isFirst 
+          ? [section.progress, endFade] 
+          : [startFade, section.progress, endFade];
+
+        const opacityOutput = isFirst 
+          ? [1, 0] 
+          : [0, 1, 0];
+
+        const yOutput = isFirst 
+          ? [0, -40] 
+          : [40, 0, -40];
+
+        const opacity = useTransform(scrollYProgress, inputRange, opacityOutput);
+        const y = useTransform(scrollYProgress, inputRange, yOutput);
 
         return (
           <motion.div
