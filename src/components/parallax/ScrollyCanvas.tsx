@@ -130,21 +130,24 @@ async function preloadFrames(
   return { images, failedCount, fallback };
 }
 
-export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObject<HTMLDivElement | null> }) {
+export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
-  const [failedCount, setFailedCount] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mediaQuery.matches);
     const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
+    // Timeout avoids synchronous setState in effect body (React 19 warning)
+    const initTimer = setTimeout(() => setReducedMotion(mediaQuery.matches), 0);
+    return () => {
+      clearTimeout(initTimer);
+      mediaQuery.removeEventListener("change", handler);
+    };
   }, []);
 
   const { scrollYProgress } = useScroll({
@@ -168,9 +171,6 @@ export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObj
       failureThreshold: MAX_FAILURE_RATE,
       onProgress: (loaded, total) => {
         setLoadedCount(loaded);
-        if (loaded / total > 0.85 && !showFallback) {
-          // Check failure rate implicitly via loaded count
-        }
       },
       onFrameFailed: (index, url, reason) => {
         console.warn(`[ScrollyCanvas] Frame ${index + 1} failed: ${url} - ${reason}`);
@@ -271,6 +271,7 @@ export default function ScrollyCanvas({ sectionRef }: { sectionRef: React.RefObj
           overflow: "hidden",
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={getFrameUrl(Math.ceil(TOTAL_FRAMES / 2))}
           alt="Prerna — Artist & Creator"

@@ -6,7 +6,7 @@ import Overlay from "./Overlay";
 import { motion } from "framer-motion";
 
 export default function HeroParallax() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   return (
     <motion.section
@@ -15,7 +15,7 @@ export default function HeroParallax() {
         position: "relative",
         height: "350vh",
         background: "#0D0D0D",
-        overflow: "hidden",
+        overflow: "clip",
       }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

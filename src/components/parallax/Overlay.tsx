@@ -106,7 +106,7 @@ const sections = [
   },
 ];
 
-export default function Overlay({ sectionRef }: { sectionRef: React.RefObject<HTMLDivElement | null> }) {
+export default function Overlay({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
@@ -131,8 +131,12 @@ export default function Overlay({ sectionRef }: { sectionRef: React.RefObject<HT
       {sections.map((section, i) => {
         const prevProgress = i > 0 ? sections[i - 1].progress : 0;
         const nextProgress = i < sections.length - 1 ? sections[i + 1].progress : 1;
-        const startFade = prevProgress + (section.progress - prevProgress) * 0.3;
+        let startFade = prevProgress + (section.progress - prevProgress) * 0.3;
         const endFade = section.progress + (nextProgress - section.progress) * 0.3;
+
+        if (startFade === section.progress) {
+          startFade = section.progress - 0.01;
+        }
 
         const opacity = useTransform(scrollYProgress, [startFade, section.progress, endFade], [0, 1, 0]);
         const y = useTransform(scrollYProgress, [startFade, section.progress, endFade], [40, 0, -40]);
