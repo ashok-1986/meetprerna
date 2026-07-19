@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import HeroReveal from "@/components/HeroReveal";
+import HeroParallax from "@/components/parallax/HeroParallax";
 import FeaturedWork from "@/components/FeaturedWork";
 import Statement from "@/components/Statement";
 import DisciplinesStrip from "@/components/DisciplinesStrip";
@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <Navbar />
       <main style={{ margin: 0, padding: 0 }}>
-        <HeroReveal />           {/* Hook */}
+        <HeroParallax />           {/* Hook — 350vh scroll canvas */}
         <FeaturedWork />         {/* Proof of work — Ashfall style */}
         <Statement />            {/* Identity — why she does it */}
         <DisciplinesStrip />     {/* Range — discovery moment */}
