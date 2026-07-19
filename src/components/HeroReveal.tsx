@@ -3,20 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 if (typeof window !== "undefined") {
-  import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-    gsap.registerPlugin(ScrollTrigger);
-  });
-}
-
-// Ensure ScrollTrigger is registered before component renders
-let scrollTriggerRegistered = false;
-if (typeof window !== "undefined" && !scrollTriggerRegistered) {
-  import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-    gsap.registerPlugin(ScrollTrigger);
-    scrollTriggerRegistered = true;
-  });
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 const TOTAL_FRAMES = 190;
