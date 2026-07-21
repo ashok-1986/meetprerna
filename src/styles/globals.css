@@ -64,42 +64,6 @@ h6 {
   font-weight: 500;
 }
 
-/* Hide system cursor globally */
-*,
-*::before,
-*::after {
-  cursor: none !important;
-}
-
-/* Restore pointer on interactive elements visually
-   (our custom cursor handles the visual) */
-a,
-button,
-[data-cursor="hover"] {
-  cursor: none !important;
-}
-
-/* Hide cursor on mobile — touch devices don't need it */
-@media (hover: none) and (pointer: coarse) {
-
-  div[style*="2147483644"],
-  canvas[style*="2147483645"],
-  div[style*="2147483646"]:not(.custom-cursor):not(.custom-cursor-splat) {
-    display: none !important;
-  }
-
-  *,
-  *::before,
-  *::after {
-    cursor: auto !important;
-  }
-}
-
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
-}
-
 /* Remove default margins between sections */
 section,
 main>* {

@@ -312,7 +312,7 @@ function LightboxOverlay({ item, onClose }: { item: any; onClose: () => void }) 
                                 transition: "background 0.3s, transform 0.2s",
                             }}
                         >
-                            Start a commission
+                            Start your journey
                         </a>
                     </div>
                 </motion.div>

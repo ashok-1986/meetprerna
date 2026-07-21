@@ -140,7 +140,7 @@ export default function CTA() {
             display: "inline-block",
           }}
         >
-          Start a commission
+          Start your journey
         </a>
 
         {/* Secondary */}

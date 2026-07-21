@@ -21,7 +21,10 @@ export default function Navbar() {
         alignItems: "center",
         justifyContent: "space-between",
         padding: "28px 48px",  // 48px from both edges
-        // No background — transparent always
+        // Subtle scrim + blur so scrolled content never collides with nav text
+        background: "linear-gradient(to bottom, rgba(13,13,13,0.45) 0%, rgba(13,13,13,0.15) 70%, transparent 100%)",
+        backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)",
       }}>
 
         {/* LEFT: Logo */}
@@ -87,7 +90,7 @@ export default function Navbar() {
             }}
             data-cursor="book"
           >
-            Commission +
+            Start your journey
           </a>
         </div>
 
@@ -152,7 +155,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="border border-[#C4FF61] text-[#C4FF61] bg-transparent rounded-full px-6 py-2.5 font-lato font-bold text-xs tracking-[0.1em] transition-all duration-300 hover:bg-[#C4FF61] hover:text-[#1A1A1A] mt-4"
               >
-                COMMISSION +
+                START YOUR JOURNEY
               </a>
             </div>
           </motion.div>

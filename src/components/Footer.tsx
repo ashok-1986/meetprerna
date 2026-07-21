@@ -29,7 +29,7 @@ export default function Footer() {
               alt="meet prerna"
               width={176}
               height={36}
-              className="h-9 w-auto"
+              style={{ height: "36px", width: "auto" }}
             />
           </div>
 

@@ -116,7 +116,7 @@ export default function AboutCTA() {
                         display: "inline-block",
                     }}
                 >
-                    Begin the conversation
+                    Start your journey
                 </a>
             </div>
 
