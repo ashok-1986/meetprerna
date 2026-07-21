@@ -1,38 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MeetPrerna — Creative Studio & Tattoo Artist Portfolio
 
-## Getting Started
+> A high-craft, motion-driven portfolio for **MeetPrerna** — a Navi Mumbai and Mumbai-based creative studio led by Prerna, a tattoo artist, painter, and sketch artist.
 
-First, run the development server:
+This repository hosts the production codebase. **You are currently looking at the `/docs` and configuration of a blueprint.** Implementation begins after sign-off on the architecture documents in `docs/`.
+
+---
+
+## Quick links
+
+| Document | Purpose |
+|---|---|
+| [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Top-level overview, system map, and reading order |
+| [docs/PRD.md](./docs/PRD.md) | Product requirements, phase gates, acceptance criteria |
+| [docs/agents.md](./docs/agents.md) | Specialized AI agent roles & collaboration protocols |
+| [docs/designs.md](./docs/designs.md) | Design system, components, animations, shaders |
+| [docs/content.md](./docs/content.md) | Content inventory and copy deck |
+| [docs/animations.md](./docs/animations.md) | Exhaustive animation choreography |
+| [docs/shaders.md](./docs/shaders.md) | GLSL shader specifications & uniform controls |
+| [docs/components.md](./docs/components.md) | Reusable component API reference |
+
+---
+
+## Stack at a glance
+
+- **Framework:** Next.js 14 (App Router, RSC, streaming)
+- **Language:** TypeScript strict
+- **Styling:** Tailwind CSS (layout only) + CSS Modules (component-level) + design tokens via CSS custom properties
+- **Motion:** GSAP 3.12 + ScrollTrigger + SplitText + Observer + Lenis smooth scroll
+- **3D / WebGL:** three.js + @react-three/fiber + @react-three/drei (selective; lazy-loaded)
+- **UI primitives:** Radix UI + shadcn/ui patterns (hand-rolled, not vendored)
+- **Forms:** react-hook-form + zod
+- **i18n:** next-intl
+- **CMS:** Sanity (headless, structured content for portfolio, services, journal)
+- **Hosting:** Vercel (edge + ISR) with image optimization via `next/image`
+- **Quality:** Vitest, Playwright, axe-core, Lighthouse CI
+
+See `docs/ARCHITECTURE.md` for the full system diagram and rationale.
+
+---
+
+## Local development
+
+> Implementation has not yet started. Once Phase 1 (Foundation) is approved, follow the setup below.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+cp .env.example .env.local   # fill in the keys you have
+pnpm dev                     # http://localhost:3000
+pnpm storybook               # http://localhost:6006
+pnpm test                    # unit + integration
+pnpm test:e2e                # Playwright
+pnpm typecheck && pnpm lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Brand snapshot
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Token | Value | Use |
+|---|---|---|
+| `--color-inchworm` | `#C4FF61` | Primary accent, CTAs, focus |
+| `--color-marigold` | `#EAFF27` | Secondary accent, editorial highlights |
+| `--color-ink` | `#1A1A1A` | Background, surfaces |
+| `--color-ivory` | `#FDFFE9` | Default text, light surfaces |
+| Font (display) | Cormorant Garamond | All h1–h3, hero, editorial moments |
+| Font (editorial) | Times New Roman italic | Reserved for testimonials, journal pull-quotes |
+| Font (body) | MG12 (or fallback) | Long-form copy, UI |
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-# meetprerna
+Proprietary. © MeetPrerna Studio. All rights reserved.
