@@ -1,0 +1,90 @@
+/* ============================================================================
+   MeetPrerna — Prose styles (long-form / editorial reading)
+   Reference: docs/designs.md §5.3.
+   ============================================================================ */
+
+.prose {
+  max-width: var(--content-narrow);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.75;
+  color: rgb(var(--color-ivory));
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.prose h1 { font-size: var(--text-display-sm); }
+.prose h2 { font-size: var(--text-h2); }
+.prose h3 { font-size: var(--text-h3); }
+
+.prose p {
+  margin-bottom: 1.25em;
+}
+
+.prose a {
+  color: rgb(var(--color-inchworm));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.prose a:hover {
+  color: rgb(var(--color-inchworm-deep));
+}
+
+.prose blockquote {
+  border-left: 2px solid rgb(var(--color-inchworm));
+  padding-left: 1.25em;
+  margin: 1.5em 0;
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: rgb(var(--color-ivory-dim));
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid rgb(var(--color-ink-20));
+  margin: 2em 0;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: rgb(var(--color-ink-90));
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  background: rgb(var(--color-ink-90));
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+
+.prose img {
+  border-radius: var(--radius-md);
+  margin: 1.5em 0;
+}

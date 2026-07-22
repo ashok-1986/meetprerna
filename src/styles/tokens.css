@@ -1,0 +1,144 @@
+/* ============================================================================
+   MeetPrerna — Design Tokens
+   ----------------------------------------------------------------------------
+   Single source of truth for color, type, spacing, motion.
+   Consumed by Tailwind (via tailwind.config.ts), GSAP, R3F, and raw CSS.
+   ----------------------------------------------------------------------------
+   Reference: docs/designs.md §15.
+   ============================================================================ */
+
+:root {
+  /* -----------------------------------------------------------------------
+     Color — Brand
+     ----------------------------------------------------------------------- */
+  --color-inchworm:      196 255 97;   /* #C4FF61 — primary accent */
+  --color-inchworm-deep: 159 204 74;   /* #9FCC4A — pressed */
+  --color-marigold:      234 255 39;   /* #EAFF27 — editorial accent */
+  --color-ink:           26 26 26;     /* #1A1A1A — background */
+  --color-ink-90:        34 34 34;     /* #222222 — raised */
+  --color-ink-70:        54 54 54;     /* #363636 — hover */
+  --color-ink-50:        84 84 84;     /* #545454 — muted */
+  --color-ink-20:        58 58 58;     /* #3a3a3a — hairlines */
+  --color-ivory:         253 255 233;  /* #FDFFE9 — text */
+  --color-ivory-dim:     201 203 182;  /* #C9CBB6 — captions */
+
+  /* -----------------------------------------------------------------------
+     Color — Functional
+     ----------------------------------------------------------------------- */
+  --color-focus:    196 255 97;
+  --color-danger:   255 107 107;
+  --color-success:  159 204 74;
+  --color-warning:  234 255 39;
+
+  /* -----------------------------------------------------------------------
+     Type — Families (loaded via next/font in app/layout.tsx)
+     ----------------------------------------------------------------------- */
+  --font-display:   'Cormorant Garamond', 'Times New Roman', serif;
+  --font-editorial: 'Times New Roman', 'Times', serif;
+  --font-body:      'MG12', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:      'JetBrains Mono', ui-monospace, monospace;
+
+  /* -----------------------------------------------------------------------
+     Type — Fluid scale (clamp(MIN, PREFERRED, MAX))
+     ----------------------------------------------------------------------- */
+  --text-display-xl: clamp(4.5rem,  1.5rem + 14vw,  18rem);
+  --text-display-lg: clamp(3.5rem,  1.5rem +  9vw,  10rem);
+  --text-display-md: clamp(2.75rem, 1rem +    6vw,   6rem);
+  --text-display-sm: clamp(2rem,    1rem +    4vw,   4rem);
+  --text-h1:         clamp(2.25rem, 1.5rem + 2.5vw, 4rem);
+  --text-h2:         clamp(1.75rem, 1rem +   3vw,   3rem);
+  --text-h3:         clamp(1.375rem, 1rem +  2.2vw, 2rem);
+  --text-body-lg:    clamp(1.125rem, 1rem +  1.4vw, 1.25rem);
+  --text-body:       clamp(1rem,     0.9375rem + 0.6vw, 1.0625rem);
+  --text-body-sm:    clamp(0.875rem, 0.8125rem + 0.4vw, 0.9375rem);
+  --text-caption:    clamp(0.75rem,  0.6875rem + 0.4vw, 0.8125rem);
+  --text-eyebrow:    clamp(0.6875rem, 0.625rem + 0.4vw, 0.75rem);
+
+  /* -----------------------------------------------------------------------
+     Spacing
+     ----------------------------------------------------------------------- */
+  --space-0:  0;
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.5rem;
+  --space-6:  2rem;
+  --space-7:  3rem;
+  --space-8:  4rem;
+  --space-9:  6rem;
+  --space-10: 8rem;
+  --space-section: clamp(6rem, 4rem + 8vw, 12rem);
+  --space-gutter:  clamp(1.25rem, 0.5rem + 3vw, 3rem);
+  --space-rail:    clamp(5rem, 3rem + 10vw, 11rem);
+
+  /* -----------------------------------------------------------------------
+     Motion — Durations (seconds)
+     ----------------------------------------------------------------------- */
+  --dur-120:  0.12s;
+  --dur-180:  0.18s;
+  --dur-260:  0.26s;
+  --dur-420:  0.42s;
+  --dur-620:  0.62s;
+  --dur-900:  0.9s;
+  --dur-1400: 1.4s;
+
+  /* -----------------------------------------------------------------------
+     Motion — Easings (cubic-bezier)
+     ----------------------------------------------------------------------- */
+  --ease-studio:    cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft:      cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-glide:     cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-breath:    cubic-bezier(0.45, 0, 0.55, 1);
+
+  /* -----------------------------------------------------------------------
+     Layout
+     ----------------------------------------------------------------------- */
+  --content-narrow: 48rem;
+  --content-wide:   80rem;
+  --rail-width:     var(--space-rail);
+  --header-height:  4.5rem;
+  --footer-height:  24rem;
+
+  /* -----------------------------------------------------------------------
+     Radii
+     ----------------------------------------------------------------------- */
+  --radius-none: 0;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-pill: 9999px;
+
+  /* -----------------------------------------------------------------------
+     Z-Index scale
+     ----------------------------------------------------------------------- */
+  --z-base:      0;
+  --z-canvas:    1;
+  --z-content:   10;
+  --z-header:    20;
+  --z-overlay:   30;
+  --z-dialog:    40;
+  --z-toast:     50;
+  --z-tooltip:   60;
+
+  /* -----------------------------------------------------------------------
+     Shadows (used very sparingly)
+     ----------------------------------------------------------------------- */
+  --shadow-1: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --shadow-2: 0 8px 24px -8px rgb(0 0 0 / 0.6);
+
+  color-scheme: dark;
+}
+
+/* Respect reduced motion globally. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

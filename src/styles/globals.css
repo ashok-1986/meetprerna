@@ -1,0 +1,170 @@
+/* ============================================================================
+   MeetPrerna — Global styles
+   ----------------------------------------------------------------------------
+   Order: Tailwind layers → tokens → base reset → fonts → prose.
+   Reference: docs/designs.md §5.
+   ============================================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens — consumed by Tailwind, GSAP, R3F, and raw CSS */
+@import './tokens.css';
+
+/* Self-hosted font @font-face declarations */
+@import './fonts.css';
+
+/* Long-form editorial reading styles */
+@import './prose.css';
+
+/* ---------------------------------------------------------------------------
+   Base reset
+   --------------------------------------------------------------------------- */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: rgb(var(--color-ivory));
+    background-color: rgb(var(--color-ink));
+    min-height: 100dvh;
+  }
+
+  /* Ensure smooth scroll on Lenis-enabled pages */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  /* -----------------------------------------------------------------------
+     Focus-visible ring
+     ----------------------------------------------------------------------- */
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-focus));
+    outline-offset: 2px;
+  }
+
+  /* Remove default focus for pointer interactions */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* -----------------------------------------------------------------------
+     Selection
+     ----------------------------------------------------------------------- */
+  ::selection {
+    background: rgb(var(--color-inchworm) / 0.25);
+    color: rgb(var(--color-ivory));
+  }
+
+  /* -----------------------------------------------------------------------
+     Scrollbar
+     ----------------------------------------------------------------------- */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--color-ink));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-ink-50));
+    border-radius: var(--radius-pill);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-ink-70));
+  }
+
+  /* -----------------------------------------------------------------------
+     Images
+     ----------------------------------------------------------------------- */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  img {
+    height: auto;
+  }
+
+  /* -----------------------------------------------------------------------
+     Links
+     ----------------------------------------------------------------------- */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* -----------------------------------------------------------------------
+     Lists
+     ----------------------------------------------------------------------- */
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  /* -----------------------------------------------------------------------
+     Interactive elements
+     ----------------------------------------------------------------------- */
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+
+  button {
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+  }
+
+  /* -----------------------------------------------------------------------
+     Reduced motion — enforced globally
+     ----------------------------------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

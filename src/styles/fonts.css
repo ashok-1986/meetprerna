@@ -1,0 +1,24 @@
+/* ============================================================================
+   MeetPrerna — Self-hosted font @font-face declarations
+   Reference: docs/designs.md §6.
+   ============================================================================ */
+
+/* -- Display: Cormorant Garamond (loaded via next/font, fallback here) -- */
+
+/* -- Body: MG12 (loaded via next/font, fallback here) -- */
+
+/* -- Mono: JetBrains Mono (loaded via next/font, fallback here) -- */
+
+/* ---------------------------------------------------------------------------
+   Local font overrides for development without next/font.
+   Uncomment and point to actual font files when available.
+   --------------------------------------------------------------------------- */
+/*
+@font-face {
+  font-family: 'MG12';
+  src: url('/fonts/MG12-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+*/
