@@ -16,10 +16,15 @@ export const env = createEnv({
     RESEND_FROM_EMAIL: z.string().email().optional(),
   },
   client: {
-    NEXT_PUBLIC_SITE_URL: z.string().url(),
+    NEXT_PUBLIC_SITE_URL: z
+      .string()
+      .optional()
+      .transform((v) => v || process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000')
+      .transform((v) => (v.startsWith('http') ? v : `https://${v}`))
+      .pipe(z.string().url()),
     NEXT_PUBLIC_DEFAULT_LOCALE: z.string().default('en'),
     NEXT_PUBLIC_TIMEZONE: z.string().default('Asia/Kolkata'),
-    NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1),
+    NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1).default('placeholder'),
     NEXT_PUBLIC_SANITY_DATASET: z.string().default('production'),
     NEXT_PUBLIC_SANITY_API_VERSION: z.string().default('2024-01-01'),
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().optional(),
