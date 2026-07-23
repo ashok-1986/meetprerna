@@ -1,19 +1,22 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useThree } from '@react-three/fiber';
-import { registerR3FRender, unregisterR3FRender } from '@/lib/masterTicker';
+import { useEffect, useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { gsap } from '@/lib/gsap';
 
 export function R3FRenderBridge() {
-  const { advance } = useThree();
+  const shouldRender = useRef(false);
 
   useEffect(() => {
-    // advance() = R3F renders one frame
-    const render = () => advance(Date.now() / 1000);
-    registerR3FRender(render);
+    const trigger = () => { shouldRender.current = true; };
+    gsap.ticker.add(trigger);
+    return () => gsap.ticker.remove(trigger);
+  }, []);
 
-    return () => unregisterR3FRender(render);
-  }, [advance]);
+  useFrame(() => {
+    if (!shouldRender.current) return;
+    shouldRender.current = false;
+  }, 1);
 
   return null;
 }

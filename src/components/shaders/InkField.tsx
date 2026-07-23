@@ -82,6 +82,11 @@ function InkFieldMaterial() {
     const updateTime = () => {
       uniforms.uTime.value = gsap.ticker.time;
     };
+    
+    // Guard against React Strict Mode duplicate registration
+    const existing = (gsap.ticker as any)._listeners?.find?.((l: any) => l.callback === updateTime);
+    if (existing) return;
+
     gsap.ticker.add(updateTime);
     return () => gsap.ticker.remove(updateTime);
   }, [uniforms]);
@@ -146,7 +151,6 @@ export function InkField() {
   return (
     <div className="shader-canvas" aria-hidden="true">
       <Canvas
-        frameloop="never"
         gl={{
           antialias: false,
           alpha: false,
@@ -188,6 +192,10 @@ function RouteIntensityDriver({ intensityRef }: { intensityRef: React.RefObject<
       });
     };
     
+    // Guard against React Strict Mode duplicate registration
+    const existing = (gsap.ticker as any)._listeners?.find?.((l: any) => l.callback === updateIntensity);
+    if (existing) return;
+
     gsap.ticker.add(updateIntensity);
     return () => gsap.ticker.remove(updateIntensity);
   }, [scene, intensityRef]);
