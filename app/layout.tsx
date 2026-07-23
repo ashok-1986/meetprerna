@@ -1,16 +1,23 @@
 import type { Metadata, Viewport } from 'next';
 import { Cormorant_Garamond, Inter, JetBrains_Mono } from 'next/font/google';
+import dynamic from 'next/dynamic';
 import { site } from '@/config/site';
-import { ShaderRoot } from '@/components/shaders/ShaderRoot';
+
+const ShaderRoot = dynamic(
+  () => import('@/components/shaders/ShaderRoot').then(mod => mod.ShaderRoot),
+  { ssr: false, loading: () => null }
+);
 import { CustomCursor } from '@/components/cursor/CustomCursor';
 import { SmoothScrollProvider } from '@/components/layout/SmoothScrollProvider';
 import '@/styles/globals.css';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
   variable: '--font-display',
   display: 'swap',
+  preload: true,
 });
 
 const inter = Inter({

@@ -44,6 +44,7 @@ export function getLenis(): Lenis {
       lenisInstance?.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
+    lenisInstance.on('scroll', ScrollTrigger.update);
   }
   return lenisInstance;
 }

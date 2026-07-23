@@ -110,6 +110,7 @@ export default function GalleryItem({ item, index, onClick, className }: Gallery
         alt={heroImage?.alt || item.title}
         aspect="4/5"
         containerClassName="transition-opacity duration-260 group-hover:opacity-90"
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
       />
       <div className="flex w-full flex-col gap-1">
         <div className="flex w-full justify-between items-baseline gap-4">
