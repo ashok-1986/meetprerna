@@ -3,8 +3,7 @@
  * Rule: NEVER use gsap.set() to hide elements. Use tl.from() so
  * elements revert to visible if the timeline is killed.
  */
-import { gsap } from '@/lib/gsap';
-import { SplitText } from '@/lib/gsap'; // or from 'gsap/SplitText'
+import { gsap, ScrollTrigger, SplitText } from '@/lib/gsap';
 
 export interface HeroTimelineDeps {
   root: HTMLElement;
@@ -87,9 +86,24 @@ export function buildHeroTimeline(deps: HeroTimelineDeps) {
     tl.from(secondaryCta, { opacity: 0, y: 16, duration: 0.42, ease: 'power1.out' }, '-=0.32');
   }
 
+  // ── Parallax on scroll ─────────────────────────────────────────────
+  const parallaxAnim = gsap.timeline().to(headline, { y: 60, ease: 'none' }, 0);
+  if (image) {
+    parallaxAnim.to(image, { y: -120, ease: 'none' }, 0);
+  }
+
+  const parallaxSt = ScrollTrigger.create({
+    trigger: root,
+    start: 'top top',
+    end: '+=100%',
+    scrub: true,
+    animation: parallaxAnim
+  });
+
   // ── Kill function ──────────────────────────────────────────────────
   const kill = () => {
     tl.kill();
+    parallaxSt.kill();
     if (split) split.revert();
   };
 
