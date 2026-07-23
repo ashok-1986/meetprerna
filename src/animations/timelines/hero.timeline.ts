@@ -25,8 +25,11 @@ export function buildHeroTimeline(deps: HeroTimelineDeps): { timeline: gsap.core
 
   // Initial states
   gsap.set(image, { clipPath: 'inset(0 100% 0 0)', willChange: 'transform, clip-path' });
-  const elements = [eyebrow, headline, subhead, primaryCta, secondaryCta].filter(Boolean) as HTMLElement[];
-  gsap.set(elements, { opacity: 0, y: 24, willChange: 'transform, opacity' });
+  const otherElements = [eyebrow, subhead, primaryCta, secondaryCta].filter(Boolean) as HTMLElement[];
+  gsap.set(otherElements, { opacity: 0, y: 24, willChange: 'transform, opacity' });
+  
+  // Start headline visible (its words will be hidden if SplitText works)
+  gsap.set(headline, { opacity: 1, y: 0 });
   
   // Use SplitText if available, else just word spans if they exist or fallback to lines/chars.
   // The stub or actual plugin is at gsap.SplitText
@@ -53,7 +56,7 @@ export function buildHeroTimeline(deps: HeroTimelineDeps): { timeline: gsap.core
     timeline.to(eyebrow, { opacity: 1, x: 0, duration: dur.d420, ease: ease.studio }, 0.1);
   }
 
-  if (split && split.words) {
+  if (split && split.words && split.words.length > 0) {
     timeline.to(split.words, {
       opacity: 1,
       y: 0,
@@ -63,6 +66,7 @@ export function buildHeroTimeline(deps: HeroTimelineDeps): { timeline: gsap.core
     }, 0.35);
   } else {
     // Fallback if no SplitText
+    gsap.set(headline, { opacity: 0, y: 24, willChange: 'transform, opacity' });
     timeline.to(headline, { opacity: 1, y: 0, duration: dur.d620, ease: ease.editorial }, 0.35);
   }
 
@@ -77,8 +81,8 @@ export function buildHeroTimeline(deps: HeroTimelineDeps): { timeline: gsap.core
 
   // Cleanup willChange
   timeline.add(() => {
-    gsap.set([image, ...elements], { clearProps: 'willChange' });
-    if (split && split.words) gsap.set(split.words, { clearProps: 'willChange' });
+    gsap.set([image, headline, ...otherElements], { clearProps: 'willChange' });
+    if (split && split.words && split.words.length > 0) gsap.set(split.words, { clearProps: 'willChange' });
   });
 
   // Parallax on scroll
