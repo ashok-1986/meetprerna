@@ -63,9 +63,12 @@ export function destroyLenis() {
   lenisInstance = null;
 }
 
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development' && new URLSearchParams(window.location.search).has('debug')) {
-  ScrollTrigger.defaults({ markers: true });
-  gsap.globalTimeline.timeScale(4);
+if (typeof window !== 'undefined') {
+  document.documentElement.classList.add('gsap-ready');
+  if (process.env.NODE_ENV === 'development' && new URLSearchParams(window.location.search).has('debug')) {
+    ScrollTrigger.defaults({ markers: true });
+    gsap.globalTimeline.timeScale(4);
+  }
 }
 
 // ---------------------------------------------------------------------------

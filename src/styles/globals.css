@@ -167,4 +167,14 @@
       scroll-behavior: auto !important;
     }
   }
+
+  /* -----------------------------------------------------------------------
+     Emergency fallback: if GSAP fails to initialize/play
+     ----------------------------------------------------------------------- */
+  html:not(.gsap-ready) [data-gsap-hero],
+  html:not(.gsap-ready) [data-gsap-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
 }

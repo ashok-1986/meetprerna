@@ -38,10 +38,10 @@ export function buildHeroTimeline(deps: HeroTimelineDeps): { timeline: gsap.core
     const SplitText = (gsap as any).SplitText;
     if (SplitText) {
       split = new SplitText(headline, { type: 'words' });
-      gsap.set(split.words, { opacity: 0, y: 48, willChange: 'transform, opacity' });
     }
   } catch (e) {
     // Fallback if SplitText fails
+    console.warn('SplitText failed, falling back to whole-element animation', e);
   }
 
   // Animation sequence
@@ -57,6 +57,7 @@ export function buildHeroTimeline(deps: HeroTimelineDeps): { timeline: gsap.core
   }
 
   if (split && split.words && split.words.length > 0) {
+    gsap.set(split.words, { opacity: 0, y: 48, willChange: 'transform, opacity' });
     timeline.to(split.words, {
       opacity: 1,
       y: 0,
