@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Section from '@/components/layout/Section';
+import { AnimatedSection } from '@/components/layout/AnimatedSection';
 import Container from '@/components/layout/Container';
 import { Button } from '@/components/ui/Button';
 import { HeroSection } from '@/components/sections/marketing/HeroSection';
@@ -17,14 +17,20 @@ export const metadata = buildMetadata({
   path: '/',
 });
 
-export const revalidate = 60;
-
 export default async function Home() {
-  const featuredItems = await sanityClient.fetch(featuredPortfolioQuery).catch((err) => {
+  const featuredItems = await sanityClient.fetch(
+    featuredPortfolioQuery,
+    {},
+    { next: { tags: ['portfolio'] } }
+  ).catch((err) => {
     console.error('[Sanity] Portfolio fetch failed:', err.message);
     return STATIC_FALLBACK_FEATURED;
   });
-  const testimonials = await sanityClient.fetch(testimonialsQuery).catch((err) => {
+  const testimonials = await sanityClient.fetch(
+    testimonialsQuery,
+    {},
+    { next: { tags: ['testimonials'] } }
+  ).catch((err) => {
     console.error('[Sanity] Testimonials fetch failed:', err.message);
     return STATIC_FALLBACK_TESTIMONIALS;
   });
@@ -41,7 +47,7 @@ export default async function Home() {
       <HeroSection />
 
       {/* 2. ManifestoSection */}
-      <Section spacing="section">
+      <AnimatedSection spacing="section" data-reveal-children>
         <Container>
           <div className="flex flex-col gap-16">
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
@@ -75,10 +81,10 @@ export default async function Home() {
             </div>
           </div>
         </Container>
-      </Section>
+      </AnimatedSection>
 
       {/* 3. SelectedWorkSection */}
-      <Section spacing="section">
+      <AnimatedSection spacing="section" data-reveal-children>
         <Container>
           <div className="flex flex-col gap-12">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -117,10 +123,10 @@ export default async function Home() {
             </div>
           </div>
         </Container>
-      </Section>
+      </AnimatedSection>
 
       {/* 4. ProcessTeaserSection */}
-      <Section spacing="section">
+      <AnimatedSection spacing="section" data-reveal-children>
         <Container>
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
             <div className="lg:col-span-5 flex flex-col gap-4">
@@ -150,10 +156,10 @@ export default async function Home() {
             </div>
           </div>
         </Container>
-      </Section>
+      </AnimatedSection>
 
       {/* 5. StudioVignetteSection */}
-      <Section spacing="section">
+      <AnimatedSection spacing="section" data-reveal-children>
         <Container>
           <div className="flex flex-col gap-12">
             <div className="flex flex-col gap-4">
@@ -175,15 +181,15 @@ export default async function Home() {
             </p>
           </div>
         </Container>
-      </Section>
+      </AnimatedSection>
 
       {/* 6. TestimonialsSection */}
       <TestimonialsSection testimonials={testimonials} />
 
       {/* 7. CTASection */}
-      <Section spacing="section" tone="warm">
+      <AnimatedSection spacing="section" tone="warm" data-reveal-children>
         <Container>
-          <div className="flex flex-col items-center text-center gap-8">
+          <div className="flex flex-col items-center text-center gap-8 py-12">
             <h2 className="font-display text-display-md text-ivory">
               Begin a piece.
             </h2>
@@ -195,7 +201,7 @@ export default async function Home() {
             </Button>
           </div>
         </Container>
-      </Section>
+      </AnimatedSection>
     </>
   );
 }

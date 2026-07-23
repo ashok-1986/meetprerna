@@ -1,16 +1,11 @@
-'use client';
-
 import Link from 'next/link';
-import Section from '@/components/layout/Section';
+import { AnimatedSection } from '@/components/layout/AnimatedSection';
 import Container from '@/components/layout/Container';
 import { Button } from '@/components/ui/Button';
-import { useSectionReveal } from '@/hooks/useSectionReveal';
 
 export function CTASection() {
-  const ref = useSectionReveal();
-
   return (
-    <Section spacing="section" tone="warm" ref={ref} data-reveal-children>
+    <AnimatedSection spacing="section" tone="warm" data-reveal-children>
       <Container>
         <div className="flex flex-col items-center text-center gap-8 py-12">
           <h2 className="font-display text-display-md text-ivory">
@@ -24,6 +19,6 @@ export function CTASection() {
           </Button>
         </div>
       </Container>
-    </Section>
+    </AnimatedSection>
   );
 }

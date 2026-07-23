@@ -1,14 +1,9 @@
-'use client';
-
-import Section from '@/components/layout/Section';
+import { AnimatedSection } from '@/components/layout/AnimatedSection';
 import Container from '@/components/layout/Container';
-import { useSectionReveal } from '@/hooks/useSectionReveal';
 
 export function ManifestoSection() {
-  const ref = useSectionReveal();
-
   return (
-    <Section spacing="section" ref={ref} data-reveal-children>
+    <AnimatedSection spacing="section" data-reveal-children>
       <Container>
         <div className="flex flex-col gap-16">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
@@ -42,6 +37,6 @@ export function ManifestoSection() {
           </div>
         </div>
       </Container>
-    </Section>
+    </AnimatedSection>
   );
 }

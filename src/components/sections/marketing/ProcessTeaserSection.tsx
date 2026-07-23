@@ -1,14 +1,9 @@
-'use client';
-
-import Section from '@/components/layout/Section';
+import { AnimatedSection } from '@/components/layout/AnimatedSection';
 import Container from '@/components/layout/Container';
-import { useSectionReveal } from '@/hooks/useSectionReveal';
 
 export function ProcessTeaserSection() {
-  const ref = useSectionReveal();
-
   return (
-    <Section spacing="section" ref={ref} data-reveal-children>
+    <AnimatedSection spacing="section" data-reveal-children>
       <Container>
         <div className="flex flex-col md:flex-row md:justify-between gap-12">
           <div className="flex flex-col gap-6 md:w-1/3">
@@ -42,6 +37,6 @@ export function ProcessTeaserSection() {
           </div>
         </div>
       </Container>
-    </Section>
+    </AnimatedSection>
   );
 }

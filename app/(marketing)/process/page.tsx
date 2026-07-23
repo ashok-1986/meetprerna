@@ -7,9 +7,11 @@ export async function generateMetadata() {
   return buildMetadata({ title: 'Process', path: '/process' });
 }
 
-export const revalidate = 3600; // revalidate every hour
-
 export default async function ProcessPage() {
-  const videos = await sanityClient.fetch(processVideosQuery);
+  const videos = await sanityClient.fetch(
+    processVideosQuery,
+    {},
+    { next: { tags: ['process'] } }
+  );
   return <ProcessClient videos={videos || []} />;
 }

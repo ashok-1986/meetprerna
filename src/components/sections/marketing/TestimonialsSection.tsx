@@ -1,16 +1,11 @@
-'use client';
-
-import Section from '@/components/layout/Section';
+import { AnimatedSection } from '@/components/layout/AnimatedSection';
 import Container from '@/components/layout/Container';
-import { useSectionReveal } from '@/hooks/useSectionReveal';
 
 export function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
-  const ref = useSectionReveal();
-
   if (!testimonials || testimonials.length === 0) return null;
 
   return (
-    <Section spacing="section" ref={ref} data-reveal-children>
+    <AnimatedSection spacing="section" data-reveal-children>
       <Container>
         <div className="flex flex-col gap-16 text-center">
           <div className="flex flex-col gap-4 items-center">
@@ -36,6 +31,6 @@ export function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
           </div>
         </div>
       </Container>
-    </Section>
+    </AnimatedSection>
   );
 }

@@ -72,9 +72,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
+      <html
       lang={site.locale}
       className={`${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
     >
       <head>
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
