@@ -1,108 +1,97 @@
-import { gsap, ScrollTrigger } from '@/lib/gsap';
-import { ease, dur } from '../easing';
+/**
+ * MeetPrerna — Hero timeline (GSAP 3.15+)
+ * Rule: NEVER use gsap.set() to hide elements. Use tl.from() so
+ * elements revert to visible if the timeline is killed.
+ */
+import { gsap } from '@/lib/gsap';
+import { SplitText } from '@/lib/gsap'; // or from 'gsap/SplitText'
 
 export interface HeroTimelineDeps {
   root: HTMLElement;
   eyebrow?: HTMLElement | null;
   headline: HTMLElement;
-  subhead: HTMLElement;
-  primaryCta: HTMLElement;
+  subhead?: HTMLElement | null;
+  primaryCta?: HTMLElement | null;
   secondaryCta?: HTMLElement | null;
-  image: HTMLElement;
+  image?: HTMLElement | null;
   reduceMotion: boolean;
 }
 
-export function buildHeroTimeline(deps: HeroTimelineDeps): { timeline: gsap.core.Timeline; kill: () => void } {
+export function buildHeroTimeline(deps: HeroTimelineDeps) {
   const { root, eyebrow, headline, subhead, primaryCta, secondaryCta, image, reduceMotion } = deps;
-  
-  const timeline = gsap.timeline({ paused: true });
 
+  // ── Reduced motion: nothing to animate ─────────────────────────────
   if (reduceMotion) {
-    gsap.set([eyebrow, headline, subhead, primaryCta, secondaryCta].filter(Boolean), { opacity: 1, y: 0 });
-    gsap.set(image, { clipPath: 'inset(0 0% 0 0)' });
-    return { timeline, kill: () => {} };
+    return { timeline: gsap.timeline(), kill: () => {} };
   }
 
-  // Initial states
-  gsap.set(image, { clipPath: 'inset(0 100% 0 0)', willChange: 'transform, clip-path' });
-  const otherElements = [eyebrow, subhead, primaryCta, secondaryCta].filter(Boolean) as HTMLElement[];
-  gsap.set(otherElements, { opacity: 0, y: 24, willChange: 'transform, opacity' });
-  
-  // Start headline visible (its words will be hidden if SplitText works)
-  gsap.set(headline, { opacity: 1, y: 0 });
-  
-  // Use SplitText if available, else just word spans if they exist or fallback to lines/chars.
-  // The stub or actual plugin is at gsap.SplitText
-  let split: any = null;
+  // ── Safety: if headline isn't in DOM, bail ─────────────────────────
+  if (!headline) {
+    console.warn('[hero.timeline] headline ref is null');
+    return { timeline: gsap.timeline(), kill: () => {} };
+  }
+
+  // ── SplitText (defensive) ──────────────────────────────────────────
+  let split: SplitText | null = null;
+  let targets: Element[] | NodeListOf<Element> = [headline];
+
   try {
-    const SplitText = (gsap as any).SplitText;
-    if (SplitText) {
-      split = new SplitText(headline, { type: 'words' });
+    split = new SplitText(headline, { type: 'words' });
+    if (split.words && split.words.length > 0) {
+      targets = split.words;
     }
   } catch (e) {
-    // Fallback if SplitText fails
-    console.warn('SplitText failed, falling back to whole-element animation', e);
+    console.warn('[hero.timeline] SplitText failed, falling back to whole element', e);
   }
 
-  // Animation sequence
-  timeline.to(image, {
-    clipPath: 'inset(0 0% 0 0)',
-    duration: dur.d900,
-    ease: ease.studio,
-  }, 0.0);
+  // ── Build timeline ─────────────────────────────────────────────────
+  // IMPORTANT: use tl.from() instead of gsap.set() + tl.to()
+  // If this timeline is killed, elements revert to their CSS defaults (visible).
+  const tl = gsap.timeline({
+    defaults: { ease: 'expo.out', duration: 0.62 },
+    onComplete: () => {
+      // Nuclear option: force everything visible when done
+      gsap.set([headline, subhead, primaryCta, secondaryCta, image], {
+        clearProps: 'opacity,transform,clipPath',
+      });
+    },
+  });
 
+  // Image mask reveal (from hidden → visible)
+  if (image) {
+    tl.from(image, {
+      clipPath: 'inset(0 100% 0 0)',
+      duration: 0.9,
+      ease: 'power3.inOut',
+    }, 0);
+  }
+
+  // Eyebrow
   if (eyebrow) {
-    gsap.set(eyebrow, { x: -16, y: 0 });
-    timeline.to(eyebrow, { opacity: 1, x: 0, duration: dur.d420, ease: ease.studio }, 0.1);
+    tl.from(eyebrow, { opacity: 0, x: -16, duration: 0.42, ease: 'power2.inOut' }, 0.1);
   }
 
-  if (split && split.words && split.words.length > 0) {
-    gsap.set(split.words, { opacity: 0, y: 48, willChange: 'transform, opacity' });
-    timeline.to(split.words, {
-      opacity: 1,
-      y: 0,
-      duration: dur.d620,
-      stagger: 0.06,
-      ease: ease.editorial,
-    }, 0.35);
-  } else {
-    // Fallback if no SplitText
-    gsap.set(headline, { opacity: 0, y: 24, willChange: 'transform, opacity' });
-    timeline.to(headline, { opacity: 1, y: 0, duration: dur.d620, ease: ease.editorial }, 0.35);
+  // Headline words (or whole headline if SplitText failed)
+  tl.from(targets, { opacity: 0, y: 48, stagger: 0.06 }, 0.35);
+
+  // Subhead
+  if (subhead) {
+    tl.from(subhead, { opacity: 0, y: 24 }, '-=0.32');
   }
 
-  timeline.to(subhead, { opacity: 1, y: 0, duration: dur.d620, ease: ease.editorial }, '>');
-
+  // CTAs
   if (primaryCta) {
-    timeline.to(primaryCta, { opacity: 1, y: 0, duration: dur.d420, ease: ease.soft }, '-=0.32');
+    tl.from(primaryCta, { opacity: 0, y: 16, duration: 0.42, ease: 'power1.out' }, '-=0.32');
   }
   if (secondaryCta) {
-    timeline.to(secondaryCta, { opacity: 1, y: 0, duration: dur.d420, ease: ease.soft }, '<');
+    tl.from(secondaryCta, { opacity: 0, y: 16, duration: 0.42, ease: 'power1.out' }, '-=0.32');
   }
 
-  // Cleanup willChange
-  timeline.add(() => {
-    gsap.set([image, headline, ...otherElements], { clearProps: 'willChange' });
-    if (split && split.words && split.words.length > 0) gsap.set(split.words, { clearProps: 'willChange' });
-  });
-
-  // Parallax on scroll
-  const parallaxSt = ScrollTrigger.create({
-    trigger: root,
-    start: 'top top',
-    end: '+=100%',
-    scrub: true,
-    animation: gsap.timeline()
-      .to(image, { y: -120, ease: 'none' }, 0)
-      .to(headline, { y: 60, ease: 'none' }, 0)
-  });
-
-  return {
-    timeline,
-    kill: () => {
-      if (split) split.revert();
-      parallaxSt.kill();
-      timeline.kill();
-    }
+  // ── Kill function ──────────────────────────────────────────────────
+  const kill = () => {
+    tl.kill();
+    if (split) split.revert();
   };
+
+  return { timeline: tl, kill };
 }

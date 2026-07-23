@@ -8,7 +8,7 @@
  */
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 
 export function useGsapContext(
@@ -17,7 +17,7 @@ export function useGsapContext(
 ) {
   const ref = useRef<gsap.Context | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(fn);
     ref.current = ctx;
     return () => {

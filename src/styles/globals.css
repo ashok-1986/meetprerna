@@ -178,3 +178,16 @@
     clip-path: none !important;
   }
 }
+
+/* If GSAP hasn't revealed content within 3 seconds, force visibility. */
+[data-gsap-hero] {
+  animation: force-visible 0.1s 3s forwards;
+}
+
+@keyframes force-visible {
+  to {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
