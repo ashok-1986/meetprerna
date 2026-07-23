@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { ScrollTrigger } from '@/lib/gsap';
-import { getLenis, destroyLenis } from '@/lib/gsap';
+import { initMasterTicker, destroyLenis } from '@/lib/masterTicker';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 /**
@@ -16,7 +16,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (reduce) return;
-    getLenis();
+    initMasterTicker();
     return () => {
       destroyLenis();
     };

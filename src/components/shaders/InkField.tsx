@@ -4,7 +4,7 @@
  */
 'use client';
 
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import inkFieldFrag from '@/shaders/inkField.frag?raw';
@@ -13,6 +13,7 @@ import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { useDeviceTier } from '@/hooks/useDeviceTier';
 import { usePathname } from 'next/navigation';
 import { gsap } from '@/lib/gsap';
+import { R3FRenderBridge } from './R3FRenderBridge';
 
 const INK_HEX = 0x1a1a1a;
 const INCHWORM_HEX = 0xc4ff61;
@@ -77,9 +78,13 @@ function InkFieldMaterial() {
     };
   }, [uniforms]);
 
-  useFrame((_, dt) => {
-    uniforms.uTime.value += dt;
-  });
+  useEffect(() => {
+    const updateTime = () => {
+      uniforms.uTime.value = gsap.ticker.time;
+    };
+    gsap.ticker.add(updateTime);
+    return () => gsap.ticker.remove(updateTime);
+  }, [uniforms]);
 
   return (
     <shaderMaterial
@@ -141,6 +146,7 @@ export function InkField() {
   return (
     <div className="shader-canvas" aria-hidden="true">
       <Canvas
+        frameloop="never"
         gl={{
           antialias: false,
           alpha: false,
@@ -151,6 +157,7 @@ export function InkField() {
         camera={{ position: [0, 0, 1], zoom: 1, near: 0.1, far: 10 }}
         style={{ width: '100vw', height: '100vh' }}
       >
+        <R3FRenderBridge />
         <mesh>
           <planeGeometry args={[2, 2]} />
           <InkFieldMaterial />
@@ -169,16 +176,21 @@ export function InkField() {
 function RouteIntensityDriver({ intensityRef }: { intensityRef: React.RefObject<{ value: number }> }) {
   const { scene } = useThree();
   
-  useFrame(() => {
-    // Walk the scene to find the shader material
-    scene.traverse((obj) => {
-      const mesh = obj as THREE.Mesh;
-      const material = mesh.material as THREE.ShaderMaterial;
-      if (material && material.uniforms && material.uniforms.uIntensity) {
-        material.uniforms.uIntensity.value = intensityRef.current?.value ?? 1.0;
-      }
-    });
-  });
+  useEffect(() => {
+    const updateIntensity = () => {
+      // Walk the scene to find the shader material
+      scene.traverse((obj) => {
+        const mesh = obj as THREE.Mesh;
+        const material = mesh.material as THREE.ShaderMaterial;
+        if (material && material.uniforms && material.uniforms.uIntensity) {
+          material.uniforms.uIntensity.value = intensityRef.current?.value ?? 1.0;
+        }
+      });
+    };
+    
+    gsap.ticker.add(updateIntensity);
+    return () => gsap.ticker.remove(updateIntensity);
+  }, [scene, intensityRef]);
 
   return null;
 }

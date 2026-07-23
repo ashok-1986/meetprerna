@@ -10,7 +10,8 @@ import { site } from '@/config/site';
 import { primaryNav, type NavItem } from '@/config/nav';
 import MobileMenu from './MobileMenu';
 import { useGsapContext } from '@/hooks/useGsapContext';
-import { gsap, getLenis } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
+import { getLenis } from '@/lib/masterTicker';
 import type Lenis from 'lenis';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
@@ -62,10 +63,14 @@ export default function Header({ variant }: HeaderProps) {
     };
 
     const lenis = getLenis();
-    lenis.on('scroll', onScroll);
+    if (lenis) {
+      lenis.on('scroll', onScroll);
+    }
 
     return () => {
-      lenis.off('scroll', onScroll);
+      if (lenis) {
+        lenis.off('scroll', onScroll);
+      }
     };
   }, [reduce]);
 
