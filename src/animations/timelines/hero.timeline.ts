@@ -44,46 +44,50 @@ export function buildHeroTimeline(deps: HeroTimelineDeps) {
   }
 
   // ── Build timeline ─────────────────────────────────────────────────
-  // IMPORTANT: use tl.from() instead of gsap.set() + tl.to()
-  // If this timeline is killed, elements revert to their CSS defaults (visible).
+  // Use imperative gsap.set() + tl.to() to prevent Strict Mode from getting stuck on from() states
+  
+  if (image) {
+    gsap.set(image, { clipPath: 'inset(0 100% 0 0)' });
+  }
+  if (eyebrow) {
+    gsap.set(eyebrow, { opacity: 0, x: -16 });
+  }
+  gsap.set(targets, { opacity: 0, y: 48 });
+  if (subhead) {
+    gsap.set(subhead, { opacity: 0, y: 24 });
+  }
+  if (primaryCta) {
+    gsap.set(primaryCta, { opacity: 0, y: 16 });
+  }
+  if (secondaryCta) {
+    gsap.set(secondaryCta, { opacity: 0, y: 16 });
+  }
+
   const tl = gsap.timeline({
     defaults: { ease: 'expo.out', duration: 0.62 },
     onComplete: () => {
-      // Nuclear option: force everything visible when done
-      gsap.set([headline, subhead, primaryCta, secondaryCta, image], {
-        clearProps: 'opacity,transform,clipPath,will-change',
+      // Clean up inline styles once done so Tailwind classes take over if needed
+      gsap.set([eyebrow, headline, subhead, primaryCta, secondaryCta, image, ...Array.from(targets)], {
+        clearProps: 'all',
       });
     },
   });
 
-  // Image mask reveal (from hidden → visible)
   if (image) {
-    tl.from(image, {
-      clipPath: 'inset(0 100% 0 0)',
-      duration: 0.9,
-      ease: 'power3.inOut',
-    }, 0);
+    tl.to(image, { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power3.inOut' }, 0);
   }
-
-  // Eyebrow
   if (eyebrow) {
-    tl.from(eyebrow, { opacity: 0, x: -16, duration: 0.42, ease: 'power2.inOut' }, 0.1);
+    tl.to(eyebrow, { opacity: 1, x: 0, duration: 0.42, ease: 'power2.inOut' }, 0.1);
   }
-
-  // Headline words (or whole headline if SplitText failed)
-  tl.from(targets, { opacity: 0, y: 48, stagger: 0.06 }, 0.35);
-
-  // Subhead
+  tl.to(targets, { opacity: 1, y: 0, stagger: 0.06 }, 0.35);
   if (subhead) {
-    tl.from(subhead, { opacity: 0, y: 24 }, '-=0.32');
+    tl.to(subhead, { opacity: 1, y: 0 }, '-=0.32');
   }
-
-  // CTAs
   if (primaryCta) {
-    tl.from(primaryCta, { opacity: 0, y: 16, duration: 0.42, ease: 'power1.out' }, '-=0.32');
+    tl.to(primaryCta, { opacity: 1, y: 0, duration: 0.42, ease: 'power1.out' }, '-=0.32');
   }
   if (secondaryCta) {
-    tl.from(secondaryCta, { opacity: 0, y: 16, duration: 0.42, ease: 'power1.out' }, '-=0.32');
+    tl.to(secondaryCta, { opacity: 1, y: 0, duration: 0.42, ease: 'power1.out' }, '-=0.32');
   }
 
   // ── Parallax on scroll ─────────────────────────────────────────────
@@ -105,6 +109,15 @@ export function buildHeroTimeline(deps: HeroTimelineDeps) {
     tl.kill();
     parallaxSt.kill();
     if (split) split.revert();
+    
+    // Nuclear option: force everything visible when unmounted / reverted
+    gsap.set([eyebrow, headline, subhead, primaryCta, secondaryCta, image, ...Array.from(targets)], {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      clipPath: 'inset(0 0% 0 0)',
+      clearProps: 'all'
+    });
   };
 
   return { timeline: tl, kill };
