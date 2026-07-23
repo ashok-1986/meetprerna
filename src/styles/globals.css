@@ -191,3 +191,15 @@
     clip-path: none !important;
   }
 }
+
+/* Shader Backgrounds */
+.shader-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -10;
+}
+
+.shader-canvas--grain {
+  z-index: 50;
+}
