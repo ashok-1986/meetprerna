@@ -9,23 +9,11 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Observer } from 'gsap/Observer';
+import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
-import { registerStubs, SplitTextStub } from './gsap-stub';
 
-// Register free plugins immediately
-gsap.registerPlugin(ScrollTrigger, Observer);
-
-// Register paid plugin stubs during Phase 1.
-// When a GSAP membership license is obtained, remove the stubs path
-// and uncomment the dynamic imports below instead.
-if (typeof window !== 'undefined') {
-  registerStubs(gsap);
-  (gsap as any).SplitText = SplitTextStub;
-  // With a GSAP license, replace the above with:
-  // const { SplitText } = await import('gsap/SplitText');
-  // const { InertiaPlugin } = await import('gsap/InertiaPlugin');
-  // etc.
-}
+// Register plugins immediately
+gsap.registerPlugin(ScrollTrigger, Observer, SplitText);
 
 // ---------------------------------------------------------------------------
 // Lenis + GSAP ticker sync.
@@ -76,6 +64,6 @@ export {
   gsap,
   ScrollTrigger,
   Observer,
-  SplitTextStub as SplitText,
+  SplitText,
 };
 

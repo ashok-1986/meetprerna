@@ -6,12 +6,9 @@ export type AnalyticsEvent =
   | { name: 'page_view'; route: string }
   | { name: 'cta_click'; cta: string; route: string }
   | { name: 'gallery_open'; item: string }
-  | { name: 'booking_submit'; projectType: string }
-  | { name: 'contact_submit' }
   | { name: 'filter_change'; filter: string; value: string }
   | { name: 'nav_click'; href: string }
-  | { name: 'social_click'; platform: string }
-  | { name: 'form_error'; field: string; error: string };
+  | { name: 'social_click'; platform: string };
 
 let plausibleInitialized = false;
 let posthogInitialized = false;
@@ -79,12 +76,4 @@ export function trackCtaClick(cta: string, route: string) {
 
 export function trackGalleryOpen(item: string) {
   track({ name: 'gallery_open', item });
-}
-
-export function trackBookingSubmit(projectType: string) {
-  track({ name: 'booking_submit', projectType });
-}
-
-export function trackContactSubmit() {
-  track({ name: 'contact_submit' });
 }

@@ -267,3 +267,18 @@ export const sitePagesQuery = groq`*[_type == "sitePage"]{
   slug,
   seo
 }`;
+
+// Process Videos
+export const processVideosQuery = groq`*[_type == "processVideo"] | order(step asc){
+  _id,
+  title,
+  vimeoId,
+  step,
+  poster{
+    asset->{
+      _id,
+      url,
+      metadata { dimensions, lqip }
+    }
+  }
+}`;

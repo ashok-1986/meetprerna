@@ -31,7 +31,6 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@hookform/resolvers": "3.9.1",
     "@radix-ui/react-dialog": "1.1.2",
     "@radix-ui/react-dropdown-menu": "2.1.2",
     "@radix-ui/react-slot": "1.1.0",
@@ -46,8 +45,7 @@
     "embla-carousel-react": "8.5.1",
     "feed": "4.2.2",
     "framer-motion": "11.11.17",
-    "gsap": "3.12.5",
-    "gsap-trial": "npm:gsap@3.12.5",
+    "gsap": "3.15.0",
     "lenis": "1.1.13",
     "lucide-react": "0.460.0",
     "next": "14.2.18",
@@ -57,7 +55,6 @@
     "posthog-js": "1.200.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-hook-form": "7.53.2",
     "react-intersection-observer": "9.13.1",
     "sanity": "3.64.1",
     "sharp": "0.33.5",

@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
+import Image from 'next/image';
 
 import { gsap } from '@/lib/gsap';
 import { useGsapContext } from '@/hooks/useGsapContext';
@@ -135,7 +136,13 @@ export default function AboutPage() {
                 ref={portraitImgRef} 
                 className="absolute inset-[-60px] bg-ink-70 flex items-center justify-center"
               >
-                <span className="absolute z-10 text-body-xs uppercase tracking-wider text-ivory-dim">Portrait Placeholder</span>
+                <Image
+                  src="/images/Prerna-side-hero.png"
+                  alt="Portrait of Prerna"
+                  fill
+                  priority
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>

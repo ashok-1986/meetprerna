@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
 import { Button } from '@/components/ui/Button';
@@ -72,7 +73,15 @@ export function HeroSection() {
       
       {/* Background Image / Placeholder for parallax effect */}
       <div className="absolute inset-0 z-0 overflow-hidden" style={{ pointerEvents: 'none' }}>
-        <div ref={imageRef} className="absolute inset-0 bg-ink-80" />
+        <div ref={imageRef} className="absolute inset-0 bg-ink-80">
+          <Image
+            src="/images/prerna-hero.png"
+            alt="Meet Prerna Studio"
+            fill
+            priority
+            className="object-cover opacity-80"
+          />
+        </div>
       </div>
     </div>
   );

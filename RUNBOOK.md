@@ -13,35 +13,14 @@ The following environment variables are required for the application to run in p
 - `NEXT_PUBLIC_SANITY_PROJECT_ID` - Found in your Sanity project settings
 - `NEXT_PUBLIC_SANITY_DATASET` - Usually `production`
 - `NEXT_PUBLIC_SANITY_API_VERSION` - E.g., `v2024-07-22`
-- `RESEND_API_KEY` - From your Resend dashboard
-- `RESEND_FROM_EMAIL` - Your verified sender email (e.g., `studio@meetprerna.com`)
 
 ### Optional / Conditional Variables
 - `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` - E.g., `meetprerna.com`. Plausible analytics will only be injected if this is present.
-- `NEXT_PUBLIC_GSAP_STUBS` - If set to `true`, the site will use GSAP stubs. This should be removed or set to `false` in production once the GSAP Business license is installed.
 - `SANITY_API_READ_TOKEN` - Used for fetching Drafts in Preview Mode. Keep this secret.
 
 ---
 
-## 2. Pre-Launch Checklist: GSAP License
-
-Currently, the codebase uses GSAP stubs (`src/lib/gsap-stub.ts`) which allow local development without a paid license. Before launching, you must install your GSAP Business license.
-
-**Steps:**
-1. Retrieve your NPM auth token from your GSAP account dashboard.
-2. Create a `.npmrc` file in the project root with the following:
-   ```
-   @gsap:registry=https://npm.greensock.com/
-   //npm.greensock.com/:_authToken=YOUR_TOKEN_HERE
-   ```
-3. Run `npm install gsap@npm:@gsap/business` (or equivalent `pnpm` command).
-4. Remove `NEXT_PUBLIC_GSAP_STUBS=true` from your environment variables.
-5. In `src/lib/gsap.ts`, uncomment the dynamic imports for `SplitText`, etc., and remove the stub fallbacks.
-6. Run `pnpm build` to verify the build succeeds.
-
----
-
-## 3. Content Management (Sanity CMS)
+## 2. Content Management (Sanity CMS)
 
 ### Seeding Content
 - **Portfolio:** Upload items manually via the Sanity Studio interface to curate images and alt text.
@@ -54,6 +33,15 @@ To make content updates appear immediately without waiting for the 60-second rev
 2. Set the URL to: `https://meetprerna.com/api/revalidate`
 3. Set the trigger to fire on `Create`, `Update`, or `Delete`.
 4. (Optional but recommended) Add a secret token in Sanity and configure it in Vercel as `SANITY_REVALIDATE_SECRET` to secure the route.
+
+---
+
+## 3. Lead Generation (Fillout)
+
+The contact and booking forms are handled by [Fillout](https://www.fillout.com/).
+- Forms are embedded directly into the site.
+- You can customize the form branding, logic, and notifications directly in the Fillout dashboard.
+- The embed code uses your specific Form ID (e.g., `gvnCVtzfz2us`). If you create a new form, update the `formId` prop in `app/(marketing)/contact/page.tsx` and `app/(marketing)/book/page.tsx`.
 
 ---
 
@@ -81,9 +69,5 @@ If a production deployment introduces a breaking change or critical issue:
 - If the site goes down, check the [Vercel Status Page](https://www.vercel-status.com/).
 - Check your Vercel project logs for 500 errors.
 
-### Email Delivery Failures
-- If form submissions are failing, check the **Resend Dashboard** for bounce logs, rate limits, or domain verification issues.
-- Form submissions are rate-limited to prevent spam (approx. 5 requests per hour per IP). If you hit a `429 Too Many Requests` during testing, this is expected.
-
 ### Analytics (Plausible)
-- Traffic and custom events (e.g., CTA clicks, form submissions) can be viewed in your Plausible dashboard. Plausible is cookie-less and does not require a GDPR consent banner.
+- Traffic and custom events (e.g., CTA clicks) can be viewed in your Plausible dashboard. Plausible is cookie-less and does not require a GDPR consent banner.

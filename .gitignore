@@ -31,6 +31,9 @@ pnpm-debug.log*
 .env.test.local
 .env.production.local
 
+# Images
+public/images/raw/
+
 # vercel
 .vercel
 

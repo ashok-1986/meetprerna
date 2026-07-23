@@ -1,7 +1,12 @@
 import Link from 'next/link';
 import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
-import BookingForm from '@/components/sections/book/BookingForm';
+import { FilloutEmbed } from '@/components/sections/marketing/FilloutEmbed';
+
+export const metadata = {
+  title: 'Book | MeetPrerna',
+  description: 'Submit your brief to book a project with Prerna.',
+};
 
 export default function BookPage() {
   return (
@@ -22,7 +27,7 @@ export default function BookPage() {
       <Section spacing="section" className="pb-32">
         <Container>
           <div className="max-w-3xl mx-auto">
-             <BookingForm />
+             <FilloutEmbed formId="gvnCVtzfz2us" height={800} />
           </div>
         </Container>
       </Section>

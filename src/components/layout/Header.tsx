@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu } from 'lucide-react';
 import { cn } from '@/utils/cn';
@@ -81,9 +82,17 @@ export default function Header({ variant }: HeaderProps) {
         <div className="mx-auto flex h-full max-w-[var(--content-wide)] items-center justify-between px-gutter">
           <Link
             href="/"
-            className="font-display text-body-lg tracking-tightest transition-colors hover:text-inchworm"
+            className="flex items-center gap-2 transition-opacity hover:opacity-80"
           >
-            {site.shortName}
+            <Image 
+              src="/images/logo.png" 
+              alt={site.shortName} 
+              width={140} 
+              height={40} 
+              className="object-contain w-auto h-8 lg:h-10" 
+              priority
+            />
+            <span className="sr-only">{site.shortName}</span>
           </Link>
 
           <nav aria-label="Primary" className="hidden md:block">
