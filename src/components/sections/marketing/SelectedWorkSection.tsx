@@ -46,7 +46,7 @@ function WorkItem({ i }: { i: number }) {
 
   return (
     <Link href={`/tattoos/project-${i}`} ref={containerRef} className="group flex flex-col gap-4 overflow-hidden block" data-cursor="open">
-      <div className="aspect-[4/5] w-full bg-ink-70 rounded-sm overflow-hidden">
+      <div className="aspect-[4/5] w-full bg-ink-secondary rounded-sm overflow-hidden">
         <div ref={imageRef} className="w-full h-full bg-ivory-dim transition-none" style={{ willChange: 'transform, filter' }} />
       </div>
       <div className="flex justify-between text-body-sm">

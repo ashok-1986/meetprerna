@@ -53,7 +53,7 @@ export function LazyVideo({
       role="button"
       tabIndex={0}
       className={cn(
-        "relative w-full overflow-hidden bg-ink-20 group cursor-pointer", 
+        "relative w-full overflow-hidden bg-ink-border group cursor-pointer", 
         aspectClasses[aspectRatio],
         className
       )}

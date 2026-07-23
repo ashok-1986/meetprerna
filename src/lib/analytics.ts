@@ -2,13 +2,26 @@
  * Analytics event dispatcher.
  * Reference: docs/PRD.md §6.1, docs/agents.md §3.4.
  */
+export const AnalyticsEvents = {
+  PAGE_VIEW: 'page_view',
+  CTA_CLICK: 'cta_click',
+  GALLERY_OPEN: 'gallery_open',
+  BOOKING_SUBMIT: 'booking_submit',
+  FILTER_CHANGE: 'filter_change',
+  NAV_CLICK: 'nav_click',
+  SOCIAL_CLICK: 'social_click',
+} as const;
+
+export type EventName = typeof AnalyticsEvents[keyof typeof AnalyticsEvents];
+
 export type AnalyticsEvent =
-  | { name: 'page_view'; route: string }
-  | { name: 'cta_click'; cta: string; route: string }
-  | { name: 'gallery_open'; item: string }
-  | { name: 'filter_change'; filter: string; value: string }
-  | { name: 'nav_click'; href: string }
-  | { name: 'social_click'; platform: string };
+  | { name: typeof AnalyticsEvents.PAGE_VIEW; route: string }
+  | { name: typeof AnalyticsEvents.CTA_CLICK; cta: string; route: string }
+  | { name: typeof AnalyticsEvents.GALLERY_OPEN; item: string }
+  | { name: typeof AnalyticsEvents.BOOKING_SUBMIT; source?: string }
+  | { name: typeof AnalyticsEvents.FILTER_CHANGE; filter: string; value: string }
+  | { name: typeof AnalyticsEvents.NAV_CLICK; href: string }
+  | { name: typeof AnalyticsEvents.SOCIAL_CLICK; platform: string };
 
 let posthogModule: typeof import('posthog-js') | null = null;
 
@@ -56,13 +69,13 @@ export function track(event: AnalyticsEvent): void {
 }
 
 export function trackPageView(route: string) {
-  track({ name: 'page_view', route });
+  track({ name: AnalyticsEvents.PAGE_VIEW, route });
 }
 
 export function trackCtaClick(cta: string, route: string) {
-  track({ name: 'cta_click', cta, route });
+  track({ name: AnalyticsEvents.CTA_CLICK, cta, route });
 }
 
 export function trackGalleryOpen(item: string) {
-  track({ name: 'gallery_open', item });
+  track({ name: AnalyticsEvents.GALLERY_OPEN, item });
 }

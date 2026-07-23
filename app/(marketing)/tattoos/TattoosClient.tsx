@@ -45,7 +45,7 @@ export default function TattoosClient({ items }: TattoosClientProps) {
       </Section>
 
       {/* Filter Bar */}
-      <div className="sticky top-[var(--header-height)] z-40 w-full border-b border-ink-20 bg-ink/90 backdrop-blur-sm py-4">
+      <div className="sticky top-[var(--header-height)] z-40 w-full border-b border-ink-border bg-ink/90 backdrop-blur-sm py-4">
         <Container>
           <FilterBar
             filters={FILTERS}

@@ -12,19 +12,26 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 
 export function useGsapContext(
-  fn: (ctx: gsap.Context) => void,
-  deps: React.DependencyList = [],
+  callback: (context: gsap.Context) => (() => void) | void,
+  deps: React.DependencyList = []
 ) {
-  const ref = useRef<gsap.Context | null>(null);
+  const cleanupRef = useRef<(() => void) | void>();
+  const ctxRef = useRef<gsap.Context | null>(null);
 
   useLayoutEffect(() => {
-    const ctx = gsap.context(fn);
-    ref.current = ctx;
+    const ctx = gsap.context((self) => {
+      cleanupRef.current = callback(self);
+    });
+    ctxRef.current = ctx;
+    
     return () => {
+      if (cleanupRef.current) {
+        cleanupRef.current();
+      }
       ctx.revert();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
-  return ref;
+  return ctxRef;
 }

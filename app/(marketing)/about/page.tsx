@@ -134,7 +134,7 @@ export default function AboutPage() {
             >
               <div 
                 ref={portraitImgRef} 
-                className="absolute inset-[-60px] bg-ink-70 flex items-center justify-center"
+                className="absolute inset-[-60px] bg-ink-secondary flex items-center justify-center"
               >
                 <Image
                   src="/images/Prerna-side-hero.png"
@@ -153,7 +153,7 @@ export default function AboutPage() {
         <Container>
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:items-center">
             <div className="order-2 lg:order-1 aspect-square rounded-sm relative overflow-hidden flex items-center justify-center bg-transparent">
-              <div ref={originImgRef} className="absolute inset-[-60px] bg-ink-70 flex items-center justify-center">
+              <div ref={originImgRef} className="absolute inset-[-60px] bg-ink-secondary flex items-center justify-center">
                 <span className="absolute z-10 text-body-xs uppercase tracking-wider text-ivory-dim">Origin Image Placeholder</span>
               </div>
             </div>
@@ -183,7 +183,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="aspect-[4/3] rounded-sm relative overflow-hidden flex items-center justify-center bg-transparent">
-              <div ref={practiceImgRef} className="absolute inset-[-60px] bg-ink-70 flex items-center justify-center">
+              <div ref={practiceImgRef} className="absolute inset-[-60px] bg-ink-secondary flex items-center justify-center">
                 <span className="absolute z-10 text-body-xs uppercase tracking-wider text-ivory-dim">Practice Image Placeholder</span>
               </div>
             </div>
@@ -198,7 +198,7 @@ export default function AboutPage() {
               <h2 className="font-display text-h2 text-ivory">Timeline.</h2>
             </div>
             
-            <div className="flex flex-col border-l border-ink-20 ml-4 md:ml-0 md:pl-8 relative" ref={timelineSectionRef}>
+            <div className="flex flex-col border-l border-ink-border ml-4 md:ml-0 md:pl-8 relative" ref={timelineSectionRef}>
               <div 
                 ref={timelineLineRef}
                 className="absolute left-[ -1px ] md:left-[-1px] top-0 bottom-0 w-[1.5px] bg-marigold origin-top"
@@ -234,8 +234,8 @@ export default function AboutPage() {
             <h2 className="font-display text-h4 text-ivory text-center">Featured In</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50">
                {[1,2,3,4].map(i => (
-                 <div key={i} className="h-12 bg-ink-70 rounded-sm flex items-center justify-center">
-                   <span className="text-body-xs text-ink-20">LOGO {i}</span>
+                 <div key={i} className="h-12 bg-ink-secondary rounded-sm flex items-center justify-center">
+                   <span className="text-body-xs text-ink-border">LOGO {i}</span>
                  </div>
                ))}
             </div>

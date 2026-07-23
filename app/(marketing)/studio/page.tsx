@@ -21,7 +21,7 @@ export default function StudioPage() {
 
       <Section spacing="none">
         <Container>
-          <div className="aspect-[21/9] w-full bg-ink-70 rounded-sm flex items-center justify-center relative overflow-hidden">
+          <div className="aspect-[21/9] w-full bg-ink-secondary rounded-sm flex items-center justify-center relative overflow-hidden">
              <div className="absolute inset-0 bg-ink/20 mix-blend-multiply" />
              <span className="relative z-10 text-body-sm text-ivory-dim tracking-wider uppercase">Studio Space Placeholder</span>
           </div>
@@ -55,7 +55,7 @@ export default function StudioPage() {
                   <p className="text-body text-ivory-dim max-w-md">{pillar.body}</p>
                 </div>
                 <div className="lg:col-span-7">
-                   <div className="aspect-[4/5] w-full max-w-md mx-auto bg-ink-70 rounded-sm" />
+                   <div className="aspect-[4/5] w-full max-w-md mx-auto bg-ink-secondary rounded-sm" />
                 </div>
               </div>
             ))}
@@ -69,8 +69,8 @@ export default function StudioPage() {
             <h2 className="font-display text-h4 text-ivory text-center">Press & Recognition</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50">
                {[1,2,3,4].map(i => (
-                 <div key={i} className="h-12 bg-ink-70 rounded-sm flex items-center justify-center">
-                   <span className="text-body-xs text-ink-20">LOGO {i}</span>
+                 <div key={i} className="h-12 bg-ink-secondary rounded-sm flex items-center justify-center">
+                   <span className="text-body-xs text-ink-border">LOGO {i}</span>
                  </div>
                ))}
             </div>
@@ -93,7 +93,7 @@ export default function StudioPage() {
                 <Link href="/book">Book an appointment</Link>
               </Button>
             </div>
-            <div className="aspect-square w-full bg-ink-70 rounded-sm flex items-center justify-center">
+            <div className="aspect-square w-full bg-ink-secondary rounded-sm flex items-center justify-center">
                <span className="text-body-sm text-ivory-dim tracking-wider uppercase">Map Placeholder</span>
             </div>
           </div>

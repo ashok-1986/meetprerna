@@ -29,7 +29,7 @@ export function ManifestoSection() {
               { name: 'Pillar Three', desc: 'A description for pillar three.' },
               { name: 'Pillar Four', desc: 'A description for pillar four.' },
             ].map((pillar, i) => (
-              <div key={i} className="flex flex-col gap-4 border-t border-ink-20 pt-6">
+              <div key={i} className="flex flex-col gap-4 border-t border-ink-border pt-6">
                 <h3 className="font-display text-h4 text-ivory">{pillar.name}</h3>
                 <p className="text-body-sm text-ivory-dim">{pillar.desc}</p>
               </div>

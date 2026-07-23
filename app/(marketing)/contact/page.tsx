@@ -25,14 +25,14 @@ export default function ContactPage() {
             {/* Info Column */}
             <div className="lg:col-span-5 flex flex-col gap-12 lg:pt-32">
                <div className="flex flex-col gap-4">
-                 <h2 className="font-display text-h4 text-ivory border-b border-ink-20 pb-4">Direct Email</h2>
+                 <h2 className="font-display text-h4 text-ivory border-b border-ink-border pb-4">Direct Email</h2>
                  <a href="mailto:studio@meetprerna.com" className="text-body text-ivory-dim hover:text-ivory transition-colors">
                    studio@meetprerna.com
                  </a>
                </div>
 
                <div className="flex flex-col gap-4">
-                 <h2 className="font-display text-h4 text-ivory border-b border-ink-20 pb-4">Studio Location</h2>
+                 <h2 className="font-display text-h4 text-ivory border-b border-ink-border pb-4">Studio Location</h2>
                  <p className="text-body text-ivory-dim">
                    Sector 17, Vashi<br />
                    Navi Mumbai, 400703<br />

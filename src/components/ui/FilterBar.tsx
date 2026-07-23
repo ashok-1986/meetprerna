@@ -43,7 +43,7 @@ export function FilterBar({ filters, activeFilter, onFilterChange }: FilterBarPr
           clearProps: 'all',
         });
       }
-      return { timeline: tl, kill: () => tl.kill() };
+      return () => { tl.kill(); };
     });
   }, [prefersReducedMotion, ctxRef]);
 
@@ -101,7 +101,7 @@ export function FilterBar({ filters, activeFilter, onFilterChange }: FilterBarPr
         }
       }
       
-      return { timeline: tl, kill: () => tl.kill() };
+      return () => { tl.kill(); };
     });
   }, [activeFilter, filters, prefersReducedMotion, ctxRef]);
 

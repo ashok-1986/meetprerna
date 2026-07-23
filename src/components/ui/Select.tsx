@@ -58,7 +58,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
               'border-b cursor-pointer',
               error 
                 ? 'border-red-500 text-ivory' 
-                : 'border-ink-20 text-ivory focus:border-inchworm',
+                : 'border-ink-border text-ivory focus:border-inchworm',
             )}
             {...props}
           >

@@ -83,7 +83,7 @@ export function SeriesRow({ year, name, count, index, onClick }: SeriesRowProps)
   return (
     <div
       ref={rowRef}
-      className="relative flex justify-between items-center py-6 border-b border-ink-20 cursor-pointer"
+      className="relative flex justify-between items-center py-6 border-b border-ink-border cursor-pointer"
       onClick={onClick}
       role="button"
       tabIndex={0}

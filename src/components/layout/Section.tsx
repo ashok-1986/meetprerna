@@ -14,7 +14,7 @@ const sectionVariants = cva(
       },
       tone: {
         default: 'bg-transparent',
-        warm: 'bg-ink-90',
+        warm: 'bg-ink-primary',
       },
     },
     defaultVariants: {

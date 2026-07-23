@@ -40,11 +40,11 @@ export function StudioVignetteSection() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-            <div className="aspect-video bg-ink-70 rounded-sm md:col-span-8 overflow-hidden relative">
+            <div className="aspect-video bg-ink-secondary rounded-sm md:col-span-8 overflow-hidden relative">
               <div ref={imageRef} className="absolute inset-[-100px] bg-ivory-dim" />
             </div>
-            <div className="aspect-[3/4] bg-ink-70 rounded-sm md:col-span-4" />
-            <div className="aspect-[21/9] bg-ink-70 rounded-sm md:col-span-12" />
+            <div className="aspect-[3/4] bg-ink-secondary rounded-sm md:col-span-4" />
+            <div className="aspect-[21/9] bg-ink-secondary rounded-sm md:col-span-12" />
           </div>
           <p className="text-body-sm text-ivory-dim text-center mt-4">
             Vashi, Navi Mumbai. Designed for calm.

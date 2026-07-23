@@ -17,10 +17,10 @@ const config: Config = {
         // so Tailwind utilities can reference them.
         ink: {
           DEFAULT: 'rgb(var(--color-ink) / <alpha-value>)',
-          90: 'rgb(var(--color-ink-90) / <alpha-value>)',
-          70: 'rgb(var(--color-ink-70) / <alpha-value>)',
-          50: 'rgb(var(--color-ink-50) / <alpha-value>)',
-          20: 'rgb(var(--color-ink-20) / <alpha-value>)',
+          primary: 'rgb(var(--color-ink-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-ink-secondary) / <alpha-value>)',
+          muted: 'rgb(var(--color-ink-muted) / <alpha-value>)',
+          border: 'rgb(var(--color-ink-border) / <alpha-value>)',
         },
         ivory: {
           DEFAULT: 'rgb(var(--color-ivory) / <alpha-value>)',

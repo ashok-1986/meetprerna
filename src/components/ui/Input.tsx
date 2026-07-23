@@ -70,7 +70,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               'border-b',
               error 
                 ? 'border-red-500 text-ivory' 
-                : 'border-ink-20 text-ivory focus:border-inchworm',
+                : 'border-ink-border text-ivory focus:border-inchworm',
               sizeClasses[inputSize]
             )}
             {...props}

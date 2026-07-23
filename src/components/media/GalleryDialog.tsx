@@ -131,7 +131,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
           0.12
         );
       }
-      return { timeline: tl, kill: () => tl.kill() };
+      return () => { tl.kill(); };
     }
     return () => {}; // return empty cleanup function if no activeItem
   }, [activeItem, prefersReducedMotion]);
@@ -220,7 +220,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
         >
           <div className="relative flex h-full w-full max-w-[var(--content-wide)] flex-col lg:flex-row gap-8 lg:gap-16 items-center">
             <Dialog.Close
-              className="absolute right-0 top-0 lg:-top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-ink-80 text-ivory transition-colors hover:bg-ink-70 focus:outline-none focus:ring-2 focus:ring-inchworm"
+              className="absolute right-0 top-0 lg:-top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-ink-80 text-ivory transition-colors hover:bg-ink-secondary focus:outline-none focus:ring-2 focus:ring-inchworm"
               aria-label="Close dialog"
             >
               <X size={20} strokeWidth={1.5} />
@@ -240,7 +240,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
                   />
                 </div>
               ) : (
-                <div className="w-full h-full bg-ink-70 rounded-sm flex items-center justify-center">
+                <div className="w-full h-full bg-ink-secondary rounded-sm flex items-center justify-center">
                   <span className="text-body text-ivory-dim">No Image</span>
                 </div>
               )}
@@ -251,7 +251,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
               style={{ opacity: 0 }}
               className="flex flex-col gap-6 lg:w-96 shrink-0 bg-ink p-6 rounded-sm"
             >
-              <div className="flex flex-col gap-2 border-b border-ink-20 pb-6">
+              <div className="flex flex-col gap-2 border-b border-ink-border pb-6">
                 <Dialog.Title className="font-display text-h3 text-ivory">
                   {activeItem.title}
                 </Dialog.Title>
@@ -262,7 +262,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
 
               <div className="flex flex-col gap-4 text-body-sm text-ivory-dim">
                 {activeItem.medium && (
-                  <div className="flex justify-between border-b border-ink-20 pb-4">
+                  <div className="flex justify-between border-b border-ink-border pb-4">
                     <span>Medium</span>
                     <span className="text-ivory text-right">
                       {activeItem.medium}
@@ -270,7 +270,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
                   </div>
                 )}
                 {activeItem.dimensions && (
-                  <div className="flex justify-between border-b border-ink-20 pb-4">
+                  <div className="flex justify-between border-b border-ink-border pb-4">
                     <span>Dimensions</span>
                     <span className="text-ivory text-right">
                       {activeItem.dimensions}
@@ -278,7 +278,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
                   </div>
                 )}
                 {activeItem.status && (
-                  <div className="flex justify-between border-b border-ink-20 pb-4">
+                  <div className="flex justify-between border-b border-ink-border pb-4">
                     <span>Status</span>
                     <span className="text-ivory capitalize text-right">
                       {activeItem.status}
@@ -286,7 +286,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
                   </div>
                 )}
                 {activeItem.bodyArea && (
-                  <div className="flex justify-between border-b border-ink-20 pb-4">
+                  <div className="flex justify-between border-b border-ink-border pb-4">
                     <span>Placement</span>
                     <span className="text-ivory text-right">
                       {activeItem.bodyArea}
@@ -305,14 +305,14 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
                 <div className="flex gap-4 pt-8">
                   <button
                     onClick={handlePrev}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-ink-20 text-ivory transition-colors hover:bg-ink-80"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-ink-border text-ivory transition-colors hover:bg-ink-80"
                     aria-label="Previous item"
                   >
                     <ChevronLeft size={20} strokeWidth={1.5} />
                   </button>
                   <button
                     onClick={handleNext}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-ink-20 text-ivory transition-colors hover:bg-ink-80"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-ink-border text-ivory transition-colors hover:bg-ink-80"
                     aria-label="Next item"
                   >
                     <ChevronRight size={20} strokeWidth={1.5} />

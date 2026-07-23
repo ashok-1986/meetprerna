@@ -13,9 +13,9 @@ const buttonVariants = cva(
         primary:
           'bg-inchworm text-ink hover:bg-inchworm-deep active:bg-inchworm-deep',
         secondary:
-          'border border-ink-20 text-ivory hover:bg-ink-70 active:bg-ink-70',
+          'border border-ink-border text-ivory hover:bg-ink-secondary active:bg-ink-secondary',
         ghost:
-          'text-ivory-dim hover:text-ivory hover:bg-ink-70 active:bg-ink-70',
+          'text-ivory-dim hover:text-ivory hover:bg-ink-secondary active:bg-ink-secondary',
         outline:
           'border border-ivory/20 text-ivory hover:bg-ivory/5 active:bg-ivory/10',
         link:

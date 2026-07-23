@@ -26,7 +26,7 @@ export default function RevealImage({
   return (
     <figure className={cn('flex flex-col gap-3', containerClassName)}>
       <div
-        className={cn('relative w-full overflow-hidden bg-ink-70 rounded-sm', !aspect && 'aspect-square')}
+        className={cn('relative w-full overflow-hidden bg-ink-secondary rounded-sm', !aspect && 'aspect-square')}
         style={aspect ? { aspectRatio: aspect } : undefined}
       >
         <Image

@@ -95,12 +95,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgb(var(--color-ink-50));
+    background: rgb(var(--color-ink-muted));
     border-radius: var(--radius-pill);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: rgb(var(--color-ink-70));
+    background: rgb(var(--color-ink-secondary));
   }
 
   /* -----------------------------------------------------------------------

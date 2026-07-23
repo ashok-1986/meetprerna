@@ -73,7 +73,7 @@ export default async function Home() {
                 { name: 'Therapy', desc: 'Art is a way of saying things that don\'t have words.' },
                 { name: 'Calmness', desc: 'The studio is a quiet room, by appointment only.' },
               ].map((pillar, i) => (
-                <div key={i} className="flex flex-col gap-4 border-t border-ink-20 pt-6">
+                <div key={i} className="flex flex-col gap-4 border-t border-ink-border pt-6">
                   <h3 className="font-display text-h4 text-ivory">{pillar.name}</h3>
                   <p className="text-body-sm text-ivory-dim">{pillar.desc}</p>
                 </div>
@@ -108,11 +108,11 @@ export default async function Home() {
                     <div 
                       role="img"
                       aria-label={item.images[0]?.alt || `${item.title} — ${item.year}`}
-                      className="aspect-[4/5] w-full rounded-sm bg-ink-70 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.02]" 
+                      className="aspect-[4/5] w-full rounded-sm bg-ink-secondary bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.02]" 
                       style={{ backgroundImage: `url(${urlFor(item.images[0]).width(800).auto('format').url()})` }}
                     />
                   ) : (
-                    <div className="aspect-[4/5] w-full bg-ink-70 rounded-sm" />
+                    <div className="aspect-[4/5] w-full bg-ink-secondary rounded-sm" />
                   )}
                   <div className="flex justify-between text-body-sm">
                     <span className="text-ivory">{item.title}</span>
@@ -172,9 +172,9 @@ export default async function Home() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-              <div className="aspect-video bg-ink-70 rounded-sm md:col-span-8" />
-              <div className="aspect-[3/4] bg-ink-70 rounded-sm md:col-span-4" />
-              <div className="aspect-[21/9] bg-ink-70 rounded-sm md:col-span-12" />
+              <div className="aspect-video bg-ink-secondary rounded-sm md:col-span-8" />
+              <div className="aspect-[3/4] bg-ink-secondary rounded-sm md:col-span-4" />
+              <div className="aspect-[21/9] bg-ink-secondary rounded-sm md:col-span-12" />
             </div>
             <p className="text-body-sm text-ivory-dim text-center mt-4">
               Vashi, Navi Mumbai. Designed for calm.

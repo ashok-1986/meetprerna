@@ -6,7 +6,7 @@ import { StatusDot } from '@/components/ui/StatusDot';
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-ink-20 bg-ink-90 pt-16 pb-8">
+    <footer className="w-full border-t border-ink-border bg-ink-primary pt-16 pb-8">
       <Container>
         <div className="flex flex-col gap-16">
           {/* Top Row */}
@@ -60,7 +60,7 @@ export default function Footer() {
           </div>
 
           {/* Bottom Row */}
-          <div className="flex flex-col justify-between gap-4 border-t border-ink-20 pt-8 text-body-xs text-ivory-dim md:flex-row md:items-center">
+          <div className="flex flex-col justify-between gap-4 border-t border-ink-border pt-8 text-body-xs text-ivory-dim md:flex-row md:items-center">
             <p>&copy; {new Date().getFullYear()} {site.name} Studio</p>
             <p>Navi Mumbai, India.</p>
           </div>

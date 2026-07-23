@@ -42,7 +42,7 @@ const SERIES = [
         <Container>
           <div className="flex flex-col gap-12">
             <h2 className="font-display text-h4 text-ivory">Series Index</h2>
-            <div className="flex flex-col border-t border-ink-20">
+            <div className="flex flex-col border-t border-ink-border">
               {SERIES.map((series, i) => (
                 <SeriesRow
                   key={series.name}

@@ -167,7 +167,7 @@ export default function ProcessClient({ videos }: ProcessClientProps) {
           const video = videos.find(v => v.step === i + 1);
           
           return (
-            <Section key={i} spacing="section" className="process-step border-t border-ink-20 relative">
+            <Section key={i} spacing="section" className="process-step border-t border-ink-border relative">
               {i < steps.length - 1 && !prefersReducedMotion && (
                 <div className="step-line absolute left-4 md:left-8 top-1/2 h-full w-[1.5px] bg-marigold origin-top hidden lg:block z-0" />
               )}
@@ -182,8 +182,8 @@ export default function ProcessClient({ videos }: ProcessClientProps) {
                   </div>
                   
                   <div className="lg:col-span-7 flex flex-col sm:flex-row gap-6">
-                     <div className="step-image flex-1 aspect-[4/5] bg-ink-70 rounded-sm flex items-center justify-center relative overflow-hidden">
-                        <div className="parallax-target absolute inset-[-60px] flex items-center justify-center bg-ink-70 w-[calc(100%+120px)] h-[calc(100%+120px)]">
+                     <div className="step-image flex-1 aspect-[4/5] bg-ink-secondary rounded-sm flex items-center justify-center relative overflow-hidden">
+                        <div className="parallax-target absolute inset-[-60px] flex items-center justify-center bg-ink-secondary w-[calc(100%+120px)] h-[calc(100%+120px)]">
                           <span className="text-body-xs uppercase tracking-wider text-ivory-dim">Image Placeholder</span>
                         </div>
                      </div>

@@ -89,7 +89,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
               'border-b',
               error 
                 ? 'border-red-500 text-ivory' 
-                : 'border-ink-20 text-ivory focus:border-inchworm',
+                : 'border-ink-border text-ivory focus:border-inchworm',
             )}
             {...props}
           />
