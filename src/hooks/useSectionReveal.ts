@@ -9,7 +9,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import { useGsapContext } from '@/hooks/useGsapContext';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { createRevealTimeline } from '@/animations/reveal';
@@ -35,17 +35,17 @@ export function useSectionReveal<T extends HTMLElement = HTMLDivElement>(
       }
 
       const hasChildren = el.hasAttribute('data-reveal-children');
-      const { timeline, kill } = createRevealTimeline(el, { y, children: hasChildren });
-
-      const st = ScrollTrigger.create({
-        trigger: el,
-        start,
-        toggleActions: 'play none none reverse',
-        animation: timeline,
+      const { kill } = createRevealTimeline(el, { 
+        y, 
+        children: hasChildren,
+        scrollTrigger: {
+          trigger: el,
+          start,
+          toggleActions: 'play none none reverse',
+        }
       });
 
       return () => {
-        st.kill();
         kill();
       };
     },
