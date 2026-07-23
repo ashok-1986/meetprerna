@@ -7,11 +7,15 @@ import { sanityClient } from '@/lib/sanity/client';
 import { featuredPortfolioQuery } from '@/lib/sanity/queries';
 import { STATIC_FALLBACK_FEATURED } from '@/lib/sanity/fallbackData';
 import { urlFor } from '@/lib/sanity/image';
+import type { PortfolioItem } from '@/types/content';
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const featuredItems = await sanityClient.fetch(featuredPortfolioQuery).catch(() => STATIC_FALLBACK_FEATURED);
+  const featuredItems = await sanityClient.fetch(featuredPortfolioQuery).catch((err) => {
+    console.error('[Sanity] Portfolio fetch failed:', err.message);
+    return STATIC_FALLBACK_FEATURED;
+  });
   const itemsToRender = featuredItems && featuredItems.length > 0 ? featuredItems : STATIC_FALLBACK_FEATURED;
 
   return (
@@ -75,7 +79,7 @@ export default async function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {itemsToRender.slice(0, 6).map((item: any, i: number) => (
+              {itemsToRender.slice(0, 6).map((item: PortfolioItem, i: number) => (
                 <Link key={item._id || i} href={`/${item.kind}s#${item.slug?.current}`} className="group flex flex-col gap-4">
                   {item.images?.[0] ? (
                     <div 

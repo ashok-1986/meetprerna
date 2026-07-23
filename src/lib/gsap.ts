@@ -9,23 +9,13 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Observer } from 'gsap/Observer';
+import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
 
 // Register plugins immediately
-gsap.registerPlugin(ScrollTrigger, Observer);
+gsap.registerPlugin(ScrollTrigger, Observer, SplitText);
 
-// Create a dummy SplitText for graceful degradation
-class SplitText {
-  words: HTMLElement[] = [];
-  chars: HTMLElement[] = [];
-  lines: HTMLElement[] = [];
-  constructor(_target: any, _vars: any) {
-    // Basic fallback: just return the target as words/chars if needed
-    // The timelines have fallbacks if words are empty
-  }
-  revert() {}
-}
-(gsap as any).SplitText = SplitText;
+
 
 // ---------------------------------------------------------------------------
 // Lenis + GSAP ticker sync.

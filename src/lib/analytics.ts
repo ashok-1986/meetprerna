@@ -10,55 +10,44 @@ export type AnalyticsEvent =
   | { name: 'nav_click'; href: string }
   | { name: 'social_click'; platform: string };
 
-let plausibleInitialized = false;
-let posthogInitialized = false;
+let posthogModule: typeof import('posthog-js') | null = null;
 
-function initPlausible() {
-  if (plausibleInitialized || typeof window === 'undefined') return;
-  const domain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
-  if (!domain) return;
-  const script = document.createElement('script');
-  script.defer = true;
-  script.dataset.domain = domain;
-  script.src = 'https://plausible.io/js/script.js';
-  document.head.appendChild(script);
-  plausibleInitialized = true;
-}
-
-function initPostHog() {
-  if (posthogInitialized || typeof window === 'undefined') return;
+async function getPostHog() {
+  if (posthogModule) return posthogModule;
   const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
   const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com';
-  if (!key) return;
-  // Dynamic import for PostHog
-  import('posthog-js').then((posthog) => {
-    posthog.default.init(key, {
-      api_host: host,
-      autocapture: false,
-      capture_pageview: false,
-      capture_pageleave: true,
-      disable_session_recording: false,
-    });
+  if (!key) return null;
+  posthogModule = await import('posthog-js');
+  posthogModule.default.init(key, {
+    api_host: host,
+    autocapture: false,
+    capture_pageview: false,
+    capture_pageleave: true,
+    disable_session_recording: false,
   });
-  posthogInitialized = true;
+  return posthogModule;
+}
+
+// Initialize Plausible once at module load
+if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN) {
+  const script = document.createElement('script');
+  script.src = 'https://plausible.io/js/script.js';
+  script.setAttribute('data-domain', process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN);
+  script.defer = true;
+  document.head.appendChild(script);
 }
 
 export function track(event: AnalyticsEvent): void {
   if (typeof window === 'undefined') return;
 
   // Plausible
-  if (process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN) {
-    initPlausible();
-    (window as any).plausible?.(event.name, { props: event });
-  }
+  const plausible = (window as any).plausible;
+  if (plausible) plausible(event.name, { props: event });
 
   // PostHog
-  if (process.env.NEXT_PUBLIC_POSTHOG_KEY) {
-    initPostHog();
-    import('posthog-js').then((posthog) => {
-      posthog.default.capture(event.name, event);
-    });
-  }
+  getPostHog().then((posthog) => {
+    if (posthog) posthog.default.capture(event.name, event);
+  });
 
   // Console in dev
   if (process.env.NODE_ENV === 'development') {

@@ -11,6 +11,7 @@ import { primaryNav, type NavItem } from '@/config/nav';
 import MobileMenu from './MobileMenu';
 import { useGsapContext } from '@/hooks/useGsapContext';
 import { gsap, getLenis } from '@/lib/gsap';
+import type Lenis from 'lenis';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 interface HeaderProps {
@@ -38,7 +39,7 @@ export default function Header({ variant }: HeaderProps) {
     let lastScrollY = 0;
     let isHidden = false;
 
-    const onScroll = (e: any) => {
+    const onScroll = (e: Lenis) => {
       const scrollY = e.animatedScroll || 0;
       
       // If we're at the top, always show

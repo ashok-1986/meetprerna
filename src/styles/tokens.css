@@ -15,10 +15,13 @@
   --color-inchworm-deep: 159 204 74;   /* #9FCC4A — pressed */
   --color-marigold:      234 255 39;   /* #EAFF27 — editorial accent */
   --color-ink:           26 26 26;     /* #1A1A1A — background */
-  --color-ink-90:        34 34 34;     /* #222222 — raised */
-  --color-ink-70:        54 54 54;     /* #363636 — hover */
-  --color-ink-50:        84 84 84;     /* #545454 — muted */
-  --color-ink-20:        58 58 58;     /* #3a3a3a — hairlines */
+  /* NOTE: These are NOT opacity/percentage values. 
+     ink-20 (#3A3A3A) is darker than ink-50 (#545454). 
+     Use ink-50/70/90 for lighter tints, ink-20 for subtle borders. */
+  --color-ink-20: 58 58 58;   /* #3A3A3A — border/subtle */
+  --color-ink-50: 84 84 84;   /* #545454 — muted text */
+  --color-ink-70: 54 54 54;   /* #363636 — secondary bg */
+  --color-ink-90: 34 34 34;   /* #222222 — card bg */
   --color-ivory:         253 255 233;  /* #FDFFE9 — text */
   --color-ivory-dim:     201 203 182;  /* #C9CBB6 — captions */
 
@@ -35,7 +38,7 @@
      ----------------------------------------------------------------------- */
   --font-display:   'Cormorant Garamond', 'Times New Roman', serif;
   --font-editorial: 'Times New Roman', 'Times', serif;
-  --font-body:      'MG12', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body:      'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:      'JetBrains Mono', ui-monospace, monospace;
 
   /* -----------------------------------------------------------------------

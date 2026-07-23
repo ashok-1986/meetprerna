@@ -34,7 +34,7 @@ const Section = forwardRef<HTMLElement, SectionProps>(
   ({ as: Tag = 'section', className, spacing, tone, children, ...props }, ref) => {
     return (
       <Tag
-        ref={ref as React.Ref<any>}
+        ref={ref as any}
         className={cn(sectionVariants({ spacing, tone }), className)}
         {...props}
       >
