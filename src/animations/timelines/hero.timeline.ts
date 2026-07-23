@@ -51,7 +51,7 @@ export function buildHeroTimeline(deps: HeroTimelineDeps) {
     onComplete: () => {
       // Nuclear option: force everything visible when done
       gsap.set([headline, subhead, primaryCta, secondaryCta, image], {
-        clearProps: 'opacity,transform,clipPath',
+        clearProps: 'opacity,transform,clipPath,will-change',
       });
     },
   });

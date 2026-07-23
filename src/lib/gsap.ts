@@ -60,6 +60,15 @@ if (typeof window !== 'undefined') {
     ScrollTrigger.defaults({ markers: true });
     gsap.globalTimeline.timeScale(4);
   }
+  
+  ScrollTrigger.defaults({
+    invalidateOnRefresh: true,
+    fastScrollEnd: true,
+  });
+  
+  document.fonts.ready.then(() => {
+    ScrollTrigger.refresh();
+  });
 }
 
 // ---------------------------------------------------------------------------

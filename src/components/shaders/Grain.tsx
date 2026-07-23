@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import grainFrag from '@/shaders/grain.frag?raw';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
-function GrainMaterial() {
+function GrainMaterial({ reduce }: { reduce: boolean }) {
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
@@ -17,7 +17,9 @@ function GrainMaterial() {
   );
 
   useFrame((_, dt) => {
-    uniforms.uTime.value += dt;
+    if (!reduce) {
+      uniforms.uTime.value += dt;
+    }
   });
 
   return (
@@ -33,7 +35,6 @@ function GrainMaterial() {
 
 export function Grain() {
   const reduce = usePrefersReducedMotion();
-  if (reduce) return null;
 
   return (
     <div
@@ -49,7 +50,7 @@ export function Grain() {
       >
         <mesh>
           <planeGeometry args={[2, 2]} />
-          <GrainMaterial />
+          <GrainMaterial reduce={reduce} />
         </mesh>
       </Canvas>
     </div>
