@@ -16,6 +16,7 @@ export function FilloutEmbed({ formId, height = 800, className = '' }: FilloutEm
         data-fillout-id={formId} 
         data-fillout-embed-type="standard" 
         data-fillout-inherit-parameters
+        data-fillout-dynamic-resize
       />
       <Script
         src="https://server.fillout.com/embed/v1/"
