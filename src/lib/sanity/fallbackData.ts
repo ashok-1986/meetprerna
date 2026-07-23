@@ -41,7 +41,55 @@ export const STATIC_FALLBACK_SKETCHES: PortfolioItem[] = Array.from({ length: 6 
 }));
 
 export const STATIC_FALLBACK_FEATURED: PortfolioItem[] = [
-  ...STATIC_FALLBACK_TATTOOS.slice(0, 2),
-  ...STATIC_FALLBACK_PAINTINGS.slice(0, 2),
-  ...STATIC_FALLBACK_SKETCHES.slice(0, 2),
+  {
+    _id: 'fallback-featured-1',
+    title: 'Floral Sleeve',
+    slug: { current: 'floral-sleeve' },
+    kind: 'tattoo',
+    year: 2024,
+    styles: ['line', 'flora'],
+    images: [],
+    published: true,
+  },
+  {
+    _id: 'fallback-featured-2',
+    title: 'Abstract Form',
+    slug: { current: 'abstract-form' },
+    kind: 'painting',
+    year: 2023,
+    styles: ['abstract'],
+    images: [],
+    published: true,
+  },
+  {
+    _id: 'fallback-featured-3',
+    title: 'Geometric Back',
+    slug: { current: 'geometric-back' },
+    kind: 'tattoo',
+    year: 2024,
+    styles: ['geometry', 'line'],
+    images: [],
+    published: true,
+  },
+];
+
+export const STATIC_FALLBACK_TESTIMONIALS = [
+  {
+    _id: 'fallback-1',
+    quote: 'The space itself is calm. Prerna listened more than she spoke. The tattoo healed clean and the line work is exactly what I wanted.',
+    attribution: '— Client, Mumbai',
+    kind: 'tattoo',
+  },
+  {
+    _id: 'fallback-2',
+    quote: 'Her abstract pieces carry so much emotion. I bought two paintings for my studio and they completely change the energy of the room.',
+    attribution: '— Collector, Delhi',
+    kind: 'painting',
+  },
+  {
+    _id: 'fallback-3',
+    quote: 'This was the most calm and considered tattoo experience I have ever had. Prerna creates a truly safe space.',
+    attribution: '— Client, Bangalore',
+    kind: 'tattoo',
+  }
 ];

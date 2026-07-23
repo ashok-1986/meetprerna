@@ -4,10 +4,18 @@ import Container from '@/components/layout/Container';
 import { Button } from '@/components/ui/Button';
 import { HeroSection } from '@/components/sections/marketing/HeroSection';
 import { sanityClient } from '@/lib/sanity/client';
-import { featuredPortfolioQuery } from '@/lib/sanity/queries';
-import { STATIC_FALLBACK_FEATURED } from '@/lib/sanity/fallbackData';
+import { featuredPortfolioQuery, testimonialsQuery } from '@/lib/sanity/queries';
+import { STATIC_FALLBACK_FEATURED, STATIC_FALLBACK_TESTIMONIALS } from '@/lib/sanity/fallbackData';
 import { urlFor } from '@/lib/sanity/image';
 import type { PortfolioItem } from '@/types/content';
+import { buildMetadata, buildPersonJsonLd } from '@/lib/seo';
+import { TestimonialsSection } from '@/components/sections/marketing/TestimonialsSection';
+
+export const metadata = buildMetadata({
+  title: 'Custom Tattoos & Abstract Art in Mumbai',
+  description: 'MeetPrerna is a Navi Mumbai creative studio by Prerna — custom tattoos, abstract paintings, and sketches. Each piece is a slow, personal conversation.',
+  path: '/',
+});
 
 export const revalidate = 60;
 
@@ -16,10 +24,19 @@ export default async function Home() {
     console.error('[Sanity] Portfolio fetch failed:', err.message);
     return STATIC_FALLBACK_FEATURED;
   });
-  const itemsToRender = featuredItems && featuredItems.length > 0 ? featuredItems : STATIC_FALLBACK_FEATURED;
+  const testimonials = await sanityClient.fetch(testimonialsQuery).catch((err) => {
+    console.error('[Sanity] Testimonials fetch failed:', err.message);
+    return STATIC_FALLBACK_TESTIMONIALS;
+  });
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildPersonJsonLd()),
+        }}
+      />
       {/* 1. HeroSection */}
       <HeroSection />
 
@@ -45,10 +62,10 @@ export default async function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { name: 'Pillar One', desc: 'A description for pillar one.' },
-                { name: 'Pillar Two', desc: 'A description for pillar two.' },
-                { name: 'Pillar Three', desc: 'A description for pillar three.' },
-                { name: 'Pillar Four', desc: 'A description for pillar four.' },
+                { name: 'Psychology', desc: 'Choosing to mark your skin is a decision about who you are becoming.' },
+                { name: 'Meditation', desc: 'The needle, the brush, the pencil — three rhythms, one attention.' },
+                { name: 'Therapy', desc: 'Art is a way of saying things that don\'t have words.' },
+                { name: 'Calmness', desc: 'The studio is a quiet room, by appointment only.' },
               ].map((pillar, i) => (
                 <div key={i} className="flex flex-col gap-4 border-t border-ink-20 pt-6">
                   <h3 className="font-display text-h4 text-ivory">{pillar.name}</h3>
@@ -79,10 +96,12 @@ export default async function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {itemsToRender.slice(0, 6).map((item: PortfolioItem, i: number) => (
+              {featuredItems.slice(0, 6).map((item: PortfolioItem, i: number) => (
                 <Link key={item._id || i} href={`/${item.kind}s#${item.slug?.current}`} className="group flex flex-col gap-4">
                   {item.images?.[0] ? (
                     <div 
+                      role="img"
+                      aria-label={item.images[0]?.alt || `${item.title} — ${item.year}`}
                       className="aspect-[4/5] w-full rounded-sm bg-ink-70 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.02]" 
                       style={{ backgroundImage: `url(${urlFor(item.images[0]).width(800).auto('format').url()})` }}
                     />
@@ -114,11 +133,11 @@ export default async function Home() {
             </div>
             <div className="lg:col-span-7 flex flex-col gap-12">
               {[
-                { step: '01', title: 'Consultation', desc: 'Process step 1 copy pending.' },
-                { step: '02', title: 'Design', desc: 'Process step 2 copy pending.' },
-                { step: '03', title: 'Refinement', desc: 'Process step 3 copy pending.' },
-                { step: '04', title: 'Execution', desc: 'Process step 4 copy pending.' },
-                { step: '05', title: 'Aftercare', desc: 'Process step 5 copy pending.' },
+                { step: '01', title: 'Consultation', desc: 'Send a brief. We review inquiries weekly and will reach out to schedule a conversation.' },
+                { step: '02', title: 'Design', desc: 'We work together to design a piece that fits perfectly with your body flow and personal narrative.' },
+                { step: '03', title: 'Refinement', desc: 'A collaborative session to adjust line weights, scale, and placement before the appointment.' },
+                { step: '04', title: 'Execution', desc: 'The session itself. A quiet space, natural light, and a slow, deliberate application of ink.' },
+                { step: '05', title: 'Aftercare', desc: 'Detailed healing instructions and a follow-up to ensure the piece settles perfectly into your skin.' },
               ].map((p, i) => (
                 <div key={i} className="flex gap-8">
                   <span className="font-display text-h3 text-inchworm pt-1">{p.step}</span>
@@ -159,38 +178,12 @@ export default async function Home() {
       </Section>
 
       {/* 6. TestimonialsSection */}
-      <Section spacing="section">
-        <Container>
-          <div className="flex flex-col gap-16 text-center">
-            <div className="flex flex-col gap-4 items-center">
-              <span className="text-body-sm tracking-wider text-ivory-dim uppercase">
-                Words from the room
-              </span>
-              <h2 className="font-display text-display-sm text-ivory">
-                What clients say.
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex flex-col gap-6">
-                  <p className="font-serif italic text-h4 text-ivory pb-6 border-b-2 border-inchworm">
-                    &quot;This was the most calm and considered tattoo experience I have ever had. Prerna creates a truly safe space.&quot;
-                  </p>
-                  <span className="text-body-sm text-ivory-dim uppercase tracking-wider">
-                    — Client {i}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </Section>
+      <TestimonialsSection testimonials={testimonials} />
 
       {/* 7. CTASection */}
       <Section spacing="section" tone="warm">
         <Container>
-          <div className="flex flex-col items-center text-center gap-8 py-12">
+          <div className="flex flex-col items-center text-center gap-8">
             <h2 className="font-display text-display-md text-ivory">
               Begin a piece.
             </h2>

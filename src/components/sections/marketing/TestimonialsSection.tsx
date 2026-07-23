@@ -4,8 +4,10 @@ import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
 import { useSectionReveal } from '@/hooks/useSectionReveal';
 
-export function TestimonialsSection() {
+export function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
   const ref = useSectionReveal();
+
+  if (!testimonials || testimonials.length === 0) return null;
 
   return (
     <Section spacing="section" ref={ref} data-reveal-children>
@@ -21,13 +23,13 @@ export function TestimonialsSection() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="flex flex-col gap-6">
+            {testimonials.slice(0, 3).map((t, i) => (
+              <div key={t._id || i} className="flex flex-col gap-6">
                 <p className="font-serif italic text-h4 text-ivory pb-6 border-b-2 border-inchworm">
-                  &quot;This was the most calm and considered tattoo experience I have ever had. Prerna creates a truly safe space.&quot;
+                  &quot;{t.quote}&quot;
                 </p>
                 <span className="text-body-sm text-ivory-dim uppercase tracking-wider">
-                  — Client {i}
+                  {t.attribution}
                 </span>
               </div>
             ))}

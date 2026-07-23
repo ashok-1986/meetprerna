@@ -50,7 +50,7 @@ const Button = forwardRef<ElementRef<'button'>, ButtonProps>(
 
     return (
       <Comp
-        ref={ref}
+        ref={ref as any}
         className={cn(buttonVariants({ variant, size, fullWidth, className }))}
         disabled={disabled || loading}
         {...props}

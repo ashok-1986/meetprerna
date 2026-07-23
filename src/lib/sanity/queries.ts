@@ -106,7 +106,7 @@ export const featuredPortfolioQuery = groq`*[_type == "portfolioItem" && publish
   year,
   kind,
   styles,
-  images[0]{
+  images[]{
     asset->{
       _id,
       url,

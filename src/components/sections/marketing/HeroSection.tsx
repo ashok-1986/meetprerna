@@ -59,11 +59,11 @@ export function HeroSection() {
                 A Navi Mumbai-based creative studio by Prerna — custom tattoos, abstract paintings, and sketches. Each piece is a slow, personal conversation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button asChild size="lg" ref={primaryCtaRef as React.Ref<any>}>
-                  <Link href="/book">Begin a piece</Link>
+                <Button asChild size="lg">
+                  <Link href="/book" ref={primaryCtaRef}>Begin a piece</Link>
                 </Button>
-                <Button asChild variant="secondary" size="lg" ref={secondaryCtaRef as React.Ref<any>}>
-                  <Link href="/tattoos">See the work</Link>
+                <Button asChild variant="secondary" size="lg">
+                  <Link href="/tattoos" ref={secondaryCtaRef}>See the work</Link>
                 </Button>
               </div>
             </div>
