@@ -67,6 +67,29 @@ const nextConfig = {
     return config;
   },
   async headers() {
+    // Pragmatic CSP baseline. Not maximally strict — over-restricting risks
+    // breaking things that can't be verified without a live deploy.
+    //
+    // frame-src/child-src allowlist embed.fillout.com (the /book and /contact
+    // pages embed a Fillout form via https://server.fillout.com/embed/v1/,
+    // which injects an https://embed.fillout.com iframe) and
+    // player.vimeo.com (VideoEmbed component). frame-ancestors is 'self',
+    // consistent with X-Frame-Options: SAMEORIGIN below — NOT 'none', which
+    // would (and, per a live report-only-policy audit, does — see note in
+    // next.config.mjs history / PR description) block the Fillout embed by
+    // conflating "who can frame us" with "what we're allowed to frame".
+    const cspDirectives = [
+      "default-src 'self'",
+      "frame-src 'self' https://embed.fillout.com https://player.vimeo.com",
+      "child-src 'self' https://embed.fillout.com https://player.vimeo.com",
+      "frame-ancestors 'self'",
+      "script-src 'self' 'unsafe-inline' https://server.fillout.com https://plausible.io",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: https://cdn.sanity.io https://images.unsplash.com https://i.vimeocdn.com",
+      "font-src 'self' data:",
+      "connect-src 'self' https://*.sanity.io https://plausible.io https://app.posthog.com",
+    ];
+
     return [
       {
         source: '/(.*)',
@@ -75,6 +98,7 @@ const nextConfig = {
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          { key: 'Content-Security-Policy', value: cspDirectives.join('; ') },
         ],
       },
       {

@@ -23,6 +23,7 @@ const srgbToLinear = (c: number) => Math.pow(c / 255, 2.2);
 function InkFieldMaterial() {
   const { size, gl } = useThree();
   const matRef = useRef<THREE.ShaderMaterial>(null);
+  const timeListenerRegistered = useRef(false);
 
   const uniforms = useMemo(
     () => ({
@@ -79,16 +80,20 @@ function InkFieldMaterial() {
   }, [uniforms]);
 
   useEffect(() => {
+    // Guard against React Strict Mode double-invoking this effect (which
+    // would otherwise register the ticker callback twice).
+    if (timeListenerRegistered.current) return;
+
     const updateTime = () => {
       uniforms.uTime.value = gsap.ticker.time;
     };
-    
-    // Guard against React Strict Mode duplicate registration
-    const existing = (gsap.ticker as any)._listeners?.find?.((l: any) => l.callback === updateTime);
-    if (existing) return;
 
+    timeListenerRegistered.current = true;
     gsap.ticker.add(updateTime);
-    return () => gsap.ticker.remove(updateTime);
+    return () => {
+      gsap.ticker.remove(updateTime);
+      timeListenerRegistered.current = false;
+    };
   }, [uniforms]);
 
   return (
@@ -151,6 +156,7 @@ export function InkField() {
   return (
     <div className="shader-canvas" aria-hidden="true">
       <Canvas
+        frameloop="demand"
         gl={{
           antialias: false,
           alpha: false,
@@ -179,8 +185,13 @@ export function InkField() {
  */
 function RouteIntensityDriver({ intensityRef }: { intensityRef: React.RefObject<{ value: number }> }) {
   const { scene } = useThree();
-  
+  const intensityListenerRegistered = useRef(false);
+
   useEffect(() => {
+    // Guard against React Strict Mode double-invoking this effect (which
+    // would otherwise register the ticker callback twice).
+    if (intensityListenerRegistered.current) return;
+
     const updateIntensity = () => {
       // Walk the scene to find the shader material
       scene.traverse((obj) => {
@@ -191,13 +202,13 @@ function RouteIntensityDriver({ intensityRef }: { intensityRef: React.RefObject<
         }
       });
     };
-    
-    // Guard against React Strict Mode duplicate registration
-    const existing = (gsap.ticker as any)._listeners?.find?.((l: any) => l.callback === updateIntensity);
-    if (existing) return;
 
+    intensityListenerRegistered.current = true;
     gsap.ticker.add(updateIntensity);
-    return () => gsap.ticker.remove(updateIntensity);
+    return () => {
+      gsap.ticker.remove(updateIntensity);
+      intensityListenerRegistered.current = false;
+    };
   }, [scene, intensityRef]);
 
   return null;
