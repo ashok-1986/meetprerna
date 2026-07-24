@@ -70,7 +70,7 @@
   --space-9:  6rem;
   --space-10: 8rem;
   --space-section: clamp(6rem, 4rem + 8vw, 12rem);
-  --space-gutter:  clamp(1.25rem, 0.5rem + 3vw, 3rem);
+  --space-gutter:  1.25rem; /* 20px */
   --space-rail:    clamp(5rem, 3rem + 10vw, 11rem);
 
   /* -----------------------------------------------------------------------

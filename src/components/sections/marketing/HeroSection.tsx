@@ -42,45 +42,50 @@ export function HeroSection() {
   }, [reduceMotion]);
 
   return (
-    <div ref={rootRef}>
-      <Section spacing="hero" tone="default">
+    <div ref={rootRef} className="relative min-h-[100dvh] flex flex-col justify-center">
+      <Section spacing="hero" tone="default" className="flex-1 flex flex-col justify-center pb-24">
         <Container>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 relative z-10">
-            <div className="lg:col-span-5">
-              <span ref={eyebrowRef} className="block text-body-sm tracking-wider text-ivory-dim uppercase">
-                Meet Prerna — Mumbai, IN
-              </span>
-            </div>
-            <div className="flex flex-col gap-8 lg:col-span-7">
-              <h1 ref={headlineRef} className="font-display text-display-xl tracking-tight text-ivory leading-none" data-cursor="lead">
-                Ink as language. Studio as a slow room.
-              </h1>
-              <p ref={subheadRef} className="text-body-lg text-ivory-dim max-w-lg">
-                A Navi Mumbai-based creative studio by Prerna — custom tattoos, abstract paintings, and sketches. Each piece is a slow, personal conversation.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button asChild size="lg">
-                  <Link href="/book" ref={primaryCtaRef}>Begin a piece</Link>
-                </Button>
-                <Button asChild variant="secondary" size="lg">
-                  <Link href="/tattoos" ref={secondaryCtaRef}>See the work</Link>
-                </Button>
-              </div>
+          <div className="flex flex-col gap-6 max-w-4xl relative z-10">
+            <span ref={eyebrowRef} className="block text-[10px] tracking-widest text-ivory-dim uppercase">
+              NAVI MUMBAI · MUMBAI · ARTIST & CREATOR · ITINERANT
+            </span>
+            
+            <h1 ref={headlineRef} className="font-display text-display-lg tracking-tight text-ivory leading-[0.95]" data-cursor="lead">
+              <span className="block">She carries no studio.</span>
+              <span className="block">Only a needle</span>
+              <span className="block text-inchworm italic">and everything she knows.</span>
+            </h1>
+            
+            <p ref={subheadRef} className="text-[11px] tracking-widest text-ivory-dim uppercase mt-4">
+              EVERY CITY. EVERY SKIN. EVERY STORY — PERMANENT.
+            </p>
+            
+            <div className="flex pt-4">
+              <Button 
+                asChild 
+                className="bg-inchworm text-ink hover:bg-inchworm-deep rounded-full px-8 uppercase text-[10px] tracking-widest font-semibold h-10"
+              >
+                <Link href="/book" ref={primaryCtaRef}>Ask your consultant</Link>
+              </Button>
             </div>
           </div>
         </Container>
       </Section>
+
       
-      {/* Background Image / Placeholder for parallax effect */}
+      {/* Background Image & Gradient Overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden" style={{ pointerEvents: 'none' }}>
-        <div ref={imageRef} className="absolute inset-0 bg-ink-80">
+        <div ref={imageRef} className="absolute inset-0">
           <Image
             src="/images/prerna-hero.png"
             alt="Meet Prerna Studio"
             fill
             priority
-            className="object-cover opacity-80"
+            className="object-cover"
           />
+          {/* Dark gradient overlay to make text pop */}
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/60 to-transparent" />
+          <div className="absolute inset-0 bg-ink/20" />
         </div>
       </div>
     </div>
