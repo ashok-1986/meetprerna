@@ -69,6 +69,17 @@ const config: Config = {
         'gutter': 'var(--space-gutter)',
         'rail': 'var(--space-rail)',
         'section': 'var(--space-section)',
+        'header': 'var(--header-height)',
+      },
+      zIndex: {
+        'base': 'var(--z-base)',
+        'canvas': 'var(--z-canvas)',
+        'content': 'var(--z-content)',
+        'header': 'var(--z-header)',
+        'overlay': 'var(--z-overlay)',
+        'dialog': 'var(--z-dialog)',
+        'toast': 'var(--z-toast)',
+        'tooltip': 'var(--z-tooltip)',
       },
       transitionTimingFunction: {
         'studio': 'cubic-bezier(0.65, 0, 0.35, 1)',
