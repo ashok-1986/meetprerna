@@ -11,12 +11,12 @@ describe('buildMetadata', () => {
 
     const ogImages = metadata.openGraph?.images;
     expect(Array.isArray(ogImages)).toBe(true);
-    const firstOg = (ogImages as { url: string }[])[0];
-    expect(firstOg.url).toContain('/opengraph-image');
-    expect(firstOg.url).not.toContain('default-1200x630.png');
+    const firstOg = (ogImages as { url: string }[]).at(0);
+    expect(firstOg?.url).toContain('/opengraph-image');
+    expect(firstOg?.url).not.toContain('default-1200x630.png');
 
     const twitterImages = metadata.twitter?.images as string[];
-    expect(twitterImages[0]).toContain('/opengraph-image');
+    expect(twitterImages.at(0)).toContain('/opengraph-image');
   });
 
   it('uses caller-supplied images instead of the default when provided', () => {
@@ -24,7 +24,7 @@ describe('buildMetadata', () => {
       images: [{ url: '/custom-og.png', width: 1200, height: 630, alt: 'Custom' }],
     });
     const ogImages = metadata.openGraph?.images as { url: string }[];
-    expect(ogImages[0].url).toBe('/custom-og.png');
+    expect(ogImages.at(0)?.url).toBe('/custom-og.png');
   });
 });
 
