@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatedSection } from '@/components/layout/AnimatedSection';
 import Container from '@/components/layout/Container';
@@ -105,12 +106,15 @@ export default async function Home() {
               {featuredItems.slice(0, 6).map((item: PortfolioItem, i: number) => (
                 <Link key={item._id || i} href={`/${item.kind}s#${item.slug?.current}`} className="group flex flex-col gap-4">
                   {item.images?.[0] ? (
-                    <div 
-                      role="img"
-                      aria-label={item.images[0]?.alt || `${item.title} — ${item.year}`}
-                      className="aspect-[4/5] w-full rounded-sm bg-ink-secondary bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.02]" 
-                      style={{ backgroundImage: `url(${urlFor(item.images[0]).width(800).auto('format').url()})` }}
-                    />
+                    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-ink-secondary">
+                      <Image
+                        src={urlFor(item.images[0]).width(800).auto('format').url()}
+                        alt={item.images[0]?.alt || `${item.title} — ${item.year}`}
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                    </div>
                   ) : (
                     <div className="aspect-[4/5] w-full bg-ink-secondary rounded-sm" />
                   )}

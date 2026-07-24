@@ -25,7 +25,7 @@ export function buildMetadata(opts: MetadataOptions = {}): Metadata {
   const description = opts.description || site.description;
   const images = opts.images?.length
     ? opts.images
-    : [{ url: '/og/default-1200x630.png', width: 1200, height: 630, alt: site.name }];
+    : [{ url: '/opengraph-image', width: 1200, height: 630, alt: site.name }];
 
   return {
     metadataBase: new URL(site.url),
@@ -84,7 +84,7 @@ export function buildPersonJsonLd() {
     '@type': 'Person',
     name: 'Prerna',
     url: site.url,
-    image: `${site.url}/og/default-1200x630.png`,
+    image: `${site.url}/opengraph-image`,
     sameAs: [site.social.instagram, site.social.arena],
     jobTitle: 'Tattoo Artist, Painter, Sketch Artist',
     worksFor: {
@@ -102,8 +102,8 @@ export function buildLocalBusinessJsonLd() {
     '@type': ['LocalBusiness', 'ProfessionalService', 'TattooParlor'],
     name: site.name,
     url: site.url,
-    logo: `${site.url}/og/default-1200x630.png`,
-    image: `${site.url}/og/default-1200x630.png`,
+    logo: `${site.url}/opengraph-image`,
+    image: `${site.url}/opengraph-image`,
     description: site.description,
     address: {
       '@type': 'PostalAddress',

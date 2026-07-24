@@ -23,6 +23,7 @@ const srgbToLinear = (c: number) => Math.pow(c / 255, 2.2);
 function InkFieldMaterial() {
   const { size, gl } = useThree();
   const matRef = useRef<THREE.ShaderMaterial>(null);
+  const timeListenerRegistered = useRef(false);
 
   const uniforms = useMemo(
     () => ({
@@ -79,16 +80,20 @@ function InkFieldMaterial() {
   }, [uniforms]);
 
   useEffect(() => {
+    // Guard against React Strict Mode double-invoking this effect (which
+    // would otherwise register the ticker callback twice).
+    if (timeListenerRegistered.current) return;
+
     const updateTime = () => {
       uniforms.uTime.value = gsap.ticker.time;
     };
-    
-    // Guard against React Strict Mode duplicate registration
-    const existing = (gsap.ticker as any)._listeners?.find?.((l: any) => l.callback === updateTime);
-    if (existing) return;
 
+    timeListenerRegistered.current = true;
     gsap.ticker.add(updateTime);
-    return () => gsap.ticker.remove(updateTime);
+    return () => {
+      gsap.ticker.remove(updateTime);
+      timeListenerRegistered.current = false;
+    };
   }, [uniforms]);
 
   return (
@@ -135,6 +140,8 @@ export function InkField() {
   const tier = useDeviceTier();
   const pathname = usePathname();
   const intensityRef = useRef({ value: getRouteIntensity(pathname) });
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const isVisibleRef = useRef(true);
 
   // Ease intensity to target on route change
   useEffect(() => {
@@ -146,11 +153,29 @@ export function InkField() {
     });
   }, [pathname]);
 
+  // Visibility gating - only render when canvas is in viewport
+  useEffect(() => {
+    if (reduce || tier === 'low') return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry) isVisibleRef.current = entry.isIntersecting;
+      },
+      { rootMargin: '100px', threshold: 0 }
+    );
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, [reduce, tier]);
+
   if (reduce || tier === 'low') return null;
 
   return (
-    <div className="shader-canvas" aria-hidden="true">
+    <div className="shader-canvas" aria-hidden="true" ref={canvasRef}>
       <Canvas
+        frameloop="demand"
         gl={{
           antialias: false,
           alpha: false,
@@ -161,6 +186,7 @@ export function InkField() {
         camera={{ position: [0, 0, 1], zoom: 1, near: 0.1, far: 10 }}
         style={{ width: '100vw', height: '100vh' }}
       >
+        <VisibilityGate isVisible={isVisibleRef.current} />
         <R3FRenderBridge />
         <mesh>
           <planeGeometry args={[2, 2]} />
@@ -179,8 +205,13 @@ export function InkField() {
  */
 function RouteIntensityDriver({ intensityRef }: { intensityRef: React.RefObject<{ value: number }> }) {
   const { scene } = useThree();
-  
+  const intensityListenerRegistered = useRef(false);
+
   useEffect(() => {
+    // Guard against React Strict Mode double-invoking this effect (which
+    // would otherwise register the ticker callback twice).
+    if (intensityListenerRegistered.current) return;
+
     const updateIntensity = () => {
       // Walk the scene to find the shader material
       scene.traverse((obj) => {
@@ -191,14 +222,27 @@ function RouteIntensityDriver({ intensityRef }: { intensityRef: React.RefObject<
         }
       });
     };
-    
-    // Guard against React Strict Mode duplicate registration
-    const existing = (gsap.ticker as any)._listeners?.find?.((l: any) => l.callback === updateIntensity);
-    if (existing) return;
 
+    intensityListenerRegistered.current = true;
     gsap.ticker.add(updateIntensity);
-    return () => gsap.ticker.remove(updateIntensity);
+    return () => {
+      gsap.ticker.remove(updateIntensity);
+      intensityListenerRegistered.current = false;
+    };
   }, [scene, intensityRef]);
 
+  return null;
+}
+
+/**
+ * Conditionally invalidates the R3F canvas only when visible.
+ * Prevents unnecessary WebGL draw calls when the canvas is off-screen.
+ */
+function VisibilityGate({ isVisible }: { isVisible: boolean }) {
+  const invalidate = useThree((state) => state.invalidate);
+  useEffect(() => {
+    if (!isVisible) return;
+    invalidate();
+  }, [isVisible, invalidate]);
   return null;
 }
