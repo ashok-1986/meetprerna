@@ -11,10 +11,11 @@ export const sanityClient = createClient({
   apiVersion: env.NEXT_PUBLIC_SANITY_API_VERSION,
   useCdn: true,
   perspective: 'published',
-  stega: {
-    enabled: process.env.NODE_ENV === 'development',
-    studioUrl: '/studio',
-  },
+  // Stega encoding embeds invisible metadata into text fields for Sanity's
+  // Presentation Tool ("click to edit"). This project has no <VisualEditing />
+  // consumer to strip it back out, so leaving it enabled corrupts every text
+  // field rendered on the public site with zero-width characters.
+  stega: false,
 });
 
 /**
