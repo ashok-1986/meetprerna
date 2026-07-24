@@ -152,11 +152,18 @@ export default function AboutPage() {
       <Section spacing="section" ref={originRevealRef}>
         <Container>
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:items-center">
-            <div className="order-2 lg:order-1 aspect-square rounded-sm relative overflow-hidden flex items-center justify-center bg-transparent">
-              <div ref={originImgRef} className="absolute inset-[-60px] bg-ink-secondary flex items-center justify-center">
-                <span className="absolute z-10 text-body-xs uppercase tracking-wider text-ivory-dim">Origin Image Placeholder</span>
-              </div>
+<div className="order-2 lg:order-1 aspect-square rounded-sm relative overflow-hidden flex items-center justify-center bg-transparent">
+            <div ref={originImgRef} className="absolute inset-[-60px]">
+              <Image
+                src="/images/origin.png"
+                alt="Origin — Prerna's early illustration work"
+                fill
+                priority={false}
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             </div>
+          </div>
             <div className="order-1 lg:order-2 flex flex-col gap-6 lg:pl-12">
               <h2 className="font-display text-h2 text-ivory">Origin.</h2>
               <p className="text-body text-ivory-dim">
@@ -182,11 +189,18 @@ export default function AboutPage() {
                 The goal is always to create work that feels inherent to the space it occupies, whether a wall or a limb.
               </p>
             </div>
-            <div className="aspect-[4/3] rounded-sm relative overflow-hidden flex items-center justify-center bg-transparent">
-              <div ref={practiceImgRef} className="absolute inset-[-60px] bg-ink-secondary flex items-center justify-center">
-                <span className="absolute z-10 text-body-xs uppercase tracking-wider text-ivory-dim">Practice Image Placeholder</span>
-              </div>
+<div className="aspect-[4/3] rounded-sm relative overflow-hidden flex items-center justify-center bg-transparent">
+            <div ref={practiceImgRef} className="absolute inset-[-60px]">
+              <Image
+                src="/images/practice.png"
+                alt="Practice — studio work in progress"
+                fill
+                priority={false}
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             </div>
+          </div>
           </div>
         </Container>
       </Section>

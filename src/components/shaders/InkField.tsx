@@ -140,6 +140,8 @@ export function InkField() {
   const tier = useDeviceTier();
   const pathname = usePathname();
   const intensityRef = useRef({ value: getRouteIntensity(pathname) });
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const isVisibleRef = useRef(true);
 
   // Ease intensity to target on route change
   useEffect(() => {
@@ -151,10 +153,27 @@ export function InkField() {
     });
   }, [pathname]);
 
+  // Visibility gating - only render when canvas is in viewport
+  useEffect(() => {
+    if (reduce || tier === 'low') return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry) isVisibleRef.current = entry.isIntersecting;
+      },
+      { rootMargin: '100px', threshold: 0 }
+    );
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, [reduce, tier]);
+
   if (reduce || tier === 'low') return null;
 
   return (
-    <div className="shader-canvas" aria-hidden="true">
+    <div className="shader-canvas" aria-hidden="true" ref={canvasRef}>
       <Canvas
         frameloop="demand"
         gl={{
@@ -167,6 +186,7 @@ export function InkField() {
         camera={{ position: [0, 0, 1], zoom: 1, near: 0.1, far: 10 }}
         style={{ width: '100vw', height: '100vh' }}
       >
+        <VisibilityGate isVisible={isVisibleRef.current} />
         <R3FRenderBridge />
         <mesh>
           <planeGeometry args={[2, 2]} />
@@ -211,5 +231,18 @@ function RouteIntensityDriver({ intensityRef }: { intensityRef: React.RefObject<
     };
   }, [scene, intensityRef]);
 
+  return null;
+}
+
+/**
+ * Conditionally invalidates the R3F canvas only when visible.
+ * Prevents unnecessary WebGL draw calls when the canvas is off-screen.
+ */
+function VisibilityGate({ isVisible }: { isVisible: boolean }) {
+  const invalidate = useThree((state) => state.invalidate);
+  useEffect(() => {
+    if (!isVisible) return;
+    invalidate();
+  }, [isVisible, invalidate]);
   return null;
 }
