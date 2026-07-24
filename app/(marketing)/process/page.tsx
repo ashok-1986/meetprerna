@@ -1,17 +1,11 @@
-import { sanityClient } from '@/lib/sanity/client';
-import { processVideosQuery } from '@/lib/sanity/queries';
+import { PROCESS_VIDEOS } from '@/data/portfolio';
 import ProcessClient from './ProcessClient';
 import { buildMetadata } from '@/lib/seo';
 
-export async function generateMetadata() {
+export function generateMetadata() {
   return buildMetadata({ title: 'Process', path: '/process' });
 }
 
-export default async function ProcessPage() {
-  const videos = await sanityClient.fetch(
-    processVideosQuery,
-    {},
-    { next: { tags: ['process'] } }
-  );
-  return <ProcessClient videos={videos || []} />;
+export default function ProcessPage() {
+  return <ProcessClient videos={PROCESS_VIDEOS} />;
 }

@@ -12,14 +12,7 @@ import Container from '@/components/layout/Container';
 import { Button } from '@/components/ui/Button';
 
 import { LazyVideo } from '@/components/media/LazyVideo';
-
-interface ProcessVideo {
-  _id: string;
-  title: string;
-  vimeoId: string;
-  step: number;
-  poster?: any;
-}
+import { type ProcessVideo } from '@/data/portfolio';
 
 interface ProcessClientProps {
   videos: ProcessVideo[];

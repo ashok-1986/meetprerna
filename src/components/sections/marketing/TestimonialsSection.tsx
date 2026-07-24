@@ -1,7 +1,8 @@
 import { AnimatedSection } from '@/components/layout/AnimatedSection';
 import Container from '@/components/layout/Container';
+import type { Testimonial } from '@/data/portfolio';
 
-export function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
+export function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
   if (!testimonials || testimonials.length === 0) return null;
 
   return (
@@ -19,7 +20,7 @@ export function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
             {testimonials.slice(0, 3).map((t, i) => (
-              <div key={t._id || i} className="flex flex-col gap-6">
+              <div key={t.id || i} className="flex flex-col gap-6">
                 <p className="font-serif italic text-h4 text-ivory pb-6 border-b-2 border-inchworm">
                   &quot;{t.quote}&quot;
                 </p>

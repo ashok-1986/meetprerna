@@ -4,10 +4,7 @@ import { AnimatedSection } from '@/components/layout/AnimatedSection';
 import Container from '@/components/layout/Container';
 import { Button } from '@/components/ui/Button';
 import { HeroSection } from '@/components/sections/marketing/HeroSection';
-import { sanityClient } from '@/lib/sanity/client';
-import { featuredPortfolioQuery, testimonialsQuery } from '@/lib/sanity/queries';
-import { STATIC_FALLBACK_FEATURED, STATIC_FALLBACK_TESTIMONIALS } from '@/lib/sanity/fallbackData';
-import { urlFor } from '@/lib/sanity/image';
+import { FEATURED_ITEMS, TESTIMONIALS } from '@/data/portfolio';
 import type { PortfolioItem } from '@/types/content';
 import { buildMetadata, buildPersonJsonLd } from '@/lib/seo';
 import { TestimonialsSection } from '@/components/sections/marketing/TestimonialsSection';
@@ -18,23 +15,9 @@ export const metadata = buildMetadata({
   path: '/',
 });
 
-export default async function Home() {
-  const featuredItems = await sanityClient.fetch(
-    featuredPortfolioQuery,
-    {},
-    { next: { tags: ['portfolio'] } }
-  ).catch((err) => {
-    console.error('[Sanity] Portfolio fetch failed:', err.message);
-    return STATIC_FALLBACK_FEATURED;
-  });
-  const testimonials = await sanityClient.fetch(
-    testimonialsQuery,
-    {},
-    { next: { tags: ['testimonials'] } }
-  ).catch((err) => {
-    console.error('[Sanity] Testimonials fetch failed:', err.message);
-    return STATIC_FALLBACK_TESTIMONIALS;
-  });
+export default function Home() {
+  const featuredItems = FEATURED_ITEMS;
+  const testimonials = TESTIMONIALS;
 
   return (
     <>
@@ -104,12 +87,12 @@ export default async function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredItems.slice(0, 6).map((item: PortfolioItem, i: number) => (
-                <Link key={item._id || i} href={`/${item.kind}s#${item.slug?.current}`} className="group flex flex-col gap-4">
+                <Link key={item.id || i} href={`/${item.kind}s#${item.slug}`} className="group flex flex-col gap-4">
                   {item.images?.[0] ? (
                     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-ink-secondary">
                       <Image
-                        src={urlFor(item.images[0]).width(800).auto('format').url()}
-                        alt={item.images[0]?.alt || `${item.title} — ${item.year}`}
+                        src={item.images[0]}
+                        alt={`${item.title} — ${item.year}`}
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"

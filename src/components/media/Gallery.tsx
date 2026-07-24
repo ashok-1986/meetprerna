@@ -27,7 +27,7 @@ export default function Gallery({ items, columns = 3, variant, className }: Gall
       <div className={cn('grid grid-cols-1 gap-4', gridColsClass, className)}>
         {items.map((item, index) => (
           <GalleryItem
-            key={item._id}
+            key={item.id}
             item={item}
             index={index}
             variant={variant}

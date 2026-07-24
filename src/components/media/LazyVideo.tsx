@@ -6,12 +6,11 @@ import { VideoEmbed } from './VideoEmbed';
 import { Play } from 'lucide-react';
 import Image from 'next/image';
 import { cn } from '@/utils/cn';
-import { urlFor } from '@/lib/sanity/image';
 
 interface LazyVideoProps {
   vimeoId: string;
   title?: string;
-  poster?: any; // Sanity Image object
+  poster?: string;
   className?: string;
   aspectRatio?: 'video' | 'square' | 'portrait';
   priority?: boolean;
@@ -41,11 +40,7 @@ export function LazyVideo({
     portrait: 'aspect-[4/5]',
   };
 
-  // Construct Vimeo thumbnail URL if no Sanity poster is provided
-  // Note: For HD Vimeo videos, it's generally better to provide a custom poster
-  // via Sanity or fetch the thumbnail via Vimeo API. 
-  // We'll use the Sanity poster if provided.
-  const posterUrl = poster?.asset ? urlFor(poster).width(1200).url() : null;
+  const posterUrl = poster || null;
 
   return (
     <div 

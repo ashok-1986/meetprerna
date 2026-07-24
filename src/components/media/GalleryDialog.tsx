@@ -4,7 +4,6 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { type PortfolioItem } from '@/types/content';
-import { urlFor } from '@/lib/sanity/image';
 import { gsap } from '@/lib/gsap';
 import { useGsapContext } from '@/hooks/useGsapContext';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
@@ -168,7 +167,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
 
   const handleNext = useCallback(() => {
     if (!activeItem || !related?.length) return;
-    const currentIndex = related.findIndex((r) => r._id === activeItem._id);
+    const currentIndex = related.findIndex((r) => r.id === activeItem.id);
     if (currentIndex === -1) return;
     const nextIndex = (currentIndex + 1) % related.length;
     const nextItem = related[nextIndex];
@@ -177,7 +176,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
 
   const handlePrev = useCallback(() => {
     if (!activeItem || !related?.length) return;
-    const currentIndex = related.findIndex((r) => r._id === activeItem._id);
+    const currentIndex = related.findIndex((r) => r.id === activeItem.id);
     if (currentIndex === -1) return;
     const prevIndex = (currentIndex - 1 + related.length) % related.length;
     const prevItem = related[prevIndex];
@@ -199,11 +198,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
 
   if (!activeItem) return null;
 
-  const heroImage =
-    activeItem.images?.find((img) => img.isHero) || activeItem.images?.[0];
-  const imgSrc = heroImage
-    ? urlFor(heroImage).width(1200).auto('format').url()
-    : undefined;
+  const imgSrc = activeItem.images?.[0];
 
   return (
     <Dialog.Root open={!!activeItem} onOpenChange={(open) => !open && triggerClose()}>
@@ -235,7 +230,7 @@ export default function GalleryDialog({ item, onClose, related }: GalleryDialogP
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={imgSrc}
-                    alt={heroImage?.alt || activeItem.title}
+                    alt={activeItem.title}
                     className="w-full h-full object-contain"
                   />
                 </div>

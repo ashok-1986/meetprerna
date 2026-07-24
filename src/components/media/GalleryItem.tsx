@@ -3,7 +3,6 @@
 import { useRef } from 'react';
 import { type PortfolioItem } from '@/types/content';
 import RevealImage from './RevealImage';
-import { urlFor } from '@/lib/sanity/image';
 import { cn } from '@/utils/cn';
 import { useGsapContext } from '@/hooks/useGsapContext';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
@@ -92,8 +91,7 @@ export default function GalleryItem({ item, index, onClick, className }: Gallery
     gsap.to(titleRef.current, { y: 0, duration: dur.d180 || 0.18, ease: ease.soft, overwrite: 'auto' });
   };
 
-  const heroImage = item.images?.find((img) => img.isHero) || item.images?.[0];
-  const imgSrc = heroImage ? urlFor(heroImage).width(800).auto('format').url() : undefined;
+  const imgSrc = item.images?.[0];
 
   return (
     <button
@@ -107,7 +105,7 @@ export default function GalleryItem({ item, index, onClick, className }: Gallery
     >
       <RevealImage
         src={imgSrc}
-        alt={heroImage?.alt || item.title}
+        alt={item.title}
         aspect="4/5"
         containerClassName="transition-opacity duration-260 group-hover:opacity-90"
         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"

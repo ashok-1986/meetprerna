@@ -20,7 +20,6 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 30,
     remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.sanity.io' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'i.vimeocdn.com' },
     ],
@@ -85,9 +84,9 @@ const nextConfig = {
       "frame-ancestors 'self'",
       "script-src 'self' 'unsafe-inline' https://server.fillout.com https://plausible.io",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: https://cdn.sanity.io https://images.unsplash.com https://i.vimeocdn.com",
+      "img-src 'self' data: https://images.unsplash.com https://i.vimeocdn.com",
       "font-src 'self' data:",
-      "connect-src 'self' https://*.sanity.io https://plausible.io https://app.posthog.com",
+      "connect-src 'self' https://plausible.io https://app.posthog.com",
     ];
 
     return [

@@ -1,7 +1,7 @@
 export interface PortfolioItem {
-  _id: string;
+  id: string;
   title: string;
-  slug: { current: string };
+  slug: string;
   kind: 'tattoo' | 'painting' | 'sketch';
   year: number;
   styles?: string[];
@@ -10,19 +10,9 @@ export interface PortfolioItem {
   dimensions?: string;
   status?: 'available' | 'sold' | 'commission' | 'archive';
   series?: { name: string; year: number };
-  images: SanityImage[];
+  /** Plain image URLs (static asset paths or data URIs). First entry is the hero image. */
+  images: string[];
   note?: string;
   client?: string;
   published: boolean;
-}
-
-export interface SanityImage {
-  asset: {
-    _id: string;
-    url: string;
-    metadata?: { lqip: string; dimensions: { width: number; height: number } };
-  };
-  alt?: string;
-  credit?: string;
-  isHero?: boolean;
 }

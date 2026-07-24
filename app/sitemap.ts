@@ -19,7 +19,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1 : 0.8,
   }));
 
-  // In Phase 5 (Sanity), we would fetch all portfolio items and append them here.
-
   return routes;
 }
