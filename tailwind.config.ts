@@ -7,7 +7,7 @@ import type { Config } from 'tailwindcss';
  * to Tailwind's JIT.
  */
 const config: Config = {
-  content: ['./src/**/*.{ts,tsx,mdx}'],
+  content: ['./src/**/*.{ts,tsx,mdx}', './app/**/*.{ts,tsx,mdx}'],
   darkMode: 'class',
   theme: {
     extend: {
