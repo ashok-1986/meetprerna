@@ -116,6 +116,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={cn(cormorant.variable, inter.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
+      suppressHydrationWarning
     >
       <head>
         <script

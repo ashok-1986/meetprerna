@@ -107,7 +107,6 @@
 
 .light {
   background: var(--color-ivory);
-  min-height: 100svh;
 }
 
 .light .back {

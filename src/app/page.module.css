@@ -2,15 +2,22 @@
   position: relative;
 }
 
-.page > *:not(.sessionLine) {
+.page > section,
+.page > div {
   position: relative;
   z-index: 1;
 }
 
 .block {
-  padding: clamp(96px, 16vh, 192px) clamp(24px, 5vw, 64px);
+  padding: 192px clamp(24px, 5vw, 64px);
   max-width: 70ch;
   margin: 0 auto;
+}
+
+@media (max-width: 1023px) {
+  .block {
+    padding: 96px clamp(24px, 5vw, 64px);
+  }
 }
 
 .sectionHeading {
@@ -200,7 +207,7 @@
 /* ── Block 02b: Thesis + credibility strip ── */
 
 .thesisSection {
-  padding: clamp(96px, 16vh, 192px) clamp(24px, 5vw, 32px);
+  padding: 192px clamp(24px, 5vw, 32px);
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -208,11 +215,16 @@
   gap: 48px;
 }
 
+@media (max-width: 1023px) {
+  .thesisSection {
+    padding: 96px clamp(24px, 5vw, 32px);
+  }
+}
+
 @media (min-width: 1024px) {
   .thesisSection {
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
+    align-items: baseline;
     gap: clamp(48px, 8vw, 96px);
   }
 }
@@ -409,7 +421,7 @@
 /* ── Block 06: Process ── */
 
 .processSection {
-  padding: clamp(96px, 16vh, 192px) clamp(24px, 5vw, 32px);
+  padding: 192px clamp(24px, 5vw, 32px);
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -417,11 +429,16 @@
   gap: 48px;
 }
 
+@media (max-width: 1023px) {
+  .processSection {
+    padding: 96px clamp(24px, 5vw, 32px);
+  }
+}
+
 @media (min-width: 1024px) {
   .processSection {
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
+    align-items: baseline;
     gap: clamp(48px, 8vw, 96px);
   }
 }
@@ -494,7 +511,7 @@
 /* ── Block 10: Close ── */
 
 .closeSection {
-  padding: clamp(96px, 16vh, 192px) clamp(24px, 5vw, 64px);
+  padding: 192px clamp(24px, 5vw, 64px);
   text-align: center;
   max-width: 40ch;
   margin: 0 auto;
@@ -502,6 +519,12 @@
   flex-direction: column;
   align-items: center;
   gap: 24px;
+}
+
+@media (max-width: 1023px) {
+  .closeSection {
+    padding: 96px clamp(24px, 5vw, 64px);
+  }
 }
 
 .closeHeading {

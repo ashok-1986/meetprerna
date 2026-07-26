@@ -212,7 +212,19 @@ That cap stays for prose-led pages, where a centred measure is correct. It does 
 
 **No letter or number markers.** Athletics puts a small `A` and `B` beside each statement. Skip it. `DESIGN.md` §6 permits numbering only on real sequences, and the reason is that a marker which conveys nothing is decoration. Four pillars are a set, not an order, and letters would be exactly as empty as numbers. The pillar names are the markers.
 
-**Vertical rhythm inside the mode.** Each statement gets its own generous block — 192px desktop between them, minimum. The mode fails when statements are packed; it needs the vertical space as much as the horizontal.
+**Vertical rhythm — CORRECTED 2026-07-26 after this shipped wrong.**
+
+Sections are **content height plus padding**. Never `100vh`, never `min-height: 100svh`, never one statement per screen.
+
+- 192px padding above and below the section as a whole.
+- 96px between statements inside it.
+- The section label sits **directly above its own statement**, 24px gap. It is not pinned to the top of a tall section with the content far below.
+
+**What went wrong.** `BLUEPRINT.md` said "one pillar per viewport" while this file said "192px between statements". Those contradict. The build took the first, so four pillars became four screens each containing one word and one sentence, with roughly 1000px of nothing between the label and the statement. The page read as broken rather than confident.
+
+**The reference does the opposite.** In the Athletics screenshots, "Original" and "Purposeful" are both visible in a single viewport, roughly 300px apart. The drama comes from the horizontal gap between the huge word and the small column, not from vertical emptiness. Horizontal space is the effect. Vertical space past about 200px is just scrolling.
+
+**The check:** at 1440, at least two statements should be visible at once. If only one fills the screen, the section is too tall.
 
 ---
 

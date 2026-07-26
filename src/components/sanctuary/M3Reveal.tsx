@@ -10,39 +10,53 @@ interface M3RevealProps {
 
 export function M3Reveal({ children, className = '' }: M3RevealProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
+  const [state, setState] = useState<'idle' | 'hidden' | 'visible'>('idle')
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    const el = ref.current
+    if (!el) return
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
-      setIsVisible(true)
+      setState('visible')
       return
     }
+
+    // Check if element is already in the viewport
+    const rect = el.getBoundingClientRect()
+    const inViewport = rect.top < window.innerHeight && rect.bottom > 0
+    if (inViewport) {
+      // Already visible — reveal immediately, skip the hide-then-show flash
+      setState('visible')
+      return
+    }
+
+    // Not yet visible — hide it and set up observer
+    setState('hidden')
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setState('visible')
           observer.unobserve(entry.target)
         }
       },
-      { rootMargin: '-100px 0px', threshold: 0.1 }
+      { rootMargin: '0px 0px', threshold: 0.05 }
     )
 
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
+    observer.observe(el)
     return () => observer.disconnect()
   }, [])
 
+  const revealClass =
+    state === 'hidden'
+      ? `${styles.reveal} ${styles.hidden}`
+      : state === 'visible'
+        ? `${styles.reveal} ${styles.visible}`
+        : '' // 'idle' — no opacity class, renders naturally
+
   return (
-    <div
-      ref={ref}
-      className={`${className} ${styles.reveal} ${isVisible ? styles.visible : styles.hidden}`}
-    >
+    <div ref={ref} className={`${className} ${revealClass}`}>
       {children}
     </div>
   )

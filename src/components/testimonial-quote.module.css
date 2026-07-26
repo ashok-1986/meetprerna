@@ -3,16 +3,18 @@
 }
 
 .quote {
-  font-family: var(--font-inter), sans-serif;
-  font-size: var(--text-body);
-  line-height: 1.6;
-  color: var(--color-ivory);
-  margin: 0;
+  font-family: 'Tinos', Georgia, serif;
+  font-style: italic;
+  font-size: var(--text-body-l);
+  line-height: 1.7;
+  color: inherit;
+  margin: 0 0 8px;
 }
 
 .name {
   font-family: var(--font-jetbrains), monospace;
   font-size: var(--text-mono);
-  color: var(--color-ivory-dim);
+  color: inherit;
+  opacity: 0.6;
   margin-top: 8px;
 }

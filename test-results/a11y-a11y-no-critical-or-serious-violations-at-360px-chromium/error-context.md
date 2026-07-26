@@ -12,15 +12,104 @@
 # Error details
 
 ```
-Test timeout of 30000ms exceeded.
+Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  -  1
++ Received  + 86
+
+- Array []
++ Array [
++   Object {
++     "description": "Ensure each HTML document contains a non-empty <title> element",
++     "help": "Documents must have <title> element to aid in navigation",
++     "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/document-title?application=playwright",
++     "id": "document-title",
++     "impact": "serious",
++     "nodes": Array [
++       Object {
++         "all": Array [],
++         "any": Array [
++           Object {
++             "data": null,
++             "id": "doc-has-title",
++             "impact": "serious",
++             "message": "Document does not have a non-empty <title> element",
++             "relatedNodes": Array [],
++           },
++         ],
++         "failureSummary": "Fix any of the following:
++   Document does not have a non-empty <title> element",
++         "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Internal Server Error</pre></body></html>",
++         "impact": "serious",
++         "none": Array [],
++         "target": Array [
++           "html",
++         ],
++       },
++     ],
++     "tags": Array [
++       "cat.text-alternatives",
++       "wcag2a",
++       "wcag242",
++       "TTv5",
++       "TT12.a",
++       "EN-301-549",
++       "EN-9.2.4.2",
++       "ACT",
++       "RGAAv4",
++       "RGAA-8.5.1",
++     ],
++   },
++   Object {
++     "description": "Ensure every HTML document has a lang attribute",
++     "help": "<html> element must have a lang attribute",
++     "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/html-has-lang?application=playwright",
++     "id": "html-has-lang",
++     "impact": "serious",
++     "nodes": Array [
++       Object {
++         "all": Array [],
++         "any": Array [
++           Object {
++             "data": Object {
++               "messageKey": "noLang",
++             },
++             "id": "has-lang",
++             "impact": "serious",
++             "message": "The <html> element does not have a lang attribute",
++             "relatedNodes": Array [],
++           },
++         ],
++         "failureSummary": "Fix any of the following:
++   The <html> element does not have a lang attribute",
++         "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Internal Server Error</pre></body></html>",
++         "impact": "serious",
++         "none": Array [],
++         "target": Array [
++           "html",
++         ],
++       },
++     ],
++     "tags": Array [
++       "cat.language",
++       "wcag2a",
++       "wcag311",
++       "TTv5",
++       "TT11.a",
++       "EN-301-549",
++       "EN-9.3.1.1",
++       "ACT",
++       "RGAAv4",
++       "RGAA-8.3.1",
++     ],
++   },
++ ]
 ```
 
-```
-Error: locator.waitFor: Test timeout of 30000ms exceeded.
-Call log:
-  - waiting for locator('body') to be visible
-    60 × locator resolved to hidden <body>…</body>
+# Page snapshot
 
+```yaml
+- generic [active] [ref=e1]: Internal Server Error
 ```
 
 # Test source
@@ -37,8 +126,7 @@ Call log:
   9   |       test(`no critical or serious violations: ${route} at ${width}px`, async ({ page }) => {
   10  |         await page.setViewportSize({ width, height: 900 })
   11  |         await page.goto(route, { waitUntil: 'load' })
-> 12  |         await page.locator('body').waitFor({ state: 'visible' })
-      |                                    ^ Error: locator.waitFor: Test timeout of 30000ms exceeded.
+  12  |         await page.locator('body').waitFor({ state: 'visible' })
   13  |         await page.waitForTimeout(1000)
   14  | 
   15  |         const results = await new AxeBuilder({ page })
@@ -55,7 +143,8 @@ Call log:
   26  |           return true
   27  |         })
   28  | 
-  29  |         expect(filtered).toEqual([])
+> 29  |         expect(filtered).toEqual([])
+      |                          ^ Error: expect(received).toEqual(expected) // deep equality
   30  |       })
   31  |     }
   32  |   }
@@ -139,4 +228,21 @@ Call log:
   110 |       expect(expanded).toBe('true')
   111 | 
   112 |       // Press Escape to close
+  113 |       await page.keyboard.press('Escape')
+  114 |       await page.waitForTimeout(300)
+  115 | 
+  116 |       const collapsed = await firstTrigger.getAttribute('aria-expanded')
+  117 |       expect(collapsed).toBe('false')
+  118 | 
+  119 |       // Focus should remain on trigger
+  120 |       await expect(firstTrigger).toBeFocused()
+  121 |     })
+  122 | 
+  123 |     test('Tab moves focus forward from open panel wrapper', async ({ page }) => {
+  124 |       await page.goto('/sanctuary', { waitUntil: 'load' })
+  125 |       await page.locator('body').waitFor({ state: 'visible' })
+  126 |       await page.waitForTimeout(1000)
+  127 | 
+  128 |       const firstTrigger = page.locator('[aria-controls^="faq-panel-"]').first()
+  129 |       await firstTrigger.focus()
 ```
