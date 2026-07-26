@@ -48,7 +48,7 @@
 @media (min-width: 1024px) {
   .pillar {
     flex-direction: row;
-    align-items: baseline;
+    align-items: flex-start;
     gap: clamp(48px, 8vw, 96px);
   }
 }
@@ -72,6 +72,12 @@
   width: 100%;
   max-width: 52ch;
   min-width: 38ch;
+}
+
+@media (min-width: 1024px) {
+  .pillarBody {
+    margin-top: 28px;
+  }
 }
 
 /* prefers-reduced-motion or no-js: render normally, no split */

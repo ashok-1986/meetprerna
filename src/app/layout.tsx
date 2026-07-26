@@ -125,14 +125,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        style={{
-          fontFamily: 'var(--font-inter), sans-serif',
-          background: 'var(--color-ink)',
-          color: 'var(--color-ivory)',
-          margin: 0,
-        }}
-      >
+      <body>
         <Header />
         {children}
         <Footer />
