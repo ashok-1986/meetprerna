@@ -1,0 +1,13 @@
+node_modules/
+.next/
+test-results/
+playwright-report/
+.env.local
+.dev.log
+.dev.err
+dev-server.log
+dev-server-err.log
+.gstack/
+.opencode/
+screenshots/
+tmp/
