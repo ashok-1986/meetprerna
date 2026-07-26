@@ -1,0 +1,202 @@
+.section {
+  padding: 0 clamp(24px, 5vw, 64px);
+  margin-bottom: 96px;
+  max-width: 70ch;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    margin-bottom: 192px;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  aspect-ratio: 1277 / 730;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.hero {
+  padding: clamp(40px, 8vh, 80px) 0 0;
+}
+
+.heroH1 {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-display-l);
+  font-weight: 600;
+  line-height: 0.95;
+  color: var(--color-ivory);
+  margin: 32px 0 16px;
+  text-wrap: balance;
+}
+
+.heroSub {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body-l);
+  line-height: 1.6;
+  color: var(--color-ivory-dim);
+  margin: 0;
+  max-width: 62ch;
+}
+
+.bodyText {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body-l);
+  line-height: 1.7;
+  color: var(--color-ivory-dim);
+  margin: 0 0 24px;
+  max-width: 70ch;
+}
+
+.bodyText:last-child {
+  margin-bottom: 0;
+}
+
+.twoAnchorSection {
+  padding: 0 clamp(24px, 5vw, 32px);
+  margin-bottom: 96px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+@media (min-width: 1024px) {
+  .twoAnchorSection {
+    margin-bottom: 192px;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: clamp(48px, 8vw, 96px);
+  }
+}
+
+.twoAnchorLeft {
+  flex: 1;
+}
+
+.twoAnchorRight {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 52ch;
+  min-width: 38ch;
+}
+
+.sectionHeading {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-h1);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--color-ivory);
+  margin: 0 0 24px;
+  max-width: 70ch;
+}
+
+/* Training and timeline */
+
+.trainingLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .trainingLayout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: clamp(32px, 5vw, 64px);
+  }
+}
+
+.trainingText {
+  flex: 1;
+}
+
+.trainingImageWrap {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--color-ink-100);
+}
+
+.trainingImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.nameLine {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-h2);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-ivory-dim);
+  margin: 0;
+  max-width: 70ch;
+  font-style: italic;
+}
+
+.ctaSection {
+  padding: clamp(64px, 12vh, 128px) clamp(24px, 5vw, 64px);
+  text-align: center;
+  max-width: 70ch;
+  margin: 0 auto;
+  border-top: 1px solid var(--color-ink-300);
+}
+
+.ctaText {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-h1);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-ivory);
+  margin: 0 0 32px;
+  text-wrap: balance;
+}
+
+.ctaPrimary {
+  display: inline-block;
+  padding: 14px 32px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-inchworm);
+  border: none;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background-color 200ms ease, transform 0.12s ease;
+}
+
+.ctaPrimary:hover {
+  background: var(--color-inchworm-deep);
+}
+
+.ctaPrimary:active {
+  transform: scale(0.97);
+}
+
+.ctaPrimary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-focus), 0 0 0 4px var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaPrimary {
+    transition: none;
+  }
+}

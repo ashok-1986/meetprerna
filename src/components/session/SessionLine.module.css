@@ -1,0 +1,27 @@
+.line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.path {
+  fill: none;
+  stroke: var(--color-inchworm);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-dasharray: 10000;
+  stroke-dashoffset: 0;
+  opacity: 0.5;
+}
+
+/* prefers-reduced-motion: keep fully drawn (stroke-dashoffset: 0 is default) */
+@media (prefers-reduced-motion: reduce) {
+  .path {
+    stroke-dashoffset: 0;
+  }
+}

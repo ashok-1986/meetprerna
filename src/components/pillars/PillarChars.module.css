@@ -1,0 +1,83 @@
+.wrap {
+  display: inline-block;
+  position: relative;
+  white-space: pre;
+}
+
+.out {
+  display: inline-block;
+}
+
+.in {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.section {
+  padding: clamp(96px, 16vh, 192px) clamp(24px, 5vw, 32px);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(120px, 16vh, 192px);
+}
+
+.sectionLabel {
+  display: block;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ink-500);
+  margin-bottom: 24px;
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .pillar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(48px, 8vw, 96px);
+  }
+}
+
+.pillarTitle {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-display-xl);
+  font-weight: 500;
+  line-height: 0.92;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.pillarBody {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.7;
+  color: var(--color-ink-500);
+  margin: 0;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 52ch;
+  min-width: 38ch;
+}
+
+/* prefers-reduced-motion or no-js: render normally, no split */
+@media (prefers-reduced-motion: reduce) {
+  .wrap { display: inline; }
+  .out { display: inline; }
+  .in { display: none; }
+}
+
+:global(html:not(.js)) .wrap { display: inline; }
+:global(html:not(.js)) .out { display: inline; }
+:global(html:not(.js)) .in { display: none; }
+

@@ -1,0 +1,243 @@
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ivory-dim);
+  text-decoration: none;
+  padding: clamp(24px, 4vh, 48px) clamp(24px, 5vw, 64px) 0;
+  transition: color 200ms ease;
+}
+
+.back:hover,
+.back:focus {
+  color: var(--color-ivory);
+}
+
+.back:active {
+  transform: scale(0.97);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: clamp(24px, 4vh, 48px) clamp(24px, 5vw, 64px) clamp(48px, 8vh, 96px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    flex-direction: row;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: flex-start;
+  }
+}
+
+.imageWrap {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 825 / 1032;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--color-ink-100);
+}
+
+.light .imageWrap {
+  background: var(--color-ink-200);
+}
+
+@media (min-width: 768px) {
+  .imageWrap {
+    position: sticky;
+    top: 24px;
+  }
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .info {
+    padding-top: 0;
+  }
+}
+
+/* Title — M19 italic on hover */
+
+.h1 {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-display-l);
+  font-weight: 600;
+  line-height: 0.95;
+  color: var(--color-ivory);
+  margin: 0;
+  text-wrap: balance;
+  transition: font-style 0.24s ease;
+}
+
+.h1:hover {
+  font-style: italic;
+}
+
+.story {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body-l);
+  line-height: 1.7;
+  color: var(--color-ivory-dim);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* Light mode — painting and sketch detail pages */
+
+.light {
+  background: var(--color-ivory);
+  min-height: 100svh;
+}
+
+.light .back {
+  color: #6B6B6B;
+}
+
+.light .back:hover,
+.light .back:focus {
+  color: var(--color-ink);
+}
+
+.h1Light {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-display-l);
+  font-weight: 600;
+  line-height: 0.95;
+  color: var(--color-ink);
+  margin: 0;
+  text-wrap: balance;
+  transition: font-style 0.24s ease;
+}
+
+.h1Light:hover {
+  font-style: italic;
+}
+
+.storyLight {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body-l);
+  line-height: 1.7;
+  color: #545454;
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* Meta */
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.metaItem {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ivory-dim);
+}
+
+.metaItem + .metaItem::before {
+  content: '·';
+  margin-right: 16px;
+  color: var(--color-ink-500);
+}
+
+.light .metaItem {
+  color: #6B6B6B;
+}
+
+.light .metaItem + .metaItem::before {
+  color: #B0B0A0;
+}
+
+/* CTA block */
+
+.ctaBlock {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-ink-300);
+}
+
+.light .ctaBlock {
+  border-top-color: var(--color-ink-300);
+}
+
+.ctaSub {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  color: var(--color-ivory-dim);
+  margin: 0 0 16px;
+}
+
+.light .ctaSub {
+  color: #6B6B6B;
+}
+
+.ctaLink {
+  display: inline-block;
+  padding: 14px 32px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-inchworm);
+  border: none;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background-color 200ms ease;
+}
+
+.ctaLink:hover {
+  background: var(--color-inchworm-deep);
+}
+
+.ctaLink:active {
+  transform: scale(0.97);
+}
+
+.ctaLink:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .h1,
+  .h1Light,
+  .back,
+  .ctaLink {
+    transition: none;
+  }
+
+  .h1:hover,
+  .h1Light:hover,
+  .cardTitle:hover {
+    font-style: normal;
+  }
+
+  .back:active,
+  .ctaLink:active {
+    transform: none;
+  }
+}

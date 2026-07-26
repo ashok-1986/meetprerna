@@ -1,0 +1,245 @@
+/* src/components/header/header.module.css */
+
+/* Skip link */
+.skipLink {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  padding: 12px 24px;
+  background: var(--color-ink);
+  color: var(--color-inchworm);
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-inchworm);
+  transform: translateY(-100%);
+  transition: transform 240ms var(--ease-out);
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Header bar */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px clamp(24px, 4vw, 120px);
+  height: 72px;
+  transition: transform 240ms var(--ease-out);
+}
+
+.header[data-visible="false"] {
+  transform: translateY(-100%);
+}
+
+/* Scrim gradient */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    var(--color-ink) 0%,
+    var(--color-ink) 30%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  pointer-events: none;
+  height: 96px;
+}
+
+/* Logo */
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-ivory);
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.logo {
+  height: 28px;
+  width: auto;
+  color: var(--color-inchworm);
+}
+
+/* City line */
+.cityLine {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ivory-dim);
+  margin-left: 12px;
+  white-space: nowrap;
+}
+
+/* Pill nav */
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-radius: 999px;
+  background: rgb(26 26 26 / 0.10);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-ink-300);
+  padding: 6px;
+  list-style: none;
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .pill {
+    background: rgb(26 26 26 / 0.85);
+  }
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 18px;
+  color: var(--color-ivory-dim);
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  text-decoration: none;
+  border-radius: 999px;
+  min-height: 44px;
+  min-width: 44px;
+  transition: color 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navItem:hover {
+    color: var(--color-ivory);
+  }
+}
+
+.navItem[data-active="true"] {
+  color: var(--color-ivory);
+}
+
+/* Focus ring */
+.navItem:focus-visible,
+.cta:focus-visible,
+.logoLink:focus-visible,
+.menuButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Active underline */
+.activeUnderline {
+  position: absolute;
+  bottom: 6px;
+  left: 18px;
+  right: 18px;
+  height: 3px;
+}
+
+.underlinePath {
+  stroke-dasharray: var(--path-length, 100);
+  stroke-dashoffset: var(--path-length, 100);
+}
+
+.underlinePath[data-drawn="true"] {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 320ms var(--ease-out);
+}
+
+/* Reduced motion: underline appears instantly */
+@media (prefers-reduced-motion: reduce) {
+  .underlinePath {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+}
+
+/* CTA */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  border: 1px solid var(--color-inchworm);
+  color: var(--color-inchworm);
+  background: transparent;
+  border-radius: 999px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  text-decoration: none;
+  min-height: 44px;
+  white-space: nowrap;
+  transition: background 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    background: var(--color-inchworm-tint);
+  }
+}
+
+/* Mobile menu button */
+.menuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-ivory);
+  cursor: pointer;
+}
+
+.menuIcon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Right cluster (CTA + menu button for mobile) */
+.rightCluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .pill {
+    display: none;
+  }
+
+  .menuButton {
+    display: flex;
+  }
+
+  .cta {
+    padding: 10px;
+    border: none;
+    color: var(--color-inchworm);
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .cta .ctaLabel {
+    display: none;
+  }
+}
+
+@media (max-width: 1279px) {
+  .cityLine {
+    display: none;
+  }
+}

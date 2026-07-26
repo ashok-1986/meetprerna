@@ -1,0 +1,35 @@
+.quote {
+  margin: 0;
+  padding: 0;
+  border: none;
+  max-width: 70ch;
+}
+
+.text {
+  font-family: 'Tinos', Georgia, serif;
+  font-style: italic;
+  font-size: var(--text-body-l);
+  line-height: 1.7;
+  color: var(--color-ivory-dim);
+  margin: 0 0 8px;
+}
+
+.footer {
+  margin: 0;
+}
+
+.name {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ivory-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

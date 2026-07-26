@@ -1,0 +1,221 @@
+/* Fullscreen menu panel */
+
+/* ---- Dialog base ---- */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: var(--color-ink);
+  color: var(--color-ivory);
+  overflow: hidden;
+  overscroll-behavior: contain;
+
+  /* Idle / exit */
+  opacity: 0;
+  transition:
+    opacity 180ms var(--ease-drawer),
+    display 180ms allow-discrete,
+    overlay 180ms allow-discrete;
+}
+
+.menu[open] {
+  opacity: 1;
+  /* Enter: 280ms */
+  transition: opacity 280ms var(--ease-drawer);
+}
+
+@starting-style {
+  .menu[open] {
+    opacity: 0;
+  }
+}
+
+/* Backdrop safety net */
+.menu::backdrop {
+  background: var(--color-ink);
+}
+
+/* ---- Layout ---- */
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  height: 100dvh;
+  padding: 72px clamp(24px, 8vw, 80px) 48px;
+  position: relative;
+  overflow-y: auto;
+}
+
+/* ---- Close button ---- */
+.closeButton {
+  position: absolute;
+  top: 14px;
+  right: clamp(24px, 8vw, 80px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-ink-500);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-ivory-dim);
+  cursor: pointer;
+  transition: color 220ms var(--ease-out), border-color 220ms var(--ease-out);
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .closeButton:hover {
+    color: var(--color-ivory);
+    border-color: var(--color-ivory-dim);
+  }
+}
+
+/* ---- Nav items area ---- */
+.navRegion {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ---- Menu item: M4 stagger + M19 wonk ---- */
+.menuItem {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-display-l);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-ivory);
+  text-decoration: none;
+  padding: 8px 0;
+  min-height: 44px;
+  width: fit-content;
+
+  /* M4: exit — no stagger */
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 380ms var(--ease-out),
+    transform 380ms var(--ease-out),
+    font-variation-settings 240ms var(--ease-out),
+    color 220ms var(--ease-out);
+  transition-delay: 0ms;
+}
+
+.menu[open] .menuItem {
+  opacity: 1;
+  transform: translateY(0);
+  /* M4: enter — stagger via --i */
+  transition-delay: calc(var(--i) * 40ms);
+}
+
+@starting-style {
+  .menu[open] .menuItem {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.menuItem:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+
+
+.menuItem[data-active="true"] {
+  color: var(--color-inchworm);
+}
+
+/* ---- M16 placeholder ---- */
+/* TODO(motion): implement M16 ink bleed mask on .menuItem hover,
+   gated behind @media (hover: hover) and (pointer: fine).
+   Single image element, right 50%, position fixed to viewport,
+   revealed via SVG mask. Needs real portfolio images. */
+
+/* ---- Bottom edge ---- */
+.bottomSection {
+  padding-top: 48px;
+  border-top: 1px solid var(--color-ink-300);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cityLine {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ivory-dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bottomCta {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  color: var(--color-inchworm);
+  text-decoration: none;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  transition: opacity 220ms var(--ease-out);
+}
+
+.bottomCta:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bottomCta:hover {
+    opacity: 0.8;
+  }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .menu {
+    transition: none;
+    opacity: 0;
+  }
+
+  .menu[open] {
+    opacity: 1;
+    transition: none;
+  }
+
+  .menuItem,
+  .menu[open] .menuItem {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0ms;
+  }
+}

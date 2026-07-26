@@ -1,0 +1,180 @@
+.footer {
+  border-top: 1px solid var(--color-ink-300);
+  padding: clamp(48px, 8vh, 80px) clamp(24px, 5vw, 64px) clamp(32px, 5vh, 48px);
+  margin-top: 128px;
+}
+
+.inner {
+  max-width: 70ch;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.link {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  color: var(--color-ivory);
+  text-decoration: none;
+  transition: color 130ms ease;
+}
+
+.link:hover,
+.link:focus {
+  color: var(--color-inchworm);
+  transition-duration: 200ms;
+}
+
+.link:active {
+  transform: scale(0.97);
+}
+
+.ctaLine {
+  margin-top: 8px;
+}
+
+.ctaLink {
+  display: inline-block;
+  padding: 14px 32px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-inchworm);
+  border: none;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background-color 130ms ease;
+}
+
+.ctaLink:hover {
+  background: var(--color-inchworm-deep);
+  transition-duration: 200ms;
+}
+
+.ctaLink:active {
+  transform: scale(0.97);
+}
+
+.ctaLink:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.closing {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-h2);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-ivory-dim);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.location {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ivory-dim);
+  margin: 0;
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-ink-300);
+}
+
+.legal {
+  display: flex;
+  gap: 16px;
+}
+
+.legalLink {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-caption);
+  color: var(--color-ivory-dim);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: color 130ms ease;
+}
+
+.legalLink:hover,
+.legalLink:focus {
+  color: var(--color-ivory);
+  transition-duration: 200ms;
+}
+
+.legalLink:active {
+  transform: scale(0.97);
+}
+
+.email {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-caption);
+  color: var(--color-ivory-dim);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: color 130ms ease;
+}
+
+.email:hover,
+.email:focus {
+  color: var(--color-ivory);
+  transition-duration: 200ms;
+}
+
+.email:active {
+  transform: scale(0.97);
+}
+
+.whatsapp {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-caption);
+  color: var(--color-ivory-dim);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: color 130ms ease;
+}
+
+.whatsapp:hover,
+.whatsapp:focus {
+  color: var(--color-ivory);
+  transition-duration: 200ms;
+}
+
+.whatsapp:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .ctaLink,
+  .legalLink,
+  .email,
+  .whatsapp {
+    transition: none;
+  }
+
+  .link:active,
+  .ctaLink:active,
+  .legalLink:active,
+  .email:active,
+  .whatsapp:active {
+    transform: none;
+  }
+}

@@ -1,0 +1,230 @@
+.hero {
+  padding: clamp(80px, 16vh, 160px) clamp(24px, 5vw, 64px) clamp(64px, 12vh, 120px);
+  text-align: center;
+}
+
+.h1 {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-display-l);
+  font-weight: 600;
+  line-height: 0.95;
+  color: var(--color-ivory);
+  margin: 0 0 16px;
+  text-wrap: balance;
+  max-width: 70ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sub {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body-l);
+  line-height: 1.6;
+  color: var(--color-ivory-dim);
+  margin: 0;
+  max-width: 70ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section {
+  padding: 0 clamp(24px, 5vw, 64px);
+  margin-bottom: 96px;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    margin-bottom: 192px;
+  }
+}
+
+.sectionHeading {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-h1);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--color-ivory);
+  margin: 0 0 24px;
+  max-width: 70ch;
+}
+
+.sectionBody {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body-l);
+  line-height: 1.7;
+  color: var(--color-ivory-dim);
+  margin: 0 0 24px;
+  max-width: 70ch;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.step {
+  max-width: 70ch;
+}
+
+.stepHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.stepNumber {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ivory-dim);
+  min-width: 3ch;
+  text-align: right;
+}
+
+.stepHeading {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-h2);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-ivory);
+  margin: 0;
+}
+
+.stepBody {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body-l);
+  line-height: 1.7;
+  color: var(--color-ivory-dim);
+  margin: 0;
+  max-width: 70ch;
+}
+
+.testimonialPlacement {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-ink-300);
+}
+
+.testimonialPlacement {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-ink-300);
+}
+
+.twoAnchorSection {
+  padding: 0 clamp(24px, 5vw, 32px);
+  margin-bottom: 96px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+@media (min-width: 1024px) {
+  .twoAnchorSection {
+    margin-bottom: 192px;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: clamp(48px, 8vw, 96px);
+  }
+}
+
+.twoAnchorLeft {
+  flex: 1;
+}
+
+.twoAnchorRight {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 52ch;
+  min-width: 38ch;
+}
+
+.sectionLabel {
+  display: block;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ivory-dim);
+  text-transform: none; /* sentence case */
+  margin-bottom: 24px;
+}
+
+.testimonialPlacement {
+  margin-top: 32px;
+}
+
+.ctaSection {
+  padding: clamp(64px, 12vh, 128px) clamp(24px, 5vw, 64px);
+  text-align: center;
+  max-width: 70ch;
+  margin: 0 auto;
+  border-top: 1px solid var(--color-ink-300);
+}
+
+.ctaHeading {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-display-l);
+  font-weight: 600;
+  line-height: 0.95;
+  color: var(--color-ivory);
+  margin: 0 0 24px;
+  text-wrap: balance;
+}
+
+.ctaPrimary {
+  display: inline-block;
+  padding: 14px 32px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-inchworm);
+  border: none;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background-color 200ms ease, transform 0.12s ease;
+}
+
+.ctaPrimary:hover {
+  background: var(--color-inchworm-deep);
+}
+
+.ctaPrimary:active {
+  transform: scale(0.97);
+}
+
+.ctaPrimary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-focus), 0 0 0 4px var(--color-ink);
+}
+
+.ctaNote {
+  margin-top: 16px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body-s);
+  color: var(--color-ivory-dim);
+}
+
+.whatsappLink {
+  color: var(--color-ivory-dim);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.whatsappLink:hover,
+.whatsappLink:focus {
+  color: var(--color-ivory);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaPrimary {
+    transition: none;
+  }
+}
