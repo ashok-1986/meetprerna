@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { portfolio } from '@/content/portfolio'
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { ArchiveGridClient } from './ArchiveGrid.client'
 import styles from './page.module.css'
 
@@ -31,9 +32,9 @@ export default function PortfolioArchive() {
           <p id="cta-strip-heading" className={styles.ctaText}>
             Have something in mind? Send it across, even if it is only a feeling.
           </p>
-          <a href="/consulting" className={styles.ctaLink}>
+          <InteractiveHoverButton href="/consulting">
             Start a conversation
-          </a>
+          </InteractiveHoverButton>
         </section>
       )}
     </main>

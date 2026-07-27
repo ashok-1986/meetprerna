@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { imagePath, type Piece } from '@/content/portfolio'
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import styles from './page.module.css'
 
 const MEDIUMS = ['All', 'Tattoo', 'Painting', 'Sketch'] as const
@@ -190,9 +191,9 @@ export function ArchiveGridClient({ pieces }: Props) {
           <p className={styles.emptyText}>
             Nothing matches that combination. Try a different filter.
           </p>
-          <a href="/consulting" className={styles.emptyCta}>
+          <InteractiveHoverButton href="/consulting">
             Start a conversation
-          </a>
+          </InteractiveHoverButton>
         </div>
       )}
     </section>

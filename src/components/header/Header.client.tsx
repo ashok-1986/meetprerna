@@ -8,42 +8,62 @@ import { MobileMenu } from './MobileMenu'
 import { recordInteraction } from '@/lib/behaviour'
 import styles from './header.module.css'
 
-/* Scroll distance over which the header settles into its pill shape.
-   120px, not further down the page — the shape should have finished
-   moving before the hero content has scrolled past. */
-const SHRINK_RANGE = 120
+/* Three discrete states, not a continuous scrub. Thresholds are SCROLL
+   DISTANCE, not scroll events — a trackpad fires dozens of events per
+   gesture, a wheel fires discrete notches, touch fires continuously,
+   so "distance" is the only consistent input across devices.
+     0 — full bleed
+     1 — halfway in
+     2 — settled
+   Hysteresis (separate enter/exit thresholds) prevents the header
+   flickering between states if the page rests exactly on a boundary. */
+const ENTER_1 = 80
+const ENTER_2 = 220
+const EXIT_1 = 50
+const EXIT_2 = 170
 
 export function HeaderClient() {
   const [menuOpen, setMenuOpen] = useState(false)
   const scrollYRef = useRef(0)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const queued = useRef(false)
-  const lastProgress = useRef(-1)
+  // -1 is not a real state — it guarantees the first setState call
+  // (even to 0) actually writes data-nav, instead of being skipped by
+  // the "next === current" no-op guard.
+  const state = useRef(-1)
 
-  // Scroll-shrink: writes --header-progress (0–1) to the root element.
-  // Only property driving the pill's shape; see header.module.css.
+  // Scroll-shrink: writes data-nav (0/1/2) to the root element. Each
+  // state maps to its own width/height/radius/margin-top in
+  // header.module.css, animated by a real CSS transition — the
+  // easing lives on the discrete state change, not on the scroll
+  // input itself. See header.module.css for why.
   useEffect(() => {
     const root = document.documentElement
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    const setState = (next: number) => {
+      if (next === state.current) return
+      state.current = next
+      root.setAttribute('data-nav', String(next))
+    }
 
     const apply = () => {
       queued.current = false
 
       if (reduceMotion.matches) {
-        root.style.setProperty('--header-progress', '1')
+        setState(2)
         return
       }
 
-      let progress = window.scrollY / SHRINK_RANGE
-      progress = progress < 0 ? 0 : progress > 1 ? 1 : progress
+      const y = window.scrollY
+      let next = state.current
 
-      // Round to 3dp so the variable doesn't change every frame by an
-      // invisible amount and force a style recalc for nothing.
-      progress = Math.round(progress * 1000) / 1000
-      if (progress === lastProgress.current) return
+      if (state.current === 0 && y >= ENTER_1) next = 1
+      else if (state.current === 1 && y >= ENTER_2) next = 2
+      else if (state.current === 1 && y < EXIT_1) next = 0
+      else if (state.current === 2 && y < EXIT_2) next = 1
 
-      lastProgress.current = progress
-      root.style.setProperty('--header-progress', String(progress))
+      setState(next)
     }
 
     const onScroll = () => {
@@ -56,9 +76,14 @@ export function HeaderClient() {
     window.addEventListener('resize', onScroll, { passive: true })
     reduceMotion.addEventListener('change', apply)
 
-    // Snap to the correct progress on load — never animate 0 to 1 on
-    // a refresh that lands mid-page.
-    apply()
+    // Snap to the correct state on load — never animate through 0/1/2
+    // on a refresh that lands mid-page.
+    if (reduceMotion.matches) {
+      setState(2)
+    } else {
+      const y = window.scrollY
+      setState(y >= ENTER_2 ? 2 : y >= ENTER_1 ? 1 : 0)
+    }
 
     return () => {
       window.removeEventListener('scroll', onScroll)
@@ -93,62 +118,62 @@ export function HeaderClient() {
           <div className={styles.navGrid}>
             <Logo />
 
-            <div className={styles.navCluster}>
-              {/* Desktop pill nav */}
-              <NavPill />
+            {/* Desktop pill nav — true centre column. Pinned to the
+                grid's centre regardless of how wide the logo or the
+                right cluster get; only they travel inward. */}
+            <NavPill />
 
-              <div className={styles.rightCluster}>
-                {/* CTA */}
-                <Link
-                  href="/consulting"
-                  className={styles.cta}
-                  aria-label="Start a conversation"
-                  onClick={handleCTAClick}
+            <div className={styles.rightCluster}>
+              {/* CTA */}
+              <Link
+                href="/consulting"
+                className={styles.cta}
+                aria-label="Start a conversation"
+                onClick={handleCTAClick}
+              >
+                <span className={styles.ctaLabel}>Start a conversation</span>
+                <svg
+                  className={styles.ctaIconMobile}
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
                 >
-                  <span className={styles.ctaLabel}>Start a conversation</span>
-                  <svg
-                    className={styles.ctaIconMobile}
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                    focusable="false"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </Link>
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </Link>
 
-                {/* Mobile menu button — opens only */}
-                <button
-                  ref={menuButtonRef}
-                  className={styles.menuButton}
-                  aria-expanded={menuOpen}
-                  aria-controls="mobile-menu"
-                  aria-label={menuOpen ? 'Close menu' : 'Menu'}
-                  onClick={handleMenuOpen}
+              {/* Mobile menu button — opens only */}
+              <button
+                ref={menuButtonRef}
+                className={styles.menuButton}
+                aria-expanded={menuOpen}
+                aria-controls="mobile-menu"
+                aria-label={menuOpen ? 'Close menu' : 'Menu'}
+                onClick={handleMenuOpen}
+              >
+                <svg
+                  className={styles.menuIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
                 >
-                  <svg
-                    className={styles.menuIcon}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                    focusable="false"
-                  >
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
-                  </svg>
-                </button>
-              </div>
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>

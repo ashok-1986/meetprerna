@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import prernaHero from '@/../public/images/about/prerna-hero.jpg'
 import prernaWithWork from '@/../public/images/about/prerna-with-work.jpg'
 import styles from './page.module.css'
@@ -157,9 +158,9 @@ export default function About() {
           <p id="about-cta-heading" className={styles.ctaText}>
             If any of this sounds like the room you want to be in, start a conversation.
           </p>
-          <a href="/consulting" className={styles.ctaPrimary}>
+          <InteractiveHoverButton href="/consulting">
             Start a conversation
-          </a>
+          </InteractiveHoverButton>
         </section>
       </M3Reveal>
     </main>

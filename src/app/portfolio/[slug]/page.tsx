@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getPiece, imagePath, portfolio } from '@/content/portfolio'
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import styles from './page.module.css'
 
 interface Props {
@@ -79,9 +80,9 @@ export default async function PortfolioPiece({ params }: Props) {
                 ? 'Interested in this piece?'
                 : 'Want something like this?'}
             </p>
-            <a href="/consulting" className={styles.ctaLink}>
+            <InteractiveHoverButton href="/consulting">
               Start a conversation
-            </a>
+            </InteractiveHoverButton>
           </div>
         </div>
       </section>

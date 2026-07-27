@@ -6,6 +6,7 @@ import { TestimonialQuote } from '@/components/TestimonialQuote'
 import { SessionLine } from '@/components/session/SessionLine.client'
 import { DragRail } from '@/components/drag/DragRail.client'
 import { PillarScrub } from '@/components/pillars/PillarScrub.client'
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { portfolio } from '@/content/portfolio'
 import { testimonials } from '@/content/testimonials'
 import styles from './page.module.css'
@@ -207,9 +208,9 @@ export default function Home() {
             <h2 id="close-heading" className={styles.closeHeading}>
               Your story deserves to be worn.
             </h2>
-            <a href="/consulting" className={styles.ctaPrimary}>
+            <InteractiveHoverButton href="/consulting">
               Start a conversation
-            </a>
+            </InteractiveHoverButton>
             <a
               href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP || '919820012345'}`}
               target="_blank"

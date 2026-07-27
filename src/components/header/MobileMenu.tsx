@@ -3,6 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import styles from './mobile-menu.module.css'
 
 const NAV_ITEMS = [
@@ -125,13 +126,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         {/* Bottom edge — CTA */}
         <div className={styles.bottomSection}>
-          <Link
-            href="/consulting"
-            className={styles.bottomCta}
-            onClick={handleClose}
-          >
+          <InteractiveHoverButton href="/consulting" onClick={handleClose}>
             Start a conversation
-          </Link>
+          </InteractiveHoverButton>
         </div>
       </div>
     </dialog>

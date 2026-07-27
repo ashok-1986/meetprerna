@@ -2,6 +2,7 @@ import { testimonials } from '@/content/testimonials'
 import { TestimonialQuote } from '@/components/sanctuary/TestimonialQuote'
 import { FAQAccordion } from '@/components/sanctuary/FAQAccordion'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import styles from './page.module.css'
 
 const faqItems = [
@@ -198,9 +199,9 @@ export default function Sanctuary() {
           <h2 id="cta-heading" className={styles.ctaHeading}>
             Your story deserves to be worn.
           </h2>
-          <a href="/consulting" className={styles.ctaPrimary}>
+          <InteractiveHoverButton href="/consulting">
             Start a conversation
-          </a>
+          </InteractiveHoverButton>
           <p className={styles.ctaNote}>
             Having trouble? <a href="https://wa.me/919820012345" className={styles.whatsappLink}>Message on WhatsApp</a>
           </p>
