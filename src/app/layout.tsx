@@ -37,7 +37,7 @@ const personSchema = {
   description: 'Tattoo artist, painter and sketch artist working across Mumbai, Navi Mumbai and travelling.',
   url: 'https://meetprerna.com/',
   sameAs: [
-    'https://www.instagram.com/prerna.tattoos/',
+    'https://www.instagram.com/meetprerna.tattoos/',
     'https://wa.me/919820012345',
   ],
   knowsAbout: [

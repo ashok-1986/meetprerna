@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>meetprerna — scroll-shrink header (fixed)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ---------------------------------------------------------------
+     TOKENS — these match DESIGN.md (neon lime on near-black,
+     Cormorant Garamond display + Inter body). Do not invent new ones.
+     --------------------------------------------------------------- */
+  :root {
+    --ink:        #0B0B0C;
+    --ink-90:     rgba(11, 11, 12, 0.92);
+    --neon:       #C4FF61;
+    --text:       #F5F2EA;
+    --text-muted: rgba(245, 242, 234, 0.62);
+
+    --pill-max:   680px;   /* settled width of the header pill */
+    --bar-h-top:  84px;    /* height at scroll = 0 */
+    --bar-h-end:  56px;    /* height when settled */
+
+    --progress: 0;         /* 0 = top, 1 = settled. Written by JS on <html>. */
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--ink);
+    color: var(--text);
+  }
+
+  /* ---------------------------------------------------------------
+     HEADER
+     Outer band is always full width and never animates. Only the
+     inner pill changes, so there is no 100vw scrollbar bug and no
+     left/right offset maths. Centring is just margin-inline: auto.
+     --------------------------------------------------------------- */
+  .header-band {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    padding-top: env(safe-area-inset-top, 0px);
+    pointer-events: none;   /* band is a spacer; children re-enable */
+  }
+
+  .header-pill {
+    pointer-events: auto;
+    position: relative;
+    margin-inline: auto;
+    contain: layout paint style;
+
+    /* Only these four properties are driven by scroll. */
+    margin-top:    calc(14px * var(--progress));
+    max-width:     calc(100% - (100% - var(--pill-max)) * var(--progress));
+    height:        calc(var(--bar-h-top) - (var(--bar-h-top) - var(--bar-h-end)) * var(--progress));
+    border-radius: calc(22px * var(--progress));
+
+    background: var(--ink-90);
+    /* Constant blur. Animating the blur RADIUS re-composites the
+       backdrop every frame and is the single biggest jank source
+       in the original. */
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Shadow lives on a pseudo-element and only its opacity changes.
+     Animating box-shadow blur repaints on every frame. */
+  .header-pill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    opacity: var(--progress);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .nav-grid {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding-inline: clamp(1rem, 3vw, 2rem);
+  }
+
+  /* Type sizes are FIXED. Shrinking font-size mid-scroll causes
+     subpixel reflow and reads as a wobble. Let the box shrink,
+     not the letters. */
+  .brand {
+    justify-self: start;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-links {
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: color 160ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .nav-links a:hover { color: var(--text); }
+  }
+
+  .nav-links a[aria-current="page"] { color: var(--text); }
+
+  /* The dot marks the current section. It encodes state, so it only
+     appears on the active link. A dot on one link with no state
+     behind it is decoration. */
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--neon);
+    flex-shrink: 0;
+    opacity: 0;
+  }
+  .nav-links a[aria-current="page"] .dot { opacity: 1; }
+
+  .cta {
+    justify-self: end;
+    border: 1px solid var(--neon);
+    color: var(--neon);
+    background: transparent;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    transition: background-color 160ms cubic-bezier(0.32, 0.72, 0, 1),
+                color 160ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .cta:hover { background: var(--neon); color: var(--ink); }
+  }
+
+  .cta:focus-visible,
+  .brand:focus-visible,
+  .nav-links a:focus-visible,
+  .menu-toggle:focus-visible {
+    outline: 2px solid var(--neon);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ---------------------------------------------------------------
+     MOBILE
+     The original hid the links and shipped no replacement. This is a
+     real toggle. Below 720px the pill stays full-bleed; a pill that
+     shrinks to 240px has nowhere for the menu to live.
+     --------------------------------------------------------------- */
+  .menu-toggle {
+    display: none;
+    justify-self: end;
+    background: none;
+    border: 0;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  .mobile-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0; right: 0;
+    background: var(--ink-90);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 18px;
+    padding: 1rem 1.25rem 1.25rem;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .mobile-panel a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  @media (max-width: 720px) {
+    :root { --bar-h-top: 68px; --bar-h-end: 56px; }
+    .header-pill { max-width: 100%; margin-top: 0; border-radius: 0; }
+    .nav-grid { grid-template-columns: 1fr auto; }
+    .nav-links, .cta { display: none; }
+    .menu-toggle { display: block; }
+    .mobile-panel[data-open="true"] { display: flex; }
+  }
+
+  /* ---------------------------------------------------------------
+     REDUCED MOTION
+     The original disabled a transition that was never used, so it did
+     nothing. Here the shape snaps to its settled state and stays put.
+     --------------------------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    :root { --progress: 1 !important; }
+  }
+
+  /* demo only */
+  section { min-height: 100vh; display: grid; place-items: center; padding: 6rem 2rem; text-align: center; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(2rem, 6vw, 3.6rem); max-width: 18ch; line-height: 1.08; margin: 0; }
+  .muted { color: var(--text-muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<header class="header-band">
+  <div class="header-pill">
+    <div class="nav-grid">
+      <a href="#" class="brand">meetprerna</a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#work" aria-current="page"><span class="dot"></span>Work</a>
+        <a href="#about">About</a>
+        <a href="#journal">Journal</a>
+      </nav>
+
+      <a href="/consulting" class="cta">Book a session</a>
+
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-panel">Menu</button>
+    </div>
+
+    <div class="mobile-panel" id="mobile-panel" data-open="false">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#journal">Journal</a>
+      <a href="/consulting">Book a session</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <h1>Your story, translated into abstract art.</h1>
+</section>
+<section><p class="muted">Scroll room.</p></section>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* 120px, not 420px. The header should have finished settling before
+     the hero headline has left the screen. 420px means the shape is
+     still moving three screens down the page. */
+  var RANGE = 120;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var last = -1;
+  var queued = false;
+
+  function apply() {
+    queued = false;
+    if (reduce.matches) { root.style.setProperty('--progress', '1'); return; }
+
+    var p = window.scrollY / RANGE;
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+
+    /* Round to 3dp. Without this the variable changes every frame by an
+       invisible amount and forces a style recalc for nothing. */
+    p = Math.round(p * 1000) / 1000;
+    if (p === last) return;
+    last = p;
+    root.style.setProperty('--progress', p);
+  }
+
+  function onScroll() {
+    if (!queued) { queued = true; requestAnimationFrame(apply); }
+  }
+
+  /* No lerp. Scroll position is already a smooth, user-controlled
+     input — easing it adds lag, and a frame-rate-dependent lerp runs
+     twice as fast on a 120Hz screen as on 60Hz. Map 1:1 to scroll. */
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  reduce.addEventListener('change', apply);
+
+  /* Snap on load. The original animated 0 -> 1 on any refresh that
+     happened mid-page. */
+  apply();
+
+  /* Mobile menu */
+  var toggle = document.querySelector('.menu-toggle');
+  var panel = document.getElementById('mobile-panel');
+  toggle.addEventListener('click', function () {
+    var open = panel.dataset.open === 'true';
+    panel.dataset.open = String(!open);
+    toggle.setAttribute('aria-expanded', String(!open));
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && panel.dataset.open === 'true') {
+      panel.dataset.open = 'false';
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.focus();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

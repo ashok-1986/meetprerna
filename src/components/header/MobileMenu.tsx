@@ -15,10 +15,9 @@ const NAV_ITEMS = [
 interface MobileMenuProps {
   isOpen: boolean
   onClose: () => void
-  cityLine: string | null
 }
 
-export function MobileMenu({ isOpen, onClose, cityLine }: MobileMenuProps) {
+export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const scrollYRef = useRef(0)
   const pathname = usePathname()
@@ -124,11 +123,8 @@ export function MobileMenu({ isOpen, onClose, cityLine }: MobileMenuProps) {
           </nav>
         </div>
 
-        {/* Bottom edge — cityLine + CTA */}
+        {/* Bottom edge — CTA */}
         <div className={styles.bottomSection}>
-          {cityLine && (
-            <span className={styles.cityLine}>{cityLine}</span>
-          )}
           <Link
             href="/consulting"
             className={styles.bottomCta}

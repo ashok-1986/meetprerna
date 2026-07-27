@@ -23,39 +23,79 @@
   outline-offset: 2px;
 }
 
-/* Header bar */
-.header {
+/*
+ * Header band + frame — scroll-shrink header.
+ *
+ * The outer band is fixed, full width, and never animates. Only the
+ * inner "frame" changes shape, so there's no 100vw scrollbar bug and
+ * no left/right offset math. Centring is margin-inline: auto.
+ *
+ * --header-progress (0 = top of page, 1 = settled) is written to
+ * document.documentElement by Header.client.tsx's scroll listener.
+ * Only four properties on .frame respond to it: margin-top, max-width,
+ * height, border-radius. Nothing else — not font-size, not padding,
+ * not the backdrop blur radius.
+ */
+.headerBand {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  inset: 0 0 auto 0;
   z-index: 100;
+  pointer-events: none; /* band is a spacer; .frame re-enables */
+
+  --frame-max: 900px;
+  --frame-h-top: 84px;
+  --frame-h-end: 56px;
+}
+
+.frame {
+  pointer-events: auto;
+  position: relative;
+  margin-inline: auto;
+  contain: layout paint style;
+
+  margin-top: calc(14px * var(--header-progress, 0));
+  max-width: calc(100% - (100% - var(--frame-max)) * var(--header-progress, 0));
+  height: calc(
+    var(--frame-h-top) - (var(--frame-h-top) - var(--frame-h-end)) * var(--header-progress, 0)
+  );
+  border-radius: calc(22px * var(--header-progress, 0));
+
+  background: rgb(26 26 26 / 0.92);
+  /* Blur radius is CONSTANT. Animating it re-composites the backdrop
+     every frame and is the single biggest jank source in a shrink
+     header like this. */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .frame {
+    background: rgb(26 26 26 / 0.96);
+  }
+}
+
+/* Depth as the settled frame separates from the page. DESIGN.md §7
+   bans drop shadows on the dark canvas ("depth is surface tone, a
+   hairline, or the step-4 glow") — a hairline border fading in via
+   opacity does the same job the reference's box-shadow does, without
+   the banned shadow. Lives on ::after so only opacity is animated,
+   same rule as the four-property constraint on .frame itself. */
+.frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid var(--color-ink-300);
+  opacity: var(--header-progress, 0);
+  pointer-events: none;
+}
+
+.navGrid {
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px clamp(24px, 4vw, 120px);
-  height: 72px;
-  transition: transform 240ms var(--ease-out);
-}
-
-.header[data-visible="false"] {
-  transform: translateY(-100%);
-}
-
-/* Scrim gradient */
-.scrim {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    to bottom,
-    var(--color-ink) 0%,
-    var(--color-ink) 30%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-  pointer-events: none;
-  height: 96px;
+  padding-inline: clamp(24px, 4vw, 120px);
 }
 
 /* Logo */
@@ -72,15 +112,6 @@
   height: 28px;
   width: auto;
   color: var(--color-inchworm);
-}
-
-/* City line */
-.cityLine {
-  font-family: var(--font-jetbrains), monospace;
-  font-size: var(--text-mono);
-  color: var(--color-ivory-dim);
-  margin-left: 12px;
-  white-space: nowrap;
 }
 
 /* Pill nav */
@@ -125,7 +156,7 @@
   }
 }
 
-.navItem[data-active="true"] {
+.navItem[data-active='true'] {
   color: var(--color-ivory);
 }
 
@@ -135,7 +166,7 @@
 .logoLink:focus-visible,
 .menuButton:focus-visible {
   outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 /* Active underline */
@@ -152,7 +183,7 @@
   stroke-dashoffset: var(--path-length, 100);
 }
 
-.underlinePath[data-drawn="true"] {
+.underlinePath[data-drawn='true'] {
   stroke-dashoffset: 0;
   transition: stroke-dashoffset 320ms var(--ease-out);
 }
@@ -208,6 +239,13 @@
   height: 24px;
 }
 
+/* Nav cluster (pill nav + right cluster, pinned together at the right edge) */
+.navCluster {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
 /* Right cluster (CTA + menu button for mobile) */
 .rightCluster {
   display: flex;
@@ -215,7 +253,10 @@
   gap: 8px;
 }
 
-/* Responsive */
+/* Responsive: desktop pill nav vs mobile menu toggle.
+   This is the site's own established breakpoint (matches every other
+   desktop/mobile split in the codebase) and is independent of the
+   720px shrink-disable breakpoint below. */
 @media (max-width: 1023px) {
   .pill {
     display: none;
@@ -238,8 +279,21 @@
   }
 }
 
-@media (max-width: 1279px) {
-  .cityLine {
-    display: none;
+/* Below 720px the frame stays full-bleed and square — it does not
+   shrink into a floating pill. Only its height still animates,
+   between the (shorter) mobile top height and the settled height. */
+@media (max-width: 720px) {
+  .headerBand {
+    --frame-h-top: 68px;
+  }
+
+  .frame {
+    max-width: 100%;
+    margin-top: 0;
+    border-radius: 0;
+  }
+
+  .frame::after {
+    border-radius: 0;
   }
 }

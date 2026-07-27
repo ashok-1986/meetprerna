@@ -1,6 +1,6 @@
 # MeetPrerna — Locked Decisions (`DECISIONS.md`)
 
-**Version:** 2.1 · **Date:** 2026-07-25 · **Status:** Binding · **Supersedes:** all conflicting statements in `PRD.md`, `designs.md`, `animations.md`, `shaders.md`, `components.md`, `ARCHITECTURE.md`, `INDEX.md`
+**Version:** 2.2 · **Date:** 2026-07-25 · **Status:** Binding · **Supersedes:** all conflicting statements in `PRD.md`, `designs.md`, `animations.md`, `shaders.md`, `components.md`, `ARCHITECTURE.md`, `INDEX.md`
 
 ---
 
@@ -617,13 +617,36 @@ Initial event set, deliberately small:
 
 **The sub-line**, matching register: `Custom tattoos, original paintings and sketches: made in conversation, never in a rush.` Mirrors the H1's colon construction rather than dropping to plain prose underneath it, so the two lines read as one voice instead of a headline followed by a caption. If a different sub was intended by "similar," swap the clause after the colon; keep the colon and the "made in conversation" phrase, since that is the line doing the work the old sub-line's "wherever the work takes her" used to do.
 
-**The city line (`siteSettings.cityLine`).** Ships as:
+**The city line — REMOVED from the header, 2026-07-27.**
 
-`Mumbai · Navi Mumbai · Travelling Artist | ✈️ Now in Goa`
+`Mumbai · Navi Mumbai · Travelling Artist | ✈️ Now in Goa` no longer
+appears in the navigation. Owner decision: the header is being
+rebuilt section by section, starting from a clean header, and this
+line does not return to it.
 
-The `| ✈️ Now in Goa` clause is the dynamic part. Prerna edits and clears it herself as her travel changes; when she is not travelling, the line reads simply `Mumbai · Navi Mumbai · Travelling Artist` with nothing after it. Never leave a stale city showing.
+It was previously specced as a `siteSettings.cityLine` string, editable
+by Prerna, appearing between the logo and the nav pill. That entire
+element is cut. Where "where she works from" and "travels on request"
+live now: `/about`, in the "Where to find me" section (`content.md`
+§5b) and, if wanted later, the footer's centre column
+(`DESIGN.md` §11b). Do not re-add it to the header without a new,
+explicit owner decision recorded here.
 
 `DESIGN.md` §10 bans emoji as icons, for real reasons: inconsistent rendering across Android skins, and an odd fit next to a monospace metadata line built to read like a shipping label. That stands as general guidance. This one line is an explicit exception, made once, by the owner, not a precedent for icons elsewhere on the site. If it ever looks wrong in practice, the fix without losing the warmth is a small inline SVG plane in `--color-inchworm` in place of the emoji glyph, same position, same meaning, consistent rendering everywhere.
+
+---
+
+## 24. D22 — Footer redesign: WhatsApp removed from the footer, footer inverts (owner decision, 2026-07-27)
+
+**Reverses part of D8.0.** D8.0's contact hierarchy table listed WhatsApp as a footer-only secondary channel, alongside email. That is now removed from the footer specifically. Email is the sole contact route on the footer. This does not touch WhatsApp anywhere else it might reasonably still appear (it was never promoted beyond a small fallback link to begin with, per D8.0) — it is a footer-only removal, made because the footer's job was redefined as brand signature rather than conversion, and a two-channel footer contradicts a single quiet contact route sitting under a loud signature line.
+
+**The footer inverts.** Background `--color-inchworm`, text `--color-ink`, per `DESIGN.md` §9 (amended same date, item 3). Locked content, in order: the signature line ("Your story deserves to be worn."), a contact column (email only), a nav column (identical labels and order to the header — real routes, not renamed ones; see the nav-label rule below), a social column (Instagram only until further handles are confirmed live), and a "Powered by Alchemetryx" credit. No CTA in the footer — the booking CTA lives in the page content above it, not duplicated into the footer.
+
+**Nav labels always match their route slug.** Settled the same date: the label for `/portfolio` is "Portfolio", not "Work" and not "Expertise". If a label and its slug ever disagree, the slug wins and the label is the bug. Applies identically to the header and the footer — they carry the same four items (Portfolio, Sanctuary, About, Contact) in the same order, because those are the site's only real routes.
+
+**Social icons are not equal-weight by default.** Only accounts with a confirmed, live handle ship. At the time of this decision, that is Instagram only (`instagram.com/meetprerna.tattoos`, corrected from a wrong `prerna.tattoos` handle found in `layout.tsx`'s Person schema — same class of bug as the previously-fixed broken email link, just in a different file). Pinterest, Facebook and YouTube are not included until their real handles are supplied and confirmed live; the row is built so adding one is an append, not a rebalance.
+
+**A legal row (Privacy, Refund Policy, Terms) is planned but not built.** The footer's layout is deliberately a plain top-to-bottom block stack with no `space-between` spanning its full height, specifically so that row can be appended later as its own block without touching anything above it.
 
 ---
 

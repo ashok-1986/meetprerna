@@ -161,14 +161,29 @@ Two surfaces only: the sticky header and the lightbox chrome. `backdrop-filter: 
 
 ## 9. Light mode
 
-Two places, both deliberate:
+Three places, all deliberate:
 
 1. **`/portfolio/[slug]`** when the piece's medium is Painting or Sketch. Not the archive grid, which stays dark and consistent.
 2. **The lower half of the home page**, after the still band. One ground shift, one direction, never back. `BLUEPRINT.md` §4c.
+3. **The footer** — added 2026-07-27, owner decision, recorded here per `AGENTS.md` §8's lock boundary. Background `--color-inchworm`, text `--color-ink`. Unlike places 1 and 2, the ground here is the accent itself, not ivory — this is the one section on the site where the lime is a background fill rather than a functional signal, because the footer's job is brand signature, not conversion, and the section needs to read as a single loud color-block rather than another light page. Text uses `--color-ink` at three opacity steps: full for the email (the only contact route once WhatsApp is removed from the footer), 0.75 for nav and social, 0.65 for the "Powered by" credit — not 0.60, which measured against `--color-ink` fails AA for small text (~4.3:1); 0.65 clears it (~5.1:1). Focus rings inside the footer use `--color-ink`, not `--color-focus` (the accent lime), since a lime ring is invisible against a lime background.
 
-The logic in both cases is the same: ink for the work, paper for the words.
+The logic in the first two cases is the same: ink for the work, paper for the words. The footer is different on purpose — it inverts the accent itself, not ivory.
 
-`--color-ivory` ground, `--color-ink` text. **Accent on light must be `--color-inchworm-deep`, and even that is 2.0:1 on ivory, which fails for text.** On light, the accent is used only as a fill behind dark text, or as a 2px underline. Never as text colour. This is the one place the accent changes behaviour.
+`--color-ivory` ground, `--color-ink` text, for places 1 and 2. **Accent on light must be `--color-inchworm-deep`, and even that is 2.0:1 on ivory, which fails for text.** On light, the accent is used only as a fill behind dark text, or as a 2px underline. Never as text colour. This remains true for places 1 and 2; the footer (place 3) is the sole exception, where the accent is the ground itself.
+
+---
+
+## 11b. Full-width bands — footer and any edge-to-edge section container
+
+**Added 2026-07-27.** Distinguish two different things that both got called "edge to edge" and that confusion caused a real bug.
+
+**The background/border spans the full viewport.** This was already true of the footer and was never broken.
+
+**The CONTENT GRID inside a full-width band must also use the available width**, laid out in columns, not centred as a single narrow text column. The footer bug: `.inner` was set to `max-width: 70ch; margin: 0 auto`, which is a body-copy measure applied to a footer. A 70ch column centred in a 2560px viewport leaves roughly 900px empty on each side, which reads as a layout failure even though the outer band is genuinely full width.
+
+**Rule:** any section using a full-bleed background must lay its content out in an actual grid spanning close to the full canvas (the `DESIGN.md` §12 gutters, not the 1200px prose cap), unless the content is a single centred statement by design (the closing CTA, which stays centred and narrow on purpose).
+
+**Footer, corrected:** three columns across the full width. Left: nav. Centre: closing line, location. Right: legal links, email, WhatsApp. Not a single stacked left-aligned block.
 
 ---
 
