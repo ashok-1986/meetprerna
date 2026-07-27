@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Hero } from '@/components/hero/Hero'
+import { Hero } from '@/components/hero/Hero.client'
+import { BandStats } from '@/components/proof/BandStats.client'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { TestimonialQuote } from '@/components/TestimonialQuote'
 import { SessionLine } from '@/components/session/SessionLine.client'
@@ -78,36 +79,9 @@ export default function Home() {
         </section>
       </M3Reveal>
 
-      {/* Block 02b: Thesis + credibility strip */}
+      {/* Block 02b: Band + Stats */}
       <M3Reveal>
-        <section aria-labelledby="thesis-heading" className={styles.thesisSection}>
-          <div className={styles.thesisLeft}>
-            <h2 id="thesis-heading">Ink that goes deeper than skin.</h2>
-          </div>
-          <div className={styles.thesisRight}>
-            <p className={styles.thesisBody}>
-              Every person carries something they have not said out loud. I listen first. Then I translate it into a mark that honours where you have been, and where you are going. The conversation usually takes longer than the tattoo. That is on purpose.
-            </p>
-            <div className={styles.thesisGrid}>
-              <div className={styles.thesisFigure}>
-                <span className={styles.thesisValue}>500+</span>
-                <span className={styles.thesisLabel}>Tattoos completed</span>
-              </div>
-              <div className={styles.thesisFigure}>
-                <span className={styles.thesisValue}>100+</span>
-                <span className={styles.thesisLabel}>Custom designs</span>
-              </div>
-              <div className={styles.thesisFigure}>
-                <span className={styles.thesisValue}>Since 2021</span>
-                <span className={styles.thesisLabel}>Tattooing</span>
-              </div>
-              <div className={styles.thesisFigure}>
-                <span className={styles.thesisValue}>Fine Arts</span>
-                <span className={styles.thesisLabel}>Diploma, JK Academy</span>
-              </div>
-            </div>
-          </div>
-        </section>
+        <BandStats />
       </M3Reveal>
 
       {/* Block 03: Drag rail */}
