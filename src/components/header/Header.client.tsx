@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Logo } from './Logo'
 import { NavPill } from './NavPill'
 import { MobileMenu } from './MobileMenu'
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { recordInteraction } from '@/lib/behaviour'
 import styles from './header.module.css'
 
@@ -56,12 +57,23 @@ export function HeaderClient() {
       }
 
       const y = window.scrollY
-      let next = state.current
 
-      if (state.current === 0 && y >= ENTER_1) next = 1
-      else if (state.current === 1 && y >= ENTER_2) next = 2
-      else if (state.current === 1 && y < EXIT_1) next = 0
-      else if (state.current === 2 && y < EXIT_2) next = 1
+      // Resolve to convergence, not one step. A single scroll event
+      // (a fast flick, an anchor jump, an instant scrollTo) can cross
+      // more than one threshold at once — stepping only once per call
+      // would strand the header a state behind until another scroll
+      // event happens to fire.
+      let next = state.current
+      for (let i = 0; i < 3; i++) {
+        let stepped = next
+        if (stepped === 0 && y >= ENTER_1) stepped = 1
+        else if (stepped === 1 && y >= ENTER_2) stepped = 2
+        else if (stepped === 1 && y < EXIT_1) stepped = 0
+        else if (stepped === 2 && y < EXIT_2) stepped = 1
+
+        if (stepped === next) break
+        next = stepped
+      }
 
       setState(next)
     }
@@ -124,18 +136,29 @@ export function HeaderClient() {
             <NavPill />
 
             <div className={styles.rightCluster}>
-              {/* CTA */}
+              {/* CTA — desktop: full interactive hover-reveal button.
+                  Below 1024px there's no room for the settled pill to
+                  hold the full label, so a separate compact icon-only
+                  link takes over; only one of the two is ever visible
+                  (display: none removes the other from the tab order
+                  too), same pattern as .pill vs .menuButton below. */}
+              <InteractiveHoverButton
+                href="/consulting"
+                className={styles.ctaDesktop}
+                onClick={handleCTAClick}
+              >
+                Start a conversation
+              </InteractiveHoverButton>
+
               <Link
                 href="/consulting"
-                className={styles.cta}
+                className={styles.ctaMobile}
                 aria-label="Start a conversation"
                 onClick={handleCTAClick}
               >
-                <span className={styles.ctaLabel}>Start a conversation</span>
                 <svg
-                  className={styles.ctaIconMobile}
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"

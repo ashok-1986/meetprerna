@@ -87,7 +87,12 @@
   border-radius: var(--pill-r, 0px);
   margin-top: var(--pill-t, 0px);
 
-  background: rgb(26 26 26 / 0.92);
+  /* Glass, not a solid bar — low-opacity tint plus blur so the hero
+     image reads through at the top of the page instead of being
+     hidden behind an opaque band. The blur does the legibility work,
+     not the fill. Opacity is a colour value, not the blur radius, so
+     varying it doesn't touch the "blur radius is CONSTANT" rule below. */
+  background: rgb(26 26 26 / 0.35);
   /* Blur radius is CONSTANT. Animating it re-composites the backdrop
      every frame and is the single biggest jank source in a shrink
      header like this. */
@@ -148,7 +153,7 @@
 }
 
 .logo {
-  height: 28px;
+  height: 45px;
   width: auto;
   color: var(--color-inchworm);
 }
@@ -203,7 +208,7 @@
 
 /* Focus ring */
 .navItem:focus-visible,
-.cta:focus-visible,
+.ctaMobile:focus-visible,
 .logoLink:focus-visible,
 .menuButton:focus-visible {
   outline: 2px solid var(--color-focus);
@@ -247,28 +252,21 @@
   }
 }
 
-/* CTA */
-.cta {
+/* CTA — desktop: the full interactive hover-reveal button. Hidden
+   below 1024px, where the settled pill has no room for the label. */
+.ctaDesktop {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 24px;
-  border: 1px solid var(--color-inchworm);
-  color: var(--color-inchworm);
-  background: transparent;
-  border-radius: 999px;
-  font-family: var(--font-inter), sans-serif;
-  font-size: var(--text-body);
-  text-decoration: none;
-  min-height: 44px;
-  white-space: nowrap;
-  transition: background 220ms var(--ease-out);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .cta:hover {
-    background: var(--color-inchworm-tint);
-  }
+/* CTA — mobile: compact icon-only link. Hidden at 1024px and up. */
+.ctaMobile {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-inchworm);
+  text-decoration: none;
 }
 
 /* Mobile menu button */
@@ -311,16 +309,12 @@
     display: flex;
   }
 
-  .cta {
-    padding: 10px;
-    border: none;
-    color: var(--color-inchworm);
-    min-width: 44px;
-    min-height: 44px;
+  .ctaDesktop {
+    display: none;
   }
 
-  .cta .ctaLabel {
-    display: none;
+  .ctaMobile {
+    display: inline-flex;
   }
 }
 
