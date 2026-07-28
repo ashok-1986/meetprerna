@@ -75,8 +75,8 @@
 
 .heroHeadline {
   font-family: var(--font-cormorant), serif;
-  font-weight: 400;
-  font-size: clamp(4rem, 15vw, 15rem);
+  font-weight: 300;
+  font-size: clamp(4rem, min(15vw, 22svh), 15rem);
   line-height: 0.8;
   letter-spacing: -0.02em;
   width: 100%;
