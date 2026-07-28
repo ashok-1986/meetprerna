@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  min-height: 220vh; /* scroll room for the pin+scale to play out */
+  min-height: 250vh; /* scroll room for the pin+scale to play out */
   background: var(--color-ink);
 }
 
@@ -33,7 +33,9 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(11, 11, 12, 0.85) 0%, transparent 40%);
+  background: 
+    linear-gradient(to right, rgba(11, 11, 12, 0.85) 0%, transparent 40%),
+    linear-gradient(to top, rgba(11, 11, 12, 0.6) 0%, transparent 30%);
   pointer-events: none;
   z-index: 1;
 }
@@ -52,10 +54,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-end;
   text-align: left;
   gap: 1.25rem;
-  padding: 0 32px;
+  padding: 0 32px 128px 32px;
   width: 100%;
   opacity: 1; /* Progressive enhancement: JS sets this to 0 */
   pointer-events: none;
@@ -67,7 +69,7 @@
 
 @media (max-width: 1023px) {
   .heroContent {
-    padding: 0 24px;
+    padding: 0 24px 96px 24px;
   }
 }
 

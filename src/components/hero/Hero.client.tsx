@@ -47,7 +47,7 @@ export function Hero() {
             ease: 'none',
             stagger: 0.04,
             duration: 1
-          })
+          }, 4.3)
           .to(cta, {
             y: 0,
             autoAlpha: 1,
