@@ -1,6 +1,6 @@
 # MeetPrerna — Motion (`MOTION.md`)
 
-**Version:** 1.0 · **Date:** 2026-07-25 · **Replaces:** `animations.md` (542 lines) + `shaders.md` (659 lines)
+**Version:** 1.1 · **Date:** 2026-07-29 · **Replaces:** `animations.md` (542 lines) + `shaders.md` (659 lines)
 
 Delete both once this is in the repo. 1,201 lines to 260.
 
@@ -63,21 +63,22 @@ Never `ease-in` on UI. It delays the first frame, which is the exact moment the 
 
 | # | Effect | Where | Purpose | Pillar | Technique | Timing | Reduced motion |
 |---|---|---|---|---|---|---|---|
-| M1 | Reveal (clip-path) | Hero headline, per line | Set the pace in the first two seconds | Meditation | `clip-path: inset(0 0 100% 0)` → `inset(0)` | 1800ms `out`, 100ms stagger | Visible, no motion |
-| **M21** | **Per-character scroll-scrubbed text** | Home block 05, the four pillars | Type that assembles as you scroll. The kinetic-type personality lever. | Meditation | Split to chars. Each char gets a randomised turn order, then a two-layer swap: outgoing layer slides right and fades, incoming layer slides in from left. Driven by ScrollTrigger `scrub`, not a timed tween. | scrub | **Full sentence renders normally, no split, no motion** |
-| M2 | Line drawing | Session line, whole home page | The needle's path. **The signature.** | Meditation | SVG `stroke-dashoffset`, ScrollTrigger `scrub` | scrub | Fully drawn, static |
-| M3 | Scroll reveal | Every section, default | Stop things appearing abruptly | Calmness | `opacity` 0→1, `translateY` 12px→0 | 600ms `out`, `once: true`, margin -100px | Opacity only, 200ms |
+| M1 | Reveal (clip-path) | Hero headline, per line | Set the pace in the first two seconds | Meditation | `clip-path: inset(0 0 100% 0)` → `inset(0)`. **Hero Load Gating:** Must be strictly gated behind `document.fonts.ready`. | 1500ms `out`, 100ms stagger. Total span 1800ms | Visible, no motion |
+| **M21** | **Per-character scroll-scrubbed text** | Home block 05, the four pillars | Type that assembles as you scroll. The kinetic-type personality lever. | Meditation | Split to chars. Each char gets a randomised turn order, then a two-layer swap: outgoing layer slides right and fades, incoming layer slides in from left. Driven by ScrollTrigger `scrub`. **Trigger:** `top 85%`. | scrub | **Full sentence renders normally, no split, no motion** |
+| M2 | Line drawing | Session line, whole home page | The needle's path. **The signature.** | Meditation | SVG `stroke-dashoffset`, ScrollTrigger `scrub`. **Trigger:** `top 85%`. | scrub | Fully drawn, static |
+| M3 | Scroll reveal | Every section, default | Stop things appearing abruptly | Calmness | `opacity` 0→1, `translateY` 12px→0. **Trigger Discipline (15% Rule):** Start at `top 85%` (or lower). | 600ms `out`, `once: true` | Opacity only, 200ms |
 | M4 | Stagger | Grid items | Cascade reads calmer than a snap | Calmness | M3 offset 40ms per item, cap 8 | 40ms | No stagger |
 | M5 | Press feedback | Every button, card, chip | Confirm the tap landed | Therapy | `scale(0.97)` on `:active` | 120ms `out` | **Keep.** Feedback is not decoration. |
-| M6 | Hover (media card) | Work and art grids | Affordance | Psychology | `scale(1.02)` inside a fixed frame, label fades in | 220ms `out`, gated `(hover:hover) and (pointer:fine)` | Label only |
+| M6 | Hover (media card) | Work and art grids | Affordance | Psychology | `scale(1.02)` inside a fixed frame. **Wrapped in `@media (hover: hover) and (pointer: fine)`.** | 220ms `out` | Label only |
 | M7 | Shared element transition | Grid thumb → detail | Keep the user oriented | Calmness | View Transitions API, GSAP Flip fallback | 320ms `inOut` | Crossfade |
 | M8 | Origin-aware animation | Filter dropdown, tooltip | Grow from the trigger, not the centre | Psychology | `transform-origin` from the Radix CSS var, `scale(0.96)` + opacity | 180ms `out` | Instant |
 | M9 | Accordion | FAQ on `/sanctuary` | Expand and collapse | Calmness | `grid-template-rows: 0fr → 1fr` | 240ms `out` | Instant |
 | M10 | Marquee | Partner studios and travel cities | Signals the itinerant model | Psychology | `translateX` linear, pause on hover, `aria-hidden` on the duplicate | 40s linear | Static list |
 | M11 | Crossfade | Filter result change | Replace content in place | Calmness | opacity only, never layout | 180ms `out` | Instant |
 | M12 | Page enter | Route change | Continuity | Calmness | View Transitions, opacity + 8px `translateY` | 260ms `out` | Opacity only |
-| M13 | Video loop | Sanctuary process steps | Show the hand working. Cheaper and warmer than a shader. | Meditation | `<video>` muted, playsinline, loop, `preload="none"`, poster frame, IntersectionObserver play and pause | native | Poster only, no autoplay |
+| M13 | Video loop | Sanctuary process steps | Show the hand working. Cheaper and warmer than a shader. | Meditation | `<video>` muted, playsinline, loop, `preload="none"`, **high-quality poster frame mandated (iOS Low Power Mode kills autoplay)**, IntersectionObserver `rootMargin: "0px 0px -15% 0px"` | native | Poster only, no autoplay |
 | M14 | Float (ambient) | Ink shader drift | Stillness. The room breathing. | Meditation | GLSL FBM, see §6 | continuous | **Canvas never mounts** |
+| **M22** | **The Fly-Through** | Hero to content | Bridge the loader into the narrative. The signature mark is the window. | Meditation | GSAP ScrollTrigger `scale`. Logo starts centered fullscreen, scales up infinitely on scroll until the camera passes through the negative space. | scrub | Static layout, no fly-through |
 
 **Cut, and not to be reintroduced:** custom cursor of any kind, cursor-driven `font-variation-settings`, `mix-blend-mode` on a moving element, Lenis smooth scroll, parallax on text, typewriter, number tickers, hero counters, hover-only reveals.
 
@@ -106,12 +107,13 @@ These are the six that make the site hers rather than competent. Each traces to 
 
 | # | Move | From | Why it is hers | Technique |
 |---|---|---|---|---|
-| **M15** | **Fresh → healed slider** | Lando's drag-to-reveal portrait | The single biggest unspoken fear of a first-timer is "what will this look like in a year". No other tattoo portfolio in Mumbai answers it. This is the highest-value component on the site. | Two stacked images, `clip-path: inset(0 X% 0 0)` on the top one, X driven by pointer or touch. No extra DOM, GPU only. Keyboard: arrow keys move the divider in 5% steps. |
-| **M16** | **Ink bleed mask reveal** | OFF+BRAND's two-layer mask reveal | The mask shape is a spreading ink blot, not a rectangle wipe. Her medium performing the reveal of her work. | SVG `mask` with an organic path, or a radial-gradient mask with animated stops. **Pair it with a scale settle: image starts at `scale(1.15)` and eases to `1` over the same duration, so the frame opens and the image relaxes into it at once.** 800ms `out`. Soft edges, so a **Mask**, not a **Clip-path**. Note: the reference tutorial used `scale(2)`, which paints four times the pixel area. `1.15` reads almost identically and costs a fraction. |
-| **M17** | **The Sketchbook** | "Helmets Hall of Fame" | She does not sell flash, margin is too low. The move that mattered was a themed collection of an artifact only that practice produces. For a custom artist that is the **unused sketches**: hundreds of drawings that never became tattoos. Free, already shot, and the most honest thing on any artist's site. See `BLUEPRINT.md` §5. | **Layout: an asymmetric CSS Grid, roughly 14 columns, with each sketch given explicit `grid-column` and `grid-row` positions so nothing lines up in a regular pattern.** That scattered placement is what makes it read as a desk rather than a gallery wall. Seeded so it is identical on every load. 20 to 30 sketches on a light paper ground. Reveal with M16. Hover lifts one `scale(1.04)` + `rotate(±2deg)`, 220ms. Tap opens large with her note. CTA routes to `/consulting`. |
-| **M18** | **Drag gallery** | Drag navigation across OFF+BRAND's work | Flipping a sketchbook, not clicking a carousel. This is the physical register. | Pointer capture, momentum on release (dismiss if velocity > 0.11), damping past the boundaries rather than a hard stop. **Visible arrows too.** Never gesture-only. |
-| **M19** | **Italic on hover** | Michael Aust's typography-led microinteractions | **Revised 2026-07-26.** Originally specced as animating Fraunces's `WONK` axis. The typeface is now Cormorant Garamond (`DECISIONS.md` §5), which has no WONK or optical-size axis — only weight. That interaction cannot be built. Replacement: hovering a work title swaps roman to Cormorant's **true italic**. A Garamond italic is a genuinely different letterform, not a slant, so the change reads as craft rather than a CSS effect. | `font-style: italic` on a discrete hover state, 240ms transition. Fixed-width container so nothing reflows — italic is narrower, so reserve the roman width. Load the italic face or it will synthesise and look wrong. |
-| **M20** | **Rive mark** | Rive on landonorris.com | One ink line that draws itself into her mark. Vector motion for a line artist. Replaces shader passes 3, 4 and 5 at a fraction of the cost. | Rive runtime, roughly 100KB, lazy loaded, one `.riv` file under 60KB. Plays once on first view, then idles. Static SVG fallback. |
+| **M15** | **Fresh → healed slider** | Lando's drag-to-reveal portrait | The single biggest unspoken fear of a first-timer is "what will this look like in a year". No other tattoo portfolio in Mumbai answers it. This is the highest-value component on the site. | Two stacked images, `clip-path: inset(0 X% 0 0)` on the top one. **Custom handle hit area MUST be strictly `min-width: 48px` to guarantee touch registry.** Keyboard: arrow keys move the divider in 5% steps. |
+| **M16** | **Ink bleed mask reveal** | OFF+BRAND's two-layer mask reveal | The mask shape is a spreading ink blot, not a rectangle wipe. Her medium performing the reveal of her work. | SVG `mask` with an organic path, or a radial-gradient mask with animated stops. Pair with a scale settle (`1.15` → `1`). 800ms `out`. Trigger: `top 85%`. |
+| **M17** | **The Sketchbook** | "Helmets Hall of Fame" | She does not sell flash, margin is too low. For a custom artist that is the **unused sketches**: hundreds of drawings that never became tattoos. Free, already shot, and the most honest thing on any artist's site. | Asymmetric CSS Grid, roughly 14 columns, explicit `grid-column`/`grid-row` positions. Hover lifts one `scale(1.04)` + `rotate(±2deg)` (gated by `@media (hover: hover) and (pointer: fine)`). |
+| **M18** | **Drag gallery** | Drag navigation across OFF+BRAND's work | Flipping a sketchbook, not clicking a carousel. This is the physical register. | **Native mobile physics over JS:** Use native CSS `scroll-snap-type: x mandatory` for mobile breakpoints. Keep JS pointer capture exclusively for desktop (avoids fighting OS swipe-to-go-back gestures). |
+| **M19** | **Italic on hover** | Michael Aust's typography-led microinteractions | Hovering a work title swaps roman to Cormorant's true italic. Reads as craft rather than a CSS effect. | `font-style: italic` on a discrete hover state. **Wrapped in `@media (hover: hover) and (pointer: fine)` to prevent sticky hovers on touchscreens.** 240ms transition. |
+| **M20** | **Rive mark** | Rive on landonorris.com | One ink line that draws itself into her mark. Vector motion for a line artist. Replaces shader passes 3, 4 and 5 at a fraction of the cost. | Rive runtime, roughly 100KB, lazy loaded. Plays once on first view, then idles. Static SVG fallback. |
+| **M22** | **The Fly-Through** | Athletics NYC | As a solo artist, her personal mark is the entire face of the business. This signature move commands immediate attention and carries premium weight. | Logo sits centered fullscreen on load. As the user scrolls, a GSAP ScrollTrigger scales the logo up infinitely until the camera flies through the negative space, revealing the main content underneath. |
 
 **On M19 and the earlier cursor ban.** These are not the same thing. The cut version mutated `font-variation-settings` on every heading on every `pointermove`, which is layout and paint on text sixty times a second. M19 is a discrete hover state on one element with a CSS transition and a fixed container. One is a per-frame text relayout. The other is a state change. Only the first was the problem.
 
@@ -175,6 +177,13 @@ A heading that a screen reader announces one letter at a time fails the WCAG AA 
 
 ## 10. Performance rules
 
+- **Trigger Discipline (The 15% Rule):** Never trigger a scroll animation immediately at the bottom of the viewport. Ensure the element visibly crosses into the screen before motion starts.
+  - All GSAP ScrollTriggers must use `start: "top 85%"` (or lower).
+  - All native IntersectionObservers must use `rootMargin: "0px 0px -15% 0px"`.
+- **Hero Load Gating:** Initial entry animations (e.g., M1 Hero headline reveal) must be strictly gated behind `document.fonts.ready`. Animating fallback fonts before a swap ruins the premium feel.
+- **Native Mobile Physics:** For horizontal carousels (e.g., M18 Drag gallery), mandate native CSS `scroll-snap-type: x mandatory` for mobile breakpoints. JS dragging fights native OS swipe-to-go-back gestures. Keep JS pointer capture exclusively for desktop.
+- **Touch & Hover Guards:** Hover-driven microinteractions (italicizing text, lifting cards) must be strictly wrapped in `@media (hover: hover) and (pointer: fine)` to prevent "sticky" hover states on touchscreens. Custom sliders MUST have a `min-width: 48px` hit area to guarantee touch registry.
+- **Graceful Media Fallbacks:** Looping video must account for iOS Low Power Mode (which silently kills autoplay). Ensure a high-quality poster frame is explicitly provided as the fallback.
 - Animate only `transform`, `opacity`, `clip-path`, `filter`. Nothing else. Ever.
 - CSS transitions, not keyframes, on anything a user can trigger rapidly. Transitions retarget mid-flight. Keyframes restart from zero.
 - Do not set a CSS variable on a parent to drive a child transform. It recalculates styles for every child. Set the transform on the element.

@@ -58,9 +58,9 @@ An animation with no row there does not get written. Add the row in a PR first, 
 
 Do not duplicate the table here. Two copies drift, and a drifting register is worse than none.
 
-Quick recall of what is in it: hero line reveal (M1), the session line (M2, the signature), scroll reveal (M3), stagger (M4), press feedback (M5), media card hover (M6), shared element transition (M7), origin-aware popover (M8), accordion (M9), marquee (M10), crossfade (M11), page enter (M12), silent looping video (M13), ambient shader float (M14), per-character scroll-scrubbed text (M21).
+Quick recall of what is in it: hero line reveal (M1), the session line (M2, the signature), scroll reveal (M3), stagger (M4), press feedback (M5), media card hover (M6), shared element transition (M7), origin-aware popover (M8), accordion (M9), marquee (M10), crossfade (M11), page enter (M12), silent looping video (M13), ambient shader float (M14), per-character scroll-scrubbed text (M21), the Fly-Through (M22).
 
-**Signature moves, `MOTION.md` §6:** fresh-to-healed slider (M15), ink bleed mask reveal (M16), the Sketchbook (M17), drag gallery (M18), wonk-on-hover (M19), Rive mark (M20). These are what make the site hers. Build them, do not trim them for time.
+**Signature moves, `MOTION.md` §6:** fresh-to-healed slider (M15), ink bleed mask reveal (M16), the Sketchbook (M17), drag gallery (M18), wonk-on-hover (M19), Rive mark (M20), the Fly-Through (M22). These are what make the site hers. Build them, do not trim them for time.
 
 **Arrangement:** the block-by-block page architecture is in `@/BLUEPRINT.md`. It supersedes `PRD.md` §5.
 
@@ -75,6 +75,16 @@ If you are about to install an animation package to do a fade, a slide, a scale 
 **Two-speed rule, `MOTION.md` §5:** slow register on `/sanctuary`, pillars and `/about`. Physical register on hero, `/portfolio` and the Sketchbook. Never both in one viewport.
 
 **Cut, and not to be reintroduced:** custom cursor of any kind, cursor-driven `font-variation-settings`, `mix-blend-mode` on a moving element, Lenis smooth scroll, parallax on text, typewriter, number tickers, hero counters, hover-only reveals.
+
+## Architectural Rules (Strict Mandates)
+
+- **Trigger Discipline (The 15% Rule):** Never trigger a scroll animation immediately at the bottom of the viewport. Ensure the element visibly crosses into the screen before motion starts.
+  - All GSAP ScrollTriggers must use `start: "top 85%"` (or lower).
+  - All native IntersectionObservers must use `rootMargin: "0px 0px -15% 0px"`.
+- **Hero Load Gating:** Initial entry animations (e.g., M1 Hero headline reveal) must be strictly gated behind `document.fonts.ready`. Animating fallback fonts before a swap ruins the premium feel.
+- **Native Mobile Physics:** For horizontal carousels (e.g., M18 Drag gallery), mandate native CSS `scroll-snap-type: x mandatory` for mobile breakpoints. JS dragging fights native OS swipe-to-go-back gestures. Keep JS pointer capture exclusively for desktop.
+- **Touch & Hover Guards:** All hover-driven microinteractions (e.g., M19 italicizing text, lifting media cards) must be strictly wrapped in `@media (hover: hover) and (pointer: fine)` to prevent "sticky" hover states on touchscreens. Custom slider handles (e.g., M15 Fresh-to-healed) must have a strictly enforced `min-width: 48px` hit area to guarantee touch registry on mobile.
+- **Graceful Media Fallbacks:** Background or inline looping video (e.g., M13) must explicitly account for iOS Low Power Mode, which silently kills autoplay. Ensure a high-quality poster frame is mandated as the fallback.
 
 ## Performance rules
 

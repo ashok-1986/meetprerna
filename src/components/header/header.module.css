@@ -203,7 +203,7 @@
 /* Reduced motion: the settled shape must appear instantly, not animate into place
    once on load. */
 @media (prefers-reduced-motion: reduce) {
-  .frame {
+  .frame, .frame::before {
     transition: none !important;
   }
 

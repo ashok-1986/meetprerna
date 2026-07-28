@@ -98,9 +98,9 @@ export function Hero() {
         })
 
         // Fire on load
-        setTimeout(() => {
+        gsap.delayedCall(0.1, () => {
           heroTl.play()
-        }, 100)
+        })
       })
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
@@ -132,7 +132,8 @@ export function Hero() {
           </div>
       </div>
       <div className={styles.heroContent}>
-        <p className={styles.heroSub} aria-label={subhead}>
+        <p className={styles.heroSub}>
+          <span style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', border: 0 }}>{subhead}</span>
           {subheadWords.map((word, i) => (
             <span key={`sw-${i}`} className="reveal-subhead" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
               {word}{i < subheadWords.length - 1 ? ' ' : ''}

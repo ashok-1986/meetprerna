@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
-import prernaHero from '@/../public/images/hero/prerna-hero.jpeg'
+import prernaHero from '@/../public/images/prerna-hero.jpg'
 import prernaWithWork from '@/../public/images/about/prerna-with-work.jpg'
 import styles from './page.module.css'
 

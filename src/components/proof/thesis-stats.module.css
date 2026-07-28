@@ -32,8 +32,6 @@
   max-width: 52ch;
   margin: 0;
   line-height: 1.1;
-  opacity: 0;
-  transform: translateY(12px);
 }
 
 .statsGrid {
@@ -50,8 +48,6 @@
 }
 
 .statItem {
-  opacity: 0;
-  transform: translateY(12px);
 }
 
 .statFigure {

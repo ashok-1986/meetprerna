@@ -12,22 +12,26 @@ export function ThesisStats() {
   
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
-      if (reduce.matches) {
-        gsap.set('.js-reveal', { opacity: 1, y: 0 })
-        return
-      }
+      let mm = gsap.matchMedia()
 
-      gsap.to('.js-reveal', {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power3.out',
-        stagger: 0.04,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-        }
+      mm.add('(prefers-reduced-motion: reduce)', () => {
+        gsap.set('.js-reveal', { opacity: 1, y: 0 })
+      })
+
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.set('.js-reveal', { opacity: 0, y: 12 })
+        
+        gsap.to('.js-reveal', {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power3.out',
+          stagger: 0.04,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 80%',
+          }
+        })
       })
     }, containerRef)
 

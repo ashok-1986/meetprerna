@@ -60,6 +60,12 @@ export function HeaderClient() {
     }
   }, [])
 
+  useEffect(() => {
+    if (isScrolledRef.current) {
+      headerRef.current?.classList.add(styles.scrolled)
+    }
+  })
+
   const handleMenuOpen = useCallback(() => {
     scrollYRef.current = window.scrollY
     setMenuOpen(true)
@@ -83,7 +89,7 @@ export function HeaderClient() {
     <>
       <header 
         ref={headerRef} 
-        className={`${styles.headerBand} ${menuOpen ? styles.navOpen : ''} ${isScrolledRef.current ? styles.scrolled : ''}`}
+        className={`${styles.headerBand} ${menuOpen ? styles.navOpen : ''}`}
       >
         <div className={styles.frame}>
           <div className={styles.headerInner}>
