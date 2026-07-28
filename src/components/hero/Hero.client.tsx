@@ -33,7 +33,7 @@ export function Hero() {
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top top',
-            end: 'bottom top',
+            end: 'bottom bottom',
             scrub: 0.6,
             pin: pinRef.current,
             pinSpacing: true
@@ -47,13 +47,14 @@ export function Hero() {
             ease: 'none',
             stagger: 0.04,
             duration: 1
-          }, 4.3)
+          }, 0)
           .to(cta, {
             y: 0,
             autoAlpha: 1,
             ease: 'none',
             duration: 0.2
           }, "-=0.1")
+          .set({}, {}, "+=2") // Pad timeline to map reveal to 0-50% of scroll
       })
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
