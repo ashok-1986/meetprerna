@@ -29,8 +29,8 @@
     .hero-section {
       position: relative;
       width: 100vw;
-      height: 100svh;
-      /* Full viewport height */
+      height: 150svh;
+      /* Accommodate the scrolling Fly-Through background */
       overflow: hidden;
     }
 
@@ -49,18 +49,28 @@
     }
 
     .hero-content {
-      position: relative;
+      position: sticky;
+      top: 0;
       z-index: 2;
-      height: 100%;
+      height: 100vh;
+      height: 100svh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-end;
       /* PINNED TO LEFT GUTTER: 32px desktop, 24px mobile */
       padding-left: 32px;
       padding-right: 32px;
       max-width: 1440px;
       margin: 0 auto;
       box-sizing: border-box;
+    }
+
+    .hero-content::after {
+      content: "";
+      display: block;
+      height: 20%;
+      flex-shrink: 1; /* Allow shrinking in short viewports */
+      min-height: calc(2rem + env(safe-area-inset-bottom));
     }
 
     .hero-headline {
@@ -82,7 +92,7 @@
       line-height: 1.6;
       color: var(--color-ivory);
       max-width: 45ch;
-      margin: 0 0 48px 0;
+      margin: 0 0 4svh 0;
     }
 
     .hero-cta {

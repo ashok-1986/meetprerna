@@ -3,9 +3,10 @@
 import { useRef, useLayoutEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { CustomEase } from 'gsap/CustomEase'
 import styles from './thesis-stats.module.css'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, CustomEase)
 
 export function ThesisStats() {
   const containerRef = useRef<HTMLElement>(null)
@@ -26,11 +27,11 @@ export function ThesisStats() {
           opacity: 1,
           y: 0,
           duration: 0.6,
-          ease: 'power3.out',
+          ease: CustomEase.create('custom', '0.23, 1, 0.32, 1'),
           stagger: 0.04,
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top 80%',
+            start: 'top 85%',
           }
         })
       })

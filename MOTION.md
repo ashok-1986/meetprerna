@@ -75,10 +75,11 @@ Never `ease-in` on UI. It delays the first frame, which is the exact moment the 
 | M9 | Accordion | FAQ on `/sanctuary` | Expand and collapse | Calmness | `grid-template-rows: 0fr → 1fr` | 240ms `out` | Instant |
 | M10 | Marquee | Partner studios and travel cities | Signals the itinerant model | Psychology | `translateX` linear, pause on hover, `aria-hidden` on the duplicate | 40s linear | Static list |
 | M11 | Crossfade | Filter result change | Replace content in place | Calmness | opacity only, never layout | 180ms `out` | Instant |
-| M12 | Page enter | Route change | Continuity | Calmness | View Transitions, opacity + 8px `translateY` | 260ms `out` | Opacity only |
+| M12 | The Ink Curtain | Route change | A deliberate, physical wipe replacing standard crossfades. | Calmness | Fixed 100svh `z-index: 9999` `div` colored `--color-ink`. Starts at `translateY(100%)`. Route Exit: `translateY(0%)` over 500ms `cubic-bezier(0.77, 0, 0.175, 1)`. System waits. Route Enter: `translateY(-100%)`. **M1 hero animation strictly waits for clear.** | 500ms | Opacity fade only |
 | M13 | Video loop | Sanctuary process steps | Show the hand working. Cheaper and warmer than a shader. | Meditation | `<video>` muted, playsinline, loop, `preload="none"`, **high-quality poster frame mandated (iOS Low Power Mode kills autoplay)**, IntersectionObserver `rootMargin: "0px 0px -15% 0px"` | native | Poster only, no autoplay |
 | M14 | Float (ambient) | Ink shader drift | Stillness. The room breathing. | Meditation | GLSL FBM, see §6 | continuous | **Canvas never mounts** |
 | **M22** | **The Fly-Through** | Hero to content | Bridge the loader into the narrative. The signature mark is the window. | Meditation | GSAP ScrollTrigger `scale`. Logo starts centered fullscreen, scales up infinitely on scroll until the camera passes through the negative space. | scrub | Static layout, no fly-through |
+| **M23** | **The Editorial Slide-Over** | Section transitions | Sections stack rather than scroll, offering a premium editorial feel. | Psychology | `position: sticky; top: 0;` on outgoing section wrapper. GSAP ScrollTrigger scales to `0.95` and dims brightness. Incoming section has higher z-index and solid background. **Trigger:** Bottom of outgoing touches bottom of viewport. | scrub | Normal static scrolling |
 
 **Cut, and not to be reintroduced:** custom cursor of any kind, cursor-driven `font-variation-settings`, `mix-blend-mode` on a moving element, Lenis smooth scroll, parallax on text, typewriter, number tickers, hero counters, hover-only reveals.
 
@@ -114,6 +115,14 @@ These are the six that make the site hers rather than competent. Each traces to 
 | **M19** | **Italic on hover** | Michael Aust's typography-led microinteractions | Hovering a work title swaps roman to Cormorant's true italic. Reads as craft rather than a CSS effect. | `font-style: italic` on a discrete hover state. **Wrapped in `@media (hover: hover) and (pointer: fine)` to prevent sticky hovers on touchscreens.** 240ms transition. |
 | **M20** | **Rive mark** | Rive on landonorris.com | One ink line that draws itself into her mark. Vector motion for a line artist. Replaces shader passes 3, 4 and 5 at a fraction of the cost. | Rive runtime, roughly 100KB, lazy loaded. Plays once on first view, then idles. Static SVG fallback. |
 | **M22** | **The Fly-Through** | Athletics NYC | As a solo artist, her personal mark is the entire face of the business. This signature move commands immediate attention and carries premium weight. | Logo sits centered fullscreen on load. As the user scrolls, a GSAP ScrollTrigger scales the logo up infinitely until the camera flies through the negative space, revealing the main content underneath. |
+| **M23** | **The Editorial Slide-Over** | floema.com | Sections don't just scroll away; they physically stack and recede. It creates an intimate, high-end editorial rhythm between concepts. | `position: sticky; top: 0;` on the outgoing section wrapper. GSAP ScrollTrigger scales it to 0.95 and drops brightness/opacity. The incoming section uses a higher z-index and solid background to physically slide over the dimmed outgoing section. |
+
+### Technical Implementation: M23 Sticky Stack DOM Structure
+To ensure the layout engine does not break on mobile Safari or Android (where `100vh` vs `100svh` causes reflow jumps), the DOM must be structured cleanly:
+1. **The Wrapper:** Each section must be wrapped in a parent container that is completely relative and unconstrained in height.
+2. **The Sticky Element:** The actual section element inside the wrapper gets `position: sticky; top: 0; height: 100svh;`.
+3. **The Stacking Context:** Assign explicit sequential `z-index` values (`10`, `20`, `30`) to the parent wrappers. 
+4. **The Trigger:** The ScrollTrigger must be attached to the parent wrapper, starting when `bottom bottom` hits the viewport, pinning the child sticky element, and scrubbing the scale/dim effect.
 
 **On M19 and the earlier cursor ban.** These are not the same thing. The cut version mutated `font-variation-settings` on every heading on every `pointermove`, which is layout and paint on text sixty times a second. M19 is a discrete hover state on one element with a CSS transition and a fixed container. One is a per-frame text relayout. The other is a state change. Only the first was the problem.
 
