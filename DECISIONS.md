@@ -650,3 +650,14 @@ explicit owner decision recorded here.
 
 ---
 
+
+## 25. D25 — Header redesigned to 2-stage pill (owner decision, 2026-07-27)
+
+**Reverses part of SCROLL COORDINATION.** The previously locked 3-stage header convergence (`data-nav="0/1/2"` with thresholds at 80px and 220px) is completely removed. 
+
+**New spec:** 
+A simpler 2-stage model using `120px` as the singular scroll threshold.
+* **Top (0-119px):** Full-width, transparent, height 84px.
+* **Scrolled (120px+):** The header shrinks to an 800px max-width pill with `border-radius: 22px`, `height: 56px`, and an opaque background (`rgba(11, 11, 12, 0.92)`). The `backdrop-filter: blur(14px)` is constant to prevent scroll jank.
+* **Mobile (<1024px):** Remains full-width and transparent at all times, no pill shrink, locked at 68px height.
+* **CTA Button:** InteractiveHoverButton replaced with a standard link. Default: transparent with 1px solid Ivory border. Hover: Ivory background with Ink text.

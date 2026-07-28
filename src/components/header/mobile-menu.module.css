@@ -169,7 +169,7 @@
 }
 
 .bottomCta {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body);
   color: var(--color-inchworm);
   text-decoration: none;

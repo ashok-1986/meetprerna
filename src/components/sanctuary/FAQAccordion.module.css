@@ -74,7 +74,7 @@
 }
 
 .answer p {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body-l);
   line-height: 1.7;
   color: var(--color-ivory-dim);

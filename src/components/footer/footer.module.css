@@ -81,7 +81,7 @@
 /* Tier 1 — the only contact route on the footer now that WhatsApp is
    gone. Full ink, never stepped down. */
 .email {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body);
   color: var(--color-ink);
   text-decoration: underline;
@@ -92,7 +92,7 @@
 
 /* Tier 2 — nav and social, 0.75 ink. */
 .navLink {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body);
   color: rgb(26 26 26 / 0.75);
   text-decoration: none;

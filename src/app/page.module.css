@@ -120,7 +120,7 @@
 }
 
 .bodyText {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body-l);
   line-height: 1.7;
   color: var(--color-ivory-dim);
@@ -141,7 +141,7 @@
 
 .textLink {
   display: inline-block;
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body);
   color: var(--color-inchworm);
   text-decoration: underline;
@@ -173,6 +173,13 @@
 }
 
 /* ── Block 02: The Index ── */
+
+.indexSection {
+  position: relative;
+  z-index: 2;
+  background: var(--color-ink);
+  width: 100%;
+}
 
 .index {
   display: flex;
@@ -251,7 +258,7 @@
 }
 
 .thesisBody {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body);
   line-height: 1.7;
   color: var(--color-ivory-dim);
@@ -487,7 +494,7 @@
 }
 
 .processLabel {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body-l);
   color: var(--color-ivory);
 }
@@ -540,7 +547,7 @@
 .ctaPrimary {
   display: inline-block;
   padding: 14px 32px;
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body);
   font-weight: 500;
   line-height: 1.5;
@@ -566,7 +573,7 @@
 }
 
 .whatsappLink {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-caption);
   color: var(--color-ivory-dim);
   text-decoration: underline;

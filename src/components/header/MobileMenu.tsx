@@ -38,36 +38,47 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     }
   }, [isOpen])
 
-  // Close: restore scroll, exit animation, notify parent
-  const handleClose = useCallback(() => {
-    const dialog = dialogRef.current
-    if (!dialog) {
-      onClose()
-      return
-    }
-
+  // Cleanup: restore scroll and body styles
+  const cleanupDialog = useCallback(() => {
     document.body.style.overflow = ''
     document.body.style.position = ''
     document.body.style.top = ''
     document.body.style.width = ''
     window.scrollTo(0, scrollYRef.current)
+  }, [])
 
-    if (dialog.open) {
-      dialog.close()
-    }
-
+  // The single source of truth for dismissal notification
+  const handleNativeClose = useCallback(() => {
+    cleanupDialog()
     onClose()
-  }, [onClose])
+  }, [cleanupDialog, onClose])
+
+  // Imperative dismissal triggered by UI (buttons, links, route change)
+  const handleDismiss = useCallback(() => {
+    const dialog = dialogRef.current
+    if (dialog?.open) {
+      // Trigger the native close event, which will call handleNativeClose
+      dialog.close()
+    } else {
+      // Fallback if dialog isn't open but we need to cleanup
+      handleNativeClose()
+    }
+  }, [handleNativeClose])
 
   // Close on route change (browser back/forward)
   useEffect(() => {
     if (isOpen) {
-      handleClose()
+      handleDismiss()
     }
   }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <dialog
+      onCancel={(e) => {
+        e.preventDefault()
+        handleDismiss()
+      }}
+      onClose={handleNativeClose}
       ref={dialogRef}
       id="mobile-menu"
       className={styles.menu}
@@ -77,7 +88,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         {/* Close button — top-right, 44px */}
         <button
           className={styles.closeButton}
-          onClick={handleClose}
+          onClick={handleDismiss}
           aria-label="Close menu"
           type="button"
         >
@@ -113,7 +124,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                       style={{ '--i': index } as React.CSSProperties}
                       data-active={isActive || undefined}
                       aria-current={isActive ? 'page' : undefined}
-                      onClick={handleClose}
+                      onClick={handleDismiss}
                     >
                       {item.label}
                     </Link>
@@ -126,7 +137,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         {/* Bottom edge — CTA */}
         <div className={styles.bottomSection}>
-          <InteractiveHoverButton href="/consulting" onClick={handleClose}>
+          <InteractiveHoverButton href="/consulting" onClick={handleDismiss}>
             Start a conversation
           </InteractiveHoverButton>
         </div>

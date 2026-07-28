@@ -14,7 +14,7 @@
 }
 
 .sub {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body-l);
   line-height: 1.6;
   color: var(--color-ivory-dim);
@@ -45,7 +45,7 @@
 
 .fallback {
   margin-top: 16px;
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body-s);
   color: var(--color-ivory-dim);
   text-align: center;

@@ -117,9 +117,9 @@ If someone says the site does not feel calm enough, the fix is in this table. It
 
 | Role | Face | Notes |
 |---|---|---|
-| Display | **Cormorant Garamond** | Weight **500 or 600** at display sizes. Never 300 or 400 — hairlines vanish on a dark ground. `DECISIONS.md` D4.1. |
-| Body and UI | **Inter** | Reliable at 16px on mid Android. The PRD's own MG12 fallback. |
-| Accent serif | **Tinos** | Metric-compatible with Times New Roman. **Testimonial quotes only**, italic. Do not load it if it has no role. `DECISIONS.md` D4.2, D4.3. |
+| Display | **Cormorant Garamond** | Weight **400 or 500** at display sizes. Never 600 or 700 — hairlines vanish on a dark ground. `DECISIONS.md` D4.1. |
+| Body and UI | **Roboto Flex** | Reliable at 16px on mid Android. The PRD's own MG12 fallback. |
+| Accent serif | **EB Garamond** | Metric-compatible with Times New Roman. **Testimonial quotes only**, italic. Do not load it if it has no role. `DECISIONS.md` D4.2, D4.3. |
 | Metadata | **JetBrains Mono** | Year, medium, dimensions, placement, session count. |
 | Devanagari | **Noto Sans Devanagari** | Fallback. |
 

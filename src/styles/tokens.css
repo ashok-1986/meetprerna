@@ -188,7 +188,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-body), sans-serif;
     background-color: var(--color-ink);
     color: var(--color-ivory);
     margin: 0;

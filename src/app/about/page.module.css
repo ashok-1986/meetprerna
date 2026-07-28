@@ -41,7 +41,7 @@
 }
 
 .heroSub {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body-l);
   line-height: 1.6;
   color: var(--color-ivory-dim);
@@ -50,7 +50,7 @@
 }
 
 .bodyText {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body-l);
   line-height: 1.7;
   color: var(--color-ivory-dim);
@@ -170,7 +170,7 @@
 .ctaPrimary {
   display: inline-block;
   padding: 14px 32px;
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body);
   font-weight: 500;
   line-height: 1.5;

@@ -5,77 +5,40 @@ import Link from 'next/link'
 import { Logo } from './Logo'
 import { NavPill } from './NavPill'
 import { MobileMenu } from './MobileMenu'
-import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { recordInteraction } from '@/lib/behaviour'
 import styles from './header.module.css'
 
-/* Three discrete states, not a continuous scrub. Thresholds are SCROLL
-   DISTANCE, not scroll events — a trackpad fires dozens of events per
-   gesture, a wheel fires discrete notches, touch fires continuously,
-   so "distance" is the only consistent input across devices.
-     0 — full bleed
-     1 — halfway in
-     2 — settled
-   Hysteresis (separate enter/exit thresholds) prevents the header
-   flickering between states if the page rests exactly on a boundary. */
-const ENTER_1 = 80
-const ENTER_2 = 220
-const EXIT_1 = 50
-const EXIT_2 = 170
+const SCROLL_THRESHOLD = 120
 
 export function HeaderClient() {
   const [menuOpen, setMenuOpen] = useState(false)
   const scrollYRef = useRef(0)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const queued = useRef(false)
-  // -1 is not a real state — it guarantees the first setState call
-  // (even to 0) actually writes data-nav, instead of being skipped by
-  // the "next === current" no-op guard.
-  const state = useRef(-1)
+  // false = top (0px), true = scrolled (120px+)
+  const state = useRef<boolean | null>(null)
 
-  // Scroll-shrink: writes data-nav (0/1/2) to the root element. Each
-  // state maps to its own width/height/radius/margin-top in
-  // header.module.css, animated by a real CSS transition — the
-  // easing lives on the discrete state change, not on the scroll
-  // input itself. See header.module.css for why.
+  // Scroll-shrink: writes data-scrolled to the root element.
   useEffect(() => {
     const root = document.documentElement
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
-    const setState = (next: number) => {
+    const setState = (next: boolean) => {
       if (next === state.current) return
       state.current = next
-      root.setAttribute('data-nav', String(next))
+      root.setAttribute('data-scrolled', next ? 'true' : 'false')
     }
 
     const apply = () => {
       queued.current = false
 
       if (reduceMotion.matches) {
-        setState(2)
+        setState(true)
         return
       }
 
       const y = window.scrollY
-
-      // Resolve to convergence, not one step. A single scroll event
-      // (a fast flick, an anchor jump, an instant scrollTo) can cross
-      // more than one threshold at once — stepping only once per call
-      // would strand the header a state behind until another scroll
-      // event happens to fire.
-      let next = state.current
-      for (let i = 0; i < 3; i++) {
-        let stepped = next
-        if (stepped === 0 && y >= ENTER_1) stepped = 1
-        else if (stepped === 1 && y >= ENTER_2) stepped = 2
-        else if (stepped === 1 && y < EXIT_1) stepped = 0
-        else if (stepped === 2 && y < EXIT_2) stepped = 1
-
-        if (stepped === next) break
-        next = stepped
-      }
-
-      setState(next)
+      setState(y >= SCROLL_THRESHOLD)
     }
 
     const onScroll = () => {
@@ -88,13 +51,10 @@ export function HeaderClient() {
     window.addEventListener('resize', onScroll, { passive: true })
     reduceMotion.addEventListener('change', apply)
 
-    // Snap to the correct state on load — never animate through 0/1/2
-    // on a refresh that lands mid-page.
     if (reduceMotion.matches) {
-      setState(2)
+      setState(true)
     } else {
-      const y = window.scrollY
-      setState(y >= ENTER_2 ? 2 : y >= ENTER_1 ? 1 : 0)
+      setState(window.scrollY >= SCROLL_THRESHOLD)
     }
 
     return () => {
@@ -130,25 +90,16 @@ export function HeaderClient() {
           <div className={styles.navGrid}>
             <Logo />
 
-            {/* Desktop pill nav — true centre column. Pinned to the
-                grid's centre regardless of how wide the logo or the
-                right cluster get; only they travel inward. */}
             <NavPill />
 
             <div className={styles.rightCluster}>
-              {/* CTA — desktop: full interactive hover-reveal button.
-                  Below 1024px there's no room for the settled pill to
-                  hold the full label, so a separate compact icon-only
-                  link takes over; only one of the two is ever visible
-                  (display: none removes the other from the tab order
-                  too), same pattern as .pill vs .menuButton below. */}
-              <InteractiveHoverButton
+              <Link
                 href="/consulting"
                 className={styles.ctaDesktop}
                 onClick={handleCTAClick}
               >
                 Start a conversation
-              </InteractiveHoverButton>
+              </Link>
 
               <Link
                 href="/consulting"

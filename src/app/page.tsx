@@ -51,7 +51,7 @@ export default function Home() {
       <SessionLine />
       <Hero />
 
-      <M3Reveal>
+      <M3Reveal className={styles.indexSection}>
         <section aria-labelledby="index-heading" className={styles.block}>
           <span className={styles.sectionLabel}>The work</span>
           <div id="index-heading" className={styles.index}>
