@@ -26,11 +26,12 @@ export function Hero() {
   const photoRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
+    let mm: gsap.MatchMedia
     const ctx = gsap.context(() => {
       const headlineElWords = gsap.utils.toArray('.reveal-headline')
       const subheadElWords = gsap.utils.toArray('.reveal-subhead')
       const cta = ctaRef.current
-      const mm = gsap.matchMedia()
+      mm = gsap.matchMedia()
       
       if (photoRef.current) {
         gsap.set(photoRef.current, { scale: 1.15 })
@@ -114,7 +115,10 @@ export function Hero() {
       })
     }, containerRef)
 
-    return () => ctx.revert()
+    return () => {
+      mm?.revert()
+      ctx.revert()
+    }
   }, [])
 
 

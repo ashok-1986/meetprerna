@@ -22,7 +22,7 @@ export function HeaderClient() {
 
   // Scroll-shrink: adds the 'scrolled' class to the header element.
   const headerRef = useRef<HTMLElement>(null)
-  const isScrolledRef = useRef<boolean>(false)
+  const [isScrolled, setIsScrolled] = useState<boolean>(false)
 
   useEffect(() => {
     const apply = () => {
@@ -32,14 +32,10 @@ export function HeaderClient() {
       const threshold = window.innerHeight * 0.9
       const isScrolled = y > threshold
 
-      if (isScrolled !== isScrolledRef.current) {
-        isScrolledRef.current = isScrolled
-        if (isScrolled) {
-          headerRef.current?.classList.add(styles.scrolled)
-        } else {
-          headerRef.current?.classList.remove(styles.scrolled)
-        }
-      }
+      setIsScrolled(prev => {
+        if (prev !== isScrolled) return isScrolled
+        return prev
+      })
     }
 
     const onScroll = () => {
@@ -59,12 +55,6 @@ export function HeaderClient() {
       window.removeEventListener('resize', onScroll)
     }
   }, [])
-
-  useEffect(() => {
-    if (isScrolledRef.current) {
-      headerRef.current?.classList.add(styles.scrolled)
-    }
-  })
 
   const handleMenuOpen = useCallback(() => {
     scrollYRef.current = window.scrollY
@@ -89,7 +79,7 @@ export function HeaderClient() {
     <>
       <header 
         ref={headerRef} 
-        className={`${styles.headerBand} ${menuOpen ? styles.navOpen : ''}`}
+        className={`${styles.headerBand} ${menuOpen ? styles.navOpen : ''} ${isScrolled ? styles.scrolled : ''}`}
       >
         <div className={styles.frame}>
           <div className={styles.headerInner}>

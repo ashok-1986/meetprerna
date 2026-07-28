@@ -11,8 +11,9 @@ export function ThesisStats() {
   const containerRef = useRef<HTMLElement>(null)
   
   useLayoutEffect(() => {
+    let mm: gsap.MatchMedia
     const ctx = gsap.context(() => {
-      let mm = gsap.matchMedia()
+      mm = gsap.matchMedia()
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set('.js-reveal', { opacity: 1, y: 0 })
@@ -35,7 +36,10 @@ export function ThesisStats() {
       })
     }, containerRef)
 
-    return () => ctx.revert()
+    return () => {
+      mm?.revert()
+      ctx.revert()
+    }
   }, [])
 
   return (
