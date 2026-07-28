@@ -9,58 +9,55 @@ import styles from './hero.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const headline = "Beyond Ink: Your Story, Translated into Abstract Art"
+const headlineWords = headline.split(' ')
+
+const subhead = "Custom tattoos, original paintings and sketches: made in conversation, never in a rush."
+const subheadWords = subhead.split(' ')
+
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null)
   const pinRef = useRef<HTMLDivElement>(null)
-  const photoRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
+  const ctaRef = useRef<HTMLAnchorElement>(null)
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const photo = photoRef.current
-      const content = contentRef.current
+      const words = gsap.utils.toArray('.reveal-word')
+      const cta = ctaRef.current
       const mm = gsap.matchMedia()
     
-      gsap.set(content, { opacity: 1, clipPath: 'inset(0% 0% 100% 0%)' })
-      content?.setAttribute('inert', 'true')
+      gsap.set([words, cta], { y: 40, autoAlpha: 0 })
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         const heroTl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top top',
-            end: 'bottom bottom',
+            end: 'bottom top',
             scrub: 0.6,
             pin: pinRef.current,
-            pinSpacing: false
+            pinSpacing: true
           }
         })
 
         heroTl
-          .to(photo, {
-            scale: 0.62,
-            borderRadius: '24px',
+          .to(words, {
+            y: 0,
+            autoAlpha: 1,
             ease: 'none',
-            duration: 0.45
-          }, 0)
-          .to(content, {
-            clipPath: 'inset(0% 0% 0% 0%)',
+            stagger: 0.04,
+            duration: 1
+          })
+          .to(cta, {
+            y: 0,
+            autoAlpha: 1,
             ease: 'none',
-            duration: 0.55,
-            onUpdate: function() {
-              if (this.progress() === 1) {
-                content?.removeAttribute('inert')
-              } else if (!content?.hasAttribute('inert')) {
-                content?.setAttribute('inert', 'true')
-              }
-            }
-          }, 0.45)
+            duration: 0.2
+          }, "-=0.1")
       })
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(photo, { scale: 0.62, borderRadius: '24px' })
-        gsap.set(content, { opacity: 1, clipPath: 'none' })
-        content?.removeAttribute('inert')
+        gsap.set([words, cta], { y: 0, autoAlpha: 1 })
       })
     }, containerRef)
 
@@ -75,7 +72,7 @@ export function Hero() {
     <section ref={containerRef} className={styles.hero}>
       <div ref={pinRef} className={styles.heroPin}>
         <div className={styles.heroPhotoWrap}>
-          <div ref={photoRef} className={styles.heroPhoto}>
+          <div className={styles.heroPhoto}>
             <Image
               src="/images/hero/prerna-hero.jpg"
               alt="Prerna, hands resting on her own face, tattoo visible across her chest"
@@ -85,14 +82,22 @@ export function Hero() {
             />
           </div>
         </div>
-        <div ref={contentRef} className={styles.heroContent}>
-          <h1 className={styles.heroHeadline}>
-            Beyond Ink: Your Story, Translated into Abstract Art
+        <div className={styles.heroContent}>
+          <h1 className={styles.heroHeadline} aria-label={headline}>
+            {headlineWords.map((word, i) => (
+              <span key={`hw-${i}`} className="reveal-word" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
+                {word}{i < headlineWords.length - 1 ? ' ' : ''}
+              </span>
+            ))}
           </h1>
-          <p className={styles.heroSub}>
-            Custom tattoos, original paintings and sketches: made in conversation, never in a rush.
+          <p className={styles.heroSub} aria-label={subhead}>
+            {subheadWords.map((word, i) => (
+              <span key={`sw-${i}`} className="reveal-word" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
+                {word}{i < subheadWords.length - 1 ? ' ' : ''}
+              </span>
+            ))}
           </p>
-          <Link href="/consulting" className={styles.heroCta}>
+          <Link ref={ctaRef} href="/consulting" className={styles.heroCta}>
             Start a conversation
           </Link>
         </div>
