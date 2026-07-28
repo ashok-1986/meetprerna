@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, Roboto_Flex, JetBrains_Mono, Geist } from 'next/font/google'
+import { Cormorant_Garamond, Urbanist, JetBrains_Mono, Geist } from 'next/font/google'
 
 import '@/styles/tokens.css'
 import { Analytics } from '@vercel/analytics/react'
@@ -17,8 +17,9 @@ const cormorant = Cormorant_Garamond({
   display: 'swap',
 })
 
-const robotoFlex = Roboto_Flex({
+const urbanist = Urbanist({
   subsets: ['latin'],
+  weight: ['400'],
   variable: '--font-body',
   display: 'swap',
 })
@@ -115,7 +116,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(cormorant.variable, robotoFlex.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
+      className={cn(cormorant.variable, urbanist.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
       <head>

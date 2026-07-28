@@ -8,33 +8,27 @@
   --header-ease: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-/* Top State (Default) */
+/* Continuous Scrubbing via --scroll-progress (0 to 1) */
 :global(html) .headerBand {
-  --pill-w: 100%;
-  --pill-h: 84px;
-  --pill-r: 0px;
-  --pill-bg: transparent;
-  --pill-shadow: 0 4px 24px rgba(0, 0, 0, 0);
-}
+  --scroll-p: var(--scroll-progress, 0);
 
-/* Scrolled State */
-:global(html[data-scrolled='true']) .headerBand {
-  --pill-w: 800px;
-  --pill-h: 56px;
-  --pill-r: 22px;
-  --pill-bg: rgba(11, 11, 12, 0.92);
-  --pill-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --pill-w: calc(100% - ((100% - 800px) * var(--scroll-p)));
+  --pill-h: calc(84px - (28px * var(--scroll-p)));
+  --pill-r: calc(22px * var(--scroll-p));
+  --pill-mt: calc(14px * var(--scroll-p));
+  --pill-bg: rgba(11, 11, 12, calc(0.92 * var(--scroll-p)));
+  --pill-shadow: 0 4px 24px rgba(0, 0, 0, calc(0.4 * var(--scroll-p)));
 }
 
 /* Mobile Base & Scrolled Override */
 @media (max-width: 1023px) {
-  :global(html) .headerBand,
-  :global(html[data-scrolled='true']) .headerBand {
+  :global(html) .headerBand {
     --pill-w: 100%;
-    --pill-h: 68px;
+    --pill-h: calc(84px - (16px * var(--scroll-p)));
     --pill-r: 0px;
-    --pill-bg: transparent;
-    --pill-shadow: 0 4px 24px rgba(0, 0, 0, 0);
+    --pill-mt: 0px;
+    --pill-bg: rgba(11, 11, 12, calc(0.92 * var(--scroll-p)));
+    --pill-shadow: 0 4px 24px rgba(0, 0, 0, calc(0.4 * var(--scroll-p)));
   }
 }
 
@@ -48,6 +42,7 @@
   width: 100%;
   height: var(--pill-h);
   border-radius: var(--pill-r);
+  margin-top: var(--pill-mt);
   background-color: var(--pill-bg);
   box-shadow: var(--pill-shadow);
   
@@ -55,20 +50,16 @@
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 
-  transition:
-    max-width var(--header-dur) var(--header-ease),
-    height var(--header-dur) var(--header-ease),
-    border-radius var(--header-dur) var(--header-ease),
-    background-color var(--header-dur) var(--header-ease),
-    box-shadow var(--header-dur) var(--header-ease);
+  /* No transition on scrubbed properties, but we can transition colors if we want */
+  /* Since they are driven directly by scroll, transitioning them causes lag. */
 }
 
 @supports not (backdrop-filter: blur(1px)) {
   .frame {
     /* Fallback for browsers with no blur support */
   }
-  :global(html[data-scrolled='true']) .frame {
-    background-color: rgb(11 11 12 / 0.98);
+  :global(html) .frame {
+    background-color: rgba(11, 11, 12, calc(0.98 * var(--scroll-p)));
   }
 }
 

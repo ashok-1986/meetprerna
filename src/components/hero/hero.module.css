@@ -1,13 +1,13 @@
 .hero {
   position: relative;
-  height: 220vh; /* scroll room for the pin+scale to play out */
+  height: 220svh; /* scroll room for the pin+scale to play out */
   background: var(--color-ink);
 }
 
 .heroPin {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -8,37 +8,44 @@ import { MobileMenu } from './MobileMenu'
 import { recordInteraction } from '@/lib/behaviour'
 import styles from './header.module.css'
 
-const SCROLL_THRESHOLD = 120
+const SCROLL_THRESHOLD = 250
 
 export function HeaderClient() {
   const [menuOpen, setMenuOpen] = useState(false)
   const scrollYRef = useRef(0)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const queued = useRef(false)
-  // false = top (0px), true = scrolled (120px+)
-  const state = useRef<boolean | null>(null)
+  // Continuous progress from 0 to 1
+  const state = useRef<number | null>(null)
 
-  // Scroll-shrink: writes data-scrolled to the root element.
+  // Scroll-shrink: writes --scroll-progress and data-scrolled to the root element.
   useEffect(() => {
     const root = document.documentElement
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
-    const setState = (next: boolean) => {
-      if (next === state.current) return
-      state.current = next
-      root.setAttribute('data-scrolled', next ? 'true' : 'false')
+    const applyProgress = (p: number) => {
+      if (p === state.current) return
+      state.current = p
+      root.style.setProperty('--scroll-progress', p.toString())
+      root.setAttribute('data-scrolled', p === 1 ? 'true' : 'false')
     }
 
     const apply = () => {
       queued.current = false
 
       if (reduceMotion.matches) {
-        setState(true)
+        applyProgress(1)
         return
       }
 
       const y = window.scrollY
-      setState(y >= SCROLL_THRESHOLD)
+      if (y >= SCROLL_THRESHOLD) {
+        applyProgress(1)
+      } else if (y <= 0) {
+        applyProgress(0)
+      } else {
+        applyProgress(Number((y / SCROLL_THRESHOLD).toFixed(3)))
+      }
     }
 
     const onScroll = () => {
@@ -52,9 +59,10 @@ export function HeaderClient() {
     reduceMotion.addEventListener('change', apply)
 
     if (reduceMotion.matches) {
-      setState(true)
+      applyProgress(1)
     } else {
-      setState(window.scrollY >= SCROLL_THRESHOLD)
+      const y = window.scrollY
+      applyProgress(y >= SCROLL_THRESHOLD ? 1 : y <= 0 ? 0 : Number((y / SCROLL_THRESHOLD).toFixed(3)))
     }
 
     return () => {

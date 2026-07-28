@@ -68,7 +68,7 @@ export function Hero() {
         <div className={styles.heroPhotoWrap}>
           <div ref={photoRef} className={styles.heroPhoto}>
             <Image
-              src="/images/hero/prerna-hero.jpeg"
+              src="/images/hero/prerna-hero.jpg"
               alt="Prerna, hands resting on her own face, tattoo visible across her chest"
               fill
               priority
