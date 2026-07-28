@@ -33,7 +33,7 @@ export function Hero() {
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top top',
-            end: 'bottom bottom',
+            end: 'bottom top',
             scrub: 0.6,
             pin: pinRef.current,
             pinSpacing: true

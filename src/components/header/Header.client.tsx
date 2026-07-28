@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Logo } from './Logo'
 import { NavPill } from './NavPill'
@@ -9,10 +8,9 @@ import { MobileMenu } from './MobileMenu'
 import { recordInteraction } from '@/lib/behaviour'
 import styles from './header.module.css'
 
-
+const SCROLL_THRESHOLD = 250
 
 export function HeaderClient() {
-  const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const scrollYRef = useRef(0)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
@@ -41,16 +39,12 @@ export function HeaderClient() {
       }
 
       const y = window.scrollY
-      const isHome = pathname === '/'
-      const thresholdStart = isHome ? window.innerHeight * 1.5 : 0
-      const thresholdEnd = thresholdStart + 250
-
-      if (y >= thresholdEnd) {
+      if (y >= SCROLL_THRESHOLD) {
         applyProgress(1)
-      } else if (y <= thresholdStart) {
+      } else if (y <= 0) {
         applyProgress(0)
       } else {
-        applyProgress(Number(((y - thresholdStart) / 250).toFixed(3)))
+        applyProgress(Number((y / SCROLL_THRESHOLD).toFixed(3)))
       }
     }
 
@@ -68,10 +62,7 @@ export function HeaderClient() {
       applyProgress(1)
     } else {
       const y = window.scrollY
-      const isHome = pathname === '/'
-      const thresholdStart = isHome ? window.innerHeight * 1.5 : 0
-      const thresholdEnd = thresholdStart + 250
-      applyProgress(y >= thresholdEnd ? 1 : y <= thresholdStart ? 0 : Number(((y - thresholdStart) / 250).toFixed(3)))
+      applyProgress(y >= SCROLL_THRESHOLD ? 1 : y <= 0 ? 0 : Number((y / SCROLL_THRESHOLD).toFixed(3)))
     }
 
     return () => {
@@ -79,7 +70,7 @@ export function HeaderClient() {
       window.removeEventListener('resize', onScroll)
       reduceMotion.removeEventListener('change', apply)
     }
-  }, [pathname])
+  }, [])
 
   const handleMenuOpen = useCallback(() => {
     scrollYRef.current = window.scrollY

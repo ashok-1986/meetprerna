@@ -43,30 +43,22 @@
   height: var(--pill-h);
   border-radius: var(--pill-r);
   margin-top: var(--pill-mt);
-}
-
-.frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
   background-color: var(--pill-bg);
   box-shadow: var(--pill-shadow);
+  
+  /* Constant blur! Never animate this property. */
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  opacity: var(--scroll-p);
-  z-index: -1;
-  pointer-events: none;
-}
 
   /* No transition on scrubbed properties, but we can transition colors if we want */
   /* Since they are driven directly by scroll, transitioning them causes lag. */
+}
 
 @supports not (backdrop-filter: blur(1px)) {
   .frame {
     /* Fallback for browsers with no blur support */
   }
-  :global(html) .frame::before {
+  :global(html) .frame {
     background-color: rgba(11, 11, 12, calc(0.98 * var(--scroll-p)));
   }
 }
