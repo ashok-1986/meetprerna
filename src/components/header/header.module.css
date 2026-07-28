@@ -72,24 +72,19 @@
   }
 }
 
-/* Three zones. 1fr auto 1fr means the centre column is pinned to the
-   true centre of the frame no matter how wide the logo or the right
-   cluster get. The nav never moves; the logo and CTA travel inward
-   toward it as the frame narrows. */
-.navGrid {
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+/* Inner container with flexbox alignment */
+.headerInner {
+  display: flex;
   align-items: center;
-  gap: 16px;
-  padding-inline: clamp(24px, 4vw, 120px);
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 32px;
 }
 
 /* Logo */
 .logoLink {
   display: flex;
   align-items: center;
-  justify-self: start;
   text-decoration: none;
   color: var(--color-ivory);
   min-height: 44px;
@@ -106,7 +101,6 @@
 .pill {
   display: flex;
   align-items: center;
-  justify-self: center;
   gap: 0;
   border-radius: 999px;
   background: transparent;
@@ -195,6 +189,7 @@
   font-family: var(--font-body), sans-serif;
   font-size: var(--text-body);
   font-weight: 500;
+  white-space: nowrap;
   
   /* Spec: Default is transparent with a 1px solid var(--color-ivory) border and var(--color-ivory) text. */
   background: transparent;
@@ -247,7 +242,6 @@
 .rightCluster {
   display: flex;
   align-items: center;
-  justify-self: end;
   gap: 8px;
 }
 

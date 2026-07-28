@@ -87,7 +87,7 @@ export function HeaderClient() {
     <>
       <header className={styles.headerBand}>
         <div className={styles.frame}>
-          <div className={styles.navGrid}>
+          <div className={styles.headerInner}>
             <Logo />
 
             <NavPill />
