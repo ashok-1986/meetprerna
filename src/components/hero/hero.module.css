@@ -49,6 +49,7 @@
 .heroContent {
   position: absolute;
   inset: 0;
+  box-sizing: border-box;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -75,9 +76,9 @@
 .heroHeadline {
   font-family: var(--font-cormorant), serif;
   font-weight: 500;
-  font-size: var(--text-display-xl);
+  font-size: var(--text-display-l);
   line-height: 1.05;
-  max-width: clamp(320px, 50vw, 750px);
+  max-width: clamp(280px, calc(50vw - 32px), 750px);
   color: var(--color-ivory);
   margin: 0;
 }
@@ -86,7 +87,7 @@
   font-family: var(--font-body), sans-serif;
   font-size: clamp(1rem, 1.4vw, 1.2rem);
   color: var(--color-ivory-dim);
-  max-width: clamp(320px, 50vw, 750px);
+  max-width: clamp(280px, calc(50vw - 32px), 750px);
   margin: 0;
   line-height: 1.5;
 }

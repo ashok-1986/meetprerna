@@ -22,11 +22,16 @@ export function Hero() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const words = gsap.utils.toArray('.reveal-word')
+      const headlineElWords = gsap.utils.toArray('.reveal-headline')
+      const subheadElWords = gsap.utils.toArray('.reveal-subhead')
       const cta = ctaRef.current
       const mm = gsap.matchMedia()
     
-      gsap.set([words, cta], { y: 40, autoAlpha: 0 })
+      gsap.set([headlineElWords, subheadElWords, cta], { 
+        y: 40, 
+        autoAlpha: 0,
+        clipPath: 'inset(100% 0 0 0)'
+      })
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         const heroTl = gsap.timeline({
@@ -41,24 +46,34 @@ export function Hero() {
         })
 
         heroTl
-          .to(words, {
+          .to(headlineElWords, {
             y: 0,
             autoAlpha: 1,
+            clipPath: 'inset(0% 0% 0% 0%)',
             ease: 'none',
-            stagger: 0.04,
+            stagger: 0.08,
             duration: 1
           }, 0)
+          .to(subheadElWords, {
+            y: 0,
+            autoAlpha: 1,
+            clipPath: 'inset(0% 0% 0% 0%)',
+            ease: 'none',
+            stagger: 0.08,
+            duration: 1
+          }, ">") // start immediately after headline
           .to(cta, {
             y: 0,
             autoAlpha: 1,
+            clipPath: 'inset(0% 0% 0% 0%)',
             ease: 'none',
             duration: 0.2
-          }, "-=0.1")
+          }, ">") // start immediately after subhead
           .set({}, {}, "+=2") // Pad timeline to map reveal to 0-50% of scroll
       })
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([words, cta], { y: 0, autoAlpha: 1 })
+        gsap.set([headlineElWords, subheadElWords, cta], { y: 0, autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)' })
       })
     }, containerRef)
 
@@ -86,14 +101,14 @@ export function Hero() {
         <div className={styles.heroContent}>
           <h1 className={styles.heroHeadline} aria-label={headline}>
             {headlineWords.map((word, i) => (
-              <span key={`hw-${i}`} className="reveal-word" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
+              <span key={`hw-${i}`} className="reveal-headline" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
                 {word}{i < headlineWords.length - 1 ? ' ' : ''}
               </span>
             ))}
           </h1>
           <p className={styles.heroSub} aria-label={subhead}>
             {subheadWords.map((word, i) => (
-              <span key={`sw-${i}`} className="reveal-word" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
+              <span key={`sw-${i}`} className="reveal-subhead" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
                 {word}{i < subheadWords.length - 1 ? ' ' : ''}
               </span>
             ))}
