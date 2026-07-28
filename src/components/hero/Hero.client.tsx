@@ -21,7 +21,7 @@ export function Hero() {
       const content = contentRef.current
       const mm = gsap.matchMedia()
     
-      gsap.set(content, { opacity: 1, clipPath: 'inset(100% 0% 0% 0%)' })
+      gsap.set(content, { opacity: 1, clipPath: 'inset(0% 0% 100% 0%)' })
       content?.setAttribute('inert', 'true')
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {

@@ -7,6 +7,7 @@
 .heroPin {
   position: sticky;
   top: 0;
+  width: 100%;
   height: 100svh;
   display: flex;
   align-items: center;
@@ -17,6 +18,12 @@
 .heroPhotoWrap {
   position: absolute;
   inset: 0;
+  width: 100vw;
+  height: 100svh;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,25 +39,33 @@
 }
 
 .heroPhoto {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   transform-origin: center center;
   /* Starts full-bleed. GSAP drives scale + border-radius on this element only. */
   will-change: transform;
 }
 
 .heroContent {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   text-align: left;
   gap: 1.25rem;
   padding: 0 32px;
   width: 100%;
   opacity: 1; /* Progressive enhancement: JS sets this to 0 */
+  pointer-events: none;
+}
+
+.heroContent > * {
+  pointer-events: auto;
 }
 
 @media (max-width: 1023px) {
