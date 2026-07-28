@@ -26,6 +26,7 @@ export function Hero() {
   const photoRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
+    let isMounted = true
     let mm: gsap.MatchMedia
     const ctx = gsap.context(() => {
       const headlineElWords = gsap.utils.toArray('.reveal-headline')
@@ -43,7 +44,7 @@ export function Hero() {
       gsap.set([headlineElWords, subheadElWords], { 
         y: 12, 
         autoAlpha: 0,
-        clipPath: 'inset(100% 0 0 0)'
+        clipPath: 'inset(0% 0% 100% 0%)'
       })
       gsap.set(cta, { y: 12, autoAlpha: 0 })
       gsap.set(headlineElWords, { y: 0 }) // Headline doesn't move on y, only sub/cta
@@ -100,7 +101,13 @@ export function Hero() {
 
         // Fire on load
         gsap.delayedCall(0.1, () => {
-          heroTl.play()
+          if (typeof document !== 'undefined' && document.fonts) {
+            document.fonts.ready.then(() => {
+              if (isMounted) heroTl.play()
+            })
+          } else {
+            if (isMounted) heroTl.play()
+          }
         })
       })
 
@@ -116,6 +123,7 @@ export function Hero() {
     }, containerRef)
 
     return () => {
+      isMounted = false
       mm?.revert()
       ctx.revert()
     }
@@ -151,9 +159,11 @@ export function Hero() {
             </span>
           ))}
         </h1>
-        <Link ref={ctaRef} href="/consulting" className={styles.heroCta}>
+        <div className={styles.heroCtaWrap}>
+          <Link ref={ctaRef} href="/consulting" className={styles.heroCta}>
             Start a conversation
           </Link>
+        </div>
       </div>
     </section>
   )

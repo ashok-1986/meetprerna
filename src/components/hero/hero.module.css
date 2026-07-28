@@ -1,21 +1,21 @@
 .hero {
   position: relative;
-  height: 150vh;
-  height: 150svh;
+  min-height: 150vh;
+  min-height: 150svh;
   width: 100%;
   background: var(--color-ink);
-  overflow: hidden;
+  /* REMOVED: overflow: hidden; as it breaks position: sticky on children */
 }
 
 .heroPhotoWrap {
   position: absolute;
   inset: 0;
   width: 100vw;
-  height: 150vh;
-  height: 150svh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: clip; /* Modern clipping that does not establish a scrolling ancestor */
 }
 
 .heroPhotoWrap::after {
@@ -46,8 +46,7 @@
   align-items: flex-start;
   justify-content: flex-end; /* Align to the bottom of the 100svh viewport */
   text-align: left;
-  padding: 0 32px;
-  padding-bottom: calc(2rem + env(safe-area-inset-bottom)); /* 32px minimum + safe area */
+  padding: 0;
   width: 100%;
   opacity: 1;
   pointer-events: none;
@@ -55,12 +54,6 @@
 
 .heroContent > * {
   pointer-events: auto;
-}
-
-@media (max-width: 1023px) {
-  .heroContent {
-    padding: 0 24px;
-  }
 }
 
 .heroSub {
@@ -71,19 +64,41 @@
   max-width: 45ch;
   margin: 0;
   line-height: 1.5;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .heroSub {
+    padding: 0 32px;
+  }
 }
 
 .heroHeadline {
   font-family: var(--font-cormorant), serif;
-  font-weight: 400; /* Adjusted from 500 */
-  font-size: var(--text-display-xl);
-  line-height: 0.92;
+  font-weight: 400;
+  font-size: clamp(4rem, 15vw, 15rem);
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  width: 100%;
+  text-align: justify;
+  text-align-last: justify;
+  overflow-wrap: break-word;
+  hyphens: auto;
   flex-shrink: 0;
-  max-width: 45ch;
   color: var(--color-ivory);
   margin: 0;
-  margin: 0;
-  /* Subhead sits just above headline */
+}
+
+.heroCtaWrap {
+  padding: 0 24px;
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .heroCtaWrap {
+    padding-inline: 32px;
+  }
 }
 
 .heroCta {

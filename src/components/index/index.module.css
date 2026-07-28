@@ -1,0 +1,56 @@
+.indexSection {
+  width: 100vw;
+  box-sizing: border-box;
+  padding-top: 96px;
+  padding-bottom: 48px;
+  padding-left: 24px;
+  padding-right: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .indexSection {
+    padding-top: 192px;
+    padding-bottom: 96px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+.row {
+  display: block;
+  text-decoration: none;
+  padding: 16px 24px; /* Padding inside the row for hover hit area */
+  margin-left: -24px; /* Pull margin negative to offset the padding so the text visually aligns with the Two-Anchor gutter */
+  margin-right: -24px;
+  transition: background-color 220ms cubic-bezier(0.23, 1, 0.32, 1);
+  /* The translateY and opacity will be applied via GSAP */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row {
+    transition: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .row {
+    padding: 24px 32px;
+    margin-left: -32px;
+    margin-right: -32px;
+  }
+}
+
+.row:hover {
+  background-color: var(--color-inchworm-tint);
+}
+
+.rowText {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 500;
+  font-size: var(--text-display-xl);
+  color: var(--color-ivory);
+  margin: 0;
+  line-height: 1.1;
+}

@@ -31,13 +31,14 @@
       width: 100vw;
       height: 150svh;
       /* Accommodate the scrolling Fly-Through background */
-      overflow: hidden;
+      /* REMOVED: overflow: hidden; as it breaks position: sticky on children */
     }
 
     .hero-image-wrapper {
       position: absolute;
       inset: 0;
       z-index: 1;
+      overflow: clip; /* Modern clipping that does not establish a scrolling ancestor */
     }
 
     .hero-image {
@@ -57,9 +58,8 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      /* PINNED TO LEFT GUTTER: 32px desktop, 24px mobile */
-      padding-left: 32px;
-      padding-right: 32px;
+      padding: 0;
+      width: 100%;
       max-width: 1440px;
       margin: 0 auto;
       box-sizing: border-box;
@@ -75,14 +75,18 @@
 
     .hero-headline {
       font-family: var(--font-display);
-      /* LOCKED WEIGHT: 500 max, as you requested */
-      font-weight: 500;
-      font-size: clamp(3.25rem, 11vw, 10rem);
-      line-height: 0.92;
-      margin: 0 0 24px 0;
+      font-weight: 400;
+      font-size: clamp(4rem, 15vw, 15rem);
+      line-height: 0.8;
+      letter-spacing: -0.02em;
+      width: 100%;
+      text-align: justify;
+      text-align-last: justify;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      flex-shrink: 0;
+      margin: 0;
       color: var(--color-ivory);
-      max-width: 12ch;
-      /* Keeps it from spanning the whole screen */
     }
 
     .hero-subhead {
@@ -92,12 +96,30 @@
       line-height: 1.6;
       color: var(--color-ivory);
       max-width: 45ch;
-      margin: 0 0 4svh 0;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .hero-subhead {
+        padding: 0 32px;
+      }
+    }
+
+    .hero-cta-wrap {
+      padding-bottom: max(32px, env(safe-area-inset-bottom));
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .hero-cta-wrap {
+        padding-inline: 32px;
+      }
     }
 
     .hero-cta {
       display: inline-block;
       padding: 12px 24px;
+      margin-top: 2rem;
       border: 1px solid var(--color-inchworm);
       color: var(--color-inchworm);
       text-decoration: none;
@@ -224,18 +246,21 @@
 
   <!-- BLOCK 01: HERO -->
   <section class="hero-section">
+    <!-- Image Wrapper with the visual crop -->
     <div class="hero-image-wrapper">
-      <!-- Replace with your actual next/image component in React -->
-      <img src="/images/hero/prerna-hero.jpeg"
-        alt="Prerna, hands resting on her own face, tattoo visible across her chest" class="hero-image">
+      <img src="images/hero/prerna-hero.jpeg" alt="Prerna, hands resting on her face" class="hero-image">
     </div>
 
     <div class="hero-content">
-      <!-- LOCKED COPY FROM DECISIONS.md D23 -->
-      <h1 class="hero-headline">Beyond Ink: Your Story, Translated into Abstract Art</h1>
-      <p class="hero-subhead">Custom tattoos, original paintings and sketches: made in conversation, never in a rush.
-      </p>
-      <a href="/consulting" class="hero-cta">Start a conversation</a>
+      <p class="hero-subhead">Exploring the balance between bold visuals and delicate linework.</p>
+      
+      <h1 class="hero-headline">
+        Beyond Ink:<br />Your Story,<br />Translated<br />into Abstract Art
+      </h1>
+
+      <div class="hero-cta-wrap">
+        <a href="/consulting" class="hero-cta">Start a conversation</a>
+      </div>
     </div>
   </section>
 
