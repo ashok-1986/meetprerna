@@ -21,7 +21,8 @@ export function Hero() {
       const content = contentRef.current
       const mm = gsap.matchMedia()
     
-      gsap.set(content, { opacity: 0 })
+      gsap.set(content, { opacity: 1, clipPath: 'inset(100% 0% 0% 0%)' })
+      content?.setAttribute('inert', 'true')
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         const heroTl = gsap.timeline({
@@ -43,15 +44,23 @@ export function Hero() {
             duration: 0.45
           }, 0)
           .to(content, {
-            opacity: 1,
+            clipPath: 'inset(0% 0% 0% 0%)',
             ease: 'none',
-            duration: 0.55
+            duration: 0.55,
+            onUpdate: function() {
+              if (this.progress() === 1) {
+                content?.removeAttribute('inert')
+              } else if (!content?.hasAttribute('inert')) {
+                content?.setAttribute('inert', 'true')
+              }
+            }
           }, 0.45)
       })
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set(photo, { scale: 0.62, borderRadius: '24px' })
-        gsap.set(content, { opacity: 1 })
+        gsap.set(content, { opacity: 1, clipPath: 'none' })
+        content?.removeAttribute('inert')
       })
     }, containerRef)
 
@@ -78,10 +87,10 @@ export function Hero() {
         </div>
         <div ref={contentRef} className={styles.heroContent}>
           <h1 className={styles.heroHeadline}>
-            Trained in fine art.<br />Fluent in skin.
+            Beyond Ink: Your Story, Translated into Abstract Art
           </h1>
           <p className={styles.heroSub}>
-            Custom tattoos, paintings, and sketches, made in conversation, never in a rush.
+            Custom tattoos, original paintings and sketches: made in conversation, never in a rush.
           </p>
           <Link href="/consulting" className={styles.heroCta}>
             Start a conversation
