@@ -7,6 +7,18 @@
   /* REMOVED: overflow: hidden; as it breaks position: sticky on children */
 }
 
+.flyThroughOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--color-pine-900);
+  pointer-events: none;
+}
+
 .heroPhotoWrap {
   position: absolute;
   inset: 0;
@@ -77,11 +89,11 @@
   font-family: var(--font-cormorant), serif;
   font-weight: 300;
   font-size: clamp(4rem, min(15vw, 22svh), 15rem);
-  line-height: 0.8;
+  line-height: 0.85;
   letter-spacing: -0.02em;
   width: 100%;
-  text-align: justify;
-  text-align-last: justify;
+  text-align: left;
+  container-type: inline-size;
   overflow-wrap: break-word;
   hyphens: auto;
   flex-shrink: 0;

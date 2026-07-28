@@ -71,17 +71,18 @@
       height: 20%;
       flex-shrink: 1; /* Allow shrinking in short viewports */
       min-height: calc(2rem + env(safe-area-inset-bottom));
+      
     }
 
     .hero-headline {
       font-family: var(--font-display);
       font-weight: 300;
-      font-size: clamp(4rem, 15vw, 15rem);
-      line-height: 0.8;
+      font-size: clamp(4rem, min(15vw, 22svh), 15rem);
+      line-height: 0.85;
       letter-spacing: -0.02em;
       width: 100%;
-      text-align: justify;
-      text-align-last: justify;
+      text-align: left;
+      container-type: inline-size;
       overflow-wrap: break-word;
       hyphens: auto;
       flex-shrink: 0;
@@ -254,8 +255,11 @@
     <div class="hero-content">
       <p class="hero-subhead">Exploring the balance between bold visuals and delicate linework.</p>
       
-      <h1 class="hero-headline">
-        Beyond Ink:<br />Your Story,<br />Translated<br />into Abstract Art
+      <h1 class="hero-headline" aria-label="Beyond Ink: Your Story, Translated into Abstract Art">
+        <span class="reveal-headline" style="display: block; white-space: nowrap;">Beyond Ink:</span>
+        <span class="reveal-headline" style="display: block; white-space: nowrap;">Your Story,</span>
+        <span class="reveal-headline" style="display: block; white-space: nowrap;">Translated</span>
+        <span class="reveal-headline" style="display: block; white-space: nowrap;">into Abstract Art</span>
       </h1>
 
       <div class="hero-cta-wrap">
