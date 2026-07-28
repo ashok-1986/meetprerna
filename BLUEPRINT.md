@@ -31,7 +31,7 @@ Hard constraints, because preloaders normally wreck LCP:
 
 - First visit only. `sessionStorage` flag.
 - Hard cap 1200ms. It never waits for assets.
-- The hero image (`origin.jpg`) loads **behind** it, so LCP is unaffected. Its black ground matches `--color-ink`, so there is no visible seam when the entry lifts.
+- The hero image (`prerna-hero.jpeg`) loads **behind** it, so LCP is unaffected. Its black ground matches `--color-ink`, so there is no visible seam when the entry lifts.
 - Skippable on any key, tap or scroll.
 - Skipped entirely under `prefers-reduced-motion` and on `saveData`.
 
@@ -61,14 +61,12 @@ This is the single biggest personality lever on the site and it costs almost not
 
 | # | Block | From | What it is | Moves |
 |---|---|---|---|---|
-| 00 | Entry | Lando + Aust | Stencil line draws her mark | M20 |
-| 01 | **Hero: full-bleed portrait** | **Aust (type-led) + OFF+BRAND (mask reveal)** | `origin.jpg`, 2752×1536 landscape, full-bleed at 100svh. She sits right of centre with near-black negative space to her left; the headline occupies that space. Reveals via M16, headline assembles over it via M1. **Change history:** drag-to-reveal removed (no bare-limb pair); briefly changed to an editorial split on a mis-measurement of a 896×1195 reference upload; reverted once the real 2752×1536 export was confirmed. | M16, M1 |
-| 02 | **The index** | **Floema (01 to 05 collections)** | Four numbered rows with live counts, each a filtered view into `/portfolio`. `01 Tattoos (48)` `02 Paintings (12)` `03 Sketches (30)` `04 The Practice` (links to `/sanctuary`). Row hover fills with `inchworm-tint`, the count ticks. Below it, the scroll cue. | M19, M11 |
+| 01 | **Hero: full-bleed portrait** | **Aust (type-led) + OFF+BRAND (mask reveal)** | `prerna-hero.jpeg`, full-bleed at 150svh. She sits right of centre with near-black negative space to her left; the headline occupies that space. Reveals via M16, headline assembles over it via M1. **Change history:** drag-to-reveal removed (no bare-limb pair); changed to load-based reveal. | M16, M1 |
 | 02b | **Thesis + credibility strip** | Floema + **Athletics (two-anchor)** | "Ink that goes deeper than skin." with the four-figure strip beside it: 500+ completed, 100+ custom, Since 2021, Fine Arts. Figures in `--color-ivory`, NOT accent — four accent elements in one viewport breaks the budget in `DESIGN.md` §4. Server-rendered, never counted up in JS. **Widen to the two-anchor gutters** rather than the 1200px cap, `DESIGN.md` §12. Copy in `content.md` §4. | M3 |
 | 03 | **Selected work, drag rail** | **Lando (drag nav) + Torch (video)** | Horizontal drag through 8 pieces. Every third card is a silent 6s loop of the needle working instead of a still. Momentum on release, damping at the ends, visible arrows as well. | M18, M13, M6 |
 | 04 | **Fresh → healed** | **Lando (drag reveal). The signature.** | One piece, huge, with a draggable divider. Left is day zero. Right is four weeks healed. Mono caption gives the interval. Six pairs confirmed, so this rotates. Nothing else in Mumbai answers "what will it look like in a year". | M15 |
 | 05 | The practice | Floema (editorial pacing) + **Athletics (two-anchor)** | Slow register begins. Four pillars in the **two-anchor mode**, `DESIGN.md` §12: pillar name at `--text-display-xl` pinned to the left gutter, its single sentence pinned right, middle left empty. **At least two pillars visible per viewport at 1440** — NOT one each. Sections are content-height, never 100vh. `DESIGN.md` §12. **No image per pillar** — the empty middle is the design and an image collapses it. No icons. Copy in `content.md` §4. | M3, M21 |
-| 05b | **The still band** | Torch (full-bleed section block) | **Changed 2026-07-26: no video.** Full-bleed black-and-white still of Prerna working (`prerna-working-bw.jpg`), ~80svh, with two lines over it: "She has never done the same thing twice." then "On purpose." in solid accent. Slow register. No `<video>` element, no poster attribute, no playback logic — a dead element pointing at nothing is worse than no element. If footage ever exists, M13 layers over the still without changing the markup around it. | M3 |
+| 05b | **The still band** | Torch (full-bleed section block) | **Changed 2026-07-26: no video.** Full-bleed black-and-white still of Prerna working (`prerna-hero.jpeg`), ~80svh, with two lines over it: "She has never done the same thing twice." then "On purpose." in solid accent. Slow register. No `<video>` element, no poster attribute, no playback logic — a dead element pointing at nothing is worse than no element. If footage ever exists, M13 layers over the still without changing the markup around it. | M3 |
 | 06 | Process | Floema (numbering on a real sequence) + Torch (webm) | `01 Conversation` to `05 Aftercare`. Three of the five carry a silent loop. Numbering is honest here because it is a real sequence. | M3, M13 |
 | 07 | **The Sketchbook** | **Lando ("Helmets Hall of Fame")** | See §5. Replaces the flash sheet. Lives inside `/portfolio`, filtered to Sketch, and gets its own scattered treatment here on Home as a teaser. | M17 |
 | 08 | Voices | Torch (pull-quote cards) | Three large quote cards, not a carousel. Name, city, source link. One line above: some clients know her as Alza. | M3, M5 |
@@ -85,18 +83,18 @@ Four portraits are in hand. They are **portraits of Prerna, not photographs of h
 
 | Image | Where | Why |
 |---|---|---|
-| `origin.jpg` — hands framing face, black ground | **Home hero, block 01, full-bleed** | The strongest of the four. Direct eye contact, hands visible (her instrument), chest piece visible, black ground blending into `--color-ink` with no seam. **2752×1536, 126KB JPG. Supports full-bleed to 1440 at 2x density.** |
+| `prerna-hero.jpeg` | **Home hero, block 01, full-bleed** | Load-reveal editorial hero. Direct eye contact, hands visible (her instrument). Supports full-bleed to 1440 at 2x density. |
 | `prerna-hero.jpg` — leather jacket, arm raised, red ground | `/about`, top | Landscape, so it works as a wide band. Red-dominant, so keep the accent off this section. |
 | `practice.jpg` — red glitter, jewelled collar, red ground | Section break between blocks 06 and 07 | Pure atmosphere. No CTA over it, no accent near it. |
 | `prerna-side-hero.jpg` — sunglasses, grey and gold | `/contact`, or the press kit | **Not the hero.** The sunglasses hide her eyes, and this site's thesis is being seen and being met. Wrong image for a first impression. |
 
 **The red problem, stated plainly.** Two of the four are crimson-dominant. `--color-inchworm` (`#C4FF61`) against deep red is a near-complementary pairing: it vibrates and is hard to control. This is not a reason to change the brand colour. It is a reason to apply the accent budget strictly on those two sections: **no filled accent element in any viewport containing a red-dominant photograph.** A thin line, or nothing. The black-ground images carry the accent fine.
 
-**Consistency note.** `origin.jpg` and `practice.jpg` share a grade. `prerna-hero.jpg` and `prerna-side-hero.jpg` read differently in skin rendering and colour treatment. Place them far apart in the scroll so the difference never shows up in one view.
+**Consistency note.** `prerna-hero.jpeg` and `practice.jpg` share a grade. `prerna-hero.jpeg` and `prerna-side-hero.jpg` read differently in skin rendering and colour treatment. Place them far apart in the scroll so the difference never shows up in one view.
 
-**Source resolutions.** `origin.jpg` as shipped is **2752×1536**, 126KB, and supports full-bleed to 1440 at 2x density.
+**Source resolutions.** `prerna-hero.jpeg` as shipped is **2752×1536** and supports full-bleed to 1440 at 2x density.
 
-The reference PNGs supplied earlier were smaller (896×1195 for `origin` and `practice`, 1344×768 for `prerna-hero`, 1404×1924 for `prerna-side-hero`). Those are previews, not the export masters. **Always measure the file in `/public/images/`, never a reference copy.** A layout decision was briefly made on the wrong file because of this.
+The reference PNGs supplied earlier were smaller (896×1195 for `prerna-hero.jpeg` and `practice`, 1344×768 for `prerna-hero`, 1404×1924 for `prerna-side-hero`). Those are previews, not the export masters. **Always measure the file in `/public/images/`, never a reference copy.** A layout decision was briefly made on the wrong file because of this.
 
 Before any layout assumes full-bleed for the other three, confirm their shipped export sizes the same way.
 

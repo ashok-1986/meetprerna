@@ -292,7 +292,7 @@
 .thesisValue {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-display-l);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1;
   color: var(--color-ivory);
 }
@@ -549,7 +549,7 @@
   padding: 14px 32px;
   font-family: var(--font-body), sans-serif;
   font-size: var(--text-body);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.5;
   color: var(--color-ink);
   background: var(--color-inchworm);

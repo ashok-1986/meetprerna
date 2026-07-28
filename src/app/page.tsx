@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Hero } from '@/components/hero/Hero.client'
-import { BandStats } from '@/components/proof/BandStats.client'
+import { ThesisStats } from '@/components/proof/ThesisStats.client'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { TestimonialQuote } from '@/components/TestimonialQuote'
 import { SessionLine } from '@/components/session/SessionLine.client'
@@ -81,7 +81,7 @@ export default function Home() {
 
       {/* Block 02b: Band + Stats */}
       <M3Reveal>
-        <BandStats />
+        <ThesisStats />
       </M3Reveal>
 
       {/* Block 03: Drag rail */}

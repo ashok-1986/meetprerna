@@ -28,7 +28,7 @@ Side note worth knowing: OFF+BRAND describe the Lando palette as "vibrant lime a
 ## 2. Two budgets
 
 - **UI motion** (buttons, dialogs, filters, nav, tooltips): **under 300ms**. Strict. No exceptions.
-- **Narrative motion** (hero load, scroll reveals, the session line): 400 to 900ms. This is a portfolio, not a dashboard.
+- **Narrative motion** (hero load, scroll reveals, the session line): 400 to 900ms. (Exception: Hero headline reveal M1 at 1800ms, per owner override). This is a portfolio, not a dashboard.
 
 Never use the narrative budget on a UI element. A 400ms filter chip feels broken.
 
@@ -63,7 +63,7 @@ Never `ease-in` on UI. It delays the first frame, which is the exact moment the 
 
 | # | Effect | Where | Purpose | Pillar | Technique | Timing | Reduced motion |
 |---|---|---|---|---|---|---|---|
-| M1 | Reveal (clip-path) | Hero headline, per line | Set the pace in the first two seconds | Meditation | `clip-path: inset(0 0 100% 0)` → `inset(0)` | 700ms `out`, 60ms stagger | Visible, no motion |
+| M1 | Reveal (clip-path) | Hero headline, per line | Set the pace in the first two seconds | Meditation | `clip-path: inset(0 0 100% 0)` → `inset(0)` | 1800ms `out`, 100ms stagger | Visible, no motion |
 | **M21** | **Per-character scroll-scrubbed text** | Home block 05, the four pillars | Type that assembles as you scroll. The kinetic-type personality lever. | Meditation | Split to chars. Each char gets a randomised turn order, then a two-layer swap: outgoing layer slides right and fades, incoming layer slides in from left. Driven by ScrollTrigger `scrub`, not a timed tween. | scrub | **Full sentence renders normally, no split, no motion** |
 | M2 | Line drawing | Session line, whole home page | The needle's path. **The signature.** | Meditation | SVG `stroke-dashoffset`, ScrollTrigger `scrub` | scrub | Fully drawn, static |
 | M3 | Scroll reveal | Every section, default | Stop things appearing abruptly | Calmness | `opacity` 0→1, `translateY` 12px→0 | 600ms `out`, `once: true`, margin -100px | Opacity only, 200ms |

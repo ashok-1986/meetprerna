@@ -20,37 +20,25 @@ export function HeaderClient() {
   // Continuous progress from 0 to 1
   const state = useRef<number | null>(null)
 
-  // Scroll-shrink: writes --scroll-progress and data-scrolled to the root element.
+  // Scroll-shrink: adds the 'scrolled' class to the header element.
+  const headerRef = useRef<HTMLElement>(null)
+  const isScrolledRef = useRef<boolean>(false)
+
   useEffect(() => {
-    const root = document.documentElement
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-
-    const applyProgress = (p: number) => {
-      if (p === state.current) return
-      state.current = p
-      root.style.setProperty('--scroll-progress', p.toString())
-      root.setAttribute('data-scrolled', p === 1 ? 'true' : 'false')
-    }
-
     const apply = () => {
       queued.current = false
-
-      if (reduceMotion.matches) {
-        applyProgress(1)
-        return
-      }
-
       const y = window.scrollY
-      const isHome = pathname === '/'
-      const thresholdStart = isHome ? window.innerHeight * 2.5 : 0
-      const thresholdEnd = thresholdStart + 250
+      // 90% of viewport height
+      const threshold = window.innerHeight * 0.9
+      const isScrolled = y > threshold
 
-      if (y >= thresholdEnd) {
-        applyProgress(1)
-      } else if (y <= thresholdStart) {
-        applyProgress(0)
-      } else {
-        applyProgress(Number(((y - thresholdStart) / 250).toFixed(3)))
+      if (isScrolled !== isScrolledRef.current) {
+        isScrolledRef.current = isScrolled
+        if (isScrolled) {
+          headerRef.current?.classList.add(styles.scrolled)
+        } else {
+          headerRef.current?.classList.remove(styles.scrolled)
+        }
       }
     }
 
@@ -62,24 +50,15 @@ export function HeaderClient() {
 
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll, { passive: true })
-    reduceMotion.addEventListener('change', apply)
-
-    if (reduceMotion.matches) {
-      applyProgress(1)
-    } else {
-      const y = window.scrollY
-      const isHome = pathname === '/'
-      const thresholdStart = isHome ? window.innerHeight * 2.5 : 0
-      const thresholdEnd = thresholdStart + 250
-      applyProgress(y >= thresholdEnd ? 1 : y <= thresholdStart ? 0 : Number(((y - thresholdStart) / 250).toFixed(3)))
-    }
+    
+    // Initial check
+    apply()
 
     return () => {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
-      reduceMotion.removeEventListener('change', apply)
     }
-  }, [pathname])
+  }, [])
 
   const handleMenuOpen = useCallback(() => {
     scrollYRef.current = window.scrollY
@@ -102,7 +81,10 @@ export function HeaderClient() {
 
   return (
     <>
-      <header className={styles.headerBand}>
+      <header 
+        ref={headerRef} 
+        className={`${styles.headerBand} ${menuOpen ? styles.navOpen : ''} ${isScrolledRef.current ? styles.scrolled : ''}`}
+      >
         <div className={styles.frame}>
           <div className={styles.headerInner}>
             <Logo />
