@@ -22,7 +22,7 @@
   --color-danger:  #FF6B6B;
 
   /* Typography scale */
-  --text-display-xl: clamp(3.25rem, 11vw, 9rem);
+  --text-display-xl: clamp(3.25rem, 12vw, 15rem);
   --text-display-l:  clamp(2.25rem, 6vw, 5rem);
   --text-h1: 2rem;
   --text-h2: 1.5rem;
@@ -30,7 +30,7 @@
   --text-body-l: 1.125rem;
   --text-body: 1rem;
   --text-caption: 0.875rem;
-  --text-mono: 1rem;
+  --text-mono: 0.75rem;
 
   /* Easing */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);

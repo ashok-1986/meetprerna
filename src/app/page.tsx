@@ -8,14 +8,11 @@ import { SessionLine } from '@/components/session/SessionLine.client'
 import { DragRail } from '@/components/drag/DragRail.client'
 import { PillarScrub } from '@/components/pillars/PillarScrub.client'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
-import { portfolio } from '@/content/portfolio'
+
 import { testimonials } from '@/content/testimonials'
 import styles from './page.module.css'
 
-const tattooCount = portfolio.filter((p) => p.medium === 'tattoo').length
-const paintingCount = portfolio.filter((p) => p.medium === 'painting').length
-const sketchCount = portfolio.filter((p) => p.medium === 'sketch').length
-
+import { IndexBlock } from '@/components/index-block/IndexBlock.client'
 const PILLARS = [
   {
     title: 'Psychology',
@@ -51,33 +48,7 @@ export default function Home() {
       <SessionLine />
       <Hero />
 
-      <M3Reveal className={styles.indexSection}>
-        <section aria-labelledby="index-heading" className={styles.block}>
-          <span className={styles.sectionLabel}>The work</span>
-          <div id="index-heading" className={styles.index}>
-            <Link href="/portfolio?medium=tattoo" className={styles.indexRow}>
-              <span className={styles.indexNum}>01</span>
-              <span className={styles.indexLabel}>Tattoos</span>
-              <span className={styles.indexCount}>({tattooCount})</span>
-            </Link>
-            <Link href="/portfolio?medium=painting" className={styles.indexRow}>
-              <span className={styles.indexNum}>02</span>
-              <span className={styles.indexLabel}>Paintings</span>
-              <span className={styles.indexCount}>({paintingCount})</span>
-            </Link>
-            <Link href="/portfolio?medium=sketch" className={styles.indexRow}>
-              <span className={styles.indexNum}>03</span>
-              <span className={styles.indexLabel}>Sketches</span>
-              <span className={styles.indexCount}>({sketchCount})</span>
-            </Link>
-          </div>
-
-          <div className={styles.scrollCue} aria-hidden="true">
-            <span className={styles.scrollLine} />
-            <span className={styles.scrollText}>SCROLL</span>
-          </div>
-        </section>
-      </M3Reveal>
+      <IndexBlock />
 
       {/* Block 02b: Band + Stats */}
       <M3Reveal>

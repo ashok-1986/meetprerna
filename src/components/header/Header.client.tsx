@@ -6,8 +6,12 @@ import Link from 'next/link'
 import { Logo } from './Logo'
 import { NavPill } from './NavPill'
 import { MobileMenu } from './MobileMenu'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { recordInteraction } from '@/lib/behaviour'
 import styles from './header.module.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 
 
@@ -25,34 +29,15 @@ export function HeaderClient() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
 
   useEffect(() => {
-    const apply = () => {
-      queued.current = false
-      const y = window.scrollY
-      // 90% of viewport height
-      const threshold = window.innerHeight * 0.9
-      const isScrolled = y > threshold
-
-      setIsScrolled(prev => {
-        if (prev !== isScrolled) return isScrolled
-        return prev
-      })
-    }
-
-    const onScroll = () => {
-      if (queued.current) return
-      queued.current = true
-      requestAnimationFrame(apply)
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
-    
-    // Initial check
-    apply()
+    const st = ScrollTrigger.create({
+      start: () => `top -${window.innerHeight * 0.9}px`,
+      onToggle: (self) => {
+        setIsScrolled(self.isActive)
+      },
+    })
 
     return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      st.kill()
     }
   }, [])
 

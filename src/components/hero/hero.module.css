@@ -47,17 +47,7 @@
 }
 
 .heroContent {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  height: 100svh;
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  pointer-events: none;
+  /* Used as a scope target for animations, layout managed by Tailwind in JSX */
 }
 
 .heroContentInner {
@@ -66,16 +56,26 @@
   pointer-events: auto;
 }
 
-/* Base state: Hidden */
-.heroContent .char {
-  transform: translate3d(0, 120%, 0);
+/* The Word Wrapper acts as the mask */
+.heroHeadline :global(.word) {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+/* The Character Initial State */
+.heroHeadline :global(.char) {
+  display: inline-block;
+  transform: translateY(120%);
   will-change: transform;
 }
 
-/* Trigger state: Visible */
-.heroContent.isLoaded .char {
-  transform: translate3d(0, 0, 0);
-  transition: transform 0.9s cubic-bezier(0.86, 0, 0.31, 1);
+/* Hide the subhead and CTA from frame zero */
+.hero :global(.gs-subhead), 
+.hero :global(.gs-cta) {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity;
 }
 
 .heroContentInner > * {
@@ -102,7 +102,7 @@
 .heroHeadline {
   font-family: var(--font-cormorant), serif;
   font-weight: 300;
-  font-size: clamp(2rem, min(15vw, 22svh), 15rem);
+  font-size: var(--text-display-xl);
   line-height: 0.85;
   letter-spacing: -0.02em;
   width: 100%;

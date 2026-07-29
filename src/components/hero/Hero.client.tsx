@@ -3,6 +3,7 @@
 import { useRef, useLayoutEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import clsx from 'clsx'
 import { gsap } from 'gsap'
 import { CustomEase } from 'gsap/CustomEase'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -24,13 +25,13 @@ export function Hero() {
   const containerRef = useRef<HTMLElement>(null)
   const ctaRef = useRef<HTMLAnchorElement>(null)
   const photoRef = useRef<HTMLDivElement>(null)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const headlineRef = useRef<HTMLHeadingElement>(null)
+
 
   useLayoutEffect(() => {
     let isMounted = true
     let mm: gsap.MatchMedia
     const ctx = gsap.context(() => {
-      const headlineElWords = gsap.utils.toArray('.reveal-headline')
       const subheadElWords = gsap.utils.toArray('.reveal-subhead')
       const cta = ctaRef.current
       mm = gsap.matchMedia()
@@ -42,17 +43,23 @@ export function Hero() {
         photoRef.current.style.webkitMaskImage = initVal
       }
 
-      gsap.set([headlineElWords, subheadElWords], { 
+      gsap.set(subheadElWords, { 
         y: 12, 
         autoAlpha: 0,
         clipPath: 'inset(0% 0% 100% 0%)'
       })
       gsap.set(cta, { y: 12, autoAlpha: 0 })
-      gsap.set(headlineElWords, { y: 0 }) // Headline doesn't move on y, only sub/cta
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const heroTl = gsap.timeline({ paused: true })
         const maskProxy = { spread: 0 }
+        const heroTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "+=50%",
+            scrub: 1,
+          }
+        })
 
         heroTl
           .to(maskProxy, {
@@ -72,53 +79,76 @@ export function Hero() {
             duration: 0.8,
             ease: CustomEase.create('custom', '0.23, 1, 0.32, 1')
           }, 0)
-          .to(subheadElWords, {
-            y: 0,
-            autoAlpha: 1,
-            clipPath: 'inset(0% 0% 0% 0%)',
-            ease: CustomEase.create('custom', '0.23, 1, 0.32, 1'),
-            stagger: 0.02,
-            duration: 1.5
-          }, 0) // start at same time as headline
 
-        // CTA reveals on scroll when 30% above bottom (top 70%)
-        gsap.to(cta, {
-          scrollTrigger: {
-            trigger: cta,
-            start: "top 70%"
-          },
-          y: 0,
-          autoAlpha: 1,
-          duration: 1.0,
-          ease: CustomEase.create('custom', '0.23, 1, 0.32, 1')
-        })
+        // Native Text Splitting Logic
+        if (headlineRef.current) {
+          const text = headlineRef.current.textContent || ''
+          const words = text.split(' ')
+          headlineRef.current.innerHTML = ''
+          
+          words.forEach((word, wordIdx) => {
+            const wordSpan = document.createElement('span')
+            wordSpan.className = 'word'
+            
+            const chars = word.split('')
+            chars.forEach((char) => {
+              const charSpan = document.createElement('span')
+              charSpan.className = 'char'
+              charSpan.textContent = char
+              wordSpan.appendChild(charSpan)
+            })
+            
+            headlineRef.current!.appendChild(wordSpan)
 
-        // Stagger logic: apply transition-delay via inline styles to each .char
-        const chars = containerRef.current?.querySelectorAll('.reveal-headline .char')
-        chars?.forEach((char, index) => {
-          (char as HTMLElement).style.transitionDelay = `${index * 0.03}s`
-        })
-
-        // Safe Font Ready + Fallback Timeout
-        const triggerAnimation = () => {
-          if (isMounted) {
-            setIsLoaded(true)
-            heroTl.play()
-          }
+            // Add standard breaking space span so inline-blocks can wrap
+            if (wordIdx < words.length - 1) {
+              const spaceSpan = document.createElement('span')
+              spaceSpan.textContent = ' '
+              headlineRef.current!.appendChild(spaceSpan)
+            }
+          })
         }
+
+        // Add text reveal and subhead fade to the scrub timeline
+        const chars = headlineRef.current?.querySelectorAll('.char')
         
-        if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
-          document.fonts.ready.then(triggerAnimation)
-          setTimeout(triggerAnimation, 1000) 
-        } else {
-          triggerAnimation()
-        }
+        heroTl
+          .to(chars, 
+            { y: '0%', stagger: 0.02, ease: 'power3.out', duration: 1 },
+            0
+          )
+          .to(['.gs-subhead', '.gs-cta'], 
+            { opacity: 1, y: 0, stagger: 0.2, ease: 'power3.out', duration: 1 },
+            "<0.2"
+          )
 
-        // M22 Fly-Through has been removed.
+        // Target the inner sticky wrapper to scale down
+        gsap.to('.gs-hero-camera', {
+          scale: 0.95,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current, // The 150svh wrapper
+            start: "center top", // Starts halfway down the scroll track
+            end: "bottom top",   // Ends when the Hero leaves the viewport
+            scrub: true,
+          }
+        });
+
+        // Fade in the black dimmer overlay at the same time
+        gsap.to('.gs-hero-dimmer', {
+          opacity: 0.6, // Dims the section by 60%
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current, 
+            start: "center top", 
+            end: "bottom top", 
+            scrub: true,
+          }
+        });
       })
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        const chars = containerRef.current!.querySelectorAll('.reveal-headline .char')
+        const chars = headlineRef.current?.querySelectorAll('.char')
         gsap.set(chars, { y: 0 })
         gsap.set(subheadElWords, { y: 0, autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)' })
         gsap.set(cta, { y: 0, autoAlpha: 1 })
@@ -137,53 +167,12 @@ export function Hero() {
     }
   }, [])
 
-  // True Edge-to-Edge Typography Measurement
-  useLayoutEffect(() => {
-    if (typeof document === 'undefined') return
 
-    const measureAndApply = () => {
-      const headline = containerRef.current?.querySelector(`.${styles.heroHeadline}`) as HTMLElement
-      if (!headline) return
-
-      const lines = headline.querySelectorAll('.reveal-headline') as NodeListOf<HTMLElement>
-      
-      lines.forEach(line => {
-        // Create clone to measure natural width accurately without layout constraints
-        const clone = document.createElement('span')
-        clone.textContent = line.textContent
-        clone.style.fontFamily = 'var(--font-cormorant), serif'
-        clone.style.fontWeight = '300'
-        clone.style.fontSize = '1000px'
-        clone.style.letterSpacing = '-0.02em'
-        clone.style.position = 'absolute'
-        clone.style.visibility = 'hidden'
-        clone.style.whiteSpace = 'nowrap'
-        document.body.appendChild(clone)
-        
-        const naturalWidth = clone.getBoundingClientRect().width
-        document.body.removeChild(clone)
-
-        // Calculate the cqi needed for this specific line to hit 100% width
-        const factor = (1000 / naturalWidth) * 100
-        
-        // Wrap it in the established clamp to respect the layout bounds
-        line.style.fontSize = `clamp(2rem, min(${factor}cqi, 22svh), 15rem)`
-        line.style.whiteSpace = 'nowrap'
-        line.style.display = 'block'
-      })
-    }
-
-    if (document.fonts) {
-      document.fonts.ready.then(measureAndApply)
-    } else {
-      measureAndApply()
-    }
-  }, [])
 
 
   return (
     <section ref={containerRef} className={styles.hero}>
-      <div className={styles.heroCamera}>
+      <div className={`${styles.heroCamera} gs-hero-camera`}>
 
         <div className={styles.heroPhotoWrap}>
           <div ref={photoRef} className={styles.heroPhoto}>
@@ -196,32 +185,35 @@ export function Hero() {
               />
             </div>
         </div>
-        <div className={`${styles.heroContent} ${isLoaded ? styles.isLoaded : ''}`}>
-          <div className={styles.heroContentInner}>
-            <p className={styles.heroSub}>
-            <span style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', border: 0 }}>{subhead}</span>
-            {subheadWords.map((word, i) => (
-              <span key={`sw-${i}`} className="reveal-subhead" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
-                {word}{i < subheadWords.length - 1 ? ' ' : ''}
-              </span>
-            ))}
-          </p>
-          <h1 className={styles.heroHeadline} aria-label={headlineLines.join(' ')}>
-            {headlineLines.map((line, i) => (
-              <span key={`hl-${i}`} className="reveal-headline line" aria-hidden="true" style={{ display: 'block', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                {line.split('').map((char, charIndex) => (
-                  <span key={`char-${charIndex}`} className="char" style={{ display: 'inline-block', transform: 'translate3d(0, 120%, 0)' }}>
-                    {char === ' ' ? '\u00A0' : char}
-                  </span>
-                ))}
-              </span>
-            ))}
-          </h1>
-            <div className={styles.heroCtaWrap}>
-              <Link ref={ctaRef} href="/consulting" className={styles.heroCta}>
+        
+        {/* Dimmer overlay for exit animation */}
+        <div className="gs-hero-dimmer absolute inset-0 bg-black opacity-0 z-10 pointer-events-none"></div>
+
+        {/* OUTER WRAPPER: This dictates the 100svh height and pushes its child to the bottom */}
+        <div 
+          className="absolute inset-0 w-full h-[100svh] flex flex-col justify-end z-20 pointer-events-none pb-[max(2rem,env(safe-area-inset-bottom))]"
+        >
+          
+          {/* INNER CLUSTER WRAPPER: This groups the 3 items tightly together. DO NOT remove this div. */}
+          <div className="pointer-events-auto flex flex-col items-start gap-4 w-full">
+            
+            {/* 1. Subhead */}
+            <p className="gs-subhead text-left w-full max-w-md text-white px-4 md:px-6">
+              Tattoos look striking when fresh, but I design for the decades. Custom ink crafted for your unique contours, made in quiet conversation, and never in a rush.
+            </p>
+            
+            {/* 2. Headline */}
+            <h1 ref={headlineRef} className={`${styles.heroHeadline} w-full text-left text-white font-serif tracking-tighter leading-[0.8] text-[clamp(3.25rem,12vw,15rem)] m-0 p-0`}>
+              Art That Ages Beautifully.
+            </h1>
+            
+            {/* 3. CTA */}
+            <div className="gs-cta px-4 md:px-6 pt-2 m-0">
+              <Link href="/consulting" className="text-white border border-white rounded-full px-6 py-2 inline-block hover:bg-white hover:text-black transition-colors duration-300">
                 Start a conversation
               </Link>
             </div>
+
           </div>
         </div>
       </div>
