@@ -1,25 +1,14 @@
 'use client'
 
-import { useRef, useLayoutEffect, useState } from 'react'
+import { useRef, useLayoutEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import clsx from 'clsx'
 import { gsap } from 'gsap'
 import { CustomEase } from 'gsap/CustomEase'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './hero.module.css'
 
 gsap.registerPlugin(CustomEase, ScrollTrigger)
-
-const headlineLines = [
-  "Beyond Ink:",
-  "Your Story,",
-  "Translated",
-  "into Abstract Art"
-]
-
-const subhead = "Custom tattoos, original paintings and sketches: made in conversation, never in a rush."
-const subheadWords = subhead.split(' ')
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null)
@@ -29,7 +18,6 @@ export function Hero() {
 
 
   useLayoutEffect(() => {
-    let isMounted = true
     let mm: gsap.MatchMedia
     const ctx = gsap.context(() => {
       const subheadElWords = gsap.utils.toArray('.reveal-subhead')
@@ -110,7 +98,7 @@ export function Hero() {
         }
 
         // Add text reveal and subhead fade to the scrub timeline
-        const chars = headlineRef.current?.querySelectorAll('.char')
+        const chars = headlineRef.current ? Array.from(headlineRef.current.querySelectorAll('.char')) : []
         
         heroTl
           .to(chars, 
@@ -148,7 +136,7 @@ export function Hero() {
       })
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        const chars = headlineRef.current?.querySelectorAll('.char')
+        const chars = headlineRef.current ? Array.from(headlineRef.current.querySelectorAll('.char')) : []
         gsap.set(chars, { y: 0 })
         gsap.set(subheadElWords, { y: 0, autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)' })
         gsap.set(cta, { y: 0, autoAlpha: 1 })
@@ -161,7 +149,6 @@ export function Hero() {
     }, containerRef)
 
     return () => {
-      isMounted = false
       mm?.revert()
       ctx.revert()
     }

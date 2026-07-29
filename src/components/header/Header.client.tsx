@@ -20,7 +20,6 @@ export function HeaderClient() {
   const [menuOpen, setMenuOpen] = useState(false)
   const scrollYRef = useRef(0)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
-  const queued = useRef(false)
   // Continuous progress from 0 to 1
   const _state = useRef<number | null>(null)
 

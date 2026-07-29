@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import { Hero } from '@/components/hero/Hero.client'
 import { ThesisStats } from '@/components/proof/ThesisStats.client'

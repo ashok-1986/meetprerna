@@ -11,7 +11,7 @@ export function IndexBlock() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       // M3 Scroll Reveal & M4 Stagger
       gsap.fromTo('.gs-reveal', 
         { opacity: 0, y: 12 }, 
