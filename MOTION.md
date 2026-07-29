@@ -195,6 +195,7 @@ A heading that a screen reader announces one letter at a time fails the WCAG AA 
 - **Native Mobile Physics:** For horizontal carousels (e.g., M18 Drag gallery), mandate native CSS `scroll-snap-type: x mandatory` for mobile breakpoints. JS dragging fights native OS swipe-to-go-back gestures. Keep JS pointer capture exclusively for desktop.
 - **Touch & Hover Guards:** Hover-driven microinteractions (italicizing text, lifting cards) must be strictly wrapped in `@media (hover: hover) and (pointer: fine)` to prevent "sticky" hover states on touchscreens. Custom sliders MUST have a `min-width: 48px` hit area to guarantee touch registry.
 - **Graceful Media Fallbacks:** Looping video must account for iOS Low Power Mode (which silently kills autoplay). Ensure a high-quality poster frame is explicitly provided as the fallback.
+- **FOUC & Hydration Guard (Text Splitting):** Any text that is split by JS for animation must be server-rendered with Tailwind `opacity-0` on the parent wrapper to prevent a Flash of Unstyled Content. A `<noscript>` block must restore `opacity: 1 !important`. GSAP must explicitly set `opacity: 1` before beginning the animation.
 - Animate only `transform`, `opacity`, `clip-path`, `filter`. Nothing else. Ever.
 - CSS transitions, not keyframes, on anything a user can trigger rapidly. Transitions retarget mid-flight. Keyframes restart from zero.
 - Do not set a CSS variable on a parent to drive a child transform. It recalculates styles for every child. Set the transform on the element.

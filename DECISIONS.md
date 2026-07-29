@@ -68,17 +68,9 @@ Plus live-site defects found during audit, listed in §14.
 
 > **REVERSED 2026-07-25 by D17 and D19 below. Sanity is dropped entirely. There is no CMS.** The reasoning below is kept because the trade-off it names is real and now consciously accepted rather than solved: Ashok is the person who adds new work. Read D19 for the accepted cost and the migration path.
 
-~~**Locked: Sanity, free tier. Not static typed content.**~~
+**Locked: Typed repository content model (D19).**
 
-**Reason.** `PRD.md` §2.2 P5 is a real product requirement, not a nice-to-have. Prerna is a solo artist who will add work weekly. "Content change = git push + Vercel deploy" means every new tattoo photo needs an engineer. That is a permanent tax and it will end with the site going stale in four months, which is exactly how the current site got here.
-
-Phase 2 scope and the Phase 2 gate already assume Sanity. `§6.1` is the outlier. `§6.1` is wrong.
-
-**Schemas (locked):** `portfolioPiece` (with a `medium` field: Tattoo, Painting, Sketch — one type, not two, since the archive is merged), `series`, `testimonial`, `faq`, `page`, `siteSettings`.
-
-**Cost check:** Sanity free tier covers 3 users, 10k documents, 1M API requests a month. This site will use a fraction of that. If it ever exceeds it, the site is doing very well and the bill is affordable.
-
-**Non-negotiable:** Phase 5 includes a recorded 30-minute CMS handover with Prerna, plus a one-page runbook. If she cannot add a piece unaided at the end of it, Phase 5 has not passed.
+**Reason.** `PRD.md` §2.2 P5 originally required a CMS so Prerna could add work weekly without an engineer. However, we have consciously accepted the trade-off (D19): "Content change = git push + Vercel deploy." The site uses a static, statically-typed content model within the repository instead of a CMS. Phase 5 includes a recorded 30-minute runbook. If she cannot add a piece unaided at the end of it, Phase 5 has not passed.
 
 ---
 
@@ -111,7 +103,7 @@ The discipline moves from hue to **quantity, placement and pacing**, which are e
 | `--color-inchworm-deep` | `#9FCC4A` | 9.3:1 | pressed |
 | `--color-danger` | `#FF6B6B` | 6.3:1 | form errors |
 
-**The accent budget (this is how neon stays subtle):** one filled accent element per viewport, accent only ever means "act here" or "you are here", and a four-step dilution ladder from solid fill down to a 12% tint. Full rules in `DESIGN.md` §4. Most of the site lives at steps 2 and 3. A solid fill appears about six times in the whole build.
+**The accent budget (this is how neon stays subtle):** A 10% threshold is the absolute maximum limit (ceiling) for neon pixels per viewport, NOT a target. The accent color (`--color-inchworm`) is permitted on primary CTA buttons (max 2 per viewport), high-impact keywords in copy (max 2-3 per viewport), and the logo/active nav. As long as the total neon pixel count does not cross 10%, the AI must not restrict the owner from using the brand color on these elements. Do not revert to the 3% rule. Full rules in `DESIGN.md` §4.
 
 ---
 
@@ -228,7 +220,6 @@ This is better than either version in the docs. `PRD.md` §7.2 invented "a sunli
 - **Primary location, confirmed 2026-07-26: Kharghar, Navi Mumbai.** Most sessions happen there. This is more concrete than the earlier "no fixed base" reading and it is worth stating in copy, because a first-timer's real question is where they physically go. It is still **not** a published street address and still **not** grounds for `LocalBusiness` schema. Naming the neighbourhood is honest and useful; publishing premises she has not confirmed is not.
 - **New section, "Where to find me"**, on `/about` and linked from `/consulting`. Two blocks:
   - **Partner studios.** Each named, with the neighbourhood and the days she works there. This answers the nervous first-timer's real question, which is "where do I actually go?", without inventing an address.
-  - **~~Travel calendar~~ — does not exist. Corrected 2026-07-26.** Prerna confirmed she has no travel schedule: she travels on request, based on what arrives through the enquiry form. Do not build a calendar and do not publish dates.
   - **Replace it with "Travel on request."** One short block: she works primarily from Kharghar, travels within Mumbai on demand, and will consider outside Mumbai if you ask. This is still a differentiator, it is just an availability model rather than a schedule. A calendar with no entries reads as an abandoned site; "tell me where you are" reads as an open door.
 - **Copy discipline.** Always "I work out of [Studio] in [area] on these dates". Never "my studio". Never "our facilities". `content.md` §4 and §5 already follow this.
 - **Hygiene copy must be accurate about ownership.** She brings her own single-use kit. The autoclave, the licensing and the room belong to the partner studio. Say exactly that. Do not claim someone else's equipment as hers, and do not imply she has none.
@@ -248,7 +239,7 @@ Form ID confirmed: `gvnCVtzfz2us`.
 
 - Every "Start a conversation" CTA — header, hero, final CTA block, the Sketchbook — **navigates to `/consulting`**, not to a `wa.me` link. `content.md` §3 already locked this vocabulary rule: the button says "Start a conversation", the page it leads to is headed "Start a conversation". That rule was written before D8 existed and it was right. Follow it.
 - `/consulting` embeds the Fillout **standard** embed, framed in our own chrome (see D8.2 below). This matches the exact snippet the owner supplied. No popup, no slider invented on top of it.
-- WhatsApp drops to one small utility link: footer, and a one-line fallback next to the embed on `/consulting` ("Having trouble? Message us on WhatsApp"). It is never styled as a CTA and never claims the accent colour treatment.
+- WhatsApp drops to one small utility link: footer, and a one-line fallback next to the embed on `/consulting` ("Having trouble? Message us on WhatsApp"). It is never styled as a CTA and never claims the accent colour treatment. The homepage final-CTA secondary must not use "Message on WhatsApp".
 - The self-built form scope from v1.0 — react-hook-form, zod, a custom `/api/consulting` route handler, Resend delivery of the form itself — **is dropped.** Fillout owns form logic, validation, storage and notification. Resend keeps its place for anything else the site needs to send (press kit requests, partner studio outreach), just not for this form.
 
 **D8.0 — The contact hierarchy, locked 2026-07-26.**
@@ -273,7 +264,7 @@ Three routes exist. They are not equal and the inequality is deliberate.
 
 The pasted snippet is the vanilla embed: a script tag plus a `div` with `data-fillout-*` attributes. That works on a static HTML page. It has a specific, well-known failure mode on a Next.js App Router site: the Fillout script scans the DOM for `data-fillout-id` elements once, on load. If a user reaches `/consulting` via a **client-side route transition** rather than a hard page load, that `div` mounts after the scanner has already run, and the embed silently never appears.
 
-Use the `@fillout/react` package instead. `FilloutStandardEmbed` for `/consulting`, matching `data-fillout-embed-type="standard"` from the snippet. It owns its own mount lifecycle through React, so it works identically on a hard load and a client-side transition. Same form ID, same behaviour, no SPA bug.
+Use the `@fillout/react` package instead. `FilloutStandardEmbed` for `/consulting`, matching `data-fillout-embed-type="standard"` from the snippet. It owns its own mount lifecycle through React, so it works identically on a hard load and a client-side transition.
 
 ```tsx
 import { FilloutStandardEmbed } from '@fillout/react';
@@ -283,12 +274,10 @@ import { FilloutStandardEmbed } from '@fillout/react';
   dynamicResize
   inheritParameters
   parameters={{ source: 'header' }}   // or "sketchbook", "sanctuary", etc.
-  onInit={(submissionUuid) => track('enquiry_started', { source: 'fillout' })}
-  onSubmit={(submissionUuid) => track('enquiry_submitted', { submissionUuid })}
 />
 ```
 
-`onInit` and `onSubmit` map directly onto the funnel events in D1. This is a cleaner signal than the WhatsApp-tap proxy the previous version relied on — a WhatsApp deep link only proves a tap, never proves a message was actually sent. A Fillout submission is a confirmed event.
+Reserve tracking calls like `recordInteraction()` for Layer 2 behavior events only, not raw form submissions. A Fillout submission is a confirmed event that handles its own tracking.
 
 **D8.2 — "Seamlessly into our palette" is two jobs, not one.**
 
@@ -390,11 +379,8 @@ The remaining issue is not authenticity, it is legibility. A first-time visitor 
 
 **Locked treatment:**
 
-- **Disclose once, plainly.** On `/about`: `Prerna also works as Alza.` One line. No explanation needed, no story required.
-- **Normalise attribution in testimonials.** Where a review names Alza, render it as written but attribute it consistently. A single line above the testimonial block does the job: `Some clients know her as Alza.`
-- **Schema:** add `alternateName: "Alza"` to the `Person` JSON-LD. Small SEO win. Searches for either name land on the same site.
-- **Still required regardless of the name:** each testimonial carries a first name, last initial, city, and a link to source (Google review, Instagram comment, or written permission on file). That part of the original decision stands. A quote with no traceable source is worth less than three that have one.
 - **Resolved 2026-07-26: Alza is retired.** Prerna confirmed the brand is "Prerna" or "MeetPrerna"; Alza was an old nickname. Use the past tense: `Some earlier clients knew her as Alza.` Keep `alternateName: "Alza"` in the `Person` schema so anyone searching the old name still finds her. Do not use Alza in any new copy.
+- **Still required regardless of the name:** each testimonial carries a first name, last initial, city, and a link to source (Google review, Instagram comment, or written permission on file). That part of the original decision stands. A quote with no traceable source is worth less than three that have one.
 
 ---
 
@@ -517,7 +503,7 @@ public/video/   process clips (M13)
 
 **Naming: the filename is the identifier.** Lowercase, hyphens, no spaces. `tidal.jpg`. A healed pair is `tidal.jpg` and `tidal-healed.jpg`. That is the whole convention.
 
-**One real constraint.** Source images must be resized and compressed before being added. A 5MB phone photo bloats the repo even though the served version is optimised. Max 2000px on the long edge, under about 1MB each. This is a two-minute job in any photo tool and is the only discipline this approach requires.
+**One real constraint.** Distinguish source originals from served assets. Artwork originals must meet D14's minimum 3000px long edge. However, before entering `/public`, these originals must be audited, resized to a maximum of 2000px on the long edge, and compressed to under about 1MB each. This keeps repo bloat down and ensures D14 and D20 gates do not conflict.
 
 **The migration path, if this ever stops working.** If the library grows past ~200 images or Prerna needs to change images without a deploy, move to Cloudinary then. Because `portfolio.ts` stores an image *path* either way, that migration changes one helper function and nothing else.
 
@@ -660,4 +646,4 @@ A simpler 2-stage model using `120px` as the singular scroll threshold.
 * **Top (0-119px):** Full-width, transparent, height 84px.
 * **Scrolled (120px+):** The header shrinks to an 800px max-width pill with `border-radius: 22px`, `height: 56px`, and an opaque background (`rgba(11, 11, 12, 0.92)`). The `backdrop-filter: blur(14px)` is constant to prevent scroll jank.
 * **Mobile (<1024px):** Remains full-width and transparent at all times, no pill shrink, locked at 68px height.
-* **CTA Button:** InteractiveHoverButton replaced with a standard link. Default: transparent with 1px solid Ivory border. Hover: Ivory background with Ink text.
+* **CTA Button:** InteractiveHoverButton replaced with a standard link, acting as a permitted exception to D8's filled-accent requirement for primary CTAs. Default: transparent with 1px solid Ivory border. Hover: Ivory background with Ink text.

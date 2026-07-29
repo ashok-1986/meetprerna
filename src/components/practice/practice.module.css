@@ -1,0 +1,54 @@
+.section {
+  position: relative;
+  width: 100%;
+  padding: 192px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, auto) 1fr minmax(0, 52ch);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.leftAnchor {
+  grid-column: 1 / 2;
+  min-width: 0;
+}
+
+.rightAnchor {
+  grid-column: 3 / 4;
+  min-width: 0;
+}
+
+.pillarTitle {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-display-xl, clamp(3.25rem, 11vw, 10rem));
+  font-weight: 500;
+  color: var(--color-ivory);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.pillarDesc {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-body, 1rem);
+  color: var(--color-ivory-dim);
+  max-width: 52ch;
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 1023px) {
+  .section {
+    padding: 192px 24px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

@@ -11,7 +11,7 @@ import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button
 import { testimonials } from '@/content/testimonials'
 import styles from './page.module.css'
 
-import { IndexBlock } from '@/components/index-block/IndexBlock.client'
+
 const PILLARS = [
   {
     title: 'Psychology',
@@ -47,7 +47,7 @@ export default function Home() {
       <SessionLine />
       <Hero />
 
-      <IndexBlock />
+
 
       {/* Block 02b: Band + Stats */}
       <M3Reveal>

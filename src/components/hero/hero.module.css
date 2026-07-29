@@ -1,20 +1,18 @@
+/* The scroll track — GSAP pin adds scroll height dynamically */
 .hero {
   position: relative;
-  min-height: 150vh;
-  min-height: 150svh;
   width: 100%;
   background: var(--color-ink);
 }
 
+/* The camera — GSAP pin: true locks this to the viewport.
+   Do NOT use position: sticky here; parent overflow:hidden breaks it. */
 .heroCamera {
-  position: sticky;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   height: 100vh;
   height: 100svh;
   overflow: hidden;
-  z-index: 0;
 }
 
 
@@ -22,11 +20,9 @@
 .heroPhotoWrap {
   position: absolute;
   inset: 0;
-  width: 100vw;
+  width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 0;
   overflow: clip; /* Modern clipping that does not establish a scrolling ancestor */
 }
 
@@ -56,17 +52,17 @@
   pointer-events: auto;
 }
 
-/* The Word Wrapper acts as the mask */
+/* Word wrappers clip the overflow so shifted chars are invisible */
 .heroHeadline :global(.word) {
-  display: inline-block;
   overflow: hidden;
-  vertical-align: top;
+  vertical-align: bottom;
+  display: inline-block;
 }
 
-/* The Character Initial State */
+/* Characters start pushed down — CSS enforces this before any JS runs */
 .heroHeadline :global(.char) {
-  display: inline-block;
   transform: translateY(120%);
+  display: inline-block;
   will-change: transform;
 }
 

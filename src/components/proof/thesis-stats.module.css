@@ -24,6 +24,27 @@
   }
 }
 
+.thesisHeader {
+  margin-bottom: 32px;
+  max-width: 52ch;
+}
+
+.sectionLabel {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 16px 0;
+}
+
+.hairline {
+  border: none;
+  border-bottom: 1px solid var(--color-ink-300);
+  margin: 0;
+  width: 100%;
+}
+
 .thesis {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-display-l);
@@ -37,23 +58,74 @@
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 64px 80px; /* Space rows/cols */
+}
+
+.statItem {
+  transition: background-color 220ms ease, transform 220ms ease;
+  background-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .statItem:hover {
+    background-color: rgba(253, 255, 233, 0.05);
+    transform: translateY(-4px);
+  }
+}
+
+.statItemTopLeft {
+  padding-right: 48px;
+  padding-bottom: 40px;
+  border-right: 1px solid var(--color-ink-300);
+  border-bottom: 1px solid var(--color-ink-300);
+}
+
+.statItemTopRight {
+  padding-left: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--color-ink-300);
+}
+
+.statItemBottomLeft {
+  padding-right: 48px;
+  padding-top: 40px;
+  border-right: 1px solid var(--color-ink-300);
+}
+
+.statItemBottomRight {
+  padding-left: 48px;
+  padding-top: 40px;
 }
 
 @media (max-width: 767px) {
   .statsGrid {
-    grid-template-columns: 1fr;
-    gap: 48px;
+    grid-template-columns: repeat(2, 1fr);
   }
-}
-
-.statItem {
+  
+  .statItemTopLeft {
+    padding-right: 24px;
+    padding-bottom: 32px;
+  }
+  
+  .statItemTopRight {
+    padding-left: 24px;
+    padding-bottom: 32px;
+  }
+  
+  .statItemBottomLeft {
+    padding-right: 24px;
+    padding-top: 32px;
+  }
+  
+  .statItemBottomRight {
+    padding-left: 24px;
+    padding-top: 32px;
+  }
 }
 
 .statFigure {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-display-l);
-  font-weight: 400;
+  font-weight: 500;
   color: var(--color-ivory);
   line-height: 1.15;
   margin: 0 0 8px 0;

@@ -38,7 +38,8 @@
       position: absolute;
       inset: 0;
       z-index: 1;
-      overflow: clip; /* Modern clipping that does not establish a scrolling ancestor */
+      overflow: clip;
+      /* Modern clipping that does not establish a scrolling ancestor */
     }
 
     .hero-image {
@@ -69,9 +70,10 @@
       content: "";
       display: block;
       height: 20%;
-      flex-shrink: 1; /* Allow shrinking in short viewports */
+      flex-shrink: 1;
+      /* Allow shrinking in short viewports */
       min-height: calc(2rem + env(safe-area-inset-bottom));
-      
+
     }
 
     .hero-headline {
@@ -254,7 +256,7 @@
 
     <div class="hero-content">
       <p class="hero-subhead">Exploring the balance between bold visuals and delicate linework.</p>
-      
+
       <h1 class="hero-headline" aria-label="Beyond Ink: Your Story, Translated into Abstract Art">
         <span class="reveal-headline" style="display: block; white-space: nowrap;">Beyond Ink:</span>
         <span class="reveal-headline" style="display: block; white-space: nowrap;">Your Story,</span>

@@ -85,6 +85,7 @@ If you are about to install an animation package to do a fade, a slide, a scale 
 - **Native Mobile Physics:** For horizontal carousels (e.g., M18 Drag gallery), mandate native CSS `scroll-snap-type: x mandatory` for mobile breakpoints. JS dragging fights native OS swipe-to-go-back gestures. Keep JS pointer capture exclusively for desktop.
 - **Touch & Hover Guards:** All hover-driven microinteractions (e.g., M19 italicizing text, lifting media cards) must be strictly wrapped in `@media (hover: hover) and (pointer: fine)` to prevent "sticky" hover states on touchscreens. Custom slider handles (e.g., M15 Fresh-to-healed) must have a strictly enforced `min-width: 48px` hit area to guarantee touch registry on mobile.
 - **Graceful Media Fallbacks:** Background or inline looping video (e.g., M13) must explicitly account for iOS Low Power Mode, which silently kills autoplay. Ensure a high-quality poster frame is mandated as the fallback.
+- **FOUC & Hydration Guard (Text Splitting):** Any text that is split by JS for animation must be server-rendered with Tailwind `opacity-0` on the parent wrapper to prevent a Flash of Unstyled Content. A `<noscript>` block must restore `opacity: 1 !important`. GSAP must explicitly set `opacity: 1` before beginning the animation.
 
 ## Performance rules
 

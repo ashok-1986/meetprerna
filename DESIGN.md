@@ -79,7 +79,12 @@ Any new pair is measured and added here before it ships. Estimated ratios are re
 
 This is how neon stays neon without becoming a energy drink. Four rules, all checkable.
 
-**Rule 1 — the 3% rule.** Accent occupies no more than roughly 3% of visible pixels in any viewport. In practice: **one filled accent element per screen.** One button, or one active chip, or one line. Not all three. If you can see two filled neon things at once, cut one.
+**Rule 1 — the 10% threshold.** Accent occupies no more than roughly 10% of visible pixels in any viewport. This is the absolute maximum limit (ceiling), NOT a target to achieve. In practice, the accent color (`--color-inchworm`) is explicitly permitted on:
+- Primary CTA buttons (max 2 per viewport).
+- Specific, high-impact keywords in the copy (max 2-3 per viewport, spaced out).
+- The logo and active navigation states.
+
+As long as the total neon pixel count does not cross the 10% threshold, the AI must not restrict the owner from using the brand color on these elements. Do not revert to the 3% rule.
 
 **Rule 2 — role lock.** Accent only ever means "act here" or "you are here". It is a functional signal, never decoration. If a thing is not clickable and not a state, it does not get accent. This alone removes 90% of the overdone cases.
 
@@ -105,7 +110,7 @@ Not in the palette. In these.
 | Pillar | Expressed through | Concretely |
 |---|---|---|
 | **Meditation** | Pacing | One idea per viewport. 900ms narrative reveals. Nothing competing for attention at the same moment. Space between sections at 96px minimum, 192px on desktop. |
-| **Calmness** | Quantity restraint | The 3% rule *is* calmness. One accent, one focal point, hairlines instead of boxes, no drop shadows. |
+| **Calmness** | Quantity restraint | The 10% threshold *is* calmness. Careful accent placement, focused elements, hairlines instead of boxes, no drop shadows. |
 | **Therapy** | Absence of pressure | No countdown. No "only 2 slots left". No exit popup. No newsletter interstitial. No fake scarcity anywhere, ever. This is a hard ban. |
 | **Psychology** | Information order | Answer the fear before asking for the booking. `/sanctuary` puts pain, hygiene and cost before the CTA, not after. |
 

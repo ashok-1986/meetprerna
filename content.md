@@ -114,10 +114,10 @@ Each pillar is a short block. No icons. Mono metadata line, then the sentence.
 
 | Pillar | Line |
 |---|---|
-| Psychology | `Choosing to mark your skin is a decision about who you are becoming. I want to hear the why before I draw anything.` |
-| Meditation | `The needle, the brush and the pencil are three rhythms with one shared attention. When I work, the room gets quiet.` |
-| Therapy | `I am not a therapist. I do hold the room. Some things come out easier when your hands are busy and nobody is watching your face.` |
-| Calmness | `No rushed stencils. No brushed-off questions. You can arrive with a mess of feelings and no vocabulary for them.` |
+| 01 Mapping The Self | `Choosing to mark your skin is a decision about who you are becoming. I explore the meaning behind the image before I draw a single line.` |
+| 02 Words Before Ink | `Every piece begins with a quiet conversation. No pressure, no rushed sketches. I listen to your story until the vision is clear enough to translate.` |
+| 03 The Abstract Form | `Your story is translated into abstract art, crafted for your unique contours. Custom ink designed to age beautifully over decades, never in a rush.` |
+| 04 A Safe Exhale | `The studio is a quiet room. A place to pause, to be seen, and to leave a part of your story permanently etched in peace.` |
 
 **Selected work**
 - H2: `Stories etched in skin.`
