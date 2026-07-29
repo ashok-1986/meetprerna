@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useLayoutEffect } from 'react'
+import { useRef, useLayoutEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { gsap } from 'gsap'
@@ -24,6 +24,7 @@ export function Hero() {
   const containerRef = useRef<HTMLElement>(null)
   const ctaRef = useRef<HTMLAnchorElement>(null)
   const photoRef = useRef<HTMLDivElement>(null)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useLayoutEffect(() => {
     let isMounted = true
@@ -71,13 +72,6 @@ export function Hero() {
             duration: 0.8,
             ease: CustomEase.create('custom', '0.23, 1, 0.32, 1')
           }, 0)
-          .to(headlineElWords, {
-            autoAlpha: 1,
-            clipPath: 'inset(0% 0% 0% 0%)',
-            ease: CustomEase.create('custom', '0.23, 1, 0.32, 1'),
-            stagger: 0.1,
-            duration: 1.8
-          }, 0)
           .to(subheadElWords, {
             y: 0,
             autoAlpha: 1,
@@ -99,38 +93,34 @@ export function Hero() {
           ease: CustomEase.create('custom', '0.23, 1, 0.32, 1')
         })
 
-        // Fire on load, gated by font loading
-        gsap.delayedCall(0.1, () => {
-          if (typeof document !== 'undefined' && document.fonts) {
-            document.fonts.ready.then(() => {
-              if (isMounted) heroTl.play()
-            })
-          } else {
-            if (isMounted) heroTl.play()
-          }
+        // Stagger logic: apply transition-delay via inline styles to each .char
+        const chars = containerRef.current?.querySelectorAll('.reveal-headline .char')
+        chars?.forEach((char, index) => {
+          (char as HTMLElement).style.transitionDelay = `${index * 0.03}s`
         })
 
-        // M22 Fly-Through ScrollTrigger
-        const overlay = document.querySelector('.flythrough-overlay')
-        if (overlay) {
-          gsap.to(overlay, {
-            scale: 80,
-            autoAlpha: 0,
-            transformOrigin: '50% 50%',
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top top",
-              end: "+=150%",
-              scrub: true,
-              pin: true,
-            }
-          })
+        // Safe Font Ready + Fallback Timeout
+        const triggerAnimation = () => {
+          if (isMounted) {
+            setIsLoaded(true)
+            heroTl.play()
+          }
         }
+        
+        if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(triggerAnimation)
+          setTimeout(triggerAnimation, 1000) 
+        } else {
+          triggerAnimation()
+        }
+
+        // M22 Fly-Through has been removed.
       })
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([headlineElWords, subheadElWords], { y: 0, autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)' })
+        const chars = containerRef.current!.querySelectorAll('.reveal-headline .char')
+        gsap.set(chars, { y: 0 })
+        gsap.set(subheadElWords, { y: 0, autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)' })
         gsap.set(cta, { y: 0, autoAlpha: 1 })
         if (photoRef.current) {
           gsap.set(photoRef.current, { scale: 1.0 })
@@ -177,7 +167,7 @@ export function Hero() {
         const factor = (1000 / naturalWidth) * 100
         
         // Wrap it in the established clamp to respect the layout bounds
-        line.style.fontSize = `clamp(4rem, min(${factor}cqi, 22svh), 15rem)`
+        line.style.fontSize = `clamp(2rem, min(${factor}cqi, 22svh), 15rem)`
         line.style.whiteSpace = 'nowrap'
         line.style.display = 'block'
       })
@@ -193,63 +183,46 @@ export function Hero() {
 
   return (
     <section ref={containerRef} className={styles.hero}>
-      {/* M22 Fly-Through Overlay */}
-      <div className={`${styles.flyThroughOverlay} flythrough-overlay`} aria-hidden="true">
-        <svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style={{ position: 'absolute', inset: 0 }}>
-          <defs>
-            <mask id="logo-mask" x="0" y="0" width="100%" height="100%">
-              {/* White background means fully opaque mask (pine-900 color is visible) */}
-              <rect x="0" y="0" width="100%" height="100%" fill="white" />
-              {/* Black paths mean fully transparent mask (cut out to see Hero underneath) */}
-              <g transform="translate(calc(50vw - 443px), calc(50vh - 150px)) scale(0.5)">
-                <path fill="black" d="M176.33 185.56l10.19-77.45c.28-1.7.5-3.42.64-5.17.14-1.75.21-3.52.21-5.31 0-8.97-1.86-15.83-5.59-20.6-3.73-4.76-9.09-7.15-16.07-7.15-11.14 0-19.75 3.94-25.84 11.82-6.09 7.88-10.27 20.46-12.53 37.73l-8.35 66.12h-30.73l9.77-77.31c.28-2.74.45-4.74.5-6.02.05-1.27.07-2.48.07-3.61 0-9.72-1.84-16.94-5.52-21.66-3.68-4.72-9.34-7.08-16.99-7.08-10.48 0-18.67 3.96-24.57 11.89-5.9 7.93-9.98 20.48-12.25 37.66l-8.5 66.12H.62L18.31 51.33h30.16l-4.39 16.14c7.08-6.98 14.42-12.2 22.02-15.65 7.6-3.44 15.65-5.17 24.14-5.17 9.63 0 17.56 2.05 23.79 6.16 6.23 4.11 10.95 10.36 14.16 18.76 7.93-8.59 15.9-14.89 23.93-18.9 8.02-4.01 16.8-6.02 26.34-6.02 12.74 0 22.63 3.68 29.66 11.05 7.03 7.36 10.55 17.79 10.55 31.29 0 2.83-.14 6.14-.42 9.91-.28 3.78-.8 8.87-1.56 15.29l-9.34 71.36h-31.01z"/>
-                <path fill="black" d="M347.51 144.36l21.95 17.13c-7.84 10.29-16.33 17.79-25.49 22.51-9.16 4.72-19.68 7.08-31.57 7.08-19.92 0-36.01-6.02-48.28-18.05-12.27-12.03-18.41-27.87-18.41-47.5 0-23.03 7.06-41.93 21.17-56.71 14.11-14.77 32.07-22.16 53.87-22.16 18.22 0 32.73 5.64 43.54 16.92 10.81 11.28 16.21 26.41 16.21 45.38 0 1.61-.07 3.66-.21 6.16-.14 2.5-.35 5.5-.64 8.99h-102.37c0 12.18 3.07 21.88 9.2 29.1 6.13 7.22 14.3 10.83 24.5 10.83 7.08 0 13.8-1.72 20.18-5.17 6.37-3.44 11.82-8.28 16.35-14.51zM279.97 102.3h69.24c-.28-9.06-3.09-16.21-8.42-21.45-5.33-5.24-12.48-7.86-21.45-7.86-10.19 0-18.83 2.64-25.91 7.93-7.08 5.29-11.56 12.41-13.45 21.38z"/>
-                <path fill="black" d="M503.54 144.36l21.95 17.13c-7.84 10.29-16.33 17.79-25.49 22.51-9.16 4.72-19.68 7.08-31.57 7.08-19.92 0-36.01-6.02-48.28-18.05-12.27-12.03-18.41-27.87-18.41-47.5 0-23.03 7.06-41.93 21.17-56.71 14.11-14.77 32.07-22.16 53.87-22.16 18.22 0 32.73 5.64 43.54 16.92 10.81 11.28 16.21 26.41 16.21 45.38 0 1.61-.07 3.66-.21 6.16-.14 2.5-.35 5.5-.64 8.99h-102.37c0 12.18 3.07 21.88 9.2 29.1 6.13 7.22 14.3 10.83 24.5 10.83 7.08 0 13.8-1.72 20.18-5.17 6.37-3.44 11.82-8.28 16.35-14.51zM436 102.3h69.24c-.28-9.06-3.09-16.21-8.42-21.45-5.33-5.24-12.48-7.86-21.45-7.86-10.19 0-18.83 2.64-25.91 7.93-7.08 5.29-11.56 12.41-13.45 21.38z"/>
-                <path fill="black" d="M562.73 185.56l14.16-108.17h-23.22l3.54-26.05h22.94l6.65-50.83h30.44l-6.37 50.83h24.35l-3.54 26.05h-24.35l-14.16 108.17h-30.44z"/>
-                <path fill="black" d="M.5 598.39V226.61h41.8v29.38c29.98-26.8 65.48-40.38 105.59-40.38 43.53 0 81.22 15.61 112 46.39 30.78 30.79 46.39 68.47 46.39 112s-15.61 81.22-46.39 112c-30.78 30.78-68.46 46.39-112 46.39-40.11 0-75.61-13.58-105.59-40.38v106.38H.5zm41.8-173.92c5.59 11.47 13.45 22.31 23.35 32.21 22.49 22.5 50.17 33.91 82.24 33.91s59.81-11.48 82.46-34.13c22.65-22.65 34.13-50.39 34.13-82.46s-11.48-59.81-34.13-82.46c-22.65-22.65-50.4-34.13-82.46-34.13s-59.73 11.55-82.22 34.33c-9.94 9.67-17.79 20.35-23.37 31.79v100.94z"/>
-                <path fill="black" d="M347.28 531.62V257.82c0-23.27 17.76-42.21 39.6-42.21h4.4v.02h92.39v46.61h-92.39v269.38h-44z"/>
-                <path fill="black" d="M683.05 532.39c-43.55 0-81.23-15.61-112-46.39-30.78-30.77-46.38-68.46-46.38-112s15.61-81.22 46.39-112c30.78-30.78 68.46-46.39 112-46.39s81.28 15.53 112.21 46.15c4.03 4.34 7.82 8.73 11.34 13.14l2.46 3.07-192.3 192.3c19.31 13.49 41.6 20.32 66.29 20.32 32.07 0 59.89-11.56 82.68-34.35l3.11-3.11 29.54 29.54-3.11 3.11c-30.92 30.93-68.68 46.61-112.22 46.61zm0-274.98c-32.07 0-59.82 11.48-82.46 34.13-22.65 22.65-34.13 50.39-34.13 82.46 0 24.98 6.97 47.43 20.73 66.76l162.63-162.63c-19.34-13.76-41.79-20.73-66.76-20.73z"/>
-                <path fill="black" d="M848.56 531.62V257.82c0-23.27 17.76-42.21 39.6-42.21h4.4v.02h92.39v46.61h-92.39v269.38h-44z"/>
-                <path fill="black" d="M1267.93 527.83V366.1c0-29.82-10.38-55.55-30.86-76.49-20.46-20.9-45.6-31.49-74.73-31.49s-54.28 10.6-74.73 31.49c-8.18 8.36-14.86 17.65-19.86 27.62v210.59h-41.8V226.85h41.8v23.6c26.79-23.12 58.59-34.83 94.59-34.83 40.63 0 75.74 14.81 104.34 44.02 28.57 29.19 43.05 65.01 43.05 106.46v161.73h-41.8z"/>
-                <polygon fill="black" points="1621.89 524.84 1599.02 475.56 1586.65 449.06 1509.44 284.06 1432.22 449.07 1419.85 475.57 1396.99 524.84 1348.22 524.84 1492.52 215.61 1526.35 215.61 1671.03 524.84 1621.89 524.84"/>
-              </g>
-            </mask>
-          </defs>
-          <rect x="0" y="0" width="100%" height="100%" fill="var(--color-pine-900)" mask="url(#logo-mask)" />
-        </svg>
-      </div>
+      <div className={styles.heroCamera}>
 
-      <div className={styles.heroPhotoWrap}>
-        <div ref={photoRef} className={styles.heroPhoto}>
-          <Image
-            src="/images/hero/prerna-hero.jpeg"
-              alt="Prerna, hands resting on her own face, tattoo visible across her chest"
-              fill
-              priority
-              style={{ objectFit: 'cover' }}
-            />
+        <div className={styles.heroPhotoWrap}>
+          <div ref={photoRef} className={styles.heroPhoto}>
+            <Image
+              src="/images/hero/prerna-hero.jpeg"
+                alt="Prerna, hands resting on her own face, tattoo visible across her chest"
+                fill
+                priority
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+        </div>
+        <div className={`${styles.heroContent} ${isLoaded ? styles.isLoaded : ''}`}>
+          <div className={styles.heroContentInner}>
+            <p className={styles.heroSub}>
+            <span style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', border: 0 }}>{subhead}</span>
+            {subheadWords.map((word, i) => (
+              <span key={`sw-${i}`} className="reveal-subhead" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
+                {word}{i < subheadWords.length - 1 ? ' ' : ''}
+              </span>
+            ))}
+          </p>
+          <h1 className={styles.heroHeadline} aria-label={headlineLines.join(' ')}>
+            {headlineLines.map((line, i) => (
+              <span key={`hl-${i}`} className="reveal-headline line" aria-hidden="true" style={{ display: 'block', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                {line.split('').map((char, charIndex) => (
+                  <span key={`char-${charIndex}`} className="char" style={{ display: 'inline-block', transform: 'translate3d(0, 120%, 0)' }}>
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
+              </span>
+            ))}
+          </h1>
+            <div className={styles.heroCtaWrap}>
+              <Link ref={ctaRef} href="/consulting" className={styles.heroCta}>
+                Start a conversation
+              </Link>
+            </div>
           </div>
-      </div>
-      <div className={styles.heroContent}>
-        <p className={styles.heroSub}>
-          <span style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', border: 0 }}>{subhead}</span>
-          {subheadWords.map((word, i) => (
-            <span key={`sw-${i}`} className="reveal-subhead" aria-hidden="true" style={{ display: 'inline-block', whiteSpace: 'pre' }}>
-              {word}{i < subheadWords.length - 1 ? ' ' : ''}
-            </span>
-          ))}
-        </p>
-        <h1 className={styles.heroHeadline} aria-label={headlineLines.join(' ')}>
-          {headlineLines.map((line, i) => (
-            <span key={`hl-${i}`} className="reveal-headline" aria-hidden="true" style={{ display: 'block' }}>
-              {line}
-            </span>
-          ))}
-        </h1>
-        <div className={styles.heroCtaWrap}>
-          <Link ref={ctaRef} href="/consulting" className={styles.heroCta}>
-            Start a conversation
-          </Link>
         </div>
       </div>
     </section>

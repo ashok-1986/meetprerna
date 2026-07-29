@@ -12,13 +12,13 @@ import styles from './header.module.css'
 
 
 export function HeaderClient() {
-  const pathname = usePathname()
+  const _pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const scrollYRef = useRef(0)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const queued = useRef(false)
   // Continuous progress from 0 to 1
-  const state = useRef<number | null>(null)
+  const _state = useRef<number | null>(null)
 
   // Scroll-shrink: adds the 'scrolled' class to the header element.
   const headerRef = useRef<HTMLElement>(null)

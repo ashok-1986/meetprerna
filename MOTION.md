@@ -119,10 +119,12 @@ These are the six that make the site hers rather than competent. Each traces to 
 
 ### Technical Implementation: M23 Sticky Stack DOM Structure
 To ensure the layout engine does not break on mobile Safari or Android (where `100vh` vs `100svh` causes reflow jumps), the DOM must be structured cleanly:
-1. **The Wrapper:** Each section must be wrapped in a parent container that is completely relative and unconstrained in height.
-2. **The Sticky Element:** The actual section element inside the wrapper gets `position: sticky; top: 0; height: 100svh;`.
-3. **The Stacking Context:** Assign explicit sequential `z-index` values (`10`, `20`, `30`) to the parent wrappers. 
-4. **The Trigger:** The ScrollTrigger must be attached to the parent wrapper, starting when `bottom bottom` hits the viewport, pinning the child sticky element, and scrubbing the scale/dim effect.
+2. **The Wrapper:** Each section must be wrapped in a parent container with an explicit `min-height` extending beyond the child's `100svh` (e.g., `min-height: 150svh`) to guarantee reliable scroll duration.
+3. **The Positioning Mechanism (Choose One):** You must use one of two mutually exclusive alternatives:
+   - **Alternative A:** Use CSS `position: sticky; top: 0; height: 100svh;` on the child element and omit ScrollTrigger pinning completely.
+   - **Alternative B:** Use GSAP ScrollTrigger `pin: true` on the child element and omit CSS `position: sticky` completely.
+4. **The Stacking Context:** Assign explicit sequential `z-index` values (`10`, `20`, `30`) to the parent wrappers. 
+5. **The Trigger:** For either alternative, the ScrollTrigger must be attached to the parent wrapper (which acts as the trigger), using a range such as `start: "top top"` and `end: "bottom bottom"`. ScrollTrigger remains solely responsible for scrubbing the scale/dim animation across the full interval.
 
 **On M19 and the earlier cursor ban.** These are not the same thing. The cut version mutated `font-variation-settings` on every heading on every `pointermove`, which is layout and paint on text sixty times a second. M19 is a discrete hover state on one element with a CSS transition and a fixed container. One is a per-frame text relayout. The other is a state change. Only the first was the problem.
 
