@@ -9,26 +9,26 @@ gsap.registerPlugin(ScrollTrigger);
 const pillars = [
   { 
     id: '01', 
-    title: 'Intention', 
-    desc: 'Every mark begins with purpose. We do not rush the concept or the consultation.', 
+    title: 'Mapping The Self', 
+    desc: 'Choosing to mark your skin is a deeply personal step toward who you are becoming. Uncovering the true weight and meaning behind the idea always comes before a single line is drawn.', 
     img: '/images/portfolio/peony-back.jpg' 
   },
   { 
     id: '02', 
-    title: 'Precision', 
-    desc: 'Flawless execution over speed. The needle is an instrument of absolute permanence.', 
+    title: 'Words Before Ink', 
+    desc: 'Every piece begins with a quiet, unhurried conversation. There is no pressure and no ticking clock. Listening to your story takes priority until the vision feels perfectly clear.', 
     img: '/images/portfolio/buddha-lotus.jpg' 
   },
   { 
     id: '03', 
-    title: 'Sanctuary', 
-    desc: 'A controlled, quiet environment. Your comfort and psychological safety dictate the pacing.', 
+    title: 'The Abstract Form', 
+    desc: 'Experiences are translated into flowing, abstract art that naturally complements the unique shape of your body. This is custom work, designed without rush, meant to live and age beautifully for decades.', 
     img: '/images/portfolio/geometric-wolf.jpg' 
   },
   { 
     id: '04', 
-    title: 'Evolution', 
-    desc: 'The art ages with you. We design for the decades, not just the day of the session.', 
+    title: 'A Safe Exhale', 
+    desc: 'The studio acts as a private sanctuary. It is a quiet, comfortable space to finally pause, feel truly seen, and let a piece of your journey be permanently etched in total peace.', 
     img: '/images/portfolio/lion-and-birds.jpg' 
   },
 ];
@@ -123,8 +123,8 @@ export function Block05Pillars() {
                     isExpanded ? 'scale-100' : 'scale-110'
                   }`}
                 />
-                {/* Light scrim to ensure text remains readable on image hover */}
-                <div className="absolute inset-0 bg-[#FDFFE9]/80 backdrop-blur-sm" />
+                {/* Gradient scrim: Solid at the bottom for text legibility, fading to transparent at the top for image clarity */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#FDFFE9] via-[#FDFFE9]/60 to-[#FDFFE9]/10 transition-opacity duration-[800ms]" />
               </div>
 
               {/* Top Label */}
