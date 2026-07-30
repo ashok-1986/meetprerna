@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,8 +8,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function TheHinge() {
   const textRef = useRef<HTMLHeadingElement>(null);
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
 
   useLayoutEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setShouldReduceMotion(mediaQuery.matches);
+
+    const listener = (event: MediaQueryListEvent) => {
+      setShouldReduceMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', listener);
+
     let mm: gsap.MatchMedia;
     const ctx = gsap.context(() => {
       mm = gsap.matchMedia();
@@ -35,6 +45,7 @@ export function TheHinge() {
       });
     }, textRef);
     return () => {
+      mediaQuery.removeEventListener('change', listener);
       mm?.revert();
       ctx.revert();
     };
@@ -45,15 +56,24 @@ export function TheHinge() {
       
       {/* Full Bleed Video Background with Poster Fallback */}
       <div className="absolute inset-0 w-full h-full bg-[#111111]">
-        <video 
-          src="/video/hinge-loop.mp4" 
-          poster="/images/hinge-poster.jpg"
-          autoPlay 
-          muted 
-          loop 
-          playsInline
-          className="w-full h-full object-cover"
-        />
+        {!shouldReduceMotion ? (
+          <video 
+            src="/video/hinge-loop.mp4" 
+            poster="/images/hinge-poster.jpg"
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            aria-hidden="true"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img 
+            src="/images/hinge-poster.jpg" 
+            alt="Prerna working in the studio" 
+            className="w-full h-full object-cover"
+          />
+        )}
         {/* Subtle scrim to ensure text legibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/80 via-transparent to-transparent" />
       </div>
