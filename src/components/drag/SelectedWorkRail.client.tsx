@@ -75,10 +75,10 @@ export function SelectedWorkRail() {
   };
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#111111] pt-28 pb-[15vh] overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-[#111111] pt-20 md:pt-28 pb-[10vh] md:pb-[15vh] overflow-hidden">
       
-      {/* Header - Massive margin-bottom added (mb-[120px]) to fix crowding */}
-      <div className="pl-6 md:pl-8 pr-6 md:pr-8 mb-[120px] flex flex-col md:flex-row justify-between items-start md:items-end">
+      {/* Header */}
+      <div className="pl-6 md:pl-8 pr-6 md:pr-8 mb-16 md:mb-[120px] flex flex-col md:flex-row justify-between items-start md:items-end">
         <div>
           <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/60 block mb-3">
             Selected Work
@@ -92,28 +92,32 @@ export function SelectedWorkRail() {
         </div>
       </div>
 
-      {/* Track - Massive vertical padding added (md:py-[150px]) to prevent clipping the 50% stagger */}
+      {/* Track with Native Touch + JS Mouse Drag */}
       <div 
         ref={sliderRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex gap-6 md:gap-8 overflow-x-auto no-scrollbar pl-6 md:pl-8 pr-6 md:pr-8 py-[100px] md:py-[150px] cursor-grab active:cursor-grabbing select-none ${
+        className={`flex gap-4 md:gap-8 overflow-x-auto touch-pan-x no-scrollbar pl-6 md:pl-8 pr-6 md:pr-8 py-12 md:py-[150px] cursor-grab active:cursor-grabbing select-none ${
           isDown ? 'cursor-grabbing' : ''
         }`}
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
       >
         {portfolioItems.map((item, index) => {
-          // THE 50% STAGGER LOGIC: 25% Up + 25% Down = 50% Delta
-          const waveOffset = index % 2 === 0 ? 'md:-translate-y-[25%]' : 'md:translate-y-[25%]';
+          // RESPONSIVE WAVE LOGIC:
+          // Mobile: Gentle 10% total wave (-5% / +5%)
+          // Desktop: Aggressive 50% total wave (-25% / +25%)
+          const waveOffset = index % 2 === 0 
+            ? '-translate-y-[5%] md:-translate-y-[25%]' 
+            : 'translate-y-[5%] md:translate-y-[25%]';
 
           return (
             <div 
               key={item.id}
-              className={`flex-none w-[320px] md:w-[460px] group relative flex flex-col ${waveOffset}`}
+              className={`flex-none w-[280px] md:w-[460px] group relative flex flex-col transition-transform duration-500 ${waveOffset}`}
             >
-              <div className="w-full h-[420px] md:h-[580px] bg-[#161618] overflow-hidden relative border border-white/10">
+              <div className="w-full h-[380px] md:h-[580px] bg-[#161618] overflow-hidden relative border border-white/10">
                 {item.type === 'video' ? (
                   <video 
                     src={item.src} 
@@ -131,12 +135,13 @@ export function SelectedWorkRail() {
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 group-hover:brightness-100"
                   />
                 )}
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+                {/* Desktop hover state, disabled on mobile via opacity-0 to avoid sticky tap states */}
+                <div className="hidden md:block absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
               </div>
               
               <div className="mt-4 flex justify-between items-baseline">
-                <span className="font-serif text-xl text-[#FDFFE9]">{item.title}</span>
-                <span className="font-mono text-[10px] tracking-[0.15em] text-white/50 uppercase">{item.category}</span>
+                <span className="font-serif text-lg md:text-xl text-[#FDFFE9]">{item.title}</span>
+                <span className="font-mono text-[9px] md:text-[10px] tracking-[0.15em] text-white/50 uppercase">{item.category}</span>
               </div>
             </div>
           );
