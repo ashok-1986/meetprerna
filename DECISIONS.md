@@ -254,6 +254,8 @@ Three routes exist. They are not equal and the inequality is deliberate.
 
 **Every primary CTA routes to `/consulting`.** Not to a `mailto:`, not to `wa.me`. The button says "Start a conversation", the page it opens is headed "Start a conversation", and the form on it is the thing that gets measured. One promoted path.
 
+*Exceptions: The Header CTA and Hero CTA (Block 01) are permitted to use a transparent background with a 1px solid border to prevent visual overcrowding, as defined in HOME-PRD.md.*
+
 **Why keep email and WhatsApp at all.** Press, commercial and collaboration enquiries are genuinely better suited to email — someone sending a rate card or a PDF should not be filling in a tattoo consultation form. And a small number of people will not use a web form under any circumstances. Both channels exist as escape hatches, findable by anyone who looks, promoted to nobody.
 
 **Why they stay small.** Every enquiry that arrives by WhatsApp or email is invisible to the funnel in §2. Fillout measures visitors, starts and completions at source; a WhatsApp message measures nothing. Splitting the funnel across three promoted channels would mean none of them is measurable. Concentrating on one and leaving the others discoverable is what makes the numbers mean anything.
@@ -597,11 +599,9 @@ Initial event set, deliberately small:
 
 ## 23. D16 — Headline reversal and the city line, owner corrections 2026-07-25
 
-**Headline.** `content.md` §2 recommended "She carries no studio. Only a needle, and everything she knows." and explicitly told the owner not to ship "Beyond Ink: Your Story, Translated into Abstract Art," calling it a stock tagline.
+**Headline (Updated 2026-07-30 by Owner Override):** The Hero H1 is officially locked as "Art that ages<br />Beautifully." (Two lines), superseding the older "Beyond Ink" recommendation.
 
-**Overridden.** The hero H1 ships as `Beyond Ink: Your Story, Translated into Abstract Art`, at `--text-display-xl`. The reasoning against it stands as written in `content.md` §2 for the record, and is overridden anyway. This is a brand-voice call, not a factual one, and the owner has the final word on how the site sounds.
-
-**The sub-line**, matching register: `Custom tattoos, original paintings and sketches: made in conversation, never in a rush.` Mirrors the H1's colon construction rather than dropping to plain prose underneath it, so the two lines read as one voice instead of a headline followed by a caption. If a different sub was intended by "similar," swap the clause after the colon; keep the colon and the "made in conversation" phrase, since that is the line doing the work the old sub-line's "wherever the work takes her" used to do.
+**The sub-line (Updated 2026-07-30):** `Tattoos look striking when fresh, but I design for the decades. Custom ink crafted for your unique contours, made in quiet conversation, and never in a rush.` (Matches the final PRD).
 
 **The city line — REMOVED from the header, 2026-07-27.**
 

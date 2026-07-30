@@ -45,11 +45,9 @@ Uses M20 (Rive), so the entry and the footer mark are the same 60KB file.
 
 Not a hamburger dropdown. A fullscreen type-led menu.
 
-Four items set in Fraunces at `display-l`, stacked, left-aligned, huge. Hovering an item does two things at once: the WONK axis animates 0 → 1 so the serifs turn hand-drawn (M19), and a piece of her work masks in on the right half (M16). Portfolio, Sanctuary, About, Contact.
+Four items set in Cormorant Garamond at `display-l`, stacked, left-aligned, huge. Hovering an item does two things at once: the WONK axis animates 0 → 1 so the serifs turn hand-drawn (M19), and a piece of her work masks in on the right half (M16). Portfolio, Sanctuary, About, Contact.
 
 "Start a conversation" is not in this menu. It stays a separate CTA, outside the pill on desktop and at the bottom of this panel on mobile, always pointing at `/consulting`. `DECISIONS.md` §9.
-
-Bottom edge carries the mono metadata: current city, next travel date, and a small "Start a conversation" link to `/consulting`.
 
 Open 280ms `drawer`. Close 180ms. Focus trapped, Escape closes, focus returns to the trigger.
 
@@ -110,13 +108,13 @@ Before any layout assumes full-bleed for the other three, confirm their shipped 
 
 | Blocks | Ground | Contains |
 |---|---|---|
-| 01 hero, 02 index, 02b thesis, 03 drag rail | `--color-ink` | The work. Tattoo photography sits properly on dark. |
-| **05b still band** | **the hinge** | Full-bleed photograph. See below. |
-| 05 pillars, 06 process, 08 voices, 09 where to find me, 10 close | `--color-ivory` | The words. Reading is easier on paper. |
+| 01 Hero, 02 Location Marquee, 03 Stats Grid, 04 Drag Rail | `--color-ink` | The work. Tattoo photography sits properly on dark. |
+| **04b The Still Band** | **the hinge** | Full-bleed photograph. See below. |
+| 05 The 4 Pillars, 06 Investment Teaser, 07 Voices, 08 Close | `--color-ivory` | The words. Reading is easier on paper. |
 
 **The hinge solves the hard problem.** A scroll-scrubbed background transition normally fails accessibility: somewhere in the middle you have ivory text on mid-grey at roughly 2:1, and that state can persist for several seconds of slow scrolling.
 
-Block 05b is a full-bleed photograph occupying the whole viewport. **Change the ground behind it, while it covers the screen.** Nothing is visible to transition, no intermediate state exists, and by the time the photo scrolls away the ground is already ivory. The image is the curtain.
+Block 04b is a full-bleed photograph occupying the whole viewport. **Change the ground behind it, while it covers the screen.** Nothing is visible to transition, no intermediate state exists, and by the time the photo scrolls away the ground is already ivory. The image is the curtain.
 
 No scrub, no crossfade, no intermediate contrast state. This is the entire implementation.
 
@@ -124,7 +122,7 @@ No scrub, no crossfade, no intermediate contrast state. This is the entire imple
 - Text `--color-ink` on `--color-ivory` — 16.4:1.
 - **The accent cannot be text on light.** `--color-inchworm` on ivory is roughly 2:1 and fails. On the light half the accent is fill-only: a filled inchworm button with `--color-ink` label (14.8:1), or a 2px underline. `DESIGN.md` §9.
 - The session line (M2) continues across the shift. Below the hinge it needs `--color-inchworm-deep`, not `--color-inchworm`, or it disappears into the paper.
-- Footer stays `--color-ink`. It grounds the page and stops the light half feeling like it runs off the bottom.
+- The footer inverts to background --color-inchworm with --color-ink text to act as a loud brand signature.
 
 **Degraded paths.** No JS: the ground is decided by section, in CSS, no observer required. Under `prefers-reduced-motion` nothing changes, because there is nothing animating. This mechanic is free in both.
 
