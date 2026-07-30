@@ -41,7 +41,7 @@ export function TheHinge() {
   }, []);
 
   return (
-    <section className="relative w-full h-[80svh] min-h-[600px] overflow-hidden bg-[#111111]">
+    <section className="relative w-full h-[100svh] overflow-hidden bg-[#111111]">
       
       {/* Full Bleed Video Background with Poster Fallback */}
       <div className="absolute inset-0 w-full h-full bg-[#111111]">
