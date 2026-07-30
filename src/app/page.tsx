@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Hero } from '@/components/hero/Hero.client'
+import { Marquee } from '@/components/marquee/Marquee.client'
 import { ThesisStats } from '@/components/proof/ThesisStats.client'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { TestimonialQuote } from '@/components/TestimonialQuote'
@@ -47,7 +48,7 @@ export default function Home() {
       <SessionLine />
       <Hero />
 
-
+      <Marquee />
 
       {/* Block 02b: Band + Stats */}
       <M3Reveal>
