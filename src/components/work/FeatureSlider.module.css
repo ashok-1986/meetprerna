@@ -4,6 +4,15 @@
   height: 100svh;
   overflow: hidden;
   background-color: #111111;
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+@media (min-width: 1024px) {
+  .sliderSection {
+    padding-top: 192px;
+    padding-bottom: 192px;
+  }
 }
 
 .slideContainer {
@@ -27,13 +36,14 @@
   opacity: 1;
   visibility: visible;
   z-index: 10;
+  transition: none;
 }
 
 .slideIncoming {
   opacity: 1;
   visibility: visible;
   z-index: 20;
-  clip-path: url(#ink-bleed-clip);
+  transition: none;
 }
 
 .slideImage {

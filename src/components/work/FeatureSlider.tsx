@@ -2,7 +2,13 @@
 
 import React, { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { CustomEase } from 'gsap/CustomEase';
 import styles from './FeatureSlider.module.css';
+
+gsap.registerPlugin(ScrollTrigger, CustomEase);
+
+const circleEase = CustomEase.create('circleEase', '0.77, 0, 0.175, 1');
 
 const slides = [
   {
@@ -40,6 +46,7 @@ export function FeatureSlider() {
 
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Check prefers-reduced-motion
   useEffect(() => {
@@ -65,22 +72,27 @@ export function FeatureSlider() {
       return;
     }
 
-    // Reset ink blot scale to 0
-    gsap.set('#ink-path', { attr: { transform: 'translate(0.5, 0.5) scale(0)' } });
+    const incomingEl = slideRefs.current[nextIndex];
+    if (!incomingEl) return;
+
+    // Reset incoming slide clip-path to circle(0% at 50% 50%)
+    gsap.set(incomingEl, { clipPath: 'circle(0% at 50% 50%)' });
 
     const tl = gsap.timeline({
       onComplete: () => {
         setActiveIndex(nextIndex);
         setIncomingIndex(null);
         setIsTransitioning(false);
+        // Clear clip-path properties to prevent render interference in other browsers
+        gsap.set(incomingEl, { clearProps: 'clipPath' });
       }
     });
 
-    // 1. Spreading Ink Blot Reveal
-    tl.to('#ink-path', {
-      attr: { transform: 'translate(0.5, 0.5) scale(4)' },
-      duration: 1.4,
-      ease: 'power2.inOut'
+    // 1. Spreading Circle Wipe Reveal (1000ms duration)
+    tl.to(incomingEl, {
+      clipPath: 'circle(150% at 50% 50%)',
+      duration: 1.0,
+      ease: circleEase
     });
   }, [activeIndex, isTransitioning, shouldReduceMotion]);
 
@@ -120,7 +132,7 @@ export function FeatureSlider() {
       if (titleChars) targets.push(...Array.from(titleChars));
       if (descChars) targets.push(...Array.from(descChars));
       
-      const delay = isTransitioning ? 0.8 : 0; // Sync with ink bleed (1.4s duration - 0.6s overlap)
+      const delay = isTransitioning ? 0.4 : 0; // Sync with circle wipe (1.0s duration - 0.6s overlap)
 
       gsap.fromTo(targets,
         { opacity: 0, y: 12 },
@@ -138,20 +150,7 @@ export function FeatureSlider() {
 
   return (
     <section className={styles.sliderSection} aria-label="Featured Works Gallery">
-      {/* SVG Ink Blot Mask Definition */}
-      <svg className="absolute w-0 h-0" aria-hidden="true">
-        <defs>
-          <clipPath id="ink-bleed-clip" clipPathUnits="objectBoundingBox">
-            <path
-              id="ink-path"
-              transform="translate(0.5, 0.5) scale(0)"
-              transform-origin="center"
-              d="M 0 0 C 0.25,-0.28 0.38,-0.12 0.46,0.16 C 0.52,0.44 0.28,0.38 0.12,0.46 C -0.16,0.52 -0.32,0.28 -0.42,0.12 C -0.48,-0.16 -0.28,-0.38 0,0 Z"
-            />
-          </clipPath>
-        </defs>
-      </svg>
-
+      
       {/* Slide Images Stack */}
       <div className={styles.slideContainer}>
         {slides.map((slide, idx) => {
@@ -163,7 +162,11 @@ export function FeatureSlider() {
           }
 
           return (
-            <div key={slide.id} className={className}>
+            <div 
+              key={slide.id} 
+              ref={el => { slideRefs.current[idx] = el; }}
+              className={className}
+            >
               <img
                 src={slide.src}
                 alt={slide.title}

@@ -72,7 +72,7 @@ export function TheHinge() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full h-[100svh] overflow-hidden bg-[#111111]">
+    <section ref={sectionRef} className="relative w-full h-[100svh] overflow-hidden bg-[#111111] py-[96px] lg:py-[192px]">
       
       {/* Full Bleed Video Background with Poster Fallback */}
       <div className="absolute inset-0 w-full h-full bg-[#111111] opacity-80">

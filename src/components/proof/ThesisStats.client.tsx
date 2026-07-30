@@ -42,7 +42,7 @@ export function ThesisStats() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#111111] py-24 md:py-32 px-6 md:px-8">
+    <section ref={sectionRef} className="w-full bg-[#111111] py-[96px] lg:py-[192px] px-6 md:px-8">
       <div className="flex flex-col md:flex-row justify-between w-full mx-auto max-w-[1800px]">
         
         {/* LEFT ANCHOR: Overline & Thesis */}
