@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -16,6 +16,109 @@ const portfolioItems = [
   { id: 7, title: 'Botanical Sleeve', type: 'image', src: '/images/portfolio/lion-and-birds.jpg', category: 'Custom / Full Sleeve' },
   { id: 8, title: 'Viper Contour', type: 'image', src: '/images/portfolio/wolf-red-geometric.jpg', category: 'Ornamental / Ribs' },
 ];
+
+interface PortfolioCardProps {
+  item: typeof portfolioItems[number];
+  waveOffset: string;
+}
+
+// Sub-component to handle per-card Intersection Observer & GSAP Stagger
+function PortfolioCard({ item, waveOffset }: PortfolioCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLSpanElement>(null);
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setShouldReduceMotion(mediaQuery.matches);
+
+    const listener = (event: MediaQueryListEvent) => {
+      setShouldReduceMotion(event.matches);
+    };
+    mediaQuery.addEventListener('change', listener);
+
+    if (mediaQuery.matches) {
+      return () => mediaQuery.removeEventListener('change', listener);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && titleRef.current) {
+            // Fire the extracted GSAP stagger animation
+            gsap.to(titleRef.current.children, {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.03,
+              ease: "power3.out",
+            });
+            observer.disconnect(); // Only animate once
+          }
+        });
+      },
+      { threshold: 0.2 } // Triggers when 20% of the card is visible
+    );
+
+    if (cardRef.current) observer.observe(cardRef.current);
+    
+    return () => {
+      mediaQuery.removeEventListener('change', listener);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <div 
+      ref={cardRef}
+      className={`flex-none w-[280px] md:w-[460px] group relative flex flex-col transition-transform duration-500 ${waveOffset}`}
+    >
+      <div className="w-full h-[380px] md:h-[580px] bg-[#161618] overflow-hidden relative border border-white/10">
+        {item.type === 'video' ? (
+          <video 
+            src={item.src} 
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 group-hover:brightness-100"
+          />
+        ) : (
+          <img 
+            src={item.src} 
+            alt={item.title} 
+            draggable={false}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 group-hover:brightness-100"
+          />
+        )}
+        {/* Desktop hover state, disabled on mobile via opacity-0 to avoid sticky tap states */}
+        <div className="hidden md:block absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+      </div>
+      
+      <div className="mt-4 flex justify-between items-baseline overflow-hidden">
+        {/* Split Text for GSAP Target */}
+        <span ref={titleRef} className="font-serif text-lg md:text-xl text-[#FDFFE9] flex">
+          {!shouldReduceMotion ? (
+            item.title.split('').map((char: string, i: number) => (
+              <span 
+                key={i} 
+                className="inline-block opacity-0 translate-y-[20px]"
+                style={{ whiteSpace: 'pre' }}
+              >
+                {char}
+              </span>
+            ))
+          ) : (
+            item.title
+          )}
+        </span>
+        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.15em] text-white/50 uppercase shrink-0 ml-4">
+          {item.category}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export function SelectedWorkRail() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -113,37 +216,11 @@ export function SelectedWorkRail() {
             : 'translate-y-[5%] md:translate-y-[25%]';
 
           return (
-            <div 
-              key={item.id}
-              className={`flex-none w-[280px] md:w-[460px] group relative flex flex-col transition-transform duration-500 ${waveOffset}`}
-            >
-              <div className="w-full h-[380px] md:h-[580px] bg-[#161618] overflow-hidden relative border border-white/10">
-                {item.type === 'video' ? (
-                  <video 
-                    src={item.src} 
-                    autoPlay 
-                    muted 
-                    loop 
-                    playsInline
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 group-hover:brightness-100"
-                  />
-                ) : (
-                  <img 
-                    src={item.src} 
-                    alt={item.title}
-                    draggable={false}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 group-hover:brightness-100"
-                  />
-                )}
-                {/* Desktop hover state, disabled on mobile via opacity-0 to avoid sticky tap states */}
-                <div className="hidden md:block absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
-              </div>
-              
-              <div className="mt-4 flex justify-between items-baseline">
-                <span className="font-serif text-lg md:text-xl text-[#FDFFE9]">{item.title}</span>
-                <span className="font-mono text-[9px] md:text-[10px] tracking-[0.15em] text-white/50 uppercase">{item.category}</span>
-              </div>
-            </div>
+            <PortfolioCard 
+              key={item.id} 
+              item={item} 
+              waveOffset={waveOffset} 
+            />
           );
         })}
       </div>
