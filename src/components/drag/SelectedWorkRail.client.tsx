@@ -75,10 +75,10 @@ export function SelectedWorkRail() {
   };
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#111111] pt-28 pb-48 md:pb-[20vh] overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-[#111111] pt-28 pb-[15vh] overflow-hidden">
       
-      {/* Header */}
-      <div className="pl-6 md:pl-8 pr-6 md:pr-8 mb-20 flex flex-col md:flex-row justify-between items-start md:items-end">
+      {/* Header - Massive margin-bottom added (mb-[120px]) to fix crowding */}
+      <div className="pl-6 md:pl-8 pr-6 md:pr-8 mb-[120px] flex flex-col md:flex-row justify-between items-start md:items-end">
         <div>
           <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/60 block mb-3">
             Selected Work
@@ -92,21 +92,21 @@ export function SelectedWorkRail() {
         </div>
       </div>
 
-      {/* Track */}
+      {/* Track - Massive vertical padding added (md:py-[150px]) to prevent clipping the 50% stagger */}
       <div 
         ref={sliderRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex gap-6 md:gap-8 overflow-x-auto no-scrollbar pl-6 md:pl-8 pr-6 md:pr-8 py-8 cursor-grab active:cursor-grabbing select-none ${
+        className={`flex gap-6 md:gap-8 overflow-x-auto no-scrollbar pl-6 md:pl-8 pr-6 md:pr-8 py-[100px] md:py-[150px] cursor-grab active:cursor-grabbing select-none ${
           isDown ? 'cursor-grabbing' : ''
         }`}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {portfolioItems.map((item, index) => {
-          // THE WAVE LOGIC: Alternating -ve and +ve offsets
-          const waveOffset = index % 2 === 0 ? 'md:-translate-y-8' : 'md:translate-y-12';
+          // THE 50% STAGGER LOGIC: 25% Up + 25% Down = 50% Delta
+          const waveOffset = index % 2 === 0 ? 'md:-translate-y-[25%]' : 'md:translate-y-[25%]';
 
           return (
             <div 
