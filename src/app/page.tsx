@@ -5,7 +5,7 @@ import { ThesisStats } from '@/components/proof/ThesisStats.client'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { TestimonialQuote } from '@/components/TestimonialQuote'
 import { SessionLine } from '@/components/session/SessionLine.client'
-import { SelectedWorkRail } from '@/components/drag/SelectedWorkRail.client'
+import { FeatureSlider } from '@/components/work/FeatureSlider'
 import { PillarScrub } from '@/components/pillars/PillarScrub.client'
 import { TheHinge } from '@/components/hinge/TheHinge'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
@@ -56,9 +56,9 @@ export default function Home() {
         <ThesisStats />
       </M3Reveal>
 
-      {/* Block 04: Drag rail */}
+      {/* Block 04: Premium Image Slider */}
       <M3Reveal>
-        <SelectedWorkRail />
+        <FeatureSlider />
       </M3Reveal>
 
       {/* Block 04b: The Hinge / Still Band */}
