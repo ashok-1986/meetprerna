@@ -40,76 +40,39 @@ function splitText(el: HTMLElement) {
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null)
-  const ctaRef = useRef<HTMLAnchorElement>(null)
-  const photoRef = useRef<HTMLDivElement>(null)
   const headlineRef = useRef<HTMLHeadingElement>(null)
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // --- 1. Split headline text into .word/.char spans ---
-      // CSS enforces .char { translateY(120%) } and .word { overflow:hidden }
-      // so the text is invisible the instant the DOM mutates — before paint.
+      // 1. Split headline text into .word/.char spans
       if (headlineRef.current) {
         const lines = headlineRef.current.querySelectorAll('.heroHeadline-line')
         lines.forEach(line => splitText(line as HTMLElement))
       }
 
-      // --- 2. FOUC PREP: ensure chars are pushed down, wrappers are styled ---
-      gsap.set('.heroHeadline .word', { overflow: 'hidden', verticalAlign: 'bottom', display: 'inline-block' })
+      // 2. FOUC PREP: Push chars down BEFORE turning on opacity
+      gsap.set('.heroHeadline .word', { overflow: 'hidden', verticalAlign: 'bottom', display: 'inline-block', whiteSpace: 'nowrap' })
       gsap.set('.heroHeadline .char', { y: '120%', display: 'inline-block' })
 
-      // --- 3. Make H1 parent visible (chars remain hidden by word overflow clip) ---
+      // 3. Make parent wrappers visible (text remains hidden by the transform above)
       gsap.set('.heroHeadline', { opacity: 1 })
 
-      // --- 4. Photo mask initial state ---
-      if (photoRef.current) {
-        gsap.set(photoRef.current, { scale: 1.15 })
-        const initVal = 'radial-gradient(circle 0% at 50% 50%, black 100%, transparent 100%)'
-        photoRef.current.style.maskImage = initVal
-        photoRef.current.style.webkitMaskImage = initVal
-      }
-
-      // --- 5. Motion branch ---
+      // 4. Motion branch
       const mm = gsap.matchMedia()
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         // MASTER TIMELINE WITH PIN
-        // GSAP physically locks .gs-hero-camera to the viewport for +=100% of scroll.
-        // This bypasses the parent overflow:hidden that breaks CSS sticky.
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: containerRef.current,   // .gs-hero-track
+            trigger: '.gs-hero-track',
             start: 'top top',
-            end: '+=100%',                   // 100vh of scroll distance
-            pin: '.gs-hero-camera',          // GSAP pins the camera
+            end: '+=100%',
+            pin: '.gs-hero-camera',
             scrub: true,
           }
         })
 
-        // FIRST HALF (0 → 0.5): Photo reveal + Text reveal
-        // Photo mask expansion
-        const maskProxy = { spread: 0 }
-        tl.to(maskProxy, {
-          spread: 150,
-          duration: 0.5,
-          ease: CustomEase.create('custom', '0.23, 1, 0.32, 1'),
-          onUpdate: () => {
-            if (photoRef.current) {
-              const val = `radial-gradient(circle ${maskProxy.spread}% at 50% 50%, black 100%, transparent 100%)`
-              photoRef.current.style.maskImage = val
-              photoRef.current.style.webkitMaskImage = val
-            }
-          }
-        }, 0)
-
-        // Photo zoom settle
-        tl.to(photoRef.current, {
-          scale: 1.0,
-          duration: 0.5,
-          ease: CustomEase.create('custom2', '0.23, 1, 0.32, 1'),
-        }, 0)
-
-        // Characters rise from y:120% to y:0%
+        // FIRST HALF (0 → 0.5): Text + photo reveal
         tl.to('.heroHeadline .char', {
           y: '0%',
           stagger: 0.04,
@@ -117,7 +80,6 @@ export function Hero() {
           duration: 0.5,
         }, 0)
 
-        // Subhead + CTA fade in
         tl.fromTo(['.gs-subhead', '.gs-cta'],
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, stagger: 0.1, ease: 'none', duration: 0.5 },
@@ -139,16 +101,10 @@ export function Hero() {
       })
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        // Show everything immediately, no animation, no pinning
         gsap.set('.heroHeadline', { opacity: 1 })
         gsap.set('.heroHeadline .char', { y: '0%' })
         gsap.set('.gs-subhead', { y: 0, opacity: 1 })
-        gsap.set(ctaRef.current, { y: 0, opacity: 1 })
-        if (photoRef.current) {
-          gsap.set(photoRef.current, { scale: 1.0 })
-          photoRef.current.style.maskImage = 'none'
-          photoRef.current.style.webkitMaskImage = 'none'
-        }
+        gsap.set('.gs-cta', { y: 0, opacity: 1 })
       })
     }, containerRef)
 
@@ -157,6 +113,7 @@ export function Hero() {
 
   return (
     <section ref={containerRef} className={`${styles.hero} gs-hero-track`}>
+      {/* FOUC Guard: Restores visibility if JS is disabled */}
       <noscript>
         <style>{`
           .opacity-0 { opacity: 1 !important; }
@@ -167,48 +124,46 @@ export function Hero() {
       {/* The Camera — GSAP pin: true locks this to the viewport */}
       <div className={`${styles.heroCamera} gs-hero-camera`}>
 
-        {/* Image Layer */}
-        <div className={styles.heroPhotoWrap}>
-          <div ref={photoRef} className={styles.heroPhoto}>
-            <Image
-              src="/images/hero/prerna-hero.jpeg"
-              alt="Prerna, hands resting on her own face, tattoo visible across her chest"
-              fill
-              priority
-              style={{ objectFit: 'cover' }}
-            />
-          </div>
-          {/* Dimmer overlay for M23 exit */}
-          <div className="gs-hero-dimmer absolute inset-0 bg-black opacity-0 pointer-events-none"></div>
+        {/* Image & Scrim Layer */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <Image
+            src="/images/hero/prerna-hero.jpeg"
+            alt="Prerna, hands resting on her own face, tattoo visible across her chest"
+            fill
+            priority
+            style={{ objectFit: 'cover' }}
+          />
+          {/* Bottom scrim for right-anchor text readability */}
+          <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-[1]"></div>
+          {/* M23 dimmer overlay */}
+          <div className="gs-hero-dimmer absolute inset-0 bg-black opacity-0 z-[2]"></div>
         </div>
 
-        {/* Content Layer */}
-        <div className="relative z-10 flex flex-col justify-end w-full h-full max-w-[1440px] mx-auto px-4 md:px-8 pb-24 md:pb-32">
+        {/* NEXUM-STYLE TWO-ANCHOR CONTENT LAYER */}
+        <div className="relative z-10 flex flex-col md:flex-row md:justify-between md:items-end w-full h-full px-6 md:px-8 pb-16 md:pb-20">
 
-          {/* Subhead */}
-          <p className="gs-subhead opacity-0 text-left w-full max-w-md text-white mb-4">
-            {site.hero.subheadLines.map((line, i) => (
-              <span key={i} className={`block ${i === 0 ? 'mb-2' : ''}`}>{line}</span>
-            ))}
-          </p>
+          {/* LEFT ANCHOR: Headline — flex-none prevents Flexbox from squishing */}
+          <div className="flex-none">
+            <h1
+              ref={headlineRef}
+              aria-label={site.hero.headingAria}
+              className={`${styles.heroHeadline} heroHeadline opacity-0 text-white font-serif tracking-tighter leading-[0.9] text-[clamp(3rem,9.5vw,10rem)] m-0 whitespace-nowrap`}
+            >
+              {site.hero.headingLines.map((line, i) => (
+                <span key={i} className="heroHeadline-line block" aria-hidden="true">{line}</span>
+              ))}
+            </h1>
+          </div>
 
-          {/* Headline */}
-          <h1
-            ref={headlineRef}
-            aria-label={site.hero.headingAria}
-            className={`${styles.heroHeadline} heroHeadline opacity-0 w-full text-left text-white font-serif tracking-tighter leading-[0.8] text-[clamp(3.25rem,12vw,15rem)] m-0 p-0`}
-          >
-            {site.hero.headingLines.map((line, i) => (
-              <span key={i} className="heroHeadline-line block" aria-hidden="true">{line}</span>
-            ))}
-          </h1>
-
-          {/* CTA */}
-          <div className="gs-cta opacity-0 pt-6 m-0">
+          {/* RIGHT ANCHOR: Subhead & CTA */}
+          {/* Pushed right by justify-between, but text remains left-aligned internally */}
+          <div className="w-full md:max-w-[42ch] flex flex-col items-start text-left mt-8 md:mt-0 md:pb-4">
+            <p className="gs-subhead opacity-0 text-white/90 text-[1.125rem] leading-relaxed mb-8">
+              {site.hero.subheadLines.join(' ')}
+            </p>
             <Link
-              ref={ctaRef}
               href="/consulting"
-              className="text-white border border-white rounded-full px-6 py-2 inline-block hover:bg-white hover:text-black transition-colors duration-300"
+              className="gs-cta opacity-0 inline-flex items-center justify-center px-6 py-3 rounded-full border border-[#C4FF61] text-[#C4FF61] hover:bg-[#C4FF61] hover:text-black transition-colors font-medium"
             >
               {site.hero.cta}
             </Link>

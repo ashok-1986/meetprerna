@@ -26,7 +26,7 @@ These are the defects found in v1.0. Each has a locked resolution below.
 |---|---|---|---|
 | C1 | `PRD.md` §2.1 G1 vs §2.3 | G1 targets 18 booked calls per 1,000 sessions. The north star says 1 per 1,000. An 18x gap. | Blocking |
 | C2 | `PRD.md` §2.2 P5 vs §6.1 vs §8 Phase 2 | P5 promises "zero engineer hours for content updates". §6.1 locks static typed files (git push required). Phase 2 scope and gate both reference Sanity schemas and a 60s CMS round-trip. | Blocking |
-| C3 | `designs.md` §2.4 | `--color-ink-50` (`#545454`) on `--color-ink` (`#1A1A1A`) is listed at 3.2:1. Actual measured ratio is **2.34:1**. It fails the 3:1 minimum for non-text UI. | Blocking |
+| C3 | `designs.md` §2.4 | `--color-ink-50` (`#545454`) on `--color-ink` (`#111111`) is listed at 3.2:1. Actual measured ratio is **2.34:1**. It fails the 3:1 minimum for non-text UI. | Blocking |
 | C4 | `designs.md` §2.1 | `--color-ink-20` (`#3a3a3a`) is darker than `--color-ink-50` (`#545454`), and is within 2 hex points of `--color-ink-70` (`#363636`). The scale is non-monotonic and has two near-duplicate tokens. | Blocking |
 | C5 | `designs.md` §2.1 vs `INDEX.md` §5 | INDEX claims "the one accent". The palette ships two neons 20 degrees apart (`#C4FF61`, `#EAFF27`). Two loud signals mean neither says "act here". | Medium — **partially resolved, see D3** |
 | C6 | `PRD.md` §7.2, §5.2 vs reality | PRD writes "a sunlit studio in Vashi", a map embed and `LocalBusiness` JSON-LD. Prerna owns no studio. She works on collaboration with partner studios in Mumbai and Navi Mumbai, and travels. | Blocking — **resolved, see D7** |
@@ -92,7 +92,7 @@ The discipline moves from hue to **quantity, placement and pacing**, which are e
 
 | Token | Hex | Ratio on `--color-ink` | Role |
 |---|---|---|---|
-| `--color-ink` | `#1A1A1A` | base | canvas |
+| `--color-ink` | `#111111` | base | canvas |
 | `--color-ink-100` | `#212121` | 1.1:1 | raised surface |
 | `--color-ink-200` | `#2A2A2A` | 1.2:1 | hover surface |
 | `--color-ink-300` | `#363636` | 1.4:1 | decorative hairline only |
@@ -290,11 +290,11 @@ Fillout renders in an iframe. `tokens.css` cannot reach inside it. Matching the 
 
 | Fillout setting | Value | Matches |
 |---|---|---|
-| Background | `#1A1A1A` | `--color-ink` |
+| Background | `#111111` | `--color-ink` |
 | Text | `#FDFFE9` | `--color-ivory` |
 | Muted / helper text | `#C9CBB6` | `--color-ivory-dim` |
 | Button / accent | `#C4FF61` | `--color-inchworm` |
-| Button text | `#1A1A1A` | `--color-ink` (dark label on the filled accent, 14.8:1) |
+| Button text | `#111111` | `--color-ink` (dark label on the filled accent, 14.8:1) |
 | Button hover / pressed | `#9FCC4A` | `--color-inchworm-deep` |
 | Input border | `#363636` | `--color-ink-300` |
 | Input border, focus | `#C4FF61` | `--color-inchworm` |

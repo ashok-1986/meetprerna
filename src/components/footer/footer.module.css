@@ -134,7 +134,7 @@
 }
 
 /* Tier 3 — quietest element on the footer. 0.65, not 0.60: measured
-   against --color-ink (#1A1A1A), 0.60 lands near 4.3:1 and fails AA
+   against --color-ink (#111111), 0.60 lands near 4.3:1 and fails AA
    for small text; 0.65 lands near 5.1:1. Verified by the a11y suite,
    not just the arithmetic. */
 .creditRow {

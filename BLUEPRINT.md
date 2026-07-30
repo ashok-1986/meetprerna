@@ -61,19 +61,17 @@ This is the single biggest personality lever on the site and it costs almost not
 
 | # | Block | From | What it is | Moves |
 |---|---|---|---|---|
-| 01 | **Hero: full-bleed portrait** | **Aust (type-led) + OFF+BRAND (mask reveal)** | `prerna-hero.jpeg`, full-bleed at 150svh. She sits right of centre with near-black negative space to her left; the headline occupies that space. Reveals via M16, headline assembles over it via M1. **Change history:** drag-to-reveal removed (no bare-limb pair); changed to load-based reveal. | M16, M1 |
-| 02b | **Thesis + credibility strip** | Floema + **Athletics (two-anchor)** | "Ink that goes deeper than skin." with the four-figure strip beside it: 500+ completed, 100+ custom, Since 2021, Fine Arts. Figures in `--color-ivory`, NOT accent — four accent elements in one viewport breaks the budget in `DESIGN.md` §4. Server-rendered, never counted up in JS. **Widen to the two-anchor gutters** rather than the 1200px cap, `DESIGN.md` §12. Copy in `content.md` §4. | M3 |
-| 03 | **Selected work, drag rail** | **Lando (drag nav) + Torch (video)** | Horizontal drag through 8 pieces. Every third card is a silent 6s loop of the needle working instead of a still. Momentum on release, damping at the ends, visible arrows as well. | M18, M13, M6 |
-| 04 | **Fresh → healed** | **Lando (drag reveal). The signature.** | One piece, huge, with a draggable divider. Left is day zero. Right is four weeks healed. Mono caption gives the interval. Six pairs confirmed, so this rotates. Nothing else in Mumbai answers "what will it look like in a year". | M15 |
-| 05 | The practice | Floema (editorial pacing) + **Athletics (two-anchor)** | Slow register begins. Four pillars in the **two-anchor mode**, `DESIGN.md` §12: pillar name at `--text-display-xl` pinned to the left gutter, its single sentence pinned right, middle left empty. **At least two pillars visible per viewport at 1440** — NOT one each. Sections are content-height, never 100vh. `DESIGN.md` §12. **No image per pillar** — the empty middle is the design and an image collapses it. No icons. Copy in `content.md` §4. | M3, M4 |
-| 05b | **The still band** | Torch (full-bleed section block) | **Changed 2026-07-26: no video.** Full-bleed black-and-white still of Prerna working (`prerna-hero.jpeg`), ~80svh, with two lines over it: "She has never done the same thing twice." then "On purpose." in solid accent. Slow register. No `<video>` element, no poster attribute, no playback logic — a dead element pointing at nothing is worse than no element. If footage ever exists, M13 layers over the still without changing the markup around it. | M3 |
-| 06 | Process | Floema (numbering on a real sequence) + Torch (webm) | `01 Conversation` to `05 Aftercare`. Three of the five carry a silent loop. Numbering is honest here because it is a real sequence. | M3, M13 |
-| 07 | **The Sketchbook** | **Lando ("Helmets Hall of Fame")** | See §5. Replaces the flash sheet. Lives inside `/portfolio`, filtered to Sketch, and gets its own scattered treatment here on Home as a teaser. | M17 |
-| 08 | Voices | Torch (pull-quote cards) | Three large quote cards, not a carousel. Name, city, source link. One line above: some clients know her as Alza. | M3, M5 |
-| 09 | Where to find me | Torch (footer marquee) | Continuous marquee of partner studios and travel cities. Pauses on hover. Duplicate is `aria-hidden`. Static list under reduced motion. | M10 |
-| 10 | Close | Lando (Rive) | The mark redraws. One CTA. The session line M2 terminates here as its underline. | M20, M2 |
+| 01 | **Hero** | **Nexum (Two-Anchor layout)** | Full-bleed portrait background image, sticky camera pinned via GSAP, Two-Anchor layout (H1 bottom-left, subhead+CTA bottom-right). FOUC guard, flex-none/whitespace-nowrap on H1. | M1, M23 |
+| 02 | **Location Marquee** | **Torch Systems** | Full-width marquee band, dark background, repeated location text ("Mumbai · Navi Mumbai · Travelling Artist") in JetBrains Mono. Pauses on hover, duplicate is `aria-hidden`. | M10 |
+| 03 | **Stats Grid** | **Athletics (Two-Anchor)** | Two-Anchor. Left: Thesis. Right: 2x2 grid with thin hairlines between cells. Standard static figures (no JS counters), hover background fill with offset. | M3, M4 |
+| 04 | **Selected Work Drag Rail** | **Lando (drag nav) + Torch (video)** | Horizontal drag rail breaking the right bound. 8 pieces, every 3rd card is looping silent video. Native scroll + JS pointer drag physics. | M18, M13, M6 |
+| 04b | **The Still Band** | **Torch (full-bleed section block)** | Full-bleed portrait still. Acts as the Hinge ground-shift (Dark ground `--color-ink` -> Light ground `--color-ivory`). Left-aligned two-line text. | M3 |
+| 05 | **The 4 Pillars Teaser** | **Athletics (Two-Anchor) on Light Ground** | Two-Anchor layout. Left: Pillar name. Right: Short teaser sentence. | M3, M4 |
+| 06 | **Investment Teaser** | **Athletics (Two-Anchor)** | Two-Anchor layout. Left: "Investment". Right: pricing teaser text pointing to the pricing/process guide on `/sanctuary`. | M3 |
+| 07 | **Voices (Testimonials)** | **Torch (pull-quote cards)** | 3 large testimonial cards. Includes credit line "Some earlier clients knew her as Alza." | M3, M5 |
+| 08 | **Close** | **Lando (Rive)** | Single clear call to action to "/consulting". | M20, M2 |
 
-Ten blocks. Blocks 01, 03, 04 and 07 are physical register. Blocks 05, 06 and 08 are slow register. They never share a viewport.
+Nine blocks total. Blocks 01, 03, and 04 are physical register (Dark ground). Blocks 05, 06, and 07 are slow register (Light ground). Block 04b is the Hinge ground shift.
 
 ---
 

@@ -1,7 +1,7 @@
 /* src/styles/tokens.css — the only place colour exists */
 :root {
   /* Surfaces, monotonic light to dark */
-  --color-ink:        #1A1A1A;  /* base canvas */
+  --color-ink:        #111111;  /* base canvas */
   --color-ink-100:    #212121;  /* raised: cards, dialogs */
   --color-ink-200:    #2A2A2A;  /* hover surface */
   --color-ink-300:    #363636;  /* decorative hairline ONLY, 1.4:1 */

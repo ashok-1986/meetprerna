@@ -20,7 +20,7 @@ So the neon stays and the discipline moves to **quantity, placement and pacing**
 
 These are defects in `designs.md` §2.1 and §2.4, not preferences.
 
-**One.** `--color-ink-50` `#545454` on `--color-ink` `#1A1A1A` is documented at 3.2:1. Measured, it is **2.34:1**. It fails the 3:1 floor for non-text UI, which is what it is used for (disabled controls, borders). Replaced with `#6B6B6B` at **3.27:1**.
+**One.** `--color-ink-50` `#545454` on `--color-ink` `#111111` is documented at 3.2:1. Measured, it is **2.34:1**. It fails the 3:1 floor for non-text UI, which is what it is used for (disabled controls, borders). Replaced with `#6B6B6B` at **3.27:1**.
 
 **Two.** The grey scale is not monotonic. `ink-20` `#3a3a3a` is *darker* than `ink-50` `#545454`, and sits two hex points from `ink-70` `#363636`. Two near-identical tokens with contradictory names. An agent will pick the wrong one. Renumbered below.
 
@@ -34,7 +34,7 @@ These are defects in `designs.md` §2.1 and §2.4, not preferences.
 /* src/styles/tokens.css — the only place colour exists */
 :root {
   /* Surfaces, monotonic light to dark */
-  --color-ink:        #1A1A1A;  /* base canvas */
+  --color-ink:        #111111;  /* base canvas */
   --color-ink-100:    #212121;  /* raised: cards, dialogs */
   --color-ink-200:    #2A2A2A;  /* hover surface */
   --color-ink-300:    #363636;  /* decorative hairline ONLY, 1.4:1 */

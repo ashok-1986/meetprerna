@@ -19,7 +19,7 @@ function getContrast(hex1, hex2) {
 }
 
 const colors = {
-  ink: '#1A1A1A',
+  ink: '#111111',
   ink500: '#6B6B6B',
   ivory: '#FDFFE9',
   ivoryDim: '#C9CBB6', // Not used on light background, ink500 is used instead

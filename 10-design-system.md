@@ -7,7 +7,7 @@ Full spec: `@/DESIGN.md`. Motion: `@/.agents/rules/20-motion-performance.md`.
 `src/styles/tokens.css`. No raw hex, rgb or hsl anywhere else. Not in a component, not in a Tailwind class, not in a shader uniform default.
 
 ```css
---color-ink:        #1A1A1A;   /* canvas */
+--color-ink:        #111111;   /* canvas */
 --color-ink-100:    #212121;   /* raised */
 --color-ink-200:    #2A2A2A;   /* hover surface */
 --color-ink-300:    #363636;   /* decorative hairline ONLY, 1.4:1 */
