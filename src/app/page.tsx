@@ -3,14 +3,12 @@ import { Hero } from '@/components/hero/Hero.client'
 import { Marquee } from '@/components/marquee/Marquee.client'
 import { ThesisStats } from '@/components/proof/ThesisStats.client'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
-import { TestimonialQuote } from '@/components/TestimonialQuote'
 import { SessionLine } from '@/components/session/SessionLine.client'
 import { FeatureSlider } from '@/components/work/FeatureSlider'
 import { Block05Pillars } from '@/components/pillars/Block05Pillars'
 import { TheHinge } from '@/components/hinge/TheHinge'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
-
-import { testimonials } from '@/content/testimonials'
+import { Voices } from '@/components/voices/Voices'
 import styles from './page.module.css'
 
 const PROCESS_STEPS = [
@@ -22,7 +20,7 @@ const PROCESS_STEPS = [
 ] as const
 
 export default function Home() {
-  const homeTestimonials = testimonials.slice(0, 3)
+
 
   return (
     <main id="main-content" className={styles.page}>
@@ -77,19 +75,9 @@ export default function Home() {
           </section>
         </M3Reveal>
 
-        {/* Block 08: Voices */}
+        {/* Block 07: Voices */}
         <M3Reveal>
-          <section aria-labelledby="voices-heading" className={styles.block}>
-            <span className={styles.sectionLabel}>Voices</span>
-            <h2 id="voices-heading" className={styles.sectionHeading}>
-              Some clients know me as Alza.
-            </h2>
-            <div className={styles.voices}>
-              {homeTestimonials.map((t) => (
-                <TestimonialQuote key={t.id} testimonial={t} />
-              ))}
-            </div>
-          </section>
+          <Voices />
         </M3Reveal>
 
         {/* Block 09: Where to find me */}
