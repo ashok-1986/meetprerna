@@ -102,7 +102,7 @@ export function TheHinge() {
 
       {/* LAYER 3: Cutout Portrait (z-20) */}
       <img 
-        src="/images/prerna-cutout.png" 
+        src="/images/prerna-cutout.jpg" 
         alt="Prerna Portrait" 
         className="hinge-reveal pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 z-20 h-[85%] md:h-[95%] w-auto object-contain drop-shadow-2xl"
       />
