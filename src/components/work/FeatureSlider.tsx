@@ -45,6 +45,7 @@ export function FeatureSlider() {
   const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
 
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Check prefers-reduced-motion
@@ -87,10 +88,10 @@ export function FeatureSlider() {
       }
     });
 
-    // 1. Spreading Circle Wipe Reveal (1000ms duration)
+    // 1. Spreading Circle Wipe Reveal (1500ms duration per user requirement)
     tl.to(incomingEl, {
       clipPath: 'circle(150% at 50% 50%)',
-      duration: 1.0,
+      duration: 1.5,
       ease: circleEase
     });
   }, [activeIndex, isTransitioning, shouldReduceMotion]);
@@ -111,9 +112,13 @@ export function FeatureSlider() {
   useLayoutEffect(() => {
     if (shouldReduceMotion) return;
     const titleChars = titleRef.current?.children;
-    if (titleChars) {
-      const targets = Array.from(titleChars);
-      const delay = isTransitioning ? 0.4 : 0; // Sync with circle wipe (1.0s duration - 0.6s overlap)
+    const descChars = descRef.current?.children;
+    if (titleChars || descChars) {
+      const targets = [];
+      if (titleChars) targets.push(...Array.from(titleChars));
+      if (descChars) targets.push(...Array.from(descChars));
+      
+      const delay = isTransitioning ? 0.9 : 0; // Sync with circle wipe (1.5s duration - 0.6s overlap)
 
       gsap.fromTo(targets,
         { opacity: 0, y: 12 },
@@ -160,10 +165,9 @@ export function FeatureSlider() {
           );
         })}
 
-        {/* Minimalist Editorial Overlays */}
+        {/* Typography Overlay - Frosted Glass Card */}
         <div className={styles.overlayContainer}>
-          {/* Subtle Centered Title */}
-          <div className={styles.titleContainer}>
+          <div className={styles.glassCard} onClick={(e) => e.stopPropagation()}>
             <h3 ref={titleRef} className={styles.title}>
               {!shouldReduceMotion ? (
                 slides[textIndex].title.split('').map((char, i) => (
@@ -179,9 +183,45 @@ export function FeatureSlider() {
                 slides[textIndex].title
               )}
             </h3>
+            <p ref={descRef} className={styles.description}>
+              {!shouldReduceMotion ? (
+                slides[textIndex].description.split('').map((char, i) => (
+                  <span
+                    key={i}
+                    className="inline-block opacity-0 translate-y-[12px]"
+                    style={{ whiteSpace: 'pre' }}
+                  >
+                    {char}
+                  </span>
+                ))
+              ) : (
+                slides[textIndex].description
+              )}
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom Nav Bar with Frosted Glass UI */}
+        <div className={styles.bottomNav} onClick={(e) => e.stopPropagation()}>
+          <span className={styles.navMeta}>FEATURED PORTFOLIO</span>
+          
+          <div className={styles.navItems}>
+            {slides.map((slide, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <button
+                  key={slide.id}
+                  onClick={() => changeSlide(idx)}
+                  disabled={isTransitioning}
+                  className={`${styles.navButton} ${isActive ? styles.navButtonActive : ''}`}
+                  aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
+                >
+                  {slide.title}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Minimal Counter in bottom corner */}
           <div className={styles.counter}>
             {String(textIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
           </div>
