@@ -7,14 +7,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const portfolioItems = [
-  { id: 1, title: 'Brushstroke Butterfly', type: 'image', src: '/images/portfolio/brushstroke-butterfly.jpg', category: 'Fine Line / Butterfly' },
-  { id: 2, title: 'Peony Back', type: 'image', src: '/images/portfolio/peony-back.jpg', category: 'Floral / Back' },
+  { id: 1, title: 'Serpentine Spine', type: 'image', src: '/images/portfolio/peony-back.jpg', category: 'Fine Line / Spine' },
+  { id: 2, title: 'Abstract Flora', type: 'image', src: '/images/portfolio/brushstroke-butterfly.jpg', category: 'Abstract / Forearm' },
   { id: 3, title: 'Process Study 01', type: 'video', src: '/video/process-1.mp4', category: 'Motion / Study' },
-  { id: 4, title: 'Geometric Wolf', type: 'image', src: '/images/portfolio/geometric-wolf.jpg', category: 'Geometric / Arm' },
-  { id: 5, title: 'Buddha Lotus', type: 'image', src: '/images/portfolio/buddha-lotus.jpg', category: 'Spiritual / Back' },
+  { id: 4, title: 'Geometric Panther', type: 'image', src: '/images/portfolio/geometric-wolf.jpg', category: 'Blackwork / Thigh' },
+  { id: 5, title: 'Kharghar Study', type: 'image', src: '/images/portfolio/buddha-lotus.jpg', category: 'Minimalist / Wrist' },
   { id: 6, title: 'Needle Depth Test', type: 'video', src: '/video/process-2.mp4', category: 'Process / Technique' },
-  { id: 7, title: 'Lion and Birds', type: 'image', src: '/images/portfolio/lion-and-birds.jpg', category: 'Custom / Ribs' },
-  { id: 8, title: 'Wolf Red Geometric', type: 'image', src: '/images/portfolio/wolf-red-geometric.jpg', category: 'Geometric / Thigh' },
+  { id: 7, title: 'Botanical Sleeve', type: 'image', src: '/images/portfolio/lion-and-birds.jpg', category: 'Custom / Full Sleeve' },
+  { id: 8, title: 'Viper Contour', type: 'image', src: '/images/portfolio/wolf-red-geometric.jpg', category: 'Ornamental / Ribs' },
 ];
 
 export function SelectedWorkRail() {
@@ -35,7 +35,7 @@ export function SelectedWorkRail() {
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         gsap.fromTo(sectionRef.current,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 40 },
           {
             opacity: 1,
             y: 0,
@@ -63,47 +63,40 @@ export function SelectedWorkRail() {
     }
   };
 
-  const handleMouseLeave = () => {
-    setIsDown(false);
-  };
-
-  const handleMouseUp = () => {
-    setIsDown(false);
-  };
+  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseUp = () => setIsDown(false);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDown || !sliderRef.current) return;
     e.preventDefault();
     const x = e.pageX - sliderRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Scroll speed multiplier
+    const walk = (x - startX) * 2;
     sliderRef.current.scrollLeft = scrollLeft - walk;
   };
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#111111] py-24 overflow-hidden">
-      {/* Section Header with Two-Anchor gutter alignment */}
-      <div className="px-6 md:px-8 max-w-[1800px] mx-auto mb-12 flex justify-between items-end">
+    <section ref={sectionRef} className="w-full bg-[#111111] py-28 overflow-hidden">
+      <div className="pl-6 md:pl-8 pr-6 md:pr-8 mb-14 flex flex-col md:flex-row justify-between items-start md:items-end">
         <div>
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/60 block mb-4">
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/60 block mb-3">
             Selected Work
           </span>
-          <h2 className="font-serif text-[#FDFFE9] text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] font-normal">
+          <h2 className="font-serif text-[#FDFFE9] text-[clamp(2.25rem,4.5vw,4rem)] leading-[1.05] font-normal">
             Permanent art, unhurried execution.
           </h2>
         </div>
-        <div className="hidden md:block font-mono text-xs text-white/40 tracking-wider">
-          [DRAG OR SCROLL TO NAVIGATE]
+        <div className="hidden md:block font-mono text-[11px] text-white/40 tracking-widest mt-4 md:mt-0">
+          [DRAG TO EXPLORE ARCHIVE]
         </div>
       </div>
 
-      {/* Edge-Bleed Horizontal Drag Rail */}
       <div 
         ref={sliderRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex gap-6 overflow-x-auto no-scrollbar px-6 md:px-8 cursor-grab active:cursor-grabbing select-none ${
+        className={`flex gap-6 md:gap-8 overflow-x-auto no-scrollbar pl-6 md:pl-8 pr-6 md:pr-8 cursor-grab active:cursor-grabbing select-none ${
           isDown ? 'cursor-grabbing' : ''
         }`}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -111,9 +104,9 @@ export function SelectedWorkRail() {
         {portfolioItems.map((item) => (
           <div 
             key={item.id}
-            className="flex-none w-[300px] md:w-[420px] group relative flex flex-col"
+            className="flex-none w-[320px] md:w-[460px] group relative flex flex-col"
           >
-            <div className="w-full h-[400px] md:h-[540px] bg-[#161618] overflow-hidden relative border border-white/10">
+            <div className="w-full h-[420px] md:h-[580px] bg-[#161618] overflow-hidden relative border border-white/10">
               {item.type === 'video' ? (
                 <video 
                   src={item.src} 
@@ -121,22 +114,21 @@ export function SelectedWorkRail() {
                   muted 
                   loop 
                   playsInline
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 group-hover:brightness-100"
                 />
               ) : (
                 <img 
                   src={item.src} 
                   alt={item.title}
                   draggable={false}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 group-hover:brightness-100"
                 />
               )}
-              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
             </div>
             
-            {/* Metadata Description */}
             <div className="mt-4 flex justify-between items-baseline">
-              <span className="font-serif text-lg text-[#FDFFE9]">{item.title}</span>
+              <span className="font-serif text-xl text-[#FDFFE9]">{item.title}</span>
               <span className="font-mono text-[10px] tracking-[0.15em] text-white/50 uppercase">{item.category}</span>
             </div>
           </div>
@@ -145,3 +137,5 @@ export function SelectedWorkRail() {
     </section>
   );
 }
+
+export default SelectedWorkRail;
