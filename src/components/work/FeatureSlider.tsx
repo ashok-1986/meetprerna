@@ -82,33 +82,11 @@ export function FeatureSlider() {
       duration: 1.4,
       ease: 'power2.inOut'
     });
-
-    // 2. Staggered Text Reveal
-    const titleChars = titleRef.current?.children;
-    const descChars = descRef.current?.children;
-
-    if (titleChars || descChars) {
-      const targets = [];
-      if (titleChars) targets.push(...Array.from(titleChars));
-      if (descChars) targets.push(...Array.from(descChars));
-
-      tl.fromTo(targets,
-        { opacity: 0, y: 12 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          stagger: 0.015, 
-          ease: 'power3.out' 
-        },
-        '-=0.6' // overlap with ink spread reveal
-      );
-    }
   }, [activeIndex, isTransitioning, shouldReduceMotion]);
 
   // Autoplay and progress bar tween controller
   useEffect(() => {
-    if (isTransitioning) return;
+    if (isTransitioning || shouldReduceMotion) return;
 
     const targetBar = document.querySelector(`.progress-bar-${activeIndex}`);
     if (!targetBar) return;
@@ -132,7 +110,7 @@ export function FeatureSlider() {
     };
   }, [activeIndex, isTransitioning, shouldReduceMotion, changeSlide]);
 
-  // Clean initial text render reveal
+  // Clean initial text render reveal + transition reveals
   useLayoutEffect(() => {
     if (shouldReduceMotion) return;
     const titleChars = titleRef.current?.children;
@@ -141,12 +119,22 @@ export function FeatureSlider() {
       const targets = [];
       if (titleChars) targets.push(...Array.from(titleChars));
       if (descChars) targets.push(...Array.from(descChars));
+      
+      const delay = isTransitioning ? 0.8 : 0; // Sync with ink bleed (1.4s duration - 0.6s overlap)
+
       gsap.fromTo(targets,
         { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.015, ease: 'power3.out' }
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.8, 
+          stagger: 0.015, 
+          ease: 'power3.out',
+          delay: delay
+        }
       );
     }
-  }, [shouldReduceMotion]);
+  }, [textIndex, shouldReduceMotion, isTransitioning]);
 
   return (
     <section className={styles.sliderSection} aria-label="Featured Works Gallery">
