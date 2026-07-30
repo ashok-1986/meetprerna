@@ -45,7 +45,6 @@ export function FeatureSlider() {
   const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
 
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const descRef = useRef<HTMLParagraphElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Check prefers-reduced-motion
@@ -96,42 +95,24 @@ export function FeatureSlider() {
     });
   }, [activeIndex, isTransitioning, shouldReduceMotion]);
 
-  // Autoplay and progress bar tween controller
+  // Autoplay timer controller (5s interval)
   useEffect(() => {
     if (isTransitioning || shouldReduceMotion) return;
 
-    const targetBar = document.querySelector(`.progress-bar-${activeIndex}`);
-    if (!targetBar) return;
+    const timer = setTimeout(() => {
+      const nextIdx = (activeIndex + 1) % slides.length;
+      changeSlide(nextIdx);
+    }, 5000);
 
-    const progressTween = gsap.fromTo(targetBar,
-      { width: '0%' },
-      {
-        width: '100%',
-        duration: 5,
-        ease: 'none',
-        onComplete: () => {
-          const nextIdx = (activeIndex + 1) % slides.length;
-          changeSlide(nextIdx);
-        }
-      }
-    );
-
-    return () => {
-      progressTween.kill();
-      gsap.set(targetBar, { width: '0%' });
-    };
+    return () => clearTimeout(timer);
   }, [activeIndex, isTransitioning, shouldReduceMotion, changeSlide]);
 
   // Clean initial text render reveal + transition reveals
   useLayoutEffect(() => {
     if (shouldReduceMotion) return;
     const titleChars = titleRef.current?.children;
-    const descChars = descRef.current?.children;
-    if (titleChars || descChars) {
-      const targets = [];
-      if (titleChars) targets.push(...Array.from(titleChars));
-      if (descChars) targets.push(...Array.from(descChars));
-      
+    if (titleChars) {
+      const targets = Array.from(titleChars);
       const delay = isTransitioning ? 0.4 : 0; // Sync with circle wipe (1.0s duration - 0.6s overlap)
 
       gsap.fromTo(targets,
@@ -151,8 +132,11 @@ export function FeatureSlider() {
   return (
     <section className={styles.sliderSection} aria-label="Featured Works Gallery">
       
-      {/* Slide Images Stack */}
-      <div className={styles.slideContainer}>
+      {/* Slide Images Stack - Click to advance */}
+      <div 
+        className={styles.slideContainer}
+        onClick={() => changeSlide((activeIndex + 1) % slides.length)}
+      >
         {slides.map((slide, idx) => {
           let className = styles.slide;
           if (idx === activeIndex) {
@@ -175,72 +159,35 @@ export function FeatureSlider() {
             </div>
           );
         })}
-      </div>
 
-      {/* Typography Overlay - Frosted Glass Card */}
-      <div className={styles.overlayContainer}>
-        <div className={styles.glassCard}>
-          <h3 ref={titleRef} className={styles.title}>
-            {!shouldReduceMotion ? (
-              slides[textIndex].title.split('').map((char, i) => (
-                <span
-                  key={i}
-                  className="inline-block opacity-0 translate-y-[12px]"
-                  style={{ whiteSpace: 'pre' }}
-                >
-                  {char}
-                </span>
-              ))
-            ) : (
-              slides[textIndex].title
-            )}
-          </h3>
-          <p ref={descRef} className={styles.description}>
-            {!shouldReduceMotion ? (
-              slides[textIndex].description.split('').map((char, i) => (
-                <span
-                  key={i}
-                  className="inline-block opacity-0 translate-y-[12px]"
-                  style={{ whiteSpace: 'pre' }}
-                >
-                  {char}
-                </span>
-              ))
-            ) : (
-              slides[textIndex].description
-            )}
-          </p>
+        {/* Minimalist Editorial Overlays */}
+        <div className={styles.overlayContainer}>
+          {/* Subtle Centered Title */}
+          <div className={styles.titleContainer}>
+            <h3 ref={titleRef} className={styles.title}>
+              {!shouldReduceMotion ? (
+                slides[textIndex].title.split('').map((char, i) => (
+                  <span
+                    key={i}
+                    className="inline-block opacity-0 translate-y-[12px]"
+                    style={{ whiteSpace: 'pre' }}
+                  >
+                    {char}
+                  </span>
+                ))
+              ) : (
+                slides[textIndex].title
+              )}
+            </h3>
+          </div>
+
+          {/* Minimal Counter in bottom corner */}
+          <div className={styles.counter}>
+            {String(textIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+          </div>
         </div>
       </div>
 
-      {/* Bottom Nav Bar with Frosted Glass UI */}
-      <div className={styles.bottomNav}>
-        <span className={styles.navMeta}>FEATURED PORTFOLIO</span>
-        
-        <div className={styles.navItems}>
-          {slides.map((slide, idx) => {
-            const isActive = idx === activeIndex;
-            return (
-              <button
-                key={slide.id}
-                onClick={() => changeSlide(idx)}
-                disabled={isTransitioning}
-                className={`${styles.navButton} ${isActive ? styles.navButtonActive : ''}`}
-                aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
-              >
-                <span className={styles.navTitle}>{slide.title}</span>
-                <div className={styles.progressBarContainer}>
-                  <div className={`${styles.progressBar} progress-bar-${idx}`} />
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        <span className={styles.navMeta}>
-          {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-        </span>
-      </div>
     </section>
   );
 }
