@@ -1,4 +1,4 @@
-import Image from 'next/image'
+
 import { Hero } from '@/components/hero/Hero.client'
 import { Marquee } from '@/components/marquee/Marquee.client'
 import { ThesisStats } from '@/components/proof/ThesisStats.client'
@@ -7,6 +7,7 @@ import { TestimonialQuote } from '@/components/TestimonialQuote'
 import { SessionLine } from '@/components/session/SessionLine.client'
 import { SelectedWorkRail } from '@/components/drag/SelectedWorkRail.client'
 import { PillarScrub } from '@/components/pillars/PillarScrub.client'
+import { TheHinge } from '@/components/hinge/TheHinge'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 
 import { testimonials } from '@/content/testimonials'
@@ -60,30 +61,12 @@ export default function Home() {
         <SelectedWorkRail />
       </M3Reveal>
 
-      <div className={styles.lightTheme}>
-        {/* Block 05b: The still (Hinge) */}
-        <M3Reveal>
-          <section aria-labelledby="still-heading" className={styles.stillBand}>
-            <h2 id="still-heading" className={styles.visuallyHidden}>
-              Prerna tattooing a client
-            </h2>
-            <Image
-              src="/images/studio/prerna-working-bw.jpg"
-              alt="Prerna tattooing a client's forearm"
-              width={1920}
-              height={1080}
-              className={styles.stillImage}
-              sizes="100vw"
-              priority={false}
-            />
-            <div className={styles.stillScrim} />
-            <div className={styles.stillText}>
-              <p className={styles.stillLine}>She has never done the same thing twice.</p>
-              <p className={styles.stillLineAccent}>On purpose.</p>
-            </div>
-          </section>
-        </M3Reveal>
+      {/* Block 04b: The Hinge / Still Band */}
+      <M3Reveal>
+        <TheHinge />
+      </M3Reveal>
 
+      <div className={styles.lightTheme}>
         {/* Block 05: Pillars */}
         <M3Reveal>
           <PillarScrub pillars={PILLARS} />
