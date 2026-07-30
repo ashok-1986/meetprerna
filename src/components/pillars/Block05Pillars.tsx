@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -36,6 +36,7 @@ const pillars = [
 export function Block05Pillars() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   useLayoutEffect(() => {
     let mm: gsap.MatchMedia;
@@ -85,45 +86,83 @@ export function Block05Pillars() {
       {/* EDGE-TO-EDGE FLEX ACCORDION */}
       {/* Spans 100vw, completely breaking out of standard containers */}
       <div className="w-full h-[100vh] md:h-[75vh] flex flex-col md:flex-row border-y border-[#0b0b0c]/10">
-        {pillars.map((pillar) => (
-          <div 
-            key={pillar.id}
-            className="group relative flex-1 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#0b0b0c]/10 last:border-0 overflow-hidden transition-all duration-[800ms] motion-reduce:transition-none ease-[cubic-bezier(0.76,0,0.24,1)] hover:flex-[1.5] md:hover:flex-[2.5] bg-[#FDFFE9]"
-          >
-            {/* Hover Image Background - Reveals organically */}
-            <div className="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-[800ms] motion-reduce:transition-none ease-out z-0">
-              <img 
-                src={pillar.img} 
-                alt={pillar.title} 
-                className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-[1200ms] motion-reduce:transition-none ease-out"
-              />
-              {/* Light scrim to ensure text remains readable on image hover */}
-              <div className="absolute inset-0 bg-[#FDFFE9]/80 backdrop-blur-sm transition-opacity duration-[800ms] motion-reduce:transition-none" />
-            </div>
+        {pillars.map((pillar, idx) => {
+          const isExpanded = expandedIndex === idx;
 
-            {/* Top Label */}
-            <div className="relative z-10 p-6 md:p-8">
-              <span className="font-mono text-[10px] md:text-[12px] tracking-widest text-[#0b0b0c]/40 group-hover:text-[#0b0b0c] transition-colors duration-500">
-                {pillar.id}
-              </span>
-            </div>
-
-            {/* Bottom Content */}
-            <div className="relative z-10 p-6 md:p-8 flex flex-col">
-              <h3 className="font-serif text-3xl md:text-5xl text-[#0b0b0c] mb-0 group-hover:mb-4 transition-all duration-500">
-                {pillar.title}
-              </h3>
-              
-              {/* Description - Expands on hover */}
-              <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 motion-reduce:transition-none ease-[cubic-bezier(0.76,0,0.24,1)]">
-                <p className="overflow-hidden font-sans text-sm md:text-base leading-relaxed text-[#0b0b0c]/80 max-w-[30ch]">
-                  {pillar.desc}
-                </p>
+          return (
+            <div 
+              key={pillar.id}
+              role="button"
+              tabIndex={0}
+              aria-expanded={isExpanded}
+              onMouseEnter={() => setExpandedIndex(idx)}
+              onMouseLeave={() => setExpandedIndex(null)}
+              onFocus={() => setExpandedIndex(idx)}
+              onBlur={() => setExpandedIndex(null)}
+              onClick={() => setExpandedIndex(isExpanded ? null : idx)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setExpandedIndex(isExpanded ? null : idx);
+                }
+              }}
+              className={`relative flex-1 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#0b0b0c]/10 last:border-0 overflow-hidden transition-all duration-[800ms] motion-reduce:transition-none ease-[cubic-bezier(0.76,0,0.24,1)] bg-[#FDFFE9] cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-black/30 z-10 ${
+                isExpanded ? 'flex-[1.5] md:flex-[2.5]' : ''
+              }`}
+            >
+              {/* Hover/Expanded Image Background - Reveals organically */}
+              <div 
+                className={`absolute inset-0 w-full h-full transition-opacity duration-[800ms] motion-reduce:transition-none ease-out z-0 ${
+                  isExpanded ? 'opacity-100' : 'opacity-0'
+                }`}
+              >
+                <img 
+                  src={pillar.img} 
+                  alt={pillar.title} 
+                  className={`w-full h-full object-cover transition-transform duration-[1200ms] motion-reduce:transition-none ease-out ${
+                    isExpanded ? 'scale-100' : 'scale-110'
+                  }`}
+                />
+                {/* Light scrim to ensure text remains readable on image hover */}
+                <div className="absolute inset-0 bg-[#FDFFE9]/80 backdrop-blur-sm" />
               </div>
-            </div>
 
-          </div>
-        ))}
+              {/* Top Label */}
+              <div className="relative z-10 p-6 md:p-8">
+                <span 
+                  className={`font-mono text-[10px] md:text-[12px] tracking-widest transition-colors duration-500 ${
+                    isExpanded ? 'text-[#0b0b0c]' : 'text-[#0b0b0c]/40'
+                  }`}
+                >
+                  {pillar.id}
+                </span>
+              </div>
+
+              {/* Bottom Content */}
+              <div className="relative z-10 p-6 md:p-8 flex flex-col">
+                <h3 
+                  className={`font-serif text-3xl md:text-5xl text-[#0b0b0c] transition-all duration-500 ${
+                    isExpanded ? 'mb-4' : 'mb-0'
+                  }`}
+                >
+                  {pillar.title}
+                </h3>
+                
+                {/* Description - Expands on hover/focus/click */}
+                <div 
+                  className={`grid transition-[grid-template-rows] duration-500 motion-reduce:transition-none ease-[cubic-bezier(0.76,0,0.24,1)] ${
+                    isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                  }`}
+                >
+                  <p className="overflow-hidden font-sans text-sm md:text-base leading-relaxed text-[#0b0b0c]/80 max-w-[30ch]">
+                    {pillar.desc}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          );
+        })}
       </div>
       
     </section>
