@@ -5,7 +5,7 @@ import { ThesisStats } from '@/components/proof/ThesisStats.client'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { TestimonialQuote } from '@/components/TestimonialQuote'
 import { SessionLine } from '@/components/session/SessionLine.client'
-import { DragRail } from '@/components/drag/DragRail.client'
+import { SelectedWorkRail } from '@/components/drag/SelectedWorkRail.client'
 import { PillarScrub } from '@/components/pillars/PillarScrub.client'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 
@@ -55,9 +55,9 @@ export default function Home() {
         <ThesisStats />
       </M3Reveal>
 
-      {/* Block 03: Drag rail */}
+      {/* Block 04: Drag rail */}
       <M3Reveal>
-        <DragRail />
+        <SelectedWorkRail />
       </M3Reveal>
 
       <div className={styles.lightTheme}>
