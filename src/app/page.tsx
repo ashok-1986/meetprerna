@@ -6,32 +6,12 @@ import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { TestimonialQuote } from '@/components/TestimonialQuote'
 import { SessionLine } from '@/components/session/SessionLine.client'
 import { FeatureSlider } from '@/components/work/FeatureSlider'
-import { PillarScrub } from '@/components/pillars/PillarScrub.client'
+import { Block05Pillars } from '@/components/pillars/Block05Pillars'
 import { TheHinge } from '@/components/hinge/TheHinge'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 
 import { testimonials } from '@/content/testimonials'
 import styles from './page.module.css'
-
-
-const PILLARS = [
-  {
-    title: 'Psychology',
-    body: 'Choosing to mark your skin is a decision about who you are becoming. I want to hear the why before I draw anything.',
-  },
-  {
-    title: 'Meditation',
-    body: 'The needle, the brush and the pencil are three rhythms with one shared attention. When I work, the room gets quiet.',
-  },
-  {
-    title: 'Therapy',
-    body: 'I am not a therapist. I do hold the room. Some things come out easier when your hands are busy and nobody is watching your face.',
-  },
-  {
-    title: 'Calmness',
-    body: 'No rushed stencils. No brushed-off questions. You can arrive with a mess of feelings and no vocabulary for them.',
-  },
-] as const
 
 const PROCESS_STEPS = [
   { num: '01', label: 'Conversation' },
@@ -69,7 +49,7 @@ export default function Home() {
       <div className={styles.lightTheme}>
         {/* Block 05: Pillars */}
         <M3Reveal>
-          <PillarScrub pillars={PILLARS} />
+          <Block05Pillars />
         </M3Reveal>
 
         {/* Block 06: Process */}
