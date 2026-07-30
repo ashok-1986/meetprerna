@@ -71,10 +71,10 @@ export function Block05Pillars() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#FDFFE9] text-[#0b0b0c] pt-24 md:pt-32 pb-0 overflow-hidden">
+    <section ref={sectionRef} className="w-full min-h-[100svh] flex flex-col bg-[#FDFFE9] text-[#0b0b0c] pt-24 md:pt-32 overflow-hidden">
       
-      {/* Standard Header locked to the 32px left gutter */}
-      <div ref={headerRef} className="pl-6 md:pl-8 pr-6 md:pr-8 mb-16 max-w-[1800px] mx-auto">
+      {/* Standard Header */}
+      <div ref={headerRef} className="pl-6 md:pl-8 pr-6 md:pr-8 mb-16 max-w-[1800px] w-full mx-auto shrink-0">
         <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-black/50 block mb-4">
           The Foundation
         </span>
@@ -85,7 +85,7 @@ export function Block05Pillars() {
 
       {/* EDGE-TO-EDGE FLEX ACCORDION */}
       {/* Spans 100vw, completely breaking out of standard containers */}
-      <div className="w-full h-[100vh] md:h-[75vh] flex flex-col md:flex-row border-y border-[#0b0b0c]/10">
+      <div className="flex-1 w-full flex flex-col md:flex-row border-t border-[#0b0b0c]/10">
         {pillars.map((pillar, idx) => {
           const isExpanded = expandedIndex === idx;
 
