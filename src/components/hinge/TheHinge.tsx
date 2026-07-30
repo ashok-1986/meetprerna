@@ -43,11 +43,15 @@ export function TheHinge() {
   return (
     <section className="relative w-full h-[80svh] min-h-[600px] overflow-hidden bg-[#111111]">
       
-      {/* Full Bleed Background Image */}
-      <div className="absolute inset-0 w-full h-full">
-        <img 
-          src="/images/prerna-working-bw.jpg" 
-          alt="Prerna working in the studio" 
+      {/* Full Bleed Video Background with Poster Fallback */}
+      <div className="absolute inset-0 w-full h-full bg-[#111111]">
+        <video 
+          src="/video/hinge-loop.mp4" 
+          poster="/images/hinge-poster.jpg"
+          autoPlay 
+          muted 
+          loop 
+          playsInline
           className="w-full h-full object-cover"
         />
         {/* Subtle scrim to ensure text legibility */}
