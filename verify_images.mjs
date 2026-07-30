@@ -29,6 +29,7 @@ while ((match = importRegex.exec(aboutStr)) !== null) {
 // 4. Still band image and hinge poster
 imagePaths.add('/images/studio/prerna-working-bw.jpg');
 imagePaths.add('/images/hinge-poster.jpg');
+imagePaths.add('/images/prerna-cutout.png');
 
 console.log("Checking images...");
 for (const img of Array.from(imagePaths).sort()) {
