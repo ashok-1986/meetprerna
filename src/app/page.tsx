@@ -23,7 +23,6 @@ export default function Home() {
         <Marquee />
 
         {/* Block 05: The Practice / Pillars & StatsGrid */}
-        <Practice />
         <StatsGrid />
 
 
@@ -43,6 +42,9 @@ export default function Home() {
       <div className={styles.lightTheme}>
         {/* Block 06: Process */}
         <Process />
+
+        {/* Block 06b: The Practice / Pillars */}
+        <Practice />
 
         {/* Block 07: Sketchbook (TODO) */}
 
