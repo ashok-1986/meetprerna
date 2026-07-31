@@ -43,9 +43,9 @@ export default function Contact() {
             WhatsApp
           </h2>
           <p className={styles.body}>
-            <a href="https://wa.me/919820012345" className={styles.whatsappLink} target="_blank" rel="noopener noreferrer">
+            <TrackingWhatsAppLink className={styles.whatsappLink} trackingSource="whatsapp_section" trackingPage="/contact">
               Message on WhatsApp
-            </a>
+            </TrackingWhatsAppLink>
           </p>
         </section>
 
