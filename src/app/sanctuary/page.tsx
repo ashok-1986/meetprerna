@@ -87,10 +87,10 @@ export default function Sanctuary() {
             <article className={styles.step}>
               <div className={styles.stepHeader}>
                 <span className={styles.stepNumber}>01</span>
-                <h3 className={styles.stepHeading}>Conversation</h3>
+                <h3 className={styles.stepHeading}>The Intake</h3>
               </div>
               <p className={styles.stepBody}>
-                We talk before we draw. Sometimes for an hour, sometimes across a few weeks. Bring references if you have them. Bring nothing if you do not. &ldquo;I have a feeling and no picture for it&rdquo; is a normal place to start.
+                You fill out the consultation form. Tell me about your idea, your placement, and your timeline.
               </p>
               <div className={styles.testimonialPlacement}>
                 {indecisionTestimonials.map(t => (
@@ -103,10 +103,10 @@ export default function Sanctuary() {
             <article className={styles.step}>
               <div className={styles.stepHeader}>
                 <span className={styles.stepNumber}>02</span>
-                <h3 className={styles.stepHeading}>Sketch</h3>
+                <h3 className={styles.stepHeading}>The Conversation</h3>
               </div>
               <p className={styles.stepBody}>
-                I draw by hand first. You see rough work, not a finished pitch. This is where the idea gets honest.
+                I review your brief, and we move to WhatsApp. This is where we discuss the details, answer your questions, and build the vision together.
               </p>
             </article>
 
@@ -114,10 +114,10 @@ export default function Sanctuary() {
             <article className={styles.step}>
               <div className={styles.stepHeader}>
                 <span className={styles.stepNumber}>03</span>
-                <h3 className={styles.stepHeading}>Design</h3>
+                <h3 className={styles.stepHeading}>The Design</h3>
               </div>
               <p className={styles.stepBody}>
-                The sketch becomes a stencil built for your body, not for a flat page. Line weight, placement and how the shape moves when you move. You approve it before anything is opened.
+                Once we agree on the direction, I draft the custom design. We refine it until it is exactly right for you.
               </p>
             </article>
 
@@ -125,10 +125,10 @@ export default function Sanctuary() {
             <article className={styles.step}>
               <div className={styles.stepHeader}>
                 <span className={styles.stepNumber}>04</span>
-                <h3 className={styles.stepHeading}>Session</h3>
+                <h3 className={styles.stepHeading}>The Session</h3>
               </div>
               <p className={styles.stepBody}>
-                Eat before you come. Wear something that gives me access to the area. We start slow, we stop when you need to stop. I will talk you through the first few minutes of breathing.
+                We meet in person. The studio is quiet, the kit is single-use, and we take the time to get it right. Never in a rush.
               </p>
             </article>
 
@@ -136,10 +136,10 @@ export default function Sanctuary() {
             <article className={styles.step}>
               <div className={styles.stepHeader}>
                 <span className={styles.stepNumber}>05</span>
-                <h3 className={styles.stepHeading}>Aftercare</h3>
+                <h3 className={styles.stepHeading}>The Aftercare</h3>
               </div>
               <p className={styles.stepBody}>
-                You leave with written instructions and my number. Healing takes two to four weeks. A touch-up, if it needs one, is included.
+                You leave with clear healing instructions. I check in with you as it heals, and once it is settled, I ask for your honest feedback.
               </p>
             </article>
           </div>

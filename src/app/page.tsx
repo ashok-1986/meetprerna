@@ -12,12 +12,12 @@ import { Voices } from '@/components/voices/Voices'
 import styles from './page.module.css'
 
 const PROCESS_STEPS = [
-  { num: '01', label: 'Conversation' },
-  { num: '02', label: 'Sketch' },
-  { num: '03', label: 'Design' },
-  { num: '04', label: 'Session' },
-  { num: '05', label: 'Aftercare' },
-] as const
+  { num: '01', label: 'The Intake' },
+  { num: '02', label: 'The Conversation' },
+  { num: '03', label: 'The Design' },
+  { num: '04', label: 'The Session' },
+  { num: '05', label: 'The Aftercare' },
+] as const;
 
 export default function Home() {
 

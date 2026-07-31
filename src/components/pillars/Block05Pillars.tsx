@@ -44,7 +44,7 @@ export function Block05Pillars() {
       mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(headerRef.current, { opacity: 1, y: 0 });
+        gsap.set([headerRef.current, '.gs-teaser-reveal'], { opacity: 1, y: 0 });
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -58,6 +58,20 @@ export function Block05Pillars() {
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top 75%",
+            }
+          }
+        );
+
+        gsap.fromTo('.gs-teaser-reveal',
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: '.gs-teaser-reveal',
+              start: "top 85%",
             }
           }
         );
@@ -163,6 +177,20 @@ export function Block05Pillars() {
             </div>
           );
         })}
+      </div>
+
+      {/* Teaser link aligned to the right gutter */}
+      <div className="w-full max-w-[1800px] mx-auto px-6 md:px-8 mt-12 mb-12 flex justify-end gs-teaser-reveal opacity-0">
+        <p className="font-sans text-sm md:text-base text-[#0b0b0c]/50">
+          Curious about how a session works? Read the full{' '}
+          <a 
+            href="/sanctuary" 
+            className="text-[#0b0b0c]/50 hover:text-[#0b0b0c] underline decoration-[#0b0b0c]/30 hover:decoration-[#0b0b0c] underline-offset-4 transition-all duration-300 font-medium"
+          >
+            5-step process
+          </a>
+          , pain, and aftercare guide.
+        </p>
       </div>
       
     </section>
