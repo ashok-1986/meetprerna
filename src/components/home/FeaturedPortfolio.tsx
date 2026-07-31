@@ -3,6 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, useScroll, useInView, MotionValue } from 'framer-motion';
 import Image from 'next/image';
+import styles from './FeaturedPortfolio.module.css';
 
 // --- Data: Mapped to actual assets ---
 const pieces = [
@@ -92,7 +93,7 @@ export function FeaturedPortfolio() {
   return (
     <section 
       ref={sectionRef} 
-      className="relative w-full min-h-[100svh] bg-[#1A1A1A] text-[#FDFFE9] overflow-hidden font-sans"
+      className={styles.section}
     >
       {/* --- 1. Floating Parallax Background Squares --- */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -102,17 +103,16 @@ export function FeaturedPortfolio() {
       </div>
 
       {/* --- 2. Header Area --- */}
-      <div className="relative px-6 pt-32 pb-16 sm:px-10 lg:px-16 lg:pt-40">
+      <div className={styles.header}>
         <motion.div 
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto max-w-7xl text-center"
         >
-          <span className="mb-5 inline-block bg-[#C4FF61] px-4 py-1.5 text-[13px] font-medium tracking-wide text-[#1A1A1A]">
-            Selected Work
+          <span className={styles.sectionLabel}>
+            Selected work
           </span>
-          <h2 className="text-[clamp(1.8rem,3.2vw,2.8rem)] font-serif font-[400] leading-[1.25] tracking-tight text-[#FDFFE9]">
+          <h2 className={styles.heading}>
             Custom ink crafted for your <span className="text-[#C9CBB6]">unique contours.</span>
             <br />
             <span className="text-[#C9CBB6]">Made in conversation, never in a rush.</span>
@@ -121,63 +121,30 @@ export function FeaturedPortfolio() {
       </div>
 
       {/* --- 3. Case Study Cards (2x2 Grid) --- */}
-      <div className="mx-auto max-w-7xl px-6 pb-16 sm:px-10 lg:px-16">
-        <div className="grid gap-4 md:grid-cols-2">
-          {pieces.map((piece, index) => (
-            <PortfolioCard key={piece.id} piece={piece} index={index} />
-          ))}
-        </div>
+      <div className={styles.grid}>
+        {pieces.map((piece, index) => (
+          <PortfolioCard key={piece.id} piece={piece} index={index} />
+        ))}
       </div>
 
-      {/* --- 4. Footer Area & Marquee --- */}
-      <div className="mx-auto max-w-7xl px-6 pb-6 sm:px-10 lg:px-16">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between border-t border-[#FDFFE9]/10 pt-8">
-          
-          {/* Left: Statement */}
-          <div className="max-w-md mb-8 md:mb-0">
-            <p className="text-[14px] leading-[1.7] text-[#C9CBB6] font-sans">
-              Every piece begins with a quiet conversation. No pressure, no rushed sketches. 
-              We listen to your story until the vision is clear enough to translate.
-            </p>
-            <motion.a 
-              href="/portfolio"
-              className="mt-6 group inline-flex items-center gap-[10px] border border-[#FDFFE9]/20 bg-[#1A1A1A] px-4 py-2.5 text-base font-medium text-[#FDFFE9] hover:bg-[#FDFFE9] hover:text-[#1A1A1A] transition-colors duration-300 font-sans"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              View full archive
-              <span className="h-6 w-6 bg-[#C4FF61] flex items-center justify-center text-[#1A1A1A] transition-all duration-300 group-hover:-translate-y-1">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-              </span>
-            </motion.a>
-          </div>
-
-          {/* Right: Infinite Marquee */}
-          <div className="flex-1 overflow-hidden md:ml-12">
-            <div className="overflow-hidden py-5">
-              <motion.div 
-                className="flex w-max"
-                animate={{ x: ['0%', '-50%'] }}
-                transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
-                style={{ willChange: 'transform' }}
-              >
-                {[...Array(2)].map((_, i) => (
-                  <div key={i} className="flex shrink-0 items-center gap-2.5 px-8">
-                    <span className="whitespace-nowrap text-sm font-mono font-medium tracking-wide text-[#C9CBB6]">
-                      Mumbai · Navi Mumbai · Travelling Artist · Custom Ink · Fine Art · 
-                    </span>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        </div>
+      {/* --- 4. Footer Area --- */}
+      <div className={styles.footer}>
+        <p className={styles.statement}>
+          Every piece begins with a quiet conversation. No pressure, no rushed sketches. 
+          We listen to your story until the vision is clear enough to translate.
+        </p>
+        <motion.a 
+          href="/portfolio"
+          className={styles.ctaButton}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.97 }}
+        >
+          View full archive
+          <svg className={styles.arrowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17" />
+          </svg>
+        </motion.a>
       </div>
-      
-      {/* Bottom spacer */}
-      <div className="h-12" />
     </section>
   );
 }
