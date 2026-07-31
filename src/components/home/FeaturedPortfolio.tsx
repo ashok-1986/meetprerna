@@ -257,7 +257,7 @@ function PortfolioCard({ piece, index }: { piece: typeof pieces[0]; index: numbe
         <div className="mt-1.5 flex items-center gap-4 font-mono text-[11px] tracking-wide text-[#1A1A1A]/60">
           <span>{piece.category}</span>
           <span className="text-[#1A1A1A]/30">•</span>
-          <span className="font-medium text-[#1A1A1A]">{piece.year}</span>
+          <span className="font-normal text-[#1A1A1A]">{piece.year}</span>
         </div>
       </div>
     </motion.div>

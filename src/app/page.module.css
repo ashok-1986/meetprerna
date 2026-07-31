@@ -23,7 +23,7 @@
 .sectionHeading {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-h1);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.15;
   color: var(--color-ivory);
   margin: 0 0 48px;
@@ -246,7 +246,7 @@
 .thesisLeft h2 {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-display-l);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.05;
   color: var(--color-ivory);
   margin: 0;
@@ -366,7 +366,7 @@
 .stillLine {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-display-l);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.05;
   color: var(--color-ivory);
   margin: 0;
@@ -376,7 +376,7 @@
 .stillLineAccent {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-display-l);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.05;
   color: var(--color-inchworm);
   margin: 0;
@@ -392,7 +392,7 @@
 .indexLabel {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-h1);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.15;
   color: var(--color-ivory);
   transition: color 200ms ease;
@@ -470,7 +470,7 @@
 .processHeading {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-display-l);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.05;
   color: var(--color-ivory);
   margin: 0;
@@ -550,7 +550,7 @@
 .closeHeading {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-display-l);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.05;
   color: var(--color-ivory);
   margin: 0;

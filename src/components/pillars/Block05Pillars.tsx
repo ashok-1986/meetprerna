@@ -185,7 +185,7 @@ export function Block05Pillars() {
           Curious about how a session works? Read the full{' '}
           <a 
             href="/sanctuary" 
-            className="text-[#0b0b0c]/50 hover:text-[#0b0b0c] underline decoration-[#0b0b0c]/30 hover:decoration-[#0b0b0c] underline-offset-4 transition-all duration-300 font-medium"
+            className="text-[#0b0b0c]/50 hover:text-[#0b0b0c] underline decoration-[#0b0b0c]/30 hover:decoration-[#0b0b0c] underline-offset-4 transition-all duration-300 font-normal"
           >
             5-step process
           </a>

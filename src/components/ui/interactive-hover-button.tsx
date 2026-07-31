@@ -21,7 +21,7 @@ import { cn } from '@/lib/utils'
 
 const BASE_CLASSES = cn(
   'group relative inline-flex w-auto shrink-0 items-center justify-center overflow-hidden rounded-full',
-  'bg-[var(--color-inchworm)] px-6 py-2.5 text-center font-medium whitespace-nowrap text-[var(--color-ink)]',
+  'bg-[var(--color-inchworm)] px-6 py-2.5 text-center font-normal whitespace-nowrap text-[var(--color-ink)]',
   'min-h-[44px] cursor-pointer select-none',
   'focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[var(--color-focus)]'
 )

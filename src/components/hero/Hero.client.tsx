@@ -163,7 +163,7 @@ export function Hero() {
             </p>
             <Link
               href="/consulting"
-              className="gs-cta opacity-0 inline-flex items-center justify-center px-6 py-3 rounded-full border border-[#C4FF61] text-[#C4FF61] hover:bg-[#C4FF61] hover:text-black transition-colors font-medium"
+              className="gs-cta opacity-0 inline-flex items-center justify-center px-6 py-3 rounded-full border border-[#C4FF61] text-[#C4FF61] hover:bg-[#C4FF61] hover:text-black transition-colors font-normal"
             >
               {site.hero.cta}
             </Link>
