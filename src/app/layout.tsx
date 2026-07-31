@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, Urbanist, JetBrains_Mono, Tinos } from 'next/font/google'
+import { Cormorant_Garamond, Urbanist, JetBrains_Mono, Libre_Baskerville } from 'next/font/google'
 
 import '@/styles/tokens.css'
 import { Analytics } from '@vercel/analytics/react'
@@ -28,11 +28,11 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
-const tinos = Tinos({
+const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
   weight: ['400'],
   style: ['italic'],
-  variable: '--font-tinos',
+  variable: '--font-accent',
   display: 'swap',
 })
 
@@ -122,7 +122,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(cormorant.variable, urbanist.variable, jetbrainsMono.variable, tinos.variable)}
+      className={cn(cormorant.variable, urbanist.variable, jetbrainsMono.variable, libreBaskerville.variable)}
       suppressHydrationWarning
     >
       <head>

@@ -3,7 +3,7 @@
 }
 
 .quote {
-  font-family: 'Tinos', Georgia, serif;
+  font-family: 'Libre Baskerville', 'Baskerville', 'Baskerville Normal', 'Baskerville Old Face', serif;
   font-style: italic;
   font-size: var(--text-body-l);
   line-height: 1.7;
