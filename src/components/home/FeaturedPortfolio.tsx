@@ -110,7 +110,7 @@ export function FeaturedPortfolio() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className={styles.sectionLabel}>
-            Selected work
+            SELECTED WORK
           </span>
           <h2 className={styles.heading}>
             Custom ink crafted for your <span className="text-[#C9CBB6]">unique contours.</span>

@@ -4,7 +4,6 @@ import { StatsGrid } from '@/components/stats/StatsGrid'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { SessionLine } from '@/components/session/SessionLine.client'
 import { FeaturedPortfolio } from '@/components/home/FeaturedPortfolio'
-import { Block05Pillars } from '@/components/pillars/Block05Pillars'
 import { TheHinge } from '@/components/hinge/TheHinge'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { Voices } from '@/components/voices/Voices'
@@ -18,44 +17,43 @@ export default function Home() {
     <main id="main-content" className={styles.page}>
       <SessionLine />
       
-      {/* 1. Cinematic Hero */}
+      {/* Block 01: Hero */}
       <Hero />
-
-      {/* 2. Scrolling Location Marquee */}
       <Marquee />
 
-      {/* 3. The Practice / Philosophy Block */}
-      <Practice />
+      {/* Block 02: The Index (TODO) */}
 
-      {/* 4. Featured Portfolio (Grid with Pixel-Block reveals) */}
+      {/* Block 02b: Thesis + Credibility Strip */}
+      <StatsGrid />
+
+      {/* Block 03: Selected Work / Featured Portfolio */}
       <FeaturedPortfolio />
 
-      {/* 5. The Hinge / Still Band (Dark to Light Transition) */}
+      {/* Block 04: Fresh → Healed (TODO) */}
+
+      {/* Block 05: The Practice / Pillars */}
+      <Practice />
+
+      {/* Block 05b: The Still Band / The Hinge */}
       <M3Reveal>
         <TheHinge />
       </M3Reveal>
 
       <div className={styles.lightTheme}>
-        {/* 6. The 4 Pillars (Ivory Background) */}
-        <M3Reveal>
-          <Block05Pillars />
-        </M3Reveal>
-
-        {/* 7. The Editorial Stats Grid */}
-        <StatsGrid />
-
-        {/* 8. Process */}
+        {/* Block 06: Process */}
         <Process />
 
-        {/* 9. Voices */}
+        {/* Block 07: The Sketchbook (TODO) */}
+
+        {/* Block 08: Voices */}
         <M3Reveal>
           <Voices />
         </M3Reveal>
 
-        {/* 10. Where to find me */}
+        {/* Block 09: Where to find me */}
         <WhereToFindMe />
 
-        {/* 11. Close */}
+        {/* Block 10: Close */}
         <M3Reveal>
           <section aria-labelledby="close-heading" className={styles.closeSection}>
             <h2 id="close-heading" className={styles.closeHeading}>

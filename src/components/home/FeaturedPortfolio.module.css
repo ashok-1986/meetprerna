@@ -25,7 +25,8 @@
   font-family: var(--font-mono), monospace;
   font-size: var(--text-mono);
   color: #C9CBB6;
-  text-transform: none; /* sentence case */
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin-bottom: 24px;
 }
 

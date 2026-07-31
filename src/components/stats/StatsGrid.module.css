@@ -4,8 +4,8 @@
   max-width: 1800px;
   margin: 0 auto;
   padding: 192px clamp(24px, 5vw, 64px);
-  background-color: var(--color-ivory);
-  color: var(--color-ink);
+  background-color: var(--color-ink);
+  color: var(--color-ivory);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -35,8 +35,9 @@
   display: block;
   font-family: var(--font-mono), monospace;
   font-size: var(--text-mono);
-  color: var(--color-ink-500);
-  text-transform: none; /* sentence case */
+  color: var(--color-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin-bottom: 24px;
 }
 
@@ -45,7 +46,7 @@
   font-size: var(--text-display-l);
   font-weight: 400;
   line-height: 1.15;
-  color: var(--color-ink);
+  color: var(--color-ivory);
   margin: 0;
   max-width: 15ch;
   text-wrap: pretty;
@@ -66,20 +67,20 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
-  border-top: 1px solid rgba(11, 11, 12, 0.1);
-  border-left: 1px solid rgba(11, 11, 12, 0.1);
+  border-top: 1px solid rgba(253, 255, 233, 0.1);
+  border-left: 1px solid rgba(253, 255, 233, 0.1);
 }
 
 .gridCell {
   padding: 48px clamp(24px, 4vw, 48px);
-  border-right: 1px solid rgba(11, 11, 12, 0.1);
-  border-bottom: 1px solid rgba(11, 11, 12, 0.1);
+  border-right: 1px solid rgba(253, 255, 233, 0.1);
+  border-bottom: 1px solid rgba(253, 255, 233, 0.1);
   background-color: transparent;
   transition: background-color 0.4s ease;
 }
 
 .gridCell:hover {
-  background-color: rgba(11, 11, 12, 0.03);
+  background-color: rgba(253, 255, 233, 0.05);
 }
 
 .cellVal {
@@ -87,14 +88,14 @@
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 400;
   line-height: 1;
-  color: var(--color-ink);
+  color: var(--color-ivory);
   margin-bottom: 24px;
 }
 
 .cellLabel {
   font-family: var(--font-mono), monospace;
   font-size: var(--text-mono);
-  color: var(--color-ink-500);
+  color: var(--color-ivory-dim);
   text-transform: none; /* sentence case */
   letter-spacing: 0.05em;
   margin: 0;

@@ -89,8 +89,8 @@ export function Block05Pillars() {
       
       {/* Standard Header */}
       <div ref={headerRef} className="pl-6 md:pl-8 pr-6 md:pr-8 mb-16 max-w-[1800px] w-full mx-auto shrink-0">
-        <span className="font-mono text-[0.75rem] text-[#6B6B6B] block mb-6">
-          The foundation
+        <span className="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-[#6B6B6B] block mb-6">
+          THE FOUNDATION
         </span>
         <h2 className="font-serif text-[clamp(2rem,4vw,3.5rem)] leading-[1.05] max-w-[20ch]">
           Four principles governing the studio.

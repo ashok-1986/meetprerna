@@ -59,7 +59,7 @@ export function StatsGrid() {
       {/* Left Anchor: Section Label & Heading */}
       <div className={styles.leftColumn}>
         <span className={`${styles.sectionLabel} gs-stat-reveal`}>
-          The practice
+          THE PRACTICE
         </span>
         <h2 
           id="stats-heading" 

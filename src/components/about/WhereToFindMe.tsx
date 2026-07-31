@@ -54,7 +54,7 @@ export function WhereToFindMe() {
       {/* Left Column: Label & Heading */}
       <div className={styles.leftColumn}>
         <span className={`${styles.sectionLabel} gs-find-reveal`}>
-          Where to find me
+          WHERE TO FIND ME
         </span>
         <h2 
           id="where-to-find-heading" 

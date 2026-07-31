@@ -144,7 +144,7 @@ export function Process() {
     <section ref={sectionRef} className={styles.section} aria-label="The Process Guide">
       {/* Left Column: Label */}
       <div className={`${styles.leftColumn} gs-process-reveal`}>
-        <span className={styles.sectionLabel}>The process</span>
+        <span className={styles.sectionLabel}>THE PROCESS</span>
       </div>
 
       {/* Right Column: 5 Steps */}
