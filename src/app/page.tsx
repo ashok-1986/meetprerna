@@ -9,15 +9,8 @@ import { Block05Pillars } from '@/components/pillars/Block05Pillars'
 import { TheHinge } from '@/components/hinge/TheHinge'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { Voices } from '@/components/voices/Voices'
+import { Process } from '@/components/process/Process'
 import styles from './page.module.css'
-
-const PROCESS_STEPS = [
-  { num: '01', label: 'The Intake' },
-  { num: '02', label: 'The Conversation' },
-  { num: '03', label: 'The Design' },
-  { num: '04', label: 'The Session' },
-  { num: '05', label: 'The Aftercare' },
-] as const;
 
 export default function Home() {
 
@@ -49,29 +42,7 @@ export default function Home() {
         </M3Reveal>
 
         {/* Block 06: Process */}
-        <M3Reveal>
-          <section aria-labelledby="process-heading" className={styles.processSection}>
-            <div className={styles.processLeft}>
-              <span className={styles.sectionLabel}>The process</span>
-              <h2 id="process-heading" className={styles.processHeading}>
-                How a piece actually gets made.
-              </h2>
-            </div>
-            <div className={styles.processRight}>
-              <div className={styles.process}>
-                {PROCESS_STEPS.map((step) => (
-                  <div key={step.num} className={styles.processStep}>
-                    <span className={styles.processNum}>{step.num}</span>
-                    <span className={styles.processLabel}>{step.label}</span>
-                  </div>
-                ))}
-              </div>
-              <a href="/sanctuary" className={styles.textLink}>
-                Walk through the process
-              </a>
-            </div>
-          </section>
-        </M3Reveal>
+        <Process />
 
         {/* Block 07: Voices */}
         <M3Reveal>

@@ -1,0 +1,100 @@
+.section {
+  position: relative;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 192px clamp(24px, 5vw, 64px);
+  background-color: var(--color-ivory);
+  color: var(--color-ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 4rem;
+}
+
+@media (max-width: 1023px) {
+  .section {
+    padding: 96px clamp(24px, 5vw, 64px);
+    flex-direction: column;
+    gap: 48px;
+  }
+}
+
+.leftColumn {
+  width: 30%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1023px) {
+  .leftColumn {
+    width: 100%;
+  }
+}
+
+.sectionLabel {
+  display: block;
+  font-family: var(--font-mono), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ink-500);
+  text-transform: none; /* sentence case */
+}
+
+.rightColumn {
+  flex-grow: 1;
+  max-width: 70ch;
+  display: flex;
+  flex-direction: column;
+  gap: 96px; /* 96px gap between each step */
+}
+
+@media (max-width: 1023px) {
+  .rightColumn {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.stepWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.stepHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.stepTitle {
+  font-family: var(--font-serif), serif;
+  font-size: var(--text-display-l);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.stepNumber {
+  color: var(--color-ink-500);
+  margin-right: 1.5rem;
+}
+
+.stepDesc {
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-ink-500);
+  margin-top: 1.5rem;
+  max-width: 60ch;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-ink-300);
+  margin-top: 96px;
+  border: none;
+}
