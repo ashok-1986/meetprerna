@@ -11,7 +11,6 @@ import { Voices } from '@/components/voices/Voices'
 import { Process } from '@/components/process/Process'
 import { WhereToFindMe } from '@/components/about/WhereToFindMe'
 import { Practice } from '@/components/practice/Practice.client'
-import { Index } from '@/components/index/Index.client'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -25,8 +24,7 @@ export default function Home() {
         <Hero />
         <Marquee />
 
-        {/* Block 02: Index */}
-        <Index />
+
 
         {/* Block 02b: Thesis + Credibility Strip */}
         <ThesisStrip />
