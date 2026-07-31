@@ -71,7 +71,7 @@
   color: var(--color-ink);
   line-height: 1.6;
   max-width: 55ch;
-  margin: 0 0 64px 0;
+  margin: 0 0 48px 0;
 }
 
 .formCard {
@@ -87,7 +87,7 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .formCard {
     padding: 32px;
   }
