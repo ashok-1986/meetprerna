@@ -88,7 +88,7 @@ export function FeatureSlider() {
       }
     });
 
-    // 1. Spreading Circle Wipe Reveal (1500ms duration per user requirement)
+    // 1. Spreading Circle Wipe Reveal (1500ms duration)
     tl.to(incomingEl, {
       clipPath: 'circle(150% at 50% 50%)',
       duration: 1.5,
@@ -165,66 +165,67 @@ export function FeatureSlider() {
           );
         })}
 
-        {/* Typography Overlay - Frosted Glass Card */}
+        {/* Subtle dark gradient fade at the bottom of the image */}
+        <div className={styles.bottomScrim} />
+
+        {/* Typography Overlay - Bottom Left corner of the image container */}
         <div className={styles.overlayContainer}>
-          <div className={styles.glassCard} onClick={(e) => e.stopPropagation()}>
-            <h3 ref={titleRef} className={styles.title}>
-              {!shouldReduceMotion ? (
-                slides[textIndex].title.split('').map((char, i) => (
-                  <span
-                    key={i}
-                    className="inline-block opacity-0 translate-y-[12px]"
-                    style={{ whiteSpace: 'pre' }}
-                  >
-                    {char}
-                  </span>
-                ))
-              ) : (
-                slides[textIndex].title
-              )}
-            </h3>
-            <p ref={descRef} className={styles.description}>
-              {!shouldReduceMotion ? (
-                slides[textIndex].description.split('').map((char, i) => (
-                  <span
-                    key={i}
-                    className="inline-block opacity-0 translate-y-[12px]"
-                    style={{ whiteSpace: 'pre' }}
-                  >
-                    {char}
-                  </span>
-                ))
-              ) : (
-                slides[textIndex].description
-              )}
-            </p>
-          </div>
+          <h3 ref={titleRef} className={styles.title}>
+            {!shouldReduceMotion ? (
+              slides[textIndex].title.split('').map((char, i) => (
+                <span
+                  key={i}
+                  className="inline-block opacity-0 translate-y-[12px]"
+                  style={{ whiteSpace: 'pre' }}
+                >
+                  {char}
+                </span>
+              ))
+            ) : (
+              slides[textIndex].title
+            )}
+          </h3>
+          <p ref={descRef} className={styles.description}>
+            {!shouldReduceMotion ? (
+              slides[textIndex].description.split('').map((char, i) => (
+                <span
+                  key={i}
+                  className="inline-block opacity-0 translate-y-[12px]"
+                  style={{ whiteSpace: 'pre' }}
+                >
+                  {char}
+                </span>
+              ))
+            ) : (
+              slides[textIndex].description
+            )}
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom Nav Bar - Sits at the bottom of the section, outside slideContainer */}
+      <div className={styles.bottomNav} onClick={(e) => e.stopPropagation()}>
+        <span className={styles.navMeta}>FEATURED PORTFOLIO</span>
+        
+        <div className={styles.navItems}>
+          {slides.map((slide, idx) => {
+            const isActive = idx === activeIndex;
+            return (
+              <button
+                key={slide.id}
+                onClick={() => changeSlide(idx)}
+                disabled={isTransitioning}
+                className={`${styles.navButton} ${isActive ? styles.navButtonActive : ''}`}
+                aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
+              >
+                {slide.title}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Bottom Nav Bar with Frosted Glass UI */}
-        <div className={styles.bottomNav} onClick={(e) => e.stopPropagation()}>
-          <span className={styles.navMeta}>FEATURED PORTFOLIO</span>
-          
-          <div className={styles.navItems}>
-            {slides.map((slide, idx) => {
-              const isActive = idx === activeIndex;
-              return (
-                <button
-                  key={slide.id}
-                  onClick={() => changeSlide(idx)}
-                  disabled={isTransitioning}
-                  className={`${styles.navButton} ${isActive ? styles.navButtonActive : ''}`}
-                  aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
-                >
-                  {slide.title}
-                </button>
-              );
-            })}
-          </div>
-
-          <div className={styles.counter}>
-            {String(textIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-          </div>
+        <div className={styles.counter}>
+          {String(textIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
         </div>
       </div>
 
