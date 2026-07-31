@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,8 +12,17 @@ export function TheHinge() {
   const textContainerRef = useRef<HTMLDivElement>(null);
   const lineOneRef = useRef<HTMLSpanElement>(null);
   const lineTwoRef = useRef<HTMLSpanElement>(null);
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
 
   useLayoutEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setShouldReduceMotion(mediaQuery.matches);
+
+    const listener = (event: MediaQueryListEvent) => {
+      setShouldReduceMotion(event.matches);
+    };
+    mediaQuery.addEventListener('change', listener);
+
     let mm: gsap.MatchMedia;
     const ctx = gsap.context(() => {
       mm = gsap.matchMedia();
@@ -57,6 +66,7 @@ export function TheHinge() {
     }, sectionRef);
 
     return () => {
+      mediaQuery.removeEventListener('change', listener);
       mm?.revert();
       ctx.revert();
     };
@@ -65,15 +75,28 @@ export function TheHinge() {
   return (
     <section ref={sectionRef} className="relative w-full h-[80svh] overflow-hidden bg-[var(--color-ink)] py-[192px]">
       
-      {/* Full Bleed Image Background */}
+      {/* Full Bleed Video Background with Poster Fallback */}
       <div className="absolute inset-0 w-full h-full bg-[var(--color-ink)] opacity-80">
-        <Image 
-          src="/images/prerna-working-bw.jpg" 
-          alt="Prerna working in the studio" 
-          fill
-          className="object-cover"
-          priority
-        />
+        {!shouldReduceMotion ? (
+          <video 
+            src="/video/hinge-loop.mp4" 
+            poster="/images/hinge-poster.jpg"
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            aria-hidden="true"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <Image 
+            src="/images/prerna-working-bw.jpg" 
+            alt="Prerna working in the studio" 
+            fill
+            className="object-cover"
+            priority
+          />
+        )}
         {/* Gradient Scrim for text contrast */}
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)] via-[var(--color-ink)]/40 to-transparent" />
       </div>
