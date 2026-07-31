@@ -57,20 +57,26 @@ export default function Home() {
         {/* Block 10: Close */}
         <M3Reveal>
           <section aria-labelledby="close-heading" className={styles.closeSection}>
-            <h2 id="close-heading" className={styles.closeHeading}>
-              Your story deserves to be worn.
-            </h2>
-            <InteractiveHoverButton href="/consulting">
-              Start a conversation
-            </InteractiveHoverButton>
-            <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP || '919820012345'}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.whatsappLink}
-            >
-              Message on WhatsApp
-            </a>
+            <div className={styles.closeLeft}>
+              <h2 id="close-heading" className={styles.closeHeading}>
+                Your story deserves to be worn.
+              </h2>
+            </div>
+            <div className={styles.closeRight}>
+              <InteractiveHoverButton 
+                href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+                trackingSource="close_section"
+                trackingPage="home"
+              >
+                Start a conversation
+              </InteractiveHoverButton>
+              <a
+                href="mailto:prerna@meetprerna.com"
+                className={styles.emailFallback}
+              >
+                Email prerna@meetprerna.com
+              </a>
+            </div>
           </section>
         </M3Reveal>
       </div>

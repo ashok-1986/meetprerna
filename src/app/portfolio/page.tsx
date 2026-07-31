@@ -32,7 +32,11 @@ export default function PortfolioArchive() {
           <p id="cta-strip-heading" className={styles.ctaText}>
             Have something in mind? Send it across, even if it is only a feeling.
           </p>
-          <InteractiveHoverButton href="/consulting">
+          <InteractiveHoverButton 
+            href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+            trackingSource="portfolio_footer"
+            trackingPage="portfolio"
+          >
             Start a conversation
           </InteractiveHoverButton>
         </section>

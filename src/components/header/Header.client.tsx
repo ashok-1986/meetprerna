@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
 import { Logo } from './Logo'
 import { NavPill } from './NavPill'
 import { MobileMenu } from './MobileMenu'
@@ -53,9 +52,9 @@ export function HeaderClient() {
   }, [])
 
   const handleCTAClick = useCallback(() => {
-    recordInteraction('cta_tapped', {
+    recordInteraction('whatsapp_cta_clicked', {
       page: window.location.pathname,
-      position: 'header',
+      source: 'header',
     })
   }, [])
 
@@ -72,19 +71,23 @@ export function HeaderClient() {
             <NavPill />
 
             <div className={styles.rightCluster}>
-              <Link
-                href="/consulting"
+              <a
+                href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.ctaDesktop}
                 onClick={handleCTAClick}
               >
                 Start a conversation
-              </Link>
+              </a>
 
-              <Link
-                href="/consulting"
+              <a
+                href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.ctaMobile}
-                aria-label="Start a conversation"
                 onClick={handleCTAClick}
+                aria-label="Start a conversation"
               >
                 <svg
                   width="20"
@@ -100,7 +103,7 @@ export function HeaderClient() {
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </Link>
+                </a>
 
               {/* Mobile menu button — opens only */}
               <button

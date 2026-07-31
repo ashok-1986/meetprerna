@@ -199,11 +199,15 @@ export default function Sanctuary() {
           <h2 id="cta-heading" className={styles.ctaHeading}>
             Your story deserves to be worn.
           </h2>
-          <InteractiveHoverButton href="/consulting">
+          <InteractiveHoverButton 
+            href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+            trackingSource="sanctuary_page"
+            trackingPage="sanctuary"
+          >
             Start a conversation
           </InteractiveHoverButton>
           <p className={styles.ctaNote}>
-            Having trouble? <a href="https://wa.me/919820012345" className={styles.whatsappLink}>Message on WhatsApp</a>
+            Having trouble? <a href="mailto:prerna@meetprerna.com" className={styles.whatsappLink}>Email prerna@meetprerna.com</a>
           </p>
         </M3Reveal>
 

@@ -1,8 +1,11 @@
+'use client'
+
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
+import { recordInteraction } from '@/lib/behaviour'
 
 /*
  * Unified CTA, ported from magicui's interactive-hover-button and
@@ -71,6 +74,8 @@ function ButtonContent({ children }: { children: ReactNode }) {
 interface CommonProps {
   children: ReactNode
   className?: string
+  trackingSource?: string
+  trackingPage?: string
 }
 
 type LinkVariantProps = CommonProps &
@@ -85,19 +90,45 @@ type ButtonVariantProps = CommonProps &
 
 export type InteractiveHoverButtonProps = LinkVariantProps | ButtonVariantProps
 
-export function InteractiveHoverButton({ children, className, href, ...props }: InteractiveHoverButtonProps) {
+export function InteractiveHoverButton({ children, className, href, trackingSource, trackingPage, onClick, ...props }: InteractiveHoverButtonProps) {
   const classes = cn(BASE_CLASSES, className)
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+    if (trackingSource && trackingPage) {
+      recordInteraction('whatsapp_cta_clicked', { source: trackingSource, page: trackingPage })
+    }
+    if (onClick) {
+      onClick(e as never)
+    }
+  }
+
   if (href) {
+    const isExternal = href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:');
+
+    if (isExternal) {
+      return (
+        <a 
+          href={href} 
+          className={classes} 
+          onClick={handleClick}
+          {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
+          target={href.startsWith('http') ? '_blank' : undefined}
+          rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        >
+          <ButtonContent>{children}</ButtonContent>
+        </a>
+      )
+    }
+
     return (
-      <Link href={href} className={classes} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <Link href={href} className={classes} onClick={handleClick} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
         <ButtonContent>{children}</ButtonContent>
       </Link>
     )
   }
 
   return (
-    <button className={classes} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
+    <button className={classes} onClick={handleClick} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
       <ButtonContent>{children}</ButtonContent>
     </button>
   )

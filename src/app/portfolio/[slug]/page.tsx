@@ -80,7 +80,11 @@ export default async function PortfolioPiece({ params }: Props) {
                 ? 'Interested in this piece?'
                 : 'Want something like this?'}
             </p>
-            <InteractiveHoverButton href="/consulting">
+            <InteractiveHoverButton 
+              href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+              trackingSource="portfolio_piece"
+              trackingPage="portfolio_item"
+            >
               Start a conversation
             </InteractiveHoverButton>
           </div>

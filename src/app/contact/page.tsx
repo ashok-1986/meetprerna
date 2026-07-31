@@ -15,7 +15,12 @@ export default function Contact() {
           </h1>
           <p className={styles.sub}>
             Press, commercial work and general enquiries. For tattoo consultations,
-            <a href="/consulting" className={styles.consultingLink}>
+            <a 
+              href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.consultingLink}
+            >
               start a conversation
             </a>
             .

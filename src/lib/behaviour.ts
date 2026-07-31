@@ -12,6 +12,7 @@ type BehaviourEventProps = {
   filter_used: { medium?: string; motif?: string }
   scroll_depth: { page: string; pct: 25 | 50 | 75 | 100 }
   cta_tapped: { page: string; position: string }
+  whatsapp_cta_clicked: { source: string; page: string }
 }
 
 const firedScrollDepths = new Set<string>()

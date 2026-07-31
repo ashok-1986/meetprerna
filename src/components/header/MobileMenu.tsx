@@ -137,7 +137,12 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         {/* Bottom edge — CTA */}
         <div className={styles.bottomSection}>
-          <InteractiveHoverButton href="/consulting" onClick={handleDismiss}>
+          <InteractiveHoverButton 
+            href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo" 
+            onClick={handleDismiss}
+            trackingSource="mobile_menu"
+            trackingPage="header"
+          >
             Start a conversation
           </InteractiveHoverButton>
         </div>

@@ -22,9 +22,14 @@ export default function ErrorPage({
         <Link href="/portfolio" className={styles.primary}>
           See the work
         </Link>
-        <Link href="/consulting" className={styles.secondary}>
+        <a 
+          href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.secondary}
+        >
           Start a conversation
-        </Link>
+        </a>
       </div>
     </main>
   )

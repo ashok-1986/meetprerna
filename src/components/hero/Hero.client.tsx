@@ -2,7 +2,7 @@
 
 import { useRef, useLayoutEffect } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { gsap } from 'gsap'
 import { CustomEase } from 'gsap/CustomEase'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -161,12 +161,15 @@ export function Hero() {
             <p className="gs-subhead opacity-0 text-white/90 text-[1.125rem] leading-relaxed mb-8">
               {site.hero.subheadLines.join(' ')}
             </p>
-            <Link
-              href="/consulting"
-              className="gs-cta opacity-0 inline-flex items-center justify-center px-6 py-3 rounded-full border border-[#C4FF61] text-[#C4FF61] hover:bg-[#C4FF61] hover:text-black transition-colors font-normal"
-            >
-              {site.hero.cta}
-            </Link>
+            <div className="gs-cta opacity-0">
+              <InteractiveHoverButton
+                href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+                trackingSource="home_hero"
+                trackingPage="home"
+              >
+                {site.hero.cta}
+              </InteractiveHoverButton>
+            </div>
           </div>
 
         </div>

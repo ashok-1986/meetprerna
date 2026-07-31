@@ -191,7 +191,11 @@ export function ArchiveGridClient({ pieces }: Props) {
           <p className={styles.emptyText}>
             Nothing matches that combination. Try a different filter.
           </p>
-          <InteractiveHoverButton href="/consulting">
+          <InteractiveHoverButton 
+            href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+            trackingSource="archive_grid_empty"
+            trackingPage="portfolio"
+          >
             Start a conversation
           </InteractiveHoverButton>
         </div>
