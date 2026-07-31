@@ -2,20 +2,30 @@
   width: 100vw;
   box-sizing: border-box;
   padding-top: 96px;
-  padding-bottom: 48px;
+  padding-bottom: 96px;
   padding-left: 24px;
   padding-right: 24px;
   display: flex;
   flex-direction: column;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .indexSection {
     padding-top: 192px;
-    padding-bottom: 96px;
+    padding-bottom: 192px;
     padding-left: 32px;
     padding-right: 32px;
   }
+}
+
+.sectionLabel {
+  display: block;
+  font-family: var(--font-mono), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
 }
 
 .row {

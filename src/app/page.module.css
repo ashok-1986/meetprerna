@@ -41,6 +41,11 @@
 
 /* ── Ground Shift ── */
 
+.darkTheme {
+  background-color: var(--color-ink);
+  color: var(--color-ivory);
+}
+
 .lightTheme {
   background-color: var(--color-ivory);
   color: var(--color-ink);
@@ -214,30 +219,28 @@
 /* ── Block 02b: Thesis + credibility strip ── */
 
 .thesisSection {
-  padding: 192px clamp(24px, 5vw, 32px);
+  position: relative;
   width: 100%;
+  max-width: 1800px;
   margin: 0 auto;
+  padding: 192px clamp(24px, 5vw, 32px);
   display: flex;
-  flex-direction: column;
-  gap: 48px;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 4rem;
 }
 
 @media (max-width: 1023px) {
   .thesisSection {
     padding: 96px clamp(24px, 5vw, 32px);
-  }
-}
-
-@media (min-width: 1024px) {
-  .thesisSection {
-    flex-direction: row;
-    align-items: baseline;
-    gap: clamp(48px, 8vw, 96px);
+    flex-direction: column;
+    gap: 48px;
   }
 }
 
 .thesisLeft {
-  flex: 1;
+  width: 45%;
+  flex-shrink: 0;
 }
 
 .thesisLeft h2 {
@@ -250,11 +253,21 @@
   text-wrap: balance;
 }
 
+@media (max-width: 1023px) {
+  .thesisLeft {
+    width: 100%;
+  }
+}
+
 .thesisRight {
-  flex: 0 0 auto;
-  width: 100%;
-  max-width: 52ch;
-  min-width: 38ch;
+  flex-grow: 1;
+  width: 45%;
+}
+
+@media (max-width: 1023px) {
+  .thesisRight {
+    width: 100%;
+  }
 }
 
 .thesisBody {

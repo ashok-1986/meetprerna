@@ -16,7 +16,7 @@ const indexRows = [
   { label: "04 The Practice", href: "/sanctuary" }
 ]
 
-export function IndexBlock() {
+export function Index() {
   const containerRef = useRef<HTMLElement>(null)
   
   useLayoutEffect(() => {
@@ -57,6 +57,7 @@ export function IndexBlock() {
 
   return (
     <section ref={containerRef} className={styles.indexSection}>
+      <span className={styles.sectionLabel}>THE INDEX</span>
       {indexRows.map((row, i) => (
         <Link key={i} href={row.href} className={`${styles.row} reveal-row`}>
           <h2 className={styles.rowText}>{row.label}</h2>

@@ -1,6 +1,7 @@
 import { Hero } from '@/components/hero/Hero.client'
 import { Marquee } from '@/components/marquee/Marquee.client'
 import { StatsGrid } from '@/components/stats/StatsGrid'
+import { ThesisStrip } from '@/components/stats/ThesisStrip'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { SessionLine } from '@/components/session/SessionLine.client'
 import { FeaturedPortfolio } from '@/components/home/FeaturedPortfolio'
@@ -10,6 +11,7 @@ import { Voices } from '@/components/voices/Voices'
 import { Process } from '@/components/process/Process'
 import { WhereToFindMe } from '@/components/about/WhereToFindMe'
 import { Practice } from '@/components/practice/Practice.client'
+import { Index } from '@/components/index/Index.client'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -17,33 +19,39 @@ export default function Home() {
     <main id="main-content" className={styles.page}>
       <SessionLine />
       
-      {/* Block 01: Hero */}
-      <Hero />
-      <Marquee />
+      {/* Dark Ground Wrapper: Blocks 01 through 05 */}
+      <div className={styles.darkTheme}>
+        {/* Block 01: Hero */}
+        <Hero />
+        <Marquee />
 
-      {/* Block 02: The Index (TODO) */}
+        {/* Block 02: Index */}
+        <Index />
 
-      {/* Block 02b: Thesis + Credibility Strip */}
-      <StatsGrid />
+        {/* Block 02b: Thesis + Credibility Strip */}
+        <ThesisStrip />
 
-      {/* Block 03: Selected Work / Featured Portfolio */}
-      <FeaturedPortfolio />
+        {/* Block 03: Selected Work / Featured Portfolio */}
+        <FeaturedPortfolio />
 
-      {/* Block 04: Fresh → Healed (TODO) */}
+        {/* Block 04: Fresh → Healed (TODO) */}
 
-      {/* Block 05: The Practice / Pillars */}
-      <Practice />
+        {/* Block 05: The Practice / Pillars & StatsGrid */}
+        <Practice />
+        <StatsGrid />
+      </div>
 
       {/* Block 05b: The Still Band / The Hinge */}
       <M3Reveal>
         <TheHinge />
       </M3Reveal>
 
+      {/* Light Ground Wrapper: Blocks 06 through 10 */}
       <div className={styles.lightTheme}>
         {/* Block 06: Process */}
         <Process />
 
-        {/* Block 07: The Sketchbook (TODO) */}
+        {/* Block 07: Sketchbook (TODO) */}
 
         {/* Block 08: Voices */}
         <M3Reveal>
