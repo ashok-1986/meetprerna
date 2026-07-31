@@ -1,7 +1,7 @@
 
 import { Hero } from '@/components/hero/Hero.client'
 import { Marquee } from '@/components/marquee/Marquee.client'
-import { ThesisStats } from '@/components/proof/ThesisStats.client'
+import { StatsGrid } from '@/components/stats/StatsGrid'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { SessionLine } from '@/components/session/SessionLine.client'
 import { FeaturedPortfolio } from '@/components/home/FeaturedPortfolio'
@@ -23,10 +23,7 @@ export default function Home() {
 
       <Marquee />
 
-      {/* Block 02b: Band + Stats */}
-      <M3Reveal>
-        <ThesisStats />
-      </M3Reveal>
+
 
       {/* Block 03: Featured Portfolio (Grid with Pixel-Block reveals) */}
       <FeaturedPortfolio />
@@ -42,7 +39,10 @@ export default function Home() {
           <Block05Pillars />
         </M3Reveal>
 
-        {/* Block 06: Process */}
+        {/* Block 06: The Stats Grid */}
+        <StatsGrid />
+
+        {/* Block 06b: Process */}
         <Process />
 
         {/* Block 07: Voices */}
