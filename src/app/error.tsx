@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { TrackingWhatsAppLink } from '@/components/ui/TrackingWhatsAppLink'
 import styles from './error-pages.module.css'
 
 export default function ErrorPage({
@@ -22,14 +23,13 @@ export default function ErrorPage({
         <Link href="/portfolio" className={styles.primary}>
           See the work
         </Link>
-        <a 
-          href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo" 
-          target="_blank"
-          rel="noopener noreferrer"
+        <TrackingWhatsAppLink 
           className={styles.secondary}
+          trackingSource="error_page"
+          trackingPage="/error"
         >
           Start a conversation
-        </a>
+        </TrackingWhatsAppLink>
       </div>
     </main>
   )

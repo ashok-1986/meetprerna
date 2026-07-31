@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import styles from './page.module.css'
+import { TrackingWhatsAppLink } from '@/components/ui/TrackingWhatsAppLink'
 
 export const metadata: Metadata = {
   title: 'Get in touch',
@@ -15,14 +16,13 @@ export default function Contact() {
           </h1>
           <p className={styles.sub}>
             Press, commercial work and general enquiries. For tattoo consultations,
-            <a 
-              href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
-              target="_blank"
-              rel="noopener noreferrer"
+            <TrackingWhatsAppLink 
               className={styles.consultingLink}
+              trackingSource="body_text"
+              trackingPage="/contact"
             >
               start a conversation
-            </a>
+            </TrackingWhatsAppLink>
             .
           </p>
         </section>

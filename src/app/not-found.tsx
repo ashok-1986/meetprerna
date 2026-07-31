@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { TrackingWhatsAppLink } from '@/components/ui/TrackingWhatsAppLink'
 import styles from './error-pages.module.css'
 
 export default function NotFound() {
@@ -12,14 +13,13 @@ export default function NotFound() {
         <Link href="/portfolio" className={styles.primary}>
           See the work
         </Link>
-        <a 
-          href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo" 
-          target="_blank"
-          rel="noopener noreferrer"
+        <TrackingWhatsAppLink 
           className={styles.secondary}
+          trackingSource="not_found_page"
+          trackingPage="/not-found"
         >
           Start a conversation
-        </a>
+        </TrackingWhatsAppLink>
       </div>
     </main>
   )

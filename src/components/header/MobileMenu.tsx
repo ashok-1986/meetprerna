@@ -141,7 +141,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo" 
             onClick={handleDismiss}
             trackingSource="mobile_menu"
-            trackingPage="header"
+            trackingPage={pathname || 'header'}
           >
             Start a conversation
           </InteractiveHoverButton>
