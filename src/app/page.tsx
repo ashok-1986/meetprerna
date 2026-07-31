@@ -4,7 +4,7 @@ import { Marquee } from '@/components/marquee/Marquee.client'
 import { ThesisStats } from '@/components/proof/ThesisStats.client'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { SessionLine } from '@/components/session/SessionLine.client'
-import { FeatureSlider } from '@/components/work/FeatureSlider'
+import { SelectedWork } from '@/components/home/SelectedWork'
 import { Block05Pillars } from '@/components/pillars/Block05Pillars'
 import { TheHinge } from '@/components/hinge/TheHinge'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
@@ -34,10 +34,8 @@ export default function Home() {
         <ThesisStats />
       </M3Reveal>
 
-      {/* Block 04: Premium Image Slider */}
-      <M3Reveal>
-        <FeatureSlider />
-      </M3Reveal>
+      {/* Block 03: Selected Work (Horizontal scroll gallery) */}
+      <SelectedWork />
 
       {/* Block 04b: The Hinge / Still Band */}
       <M3Reveal>
