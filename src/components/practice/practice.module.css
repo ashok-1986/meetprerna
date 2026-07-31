@@ -34,7 +34,7 @@
 }
 
 .pillarDesc {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-size: var(--text-body, 1rem);
   color: var(--color-ivory-dim);
   max-width: 52ch;
@@ -44,10 +44,12 @@
 
 @media (max-width: 1023px) {
   .section {
-    padding: 192px 24px;
+    padding: 96px 24px;
+    gap: 64px;
   }
 
   .row {
+    display: flex;
     flex-direction: column;
     gap: 16px;
   }

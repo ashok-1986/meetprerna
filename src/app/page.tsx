@@ -1,4 +1,3 @@
-
 import { Hero } from '@/components/hero/Hero.client'
 import { Marquee } from '@/components/marquee/Marquee.client'
 import { StatsGrid } from '@/components/stats/StatsGrid'
@@ -11,49 +10,52 @@ import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button
 import { Voices } from '@/components/voices/Voices'
 import { Process } from '@/components/process/Process'
 import { WhereToFindMe } from '@/components/about/WhereToFindMe'
+import { Practice } from '@/components/practice/Practice.client'
 import styles from './page.module.css'
 
 export default function Home() {
-
-
   return (
     <main id="main-content" className={styles.page}>
       <SessionLine />
+      
+      {/* 1. Cinematic Hero */}
       <Hero />
 
+      {/* 2. Scrolling Location Marquee */}
       <Marquee />
 
+      {/* 3. The Practice / Philosophy Block */}
+      <Practice />
 
-
-      {/* Block 03: Featured Portfolio (Grid with Pixel-Block reveals) */}
+      {/* 4. Featured Portfolio (Grid with Pixel-Block reveals) */}
       <FeaturedPortfolio />
 
-      {/* Block 04b: The Hinge / Still Band */}
+      {/* 5. The Hinge / Still Band (Dark to Light Transition) */}
       <M3Reveal>
         <TheHinge />
       </M3Reveal>
 
       <div className={styles.lightTheme}>
-        {/* Block 05: Pillars */}
+        {/* 6. The 4 Pillars (Ivory Background) */}
         <M3Reveal>
           <Block05Pillars />
         </M3Reveal>
 
-        {/* Block 06: The Stats Grid */}
+        {/* 7. The Editorial Stats Grid */}
         <StatsGrid />
 
-        {/* Block 06b: Process */}
+        {/* 8. Process */}
         <Process />
 
-        {/* Block 07: Voices */}
+        {/* 9. Voices */}
         <M3Reveal>
           <Voices />
         </M3Reveal>
 
-        {/* Block 09: Where to find me */}
+        {/* 10. Where to find me */}
         <WhereToFindMe />
 
-        {/* Block 10: Close */}
+        {/* 11. Close */}
         <M3Reveal>
           <section aria-labelledby="close-heading" className={styles.closeSection}>
             <h2 id="close-heading" className={styles.closeHeading}>
