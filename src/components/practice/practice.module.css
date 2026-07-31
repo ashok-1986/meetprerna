@@ -7,6 +7,16 @@
   gap: 96px;
 }
 
+.sectionLabel {
+  display: block;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--text-mono);
+  color: var(--color-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
+}
+
 .row {
   display: grid;
   grid-template-columns: minmax(0, auto) 1fr minmax(0, 52ch);
@@ -26,9 +36,9 @@
 
 .pillarTitle {
   font-family: var(--font-cormorant), serif;
-  font-size: var(--text-display-l);
+  font-size: var(--text-display-xl, clamp(3.25rem, 11vw, 10rem));
   font-weight: 400;
-  color: var(--color-ink);
+  color: var(--color-ivory);
   margin: 0;
   line-height: 1.1;
 }
@@ -36,8 +46,8 @@
 .pillarDesc {
   font-family: var(--font-sans), sans-serif;
   font-size: var(--text-body, 1rem);
-  color: var(--color-ink-500);
-  max-width: 52ch;
+  color: var(--color-ivory-dim);
+  max-width: 55ch;
   margin: 0;
   line-height: 1.6;
 }

@@ -44,7 +44,13 @@ export default function Home() {
         <Process />
 
         {/* Block 06b: The Practice / Pillars */}
+      </div>
+
+      <div className={styles.darkTheme}>
         <Practice />
+      </div>
+
+      <div className={styles.lightTheme}>
 
         {/* Block 07: Sketchbook (TODO) */}
 

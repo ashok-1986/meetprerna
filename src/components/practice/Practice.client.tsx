@@ -9,22 +9,30 @@ gsap.registerPlugin(ScrollTrigger)
 
 const pillars = [
   {
-    title: "01 Mapping The Self",
+    title: "Mapping The Self",
     desc: "Choosing to mark your skin is a decision about who you are becoming. I explore the meaning behind the image before I draw a single line."
   },
   {
-    title: "02 Words Before Ink",
+    title: "Words Before Ink",
     desc: "Every piece begins with a quiet conversation. No pressure, no rushed sketches. I listen to your story until the vision is clear enough to translate."
   },
   {
-    title: "03 The Abstract Form",
+    title: "The Abstract Form",
     desc: "Your story is translated into abstract art, crafted for your unique contours. Custom ink designed to age beautifully over decades, never in a rush."
   },
   {
-    title: "04 A Safe Exhale",
+    title: "A Safe Exhale",
     desc: "The studio is a quiet room. A place to pause, to be seen, and to leave a part of your story permanently etched in peace."
   }
 ]
+
+const splitText = (text: string) => {
+  return text.split('').map((char, index) => (
+    <span key={index} className="js-char">
+      {char}
+    </span>
+  ))
+}
 
 export function Practice() {
   const containerRef = useRef<HTMLElement>(null)
@@ -36,11 +44,12 @@ export function Practice() {
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set('.js-reveal', { opacity: 1, y: 0 })
+        gsap.set('.js-char', { opacity: 1 })
       })
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
+        // Fade in rows normally
         gsap.set('.js-reveal', { opacity: 0, y: 12 })
-        
         gsap.to('.js-reveal', {
           opacity: 1,
           y: 0,
@@ -52,6 +61,25 @@ export function Practice() {
             start: 'top 85%',
           }
         })
+
+        // Character scrub for titles (M21)
+        const titles = gsap.utils.toArray('.js-title-split') as HTMLElement[]
+        titles.forEach((title) => {
+          const chars = title.querySelectorAll('.js-char')
+          gsap.set(chars, { opacity: 0.2 })
+          
+          gsap.to(chars, {
+            opacity: 1,
+            stagger: 0.1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: title,
+              start: 'top 85%',
+              end: 'bottom 50%',
+              scrub: true,
+            }
+          })
+        })
       })
     }, containerRef)
 
@@ -62,11 +90,16 @@ export function Practice() {
   }, [])
 
   return (
-    <section ref={containerRef} className={styles.section}>
+    <section ref={containerRef} className={styles.section} aria-label="The Practice">
+      <div className="js-reveal">
+        <span className={styles.sectionLabel}>THE PRACTICE</span>
+      </div>
       {pillars.map((pillar) => (
         <div key={pillar.title} className={`${styles.row} js-reveal`}>
           <div className={styles.leftAnchor}>
-            <h2 className={styles.pillarTitle}>{pillar.title}</h2>
+            <h2 className={`${styles.pillarTitle} js-title-split`} aria-label={pillar.title}>
+              {splitText(pillar.title)}
+            </h2>
           </div>
           <div className={styles.rightAnchor}>
             <p className={styles.pillarDesc}>{pillar.desc}</p>
