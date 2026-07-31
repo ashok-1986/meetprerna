@@ -70,11 +70,14 @@ export function WhereToFindMe() {
           I work primarily from Kharghar, Navi Mumbai, and collaborate with partner studios 
           across Mumbai on demand. Rather than tie you to one fixed address, I meet you where 
           you are comfortable.
-          <br /><br />
-          Tell me your preferred area and timing. I will confirm the nearest available studio.
         </p>
 
         <div className={`${styles.formCard} gs-find-reveal`}>
+          <h3 className={styles.cardHeading}>Start a conversation</h3>
+          <p className={styles.cardSubline}>
+            Tell me your preferred area and timing. I will confirm the nearest available studio.
+          </p>
+
           {loading && (
             <div className={styles.skeleton} aria-hidden="true">
               <div className={styles.skeletonLine} />
@@ -85,7 +88,7 @@ export function WhereToFindMe() {
             </div>
           )}
 
-          <div style={{ width: '100%', height: '100%', minHeight: '400px' }}>
+          <div className={styles.iframeContainer}>
             <FilloutStandardEmbed
               filloutId="gvnCVtzfz2us"
               dynamicResize
