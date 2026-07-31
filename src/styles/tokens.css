@@ -78,8 +78,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-heading:        var(--font-sans);
-  --font-sans:        var(--font-sans);
+  --font-heading:        var(--font-body);
+  --font-sans:        var(--font-body);
   --font-serif:       var(--font-cormorant), serif;
   --font-mono:        var(--font-jetbrains), monospace;
   --font-accent:      var(--font-tinos), Georgia, serif;

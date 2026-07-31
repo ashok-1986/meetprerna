@@ -10,6 +10,7 @@ import { TheHinge } from '@/components/hinge/TheHinge'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { Voices } from '@/components/voices/Voices'
 import { Process } from '@/components/process/Process'
+import { WhereToFindMe } from '@/components/about/WhereToFindMe'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -50,22 +51,7 @@ export default function Home() {
         </M3Reveal>
 
         {/* Block 09: Where to find me */}
-        <M3Reveal>
-          <section aria-labelledby="find-heading" className={styles.block}>
-            <span className={styles.sectionLabel}>Where to find me</span>
-            <h2 id="find-heading" className={styles.sectionHeading}>
-              Where to find me
-            </h2>
-            <p className={styles.bodyText}>
-              My primary location is Kharghar, in Navi Mumbai. Most sessions happen
-              there. I also work from studios elsewhere in Mumbai when there is
-              demand.
-            </p>
-            <p className={styles.bodyMeta}>
-              No fixed studio address. Start a conversation to find out where.
-            </p>
-          </section>
-        </M3Reveal>
+        <WhereToFindMe />
 
         {/* Block 10: Close */}
         <M3Reveal>

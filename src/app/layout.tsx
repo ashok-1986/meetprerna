@@ -1,13 +1,11 @@
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, Urbanist, JetBrains_Mono, Geist, Tinos } from 'next/font/google'
+import { Cormorant_Garamond, Urbanist, JetBrains_Mono, Tinos } from 'next/font/google'
 
 import '@/styles/tokens.css'
 import { Analytics } from '@vercel/analytics/react'
 import { cn } from "@/lib/utils";
 import { Header } from '@/components/header/Header'
 import { Footer } from '@/components/footer/Footer'
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -124,7 +122,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(cormorant.variable, urbanist.variable, jetbrainsMono.variable, tinos.variable, "font-sans", geist.variable)}
+      className={cn(cormorant.variable, urbanist.variable, jetbrainsMono.variable, tinos.variable)}
       suppressHydrationWarning
     >
       <head>

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
-import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import prernaHero from '@/../public/images/prerna-hero.jpg'
 import prernaWithWork from '@/../public/images/about/prerna-with-work.jpg'
+import { WhereToFindMe } from '@/components/about/WhereToFindMe'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
@@ -110,24 +110,7 @@ export default function About() {
         </div>
       </M3Reveal>
 
-      <M3Reveal className={`${styles.section} ${styles.twoAnchorSection}`} aria-labelledby="find-me-heading">
-        <div className={styles.twoAnchorLeft}>
-          <h2 id="find-me-heading" className={styles.sectionHeading}>
-            Where to find me
-          </h2>
-        </div>
-        <div className={styles.twoAnchorRight}>
-          <p className={styles.bodyText}>
-            My primary location is Kharghar, in Navi Mumbai. Most sessions happen there.
-          </p>
-          <p className={styles.bodyText}>
-            I also work from studios elsewhere in Mumbai when there is demand, at places I have collaborated with before.
-          </p>
-          <p className={styles.bodyText}>
-            I have been tattooing since 2021. The brush is older.
-          </p>
-        </div>
-      </M3Reveal>
+      <WhereToFindMe />
 
       <M3Reveal className={`${styles.section} ${styles.twoAnchorSection}`} aria-labelledby="travel-heading">
         <div className={styles.twoAnchorLeft}>
@@ -153,16 +136,7 @@ export default function About() {
         </section>
       </M3Reveal>
 
-      <M3Reveal>
-        <section className={styles.ctaSection} aria-labelledby="about-cta-heading">
-          <p id="about-cta-heading" className={styles.ctaText}>
-            If any of this sounds like the room you want to be in, start a conversation.
-          </p>
-          <InteractiveHoverButton href="/consulting">
-            Start a conversation
-          </InteractiveHoverButton>
-        </section>
-      </M3Reveal>
+
     </main>
   )
 }
