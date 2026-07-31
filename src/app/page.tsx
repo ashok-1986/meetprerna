@@ -20,11 +20,12 @@ export default function Home() {
       
       {/* Dark Ground Wrapper: Blocks 01 through 05 */}
       <div className={styles.darkTheme}>
-        {/* Block 01: Hero */}
         <Hero />
         <Marquee />
 
-
+        {/* Block 05: The Practice / Pillars & StatsGrid */}
+        <Practice />
+        <StatsGrid />
 
         {/* Block 02b: Thesis + Credibility Strip */}
         <ThesisStrip />
@@ -33,10 +34,6 @@ export default function Home() {
         <FeaturedPortfolio />
 
         {/* Block 04: Fresh → Healed (TODO) */}
-
-        {/* Block 05: The Practice / Pillars & StatsGrid */}
-        <Practice />
-        <StatsGrid />
       </div>
 
       {/* Block 05b: The Still Band / The Hinge */}
