@@ -190,11 +190,14 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
+  body, button, input, select, textarea {
     font-family: var(--font-body), sans-serif;
     background-color: var(--color-ink);
     color: var(--color-ivory);
     margin: 0;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-cormorant), serif;
   }
   html {
     @apply font-sans;
