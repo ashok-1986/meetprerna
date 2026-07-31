@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
+import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -11,17 +12,8 @@ export function TheHinge() {
   const textContainerRef = useRef<HTMLDivElement>(null);
   const lineOneRef = useRef<HTMLSpanElement>(null);
   const lineTwoRef = useRef<HTMLSpanElement>(null);
-  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
 
   useLayoutEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setShouldReduceMotion(mediaQuery.matches);
-
-    const listener = (event: MediaQueryListEvent) => {
-      setShouldReduceMotion(event.matches);
-    };
-    mediaQuery.addEventListener('change', listener);
-
     let mm: gsap.MatchMedia;
     const ctx = gsap.context(() => {
       mm = gsap.matchMedia();
@@ -65,37 +57,25 @@ export function TheHinge() {
     }, sectionRef);
 
     return () => {
-      mediaQuery.removeEventListener('change', listener);
       mm?.revert();
       ctx.revert();
     };
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full h-[100svh] overflow-hidden bg-[#111111] py-[96px] lg:py-[192px]">
+    <section ref={sectionRef} className="relative w-full h-[80svh] overflow-hidden bg-[var(--color-ink)] py-[192px]">
       
-      {/* Full Bleed Video Background with Poster Fallback */}
-      <div className="absolute inset-0 w-full h-full bg-[#111111] opacity-80">
-        {!shouldReduceMotion ? (
-          <video 
-            src="/video/hinge-loop.mp4" 
-            poster="/images/hinge-poster.jpg"
-            autoPlay 
-            muted 
-            loop 
-            playsInline
-            aria-hidden="true"
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <img 
-            src="/images/hinge-poster.jpg" 
-            alt="Prerna working in the studio" 
-            className="w-full h-full object-cover"
-          />
-        )}
+      {/* Full Bleed Image Background */}
+      <div className="absolute inset-0 w-full h-full bg-[var(--color-ink)] opacity-80">
+        <Image 
+          src="/images/prerna-working-bw.jpg" 
+          alt="Prerna working in the studio" 
+          fill
+          className="object-cover"
+          priority
+        />
         {/* Gradient Scrim for text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)] via-[var(--color-ink)]/40 to-transparent" />
       </div>
 
       {/* Left-Anchored Parallax Typography */}
@@ -103,16 +83,19 @@ export function TheHinge() {
         ref={textContainerRef}
         className="absolute bottom-16 md:bottom-24 left-0 w-full px-6 md:px-8 max-w-[1800px] mx-auto z-10"
       >
-        <h2 className="font-serif text-[clamp(2.25rem,5vw,4.5rem)] leading-[1.1] max-w-[18ch] font-normal">
+        <h2 
+          className="font-serif leading-[1.1] max-w-[18ch] font-normal"
+          style={{ fontSize: 'var(--text-display-l)' }}
+        >
           {/* Mask Wrapper 1 */}
           <span className="block overflow-hidden pb-2">
-            <span ref={lineOneRef} className="block text-[#FDFFE9] transform origin-bottom">
+            <span ref={lineOneRef} className="block text-[var(--color-ivory)] transform origin-bottom">
               She has never done the same art twice.
             </span>
           </span>
           {/* Mask Wrapper 2 */}
           <span className="block overflow-hidden pt-2">
-            <span ref={lineTwoRef} className="block text-[#C4FF61] transform origin-bottom">
+            <span ref={lineTwoRef} className="block text-[var(--color-inchworm)] transform origin-bottom">
               On purpose.
             </span>
           </span>

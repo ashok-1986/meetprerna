@@ -77,7 +77,7 @@ export default function Sanctuary() {
 
         {/* The Five Steps */}
         <M3Reveal className={`${styles.section} ${styles.stepsSection}`} aria-labelledby="steps-heading">
-          <span className={styles.sectionLabel}>The process</span>
+          <span className={styles.sectionLabel}>THE PROCESS</span>
           <h2 id="steps-heading" className={styles.sectionHeading}>
             The five steps
           </h2>
@@ -148,7 +148,7 @@ export default function Sanctuary() {
         {/* Pain Section */}
         <M3Reveal className={`${styles.section} ${styles.twoAnchorSection}`} aria-labelledby="pain-heading">
           <div className={styles.twoAnchorLeft}>
-            <span className={styles.sectionLabel}>Pain</span>
+            <span className={styles.sectionLabel}>PAIN</span>
             <h2 id="pain-heading" className={styles.sectionHeading}>
               Yes, it hurts. Here is what that actually means.
             </h2>
@@ -168,7 +168,7 @@ export default function Sanctuary() {
         {/* Hygiene Section */}
         <M3Reveal className={`${styles.section} ${styles.twoAnchorSection}`} aria-labelledby="hygiene-heading">
           <div className={styles.twoAnchorLeft}>
-            <span className={styles.sectionLabel}>Hygiene</span>
+            <span className={styles.sectionLabel}>HYGIENE</span>
             <h2 id="hygiene-heading" className={styles.sectionHeading}>
               What comes out of the packet.
             </h2>
@@ -187,7 +187,7 @@ export default function Sanctuary() {
 
         {/* FAQ */}
         <M3Reveal className={`${styles.section} ${styles.faqSection}`} aria-labelledby="faq-heading">
-          <span className={styles.sectionLabel}>Cost & questions</span>
+          <span className={styles.sectionLabel}>COST & QUESTIONS</span>
           <h2 id="faq-heading" className={styles.sectionHeading}>
             Questions people are scared to ask
           </h2>

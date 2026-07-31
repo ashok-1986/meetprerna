@@ -36,7 +36,7 @@
 
 .pillarTitle {
   font-family: var(--font-cormorant), serif;
-  font-size: var(--text-display-xl, clamp(3.25rem, 11vw, 10rem));
+  font-size: var(--text-display-l);
   font-weight: 400;
   color: var(--color-ivory);
   margin: 0;
@@ -44,7 +44,7 @@
 }
 
 .pillarDesc {
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body, 1rem);
   color: var(--color-ivory-dim);
   max-width: 55ch;

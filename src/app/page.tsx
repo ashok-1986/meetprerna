@@ -22,15 +22,16 @@ export default function Home() {
         <Hero />
         <Marquee />
 
-        {/* Block 05: The Practice / Pillars & StatsGrid */}
+        {/* Block 02b: StatsGrid (Thesis + Credibility Strip) */}
         <StatsGrid />
-
-
 
         {/* Block 03: Selected Work / Featured Portfolio */}
         <FeaturedPortfolio />
 
         {/* Block 04: Fresh → Healed (TODO) */}
+        
+        {/* Block 05: The Practice / Pillars */}
+        <Practice />
       </div>
 
       {/* Block 05b: The Still Band / The Hinge */}
@@ -42,15 +43,6 @@ export default function Home() {
       <div className={styles.lightTheme}>
         {/* Block 06: Process */}
         <Process />
-
-        {/* Block 06b: The Practice / Pillars */}
-      </div>
-
-      <div className={styles.darkTheme}>
-        <Practice />
-      </div>
-
-      <div className={styles.lightTheme}>
 
         {/* Block 07: Sketchbook (TODO) */}
 

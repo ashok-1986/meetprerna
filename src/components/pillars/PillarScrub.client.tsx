@@ -75,7 +75,7 @@ export function PillarScrub({ pillars }: PillarScrubProps) {
 
   return (
     <section ref={sectionRef} className={styles.section}>
-      <span className={styles.sectionLabel}>The practice</span>
+      <span className={styles.sectionLabel}>THE PRACTICE</span>
       {pillars.map((pillar, pi) => (
         <div key={pillar.title} className={styles.pillar}>
           <p className={styles.pillarTitle}>{pillar.title}</p>

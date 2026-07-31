@@ -109,7 +109,7 @@
 }
 
 .stepDesc {
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: var(--text-body-l);
   color: var(--color-ink);
   line-height: 1.6;
