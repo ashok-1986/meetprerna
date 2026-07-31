@@ -1,7 +1,6 @@
 import { Hero } from '@/components/hero/Hero.client'
 import { Marquee } from '@/components/marquee/Marquee.client'
 import { StatsGrid } from '@/components/stats/StatsGrid'
-import { ThesisStrip } from '@/components/stats/ThesisStrip'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { SessionLine } from '@/components/session/SessionLine.client'
 import { FeaturedPortfolio } from '@/components/home/FeaturedPortfolio'
@@ -27,8 +26,7 @@ export default function Home() {
         <Practice />
         <StatsGrid />
 
-        {/* Block 02b: Thesis + Credibility Strip */}
-        <ThesisStrip />
+
 
         {/* Block 03: Selected Work / Featured Portfolio */}
         <FeaturedPortfolio />
