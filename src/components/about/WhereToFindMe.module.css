@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 1800px;
   margin: 0 auto;
-  padding: 192px clamp(24px, 5vw, 64px);
+  padding: 192px 32px;
   background-color: var(--color-ivory);
   color: var(--color-ink);
   display: flex;
@@ -14,7 +14,7 @@
 
 @media (max-width: 1023px) {
   .section {
-    padding: 96px clamp(24px, 5vw, 64px);
+    padding: 96px 24px;
     flex-direction: column;
     gap: 48px;
   }
@@ -81,7 +81,7 @@
   padding: 48px;
   max-width: 600px;
   width: 100%;
-  margin: 0 auto;
+  margin: 0;
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -115,13 +115,7 @@
 
 .iframeContainer {
   width: 100%;
-  overflow: hidden;
   position: relative;
-}
-
-.iframeContainer iframe {
-  transform: translateY(-60px);
-  margin-bottom: -60px;
 }
 
 .skeleton {
