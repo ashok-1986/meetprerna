@@ -51,7 +51,7 @@ export function WhereToFindMe() {
       className={styles.section} 
       aria-labelledby="where-to-find-heading"
     >
-      {/* Left Column: Label & Heading */}
+      {/* Left Column: Heading & Body Copy */}
       <div className={styles.leftColumn}>
         <span className={`${styles.sectionLabel} gs-find-reveal`}>
           WHERE TO FIND ME
@@ -62,22 +62,16 @@ export function WhereToFindMe() {
         >
           Your session, your neighbourhood.
         </h2>
-      </div>
-
-      {/* Right Column: Body Copy & Form Card */}
-      <div className={styles.rightColumn}>
         <p className={`${styles.bodyText} gs-find-reveal`}>
           I work primarily from Kharghar, Navi Mumbai, and collaborate with partner studios 
           across Mumbai on demand. Rather than tie you to one fixed address, I meet you where 
           you are comfortable.
         </p>
+      </div>
 
+      {/* Right Column: Form Card */}
+      <div className={styles.rightColumn}>
         <div className={`${styles.formCard} gs-find-reveal`}>
-          <h3 className={styles.cardHeading}>Start a conversation</h3>
-          <p className={styles.cardSubline}>
-            Tell me your preferred area and timing. I will confirm the nearest available studio.
-          </p>
-
           {loading && (
             <div className={styles.skeleton} aria-hidden="true">
               <div className={styles.skeletonLine} />
