@@ -18,6 +18,32 @@ export default function About() {
     <main id="main-content">
       <AboutHero />
 
+      {/* TODO(owner): tattooing start year unconfirmed — bio source says
+          Sept 2022, homepage stats say "Since 2021," needs Prerna's
+          confirmation before either is treated as correct. */}
+      <M3Reveal className={`${styles.section} ${styles.narrativeSection}`}>
+        <div className={styles.narrativeInner}>
+          <p className={styles.narrativeFragment}>
+            Art found me before I could explain it. Performing let me be seen without needing words.
+          </p>
+          <p className={styles.narrativeFragment}>
+            I chose commerce because it felt safe. A friend&rsquo;s courage showed me I&rsquo;d been ignoring my own calling.
+          </p>
+          <p className={styles.narrativeFragment}>
+            I moved to Mumbai chasing that feeling, then lockdown hit. Fine art kept me steady when nothing else did.
+          </p>
+          <p className={styles.narrativeFragment}>
+            Tattooing found me by accident, needles and all. My real material is people&rsquo;s stories, given a shape they can carry.
+          </p>
+          <p className={styles.narrativeFragment}>
+            People shape how I think. Alone is where the ideas actually finish.
+          </p>
+          <p className={styles.narrativeFragment}>
+            I still don&rsquo;t have it all figured out, and I&rsquo;ve stopped pretending I do. Every mistake teaches me something, one piece at a time.
+          </p>
+        </div>
+      </M3Reveal>
+
       <M3Reveal className={styles.section}>
         <section aria-labelledby="about-hero-heading">
           <div className={styles.imageWrap}>

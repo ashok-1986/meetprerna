@@ -30,6 +30,35 @@
   padding: clamp(40px, 8vh, 80px) 0 0;
 }
 
+.narrativeSection {
+  background: var(--color-ink);
+  width: 100%;
+  max-width: none;
+}
+
+.narrativeInner {
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+  max-width: 70ch;
+}
+
+@media (min-width: 1024px) {
+  .narrativeInner {
+    gap: 192px;
+  }
+}
+
+.narrativeFragment {
+  font-family: var(--font-cormorant), serif;
+  font-size: var(--text-h2);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-ivory);
+  margin: 0;
+  text-wrap: balance;
+}
+
 .heroH1 {
   font-family: var(--font-cormorant), serif;
   font-size: var(--text-display-l);
