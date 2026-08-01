@@ -49,14 +49,17 @@ export default function Contact() {
           </p>
         </section>
 
+        {/* TODO(owner): real press kit PDF still pending, WhatsApp fallback in place 2026-08-01. */}
         <section className={styles.section} aria-labelledby="press-heading">
           <h2 id="press-heading" className={styles.sectionHeading}>
             Press kit
           </h2>
           <p className={styles.body}>
-            <a href="/press-kit.pdf" className={styles.link}>
-              Download press kit (PDF, ≤ 4 MB)
-            </a>
+            For photos, bio, and brand assets, message us on{' '}
+            <TrackingWhatsAppLink className={styles.link} trackingSource="press_kit_section" trackingPage="/contact">
+              WhatsApp
+            </TrackingWhatsAppLink>
+            {' '}and we&rsquo;ll send them directly.
           </p>
         </section>
       </main>

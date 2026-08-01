@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Sanctuary', href: '/sanctuary' },
   { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Consulting', href: '/consulting' },
 ] as const
 
 interface MobileMenuProps {

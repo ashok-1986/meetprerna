@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { label: 'Sanctuary', href: '/sanctuary' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
+  { label: 'Consulting', href: '/consulting' },
 ] as const
 
 // Only Instagram is a confirmed, live account. Pinterest / Facebook /

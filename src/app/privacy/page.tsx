@@ -101,7 +101,7 @@ export default function Privacy() {
             with the subject &ldquo;DPDP Request&rdquo;. We will respond within the statutory timeframe.
           </p>
           <p className={styles.body}>
-            Grievance officer: TODO(owner): confirm officer and contact address.
+            Grievance Officer: Ashok Verma, <a href="mailto:ashok@alchemetryx.com" className={styles.link}>ashok@alchemetryx.com</a>
           </p>
         </section>
 
