@@ -8,7 +8,11 @@ import styles from './WhereToFindMe.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function WhereToFindMe() {
+interface WhereToFindMeProps {
+  showForm?: boolean;
+}
+
+export function WhereToFindMe({ showForm = true }: WhereToFindMeProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [loading, setLoading] = useState(true);
 
@@ -46,9 +50,9 @@ export function WhereToFindMe() {
   }, []);
 
   return (
-    <section 
-      ref={sectionRef} 
-      className={styles.section} 
+    <section
+      ref={sectionRef}
+      className={`${styles.section} ${!showForm ? styles.noForm : ''}`}
       aria-labelledby="where-to-find-heading"
     >
       {/* Left Column: Heading & Body Copy */}
@@ -70,40 +74,42 @@ export function WhereToFindMe() {
       </div>
 
       {/* Right Column: Form Card */}
-      <div className={styles.rightColumn}>
-        <div className={`${styles.formCard} gs-find-reveal`}>
-          {loading && (
-            <div className={styles.skeleton} aria-hidden="true">
-              <div className={styles.skeletonLine} />
-              <div className={styles.skeletonLineShort} />
-              <div className={styles.skeletonInput} />
-              <div className={styles.skeletonInput} />
-              <div className={styles.skeletonButton} />
+      {showForm && (
+        <div className={styles.rightColumn}>
+          <div className={`${styles.formCard} gs-find-reveal`}>
+            {loading && (
+              <div className={styles.skeleton} aria-hidden="true">
+                <div className={styles.skeletonLine} />
+                <div className={styles.skeletonLineShort} />
+                <div className={styles.skeletonInput} />
+                <div className={styles.skeletonInput} />
+                <div className={styles.skeletonButton} />
+              </div>
+            )}
+
+            <div className={styles.iframeContainer}>
+              <FilloutStandardEmbed
+                filloutId="gvnCVtzfz2us"
+                dynamicResize
+                inheritParameters
+                parameters={{ source: 'where-to-find-me' }}
+                onInit={() => {
+                  console.log('enquiry_started');
+                  setLoading(false);
+                }}
+                onSubmit={() => console.log('enquiry_submitted')}
+              />
             </div>
-          )}
 
-          <div className={styles.iframeContainer}>
-            <FilloutStandardEmbed
-              filloutId="gvnCVtzfz2us"
-              dynamicResize
-              inheritParameters
-              parameters={{ source: 'where-to-find-me' }}
-              onInit={() => {
-                console.log('enquiry_started');
-                setLoading(false);
-              }}
-              onSubmit={() => console.log('enquiry_submitted')}
-            />
+            <p className={styles.fallbackText}>
+              Having trouble with the form?{' '}
+              <a href="mailto:prerna@meetprerna.com" className={styles.fallbackLink}>
+                Email prerna@meetprerna.com
+              </a>
+            </p>
           </div>
-
-          <p className={styles.fallbackText}>
-            Having trouble with the form?{' '}
-            <a href="mailto:prerna@meetprerna.com" className={styles.fallbackLink}>
-              Email prerna@meetprerna.com
-            </a>
-          </p>
         </div>
-      </div>
+      )}
     </section>
   );
 }

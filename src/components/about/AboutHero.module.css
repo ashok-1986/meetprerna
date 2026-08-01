@@ -1,0 +1,60 @@
+.section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--color-ink);
+}
+
+/* Background layer — overscanned by 15% top/bottom so the scroll-linked
+   yPercent slide never exposes an edge. */
+.bgWrap {
+  position: absolute;
+  inset: -15% 0;
+  z-index: 0;
+  will-change: transform;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Foreground layer — anchored to the right within the same 32px gutter
+   used by the two-anchor sections below, bottom-aligned since the source
+   portrait has a tall transparent crop above the figure. */
+.fgWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0 clamp(24px, 5vw, 32px);
+  will-change: transform;
+}
+
+.fgImageWrap {
+  position: relative;
+  width: min(100%, 460px);
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .fgImageWrap {
+    width: min(72%, 340px);
+  }
+}
+
+.fgImage {
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bgWrap,
+  .fgWrap {
+    transform: none !important;
+  }
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
+import { AboutHero } from '@/components/about/AboutHero'
 import prernaHero from '@/../public/images/prerna-hero.jpg'
 import prernaWithWork from '@/../public/images/about/prerna-with-work.jpg'
 import { WhereToFindMe } from '@/components/about/WhereToFindMe'
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
 export default function About() {
   return (
     <main id="main-content">
+      <AboutHero />
+
       <M3Reveal className={styles.section}>
         <section aria-labelledby="about-hero-heading">
           <div className={styles.imageWrap}>
@@ -60,12 +63,12 @@ export default function About() {
       </M3Reveal>
 
       <M3Reveal className={`${styles.section} ${styles.twoAnchorSection}`} aria-labelledby="training-heading">
-        <div className={styles.twoAnchorLeft}>
+        <div className={`${styles.twoAnchorLeft} ${styles.trainingLeft}`}>
           <h2 id="training-heading" className={styles.sectionHeading}>
             Training and timeline
           </h2>
         </div>
-        <div className={styles.twoAnchorRight}>
+        <div className={`${styles.twoAnchorRight} ${styles.trainingRight}`}>
           <div className={styles.trainingLayout}>
             <div className={styles.trainingText}>
               <p className={styles.bodyText}>
@@ -110,7 +113,7 @@ export default function About() {
         </div>
       </M3Reveal>
 
-      <WhereToFindMe />
+      <WhereToFindMe showForm={false} />
 
       <M3Reveal className={`${styles.section} ${styles.twoAnchorSection}`} aria-labelledby="travel-heading">
         <div className={styles.twoAnchorLeft}>
