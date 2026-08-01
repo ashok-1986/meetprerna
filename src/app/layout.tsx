@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { cn } from "@/lib/utils";
 import { Header } from '@/components/header/Header'
 import { Footer } from '@/components/footer/Footer'
+import { site } from '@/content/site'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -45,7 +46,7 @@ const personSchema = {
   url: 'https://meetprerna.com/',
   sameAs: [
     'https://www.instagram.com/meetprerna.tattoos/',
-    'https://wa.me/919820012345',
+    `https://wa.me/${site.whatsapp}`,
   ],
   knowsAbout: [
     'Tattoo art',
@@ -90,8 +91,8 @@ const serviceSchema = {
   availableChannel: {
     '@type': 'ServiceChannel',
     serviceUrl: 'https://meetprerna.com/consulting',
-    servicePhone: '+919820012345',
-    servicePostalCode: '400001',
+    servicePhone: `+${site.whatsapp}`,
+    servicePostalCode: site.pincode,
     availableLanguage: ['English', 'Hindi', 'Marathi'],
   },
 }

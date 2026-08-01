@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { FilloutEmbed } from '@/components/forms/FilloutEmbed.client'
+import { site } from '@/content/site'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ export default function Consulting() {
             <FilloutEmbed filloutId="gvnCVtzfz2us" />
           </div>
           <p className={styles.fallback}>
-            Having trouble? <a href="https://wa.me/919820012345" className={styles.whatsappLink}>Message on WhatsApp</a>
+            Having trouble? <a href={`https://wa.me/${site.whatsapp}`} className={styles.whatsappLink}>Message on WhatsApp</a>
           </p>
         </div>
       </section>

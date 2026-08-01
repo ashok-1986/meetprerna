@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { portfolio } from '@/content/portfolio'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { ArchiveGridClient } from './ArchiveGrid.client'
+import { site } from '@/content/site'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
@@ -32,8 +33,8 @@ export default function PortfolioArchive() {
           <p id="cta-strip-heading" className={styles.ctaText}>
             Have something in mind? Send it across, even if it is only a feeling.
           </p>
-          <InteractiveHoverButton 
-            href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+          <InteractiveHoverButton
+            href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
             trackingSource="portfolio_footer"
             trackingPage="portfolio"
           >

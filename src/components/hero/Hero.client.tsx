@@ -163,7 +163,7 @@ export function Hero() {
             </p>
             <div className="gs-cta opacity-0">
               <InteractiveHoverButton
-                href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+                href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
                 trackingSource="home_hero"
                 trackingPage="home"
               >

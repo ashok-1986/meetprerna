@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getPiece, imagePath, portfolio } from '@/content/portfolio'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
+import { site } from '@/content/site'
 import styles from './page.module.css'
 
 interface Props {
@@ -80,8 +81,8 @@ export default async function PortfolioPiece({ params }: Props) {
                 ? 'Interested in this piece?'
                 : 'Want something like this?'}
             </p>
-            <InteractiveHoverButton 
-              href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+            <InteractiveHoverButton
+              href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
               trackingSource="portfolio_piece"
               trackingPage="portfolio_item"
             >

@@ -4,6 +4,7 @@ import { useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
+import { site } from '@/content/site'
 import styles from './mobile-menu.module.css'
 
 const NAV_ITEMS = [
@@ -137,8 +138,8 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         {/* Bottom edge — CTA */}
         <div className={styles.bottomSection}>
-          <InteractiveHoverButton 
-            href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo" 
+          <InteractiveHoverButton
+            href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
             onClick={handleDismiss}
             trackingSource="mobile_menu"
             trackingPage={pathname || 'header'}

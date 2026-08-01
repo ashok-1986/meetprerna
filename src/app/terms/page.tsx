@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Header } from '@/components/header/Header'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
@@ -10,7 +9,6 @@ export const metadata: Metadata = {
 export default function Terms() {
   return (
     <>
-      <Header />
       <main id="main-content">
         <section className={styles.section} aria-labelledby="terms-heading">
           <h1 id="terms-heading" className={styles.sectionHeading}>

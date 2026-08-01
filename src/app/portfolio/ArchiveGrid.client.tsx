@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { imagePath, type Piece } from '@/content/portfolio'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
+import { site } from '@/content/site'
 import styles from './page.module.css'
 
 const MEDIUMS = ['All', 'Tattoo', 'Painting', 'Sketch'] as const
@@ -191,8 +192,8 @@ export function ArchiveGridClient({ pieces }: Props) {
           <p className={styles.emptyText}>
             Nothing matches that combination. Try a different filter.
           </p>
-          <InteractiveHoverButton 
-            href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+          <InteractiveHoverButton
+            href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
             trackingSource="archive_grid_empty"
             trackingPage="portfolio"
           >

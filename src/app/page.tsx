@@ -10,6 +10,7 @@ import { Voices } from '@/components/voices/Voices'
 import { Process } from '@/components/process/Process'
 import { WhereToFindMe } from '@/components/about/WhereToFindMe'
 import { Practice } from '@/components/practice/Practice.client'
+import { site } from '@/content/site'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -63,8 +64,8 @@ export default function Home() {
               </h2>
             </div>
             <div className={styles.closeRight}>
-              <InteractiveHoverButton 
-                href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+              <InteractiveHoverButton
+                href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
                 trackingSource="close_section"
                 trackingPage="home"
               >

@@ -8,6 +8,7 @@ import { MobileMenu } from './MobileMenu'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { recordInteraction } from '@/lib/behaviour'
+import { site } from '@/content/site'
 import styles from './header.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -72,7 +73,7 @@ export function HeaderClient() {
 
             <div className={styles.rightCluster}>
               <a
-                href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+                href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.ctaDesktop}
@@ -82,7 +83,7 @@ export function HeaderClient() {
               </a>
 
               <a
-                href="https://wa.me/917738147935?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo"
+                href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.ctaMobile}
