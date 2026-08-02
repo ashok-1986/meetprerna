@@ -20,11 +20,9 @@ Paste the evidence into the PR. A claim without output is not evidence.
 - [ ] Keyboard walkthrough done. Every interactive element reachable, focus ring visible, tab order matches reading order.
 - [ ] Tested with `prefers-reduced-motion: reduce` on.
 - [ ] No raw colour value outside `tokens.css`.
-- [ ] Any new animation has a row in the motion register.
-- [ ] Any new colour pair has a measured contrast ratio in `designs.md` §2.4.
+- [ ] Any new colour pair has a measured contrast ratio in `DESIGN.md` §1.
 - [ ] No `TODO` left without an owner tag.
 - [ ] **Disappearing-TODO check.** If this change REMOVED a `TODO(prerna):` or `TODO(owner):` marker, confirm the owner actually supplied that content. A vanished TODO with plausible prose in its place is a fabrication, not a completion. This has happened: an invented cancellation policy, an invented "six years of tattooing", and an unconfirmed email address all shipped this way in one commit.
-- [ ] **Contact hierarchy intact.** Every primary CTA routes to `/consulting`. Email and WhatsApp appear only as small `--color-ivory-dim` text links in the footer and on `/contact`. Neither is ever a button or accent-coloured. `DECISIONS.md` §9 D8.0.
 
 ## Accessibility floor
 
@@ -46,14 +44,14 @@ WCAG 2.1 AA. Not negotiable, not deferred to a later phase.
 
 - Nothing describing Prerna's practice ships without her approval.
 - No invented pricing, address, timeline, medical claim or guarantee. Missing fact means `TODO(prerna):`, not a plausible guess.
-- **No `LocalBusiness` schema. No address. No map embed.** See `@/DECISIONS.md` §8.
+- **No `LocalBusiness` schema. No address. No map embed.**
 - No client photograph published without written consent.
-- No testimonial published without a name and a verifiable source. See `@/DECISIONS.md` §13.
+- No testimonial published without a name and a verifiable source.
 
 ## SEO gates
 
 - Every route has a unique title and description from `content.md` §8.
-- All redirects in `@/DECISIONS.md` §7 implemented in `next.config.js` and verified with `curl -I` before DNS switch.
+- All redirects implemented in `next.config.js` and verified with `curl -I` before DNS switch.
 - `sitemap.ts` and `robots.ts` present. Sitemap submitted on switch day.
 - JSON-LD: `Person`, `Service`, `VisualArtwork` on art detail, `BreadcrumbList`, `FAQPage` on `/sanctuary`. Validated in the Rich Results test.
 - Every portfolio image has descriptive alt text. Decorative shapes get `alt=""`.
@@ -100,7 +98,7 @@ WCAG 2.1 AA. Not negotiable, not deferred to a later phase.
 - [ ] All images consented, captioned, alt-tagged.
 - [ ] Redirects verified against the live domain post-switch.
 - [ ] Search Console: sitemap submitted, coverage clean.
-- [ ] Funnel measurable end to end: Vercel Analytics live for page views, Fillout Analytics tab showing visitors/started/finished, and `source` parameters reaching Fillout submissions. No custom event pipeline. `DECISIONS.md` §22.
+- [ ] Funnel measurable end to end: Vercel Analytics live for page views, Fillout Analytics tab showing visitors/started/finished, and `source` parameters reaching Fillout submissions. No custom event pipeline.
 - [ ] Handover recorded: Prerna can add a testimonial (via the Senja link) and knows the Drive folder workflow for new images. Adding a new portfolio piece requires a code change by Ashok — this is a known, accepted limitation, documented in the runbook so nobody is surprised by it later.
 - [ ] Rollback plan written.
 - [ ] 7 days live with no P0 or P1.

@@ -4,7 +4,7 @@ Applies to every agent, every task, always.
 
 ## Source of truth
 
-Read `@/DECISIONS.md` before acting. It overrides every other document in this repo, including `PRD.md`.
+`DECISIONS.md` has been retired — its colour, font, and layout content is consolidated into `@/DESIGN.md`. Read that before acting on anything visual.
 
 Full precedence and project context: `@/AGENTS.md`.
 

@@ -2,7 +2,7 @@
 
 // This does NOT record the conversion funnel. The funnel is measured
 // at source: Vercel Analytics for page views, Fillout's own Analytics
-// tab for form visitors and submissions. See DECISIONS.md §22.
+// tab for form visitors and submissions.
 // This module records on-site behaviour only — whether the
 // interactions we built are actually being used.
 

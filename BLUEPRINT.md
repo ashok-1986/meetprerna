@@ -47,7 +47,7 @@ Not a hamburger dropdown. A fullscreen type-led menu.
 
 Four items set in Cormorant Garamond at `display-l`, stacked, left-aligned, huge. Hovering an item does two things at once: the WONK axis animates 0 → 1 so the serifs turn hand-drawn (M19), and a piece of her work masks in on the right half (M16). Portfolio, Sanctuary, About, Contact.
 
-"Start a conversation" is not in this menu. It stays a separate CTA, outside the pill on desktop and at the bottom of this panel on mobile, always pointing at `/consulting`. `DECISIONS.md` §9.
+"Start a conversation" is not in this menu. It stays a separate CTA, outside the pill on desktop and at the bottom of this panel on mobile.
 
 Open 280ms `drawer`. Close 180ms. Focus trapped, Escape closes, focus returns to the trigger.
 
@@ -208,9 +208,9 @@ Every tattoo artist has hundreds of drawings that never became tattoos. Studies,
 
 **`/sanctuary` (slow, no exceptions).** This page is read, not performed. Floema pacing throughout. Five numbered steps, three silent loops, accordion FAQ. Pain, hygiene and cost come before the CTA, not after. No drag, no pinning, no parallax.
 
-**`/about` (slow, with one physical moment).** Portrait using the same drag-reveal mechanic as the hero, this time bare arm to her own work. Then the practice statement, where she works from (Kharghar primary, Mumbai on demand, partner studios **unnamed** until they consent), and a short "travel on request" block. **There is no travel calendar** — she travels on request, not on a schedule. `DECISIONS.md` §8.
+**`/about` (slow, with one physical moment).** Portrait using the same drag-reveal mechanic as the hero, this time bare arm to her own work. Then the practice statement, where she works from (Kharghar primary, Mumbai on demand, partner studios **unnamed** until they consent), and a short "travel on request" block. **There is no travel calendar** — she travels on request, not on a schedule.
 
-**`/consulting`.** M5 and M8 only. The Fillout embed is not something we animate; it is a third-party iframe. WhatsApp appears once, as a small fallback line beside the embed, never as its own button. `DECISIONS.md` §9.
+**`/enquiry`.** Minimal motion only. The Fillout embed is not something we animate; it is a third-party iframe. WhatsApp appears once, as a small fallback line beside the embed, never as its own button.
 
 ---
 
@@ -228,6 +228,5 @@ What is not standard on any platform is the six signature moves. M15, M16, M18, 
 
 - `PRD.md` §5, all page-by-page specs. Dead.
 - `PRD.md` §5.1's section list, which was Hero, Manifesto, Selected Work, Process Teaser, Studio Vignette, Testimonials, Footer. Generic. Replaced by §4 above.
-- `MOTION.md` §7 per-page choreography. Superseded by §4 and §6 here.
 
-The register in `MOTION.md` §4 and §6 stays as the mechanical spec. This file is the arrangement.
+Motion governance (`MOTION.md` and the M-numbered register) has been retired. This file is the page arrangement; per-effect mechanics are no longer tracked in a separate register.

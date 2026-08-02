@@ -2,7 +2,7 @@
 
 **Version:** 1.0 · **Date:** 2026-07-27
 
-One entry per reference site. Every claim here was checked against the live site or a verified screenshot, not recalled from a description. If a new reference comes in, add an entry here before it changes `MOTION.md` or `BLUEPRINT.md`.
+One entry per reference site. Every claim here was checked against the live site or a verified screenshot, not recalled from a description. If a new reference comes in, add an entry here before it changes `BLUEPRINT.md`. Motion governance (`MOTION.md`) has been retired — this file no longer feeds it.
 
 The point of this file: a reference gets litigated once, its verified takeaways get written down, and the next time someone says "like Athletics" the answer is a lookup, not a re-argument from memory.
 
@@ -75,8 +75,8 @@ The point of this file: a reference gets litigated once, its verified takeaways 
 
 **Not taken, and should not be re-proposed without new material:**
 - A video-first homepage. This project has 18 photographs and no confirmed usable video footage. Building a system around nine video slots for a site with no video is building for content that doesn't exist.
-- Smooth-scroll/Lenis. Explicitly cut, `DECISIONS.md` §10, for scroll-anchoring and Android performance reasons unrelated to Athletics.
-- A second accent colour, magnetic buttons, a custom cursor, or a single-page rebuild. None of these are things Athletics actually does; they arrived in a separate, unsourced blueprint document and were not adopted. See `DECISIONS.md` for the reasoning against each, independently of this reference.
+- Smooth-scroll/Lenis. Explicitly cut, for scroll-anchoring and Android performance reasons unrelated to Athletics.
+- A second accent colour, magnetic buttons, a custom cursor, or a single-page rebuild. None of these are things Athletics actually does; they arrived in a separate, unsourced blueprint document and were not adopted.
 
 ---
 
@@ -86,6 +86,6 @@ Before proposing any change based on a new site:
 
 1. Fetch the live site or open the actual screenshot. Do not work from a description of the site.
 2. Add an entry here: what it verifiably is, what's worth taking, what's a positioning mismatch for this project and shouldn't be taken.
-3. Only then propose the `MOTION.md` or `BLUEPRINT.md` change, citing this entry.
+3. Only then propose the `BLUEPRINT.md` change, citing this entry.
 
 If a document arrives claiming to be a blueprint or a spec that references multiple sites at once, check it against this file line by line before running any part of it. A claim like "Athletics does X" is checkable here in seconds; if it's not in this file yet, verify it against the live site before acting on it.

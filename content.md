@@ -1,6 +1,6 @@
 # MeetPrerna — Content & Copy Deck (`content.md`)
 
-**Version:** 1.1 · **Date:** 2026-07-25 · **Status:** Binding for copy · **Read after:** `DECISIONS.md`
+**Version:** 1.1 · **Date:** 2026-07-25 · **Status:** Binding for copy
 
 > This file was listed in `INDEX.md` §3.3 but was not delivered in v1.0. This is it.
 > Copy here is production-ready. Prerna approves it before it ships. Nothing on this site describes her practice without her sign-off.
@@ -26,12 +26,12 @@ Six rules. Everything else follows from them.
 
 ## 2. The headline decision — SETTLED, do not reopen
 
-**SHIPPING (owner decision, binding, `DECISIONS.md` §23):**
+**SHIPPING (owner decision, binding):**
 
 - **H1:** `Beyond Ink: Your Story, Translated into Abstract Art`
 - **Sub:** `Custom tattoos, original paintings and sketches: made in conversation, never in a rush.`
 
-> **Do not change this. Do not propose alternatives.** An earlier version of this section recommended "She carries no studio. Only a needle, and everything she knows." and told the owner not to ship the line above. The owner considered that argument and chose otherwise. Typeface, palette and headline are brand voice, and brand voice is the owner's call. `DECISIONS.md` outranks this file.
+> **Do not change this. Do not propose alternatives.** An earlier version of this section recommended "She carries no studio. Only a needle, and everything she knows." and told the owner not to ship the line above. The owner considered that argument and chose otherwise. Typeface, palette and headline are brand voice, and brand voice is the owner's call.
 
 **A second, independent reason the old recommendation is dead.** It opened with "She carries no studio." Prerna has since confirmed (2026-07-26) that her **primary location is Kharghar, Navi Mumbai**. That line is now factually false. Even if the recommendation had been accepted, it would have to be withdrawn today.
 
@@ -300,7 +300,7 @@ Persona: anyone deciding whether to trust her. Slow register. `prerna-hero.jpg` 
 
 `I also work from studios elsewhere in Mumbai when there is demand, at places I have collaborated with before.`
 
-> Do not name partner studios. Prerna has not confirmed their permission. `DECISIONS.md` §8.
+> Do not name partner studios. Prerna has not confirmed their permission.
 
 **Travel**
 
@@ -308,13 +308,13 @@ Persona: anyone deciding whether to trust her. Slow register. `prerna-hero.jpg` 
 
 `If you are outside Mumbai and you want a piece, send me the details through the enquiry form and I will tell you honestly whether I can make it work.`
 
-> There is **no travel calendar**. Do not build one and do not publish dates. `DECISIONS.md` §8.
+> There is **no travel calendar**. Do not build one and do not publish dates.
 
 **The name**
 
 `Some earlier clients knew me as Alza. That was an old nickname. The work is under Prerna now.`
 
-> One line, past tense, no explanation needed. It exists so a visitor reading the testimonials is not confused. Keep `alternateName: "Alza"` in the `Person` schema so anyone searching the old name still finds her. `DECISIONS.md` §13.
+> One line, past tense, no explanation needed. It exists so a visitor reading the testimonials is not confused. Keep `alternateName: "Alza"` in the `Person` schema so anyone searching the old name still finds her.
 
 **Closing CTA**
 - `If any of this sounds like the room you want to be in, start a conversation.`
@@ -339,7 +339,7 @@ Insert after "How this started":
 
 ## 6. Portfolio (`/portfolio`)
 
-Tattoos, paintings and sketches share one archive. `DECISIONS.md` §6 has the reasoning: one practice, one collection, one body of SEO equity.
+Tattoos, paintings and sketches share one archive: one practice, one collection, one body of SEO equity.
 
 **Archive hero**
 - H1: `The archive.`
@@ -372,11 +372,11 @@ Template she can fill: `What they came with. What we found. What changed between
 
 **Consulting page (`/consulting`) — chrome around the Fillout embed**
 
-The form fields themselves (name, contact, project type, brief, references, consent) live inside Fillout, built and maintained there, not in this codebase. `DECISIONS.md` §9 has the technical contract. What follows is the copy for everything **around** the embed, which is a normal page section like any other.
+The form fields themselves (name, contact, project type, brief, references, consent) live inside Fillout, built and maintained there, not in this codebase. What follows is the copy for everything **around** the embed, which is a normal page section like any other.
 
 - H1: `Start a conversation.`
 - Sub: `Tell me what you are carrying. I usually reply within 8 hours.`
-- [Fillout embed sits here, framed in a card. See DECISIONS.md §9 D8.2 for the exact chrome and the theme values.]
+- [Fillout embed sits here, framed in a card.]
 - Fallback line below the embed, small, --color-ivory-dim: `Having trouble? Message on WhatsApp instead.` — a text link, not a button, not accent-coloured.
 
 **When rebuilding the field list inside Fillout**, use this as the brief (the actual field creation happens in Fillout's dashboard):
@@ -402,7 +402,7 @@ Lighter weight than `/consulting` on purpose. This page is for press, collaborat
 - Body, short: `Looking to book a piece instead? Start a conversation.` — links to `/consulting`.
 - Press kit: `Download the press kit` — links to the PDF.
 - Primary route: point at `/consulting`, note the usual 8-hour reply. This is the promoted path.
-- Secondary, below it, small and unpromoted: `prerna@meetprerna.com` as a plain text link for press, commercial and collaboration enquiries. `--color-ivory-dim`, underlined, never a button. `DECISIONS.md` §9 D8.0.
+- Secondary, below it, small and unpromoted: `prerna@meetprerna.com` as a plain text link for press, commercial and collaboration enquiries. `--color-ivory-dim`, underlined, never a button.
 - **Verify the mailbox receives mail before publishing.** The current live site shows this address with a `mailto:` pointing elsewhere. If it bounces, remove it.
 
 Keep this page fast and plain. No embed required here unless Prerna wants the same Fillout form in a shorter mode; a mailto link is enough for launch.
@@ -422,7 +422,7 @@ Keep this page fast and plain. No embed required here unless Prerna wants the sa
 
 ## 8. SEO surface (corrected)
 
-Replaces `PRD.md` §7.2. Routes match `DECISIONS.md` §6. No `LocalBusiness`, per `DECISIONS.md` §8.
+Replaces `PRD.md` §7.2. No `LocalBusiness`.
 
 | Route | Title | Meta description |
 |---|---|---|
@@ -453,7 +453,7 @@ The `/sanctuary` page is the SEO workhorse. "Does a tattoo hurt", "first tattoo 
 | Studio, hands, tools, station setup | 8 | Not started |
 | Portraits of Prerna (1 square, 1 wide, 1 editorial) | 3 | Not started |
 | Piece stories, 60 to 120 words each | 12 | Not started |
-| Verified testimonials, named and sourced (see `DECISIONS.md` §13) | 3 | **Blocked** |
+| Verified testimonials, named and sourced | 3 | **Blocked** |
 | Sanctuary copy: process, pain, hygiene, aftercare | ~1,200 words | Drafted above, needs Prerna |
 | FAQ answers | 8 | Needs Prerna |
 | Pricing or deposit policy statement | 1 | Needs Prerna |
@@ -461,7 +461,7 @@ The `/sanctuary` page is the SEO workhorse. "Does a tattoo hurt", "first tattoo 
 | Travel and residency calendar | 1 | Not started |
 | Press kit PDF (≤ 4MB) | 1 | Phase 5 |
 
-**Locked gate (from `DECISIONS.md` §15):** Phase 3 does not start until 80% of the rows above are delivered.
+**Locked gate:** Phase 3 does not start until 80% of the rows above are delivered.
 
 **Book the shoot in week one.** One half-day, one photographer, consistent light. Twenty-four good frames from a single session beat sixty inconsistent ones gathered over three months. Shoot October to February to avoid Mumbai heat and humidity affecting both the artist and the equipment.
 

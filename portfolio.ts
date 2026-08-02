@@ -152,7 +152,7 @@ export const portfolio: Piece[] = [
 // APPEND — paintings and sketches, supplied 2026-07-26.
 // The three-medium structure is now real. Restore the medium
 // filter on /portfolio and the LIGHT MODE detail pages for
-// painting and sketch. DECISIONS.md §6.
+// painting and sketch.
 // ============================================================
 
   {
