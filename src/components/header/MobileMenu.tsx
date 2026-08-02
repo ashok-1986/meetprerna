@@ -3,15 +3,14 @@
 import { useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
-import { site } from '@/content/site'
+import { StartConversationCTA } from '@/components/ui/StartConversationCTA'
 import styles from './mobile-menu.module.css'
 
 const NAV_ITEMS = [
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Sanctuary', href: '/sanctuary' },
   { label: 'About', href: '/about' },
-  { label: 'Consulting', href: '/consulting' },
+  { label: 'Enquiry', href: '/enquiry' },
 ] as const
 
 interface MobileMenuProps {
@@ -138,14 +137,14 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         {/* Bottom edge — CTA */}
         <div className={styles.bottomSection}>
-          <InteractiveHoverButton
-            href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
-            onClick={handleDismiss}
+          <StartConversationCTA
+            variant="hoverButton"
             trackingSource="mobile_menu"
             trackingPage={pathname || 'header'}
+            onOpen={handleDismiss}
           >
             Start a conversation
-          </InteractiveHoverButton>
+          </StartConversationCTA>
         </div>
       </div>
     </dialog>

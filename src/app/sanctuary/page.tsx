@@ -2,8 +2,7 @@ import { testimonials } from '@/content/testimonials'
 import { TestimonialQuote } from '@/components/sanctuary/TestimonialQuote'
 import { FAQAccordion } from '@/components/sanctuary/FAQAccordion'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
-import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
-import { site } from '@/content/site'
+import { StartConversationCTA } from '@/components/ui/StartConversationCTA'
 import styles from './page.module.css'
 
 const faqItems = [
@@ -200,13 +199,13 @@ export default function Sanctuary() {
           <h2 id="cta-heading" className={styles.ctaHeading}>
             Your story deserves to be worn.
           </h2>
-          <InteractiveHoverButton
-            href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
+          <StartConversationCTA
+            variant="hoverButton"
             trackingSource="sanctuary_page"
             trackingPage="sanctuary"
           >
             Start a conversation
-          </InteractiveHoverButton>
+          </StartConversationCTA>
           <p className={styles.ctaNote}>
             Having trouble? <a href="mailto:prerna@meetprerna.com" className={styles.whatsappLink}>Email prerna@meetprerna.com</a>
           </p>

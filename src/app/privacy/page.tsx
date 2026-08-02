@@ -37,7 +37,7 @@ export default function Privacy() {
 
           <h3 className={styles.subHeading}>Fillout (enquiry forms)</h3>
           <p className={styles.body}>
-            The consultation form on <code>/consulting</code> is a Fillout embed.
+            The enquiry form on <code>/enquiry</code> and the scheduling form on <code>/schedule</code> are Fillout embeds.
             Fillout receives the fields you enter (name, contact, project type, brief, references, consent).
             Fillout&rsquo;s privacy policy: <a href="https://www.fillout.com/privacy" className={styles.link} target="_blank" rel="noopener noreferrer">fillout.com/privacy</a>.
             Fillout is a processor; we are the controller.

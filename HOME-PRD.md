@@ -76,6 +76,7 @@
 * Trigger: `start: "top 65%"`.
 * Duration: **1200ms**. Stagger: **120ms**. Technique: `opacity: 0` to `1`, `translateY: 16px` to `0`.
 * Hover: Specific grid cell background fills with `rgba(253, 255, 233, 0.05)` and shifts up 4px. **NO JavaScript number counters.**
+* **NOTE (unreconciled):** shipped `StatsGrid.tsx` actually uses `start: "top 85%"`, **800ms** duration, `translateY: 30px`. Stagger (120ms) and easing (`power3.out`) match this spec. Whoever reconciles this doc should decide which numbers are correct — `src/components/about/HowThisStarted.tsx` deliberately follows the shipped component, not this spec.
 
 
 

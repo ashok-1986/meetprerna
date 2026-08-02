@@ -5,8 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { imagePath, type Piece } from '@/content/portfolio'
-import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
-import { site } from '@/content/site'
+import { StartConversationCTA } from '@/components/ui/StartConversationCTA'
 import styles from './page.module.css'
 
 const MEDIUMS = ['All', 'Tattoo', 'Painting', 'Sketch'] as const
@@ -192,13 +191,13 @@ export function ArchiveGridClient({ pieces }: Props) {
           <p className={styles.emptyText}>
             Nothing matches that combination. Try a different filter.
           </p>
-          <InteractiveHoverButton
-            href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
+          <StartConversationCTA
+            variant="hoverButton"
             trackingSource="archive_grid_empty"
             trackingPage="portfolio"
           >
             Start a conversation
-          </InteractiveHoverButton>
+          </StartConversationCTA>
         </div>
       )}
     </section>

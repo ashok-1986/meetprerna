@@ -8,7 +8,7 @@ const NAV_ITEMS = [
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Sanctuary', href: '/sanctuary' },
   { label: 'About', href: '/about' },
-  { label: 'Consulting', href: '/consulting' },
+  { label: 'Enquiry', href: '/enquiry' },
 ] as const
 
 function ActiveUnderline() {

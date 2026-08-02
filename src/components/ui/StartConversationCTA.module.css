@@ -1,0 +1,127 @@
+/* Small popover, not a full-page modal — deliberately distinct from
+   MobileMenu's fullscreen <dialog> pattern, though it reuses the same
+   opacity-only [open]/@starting-style technique from mobile-menu.module.css
+   and the header's glass recipe (blur, ink panel, solid fallback) per
+   DESIGN.md §8. */
+
+.dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(340px, calc(100vw - 48px));
+  max-height: calc(100dvh - 48px);
+  padding: 0;
+  border: 1px solid var(--color-ink-500);
+  border-radius: 2px;
+  background: rgba(11, 11, 12, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  color: var(--color-ivory);
+
+  opacity: 0;
+  transition: opacity 180ms var(--ease-drawer), display 180ms allow-discrete, overlay 180ms allow-discrete;
+}
+
+.dialog[open] {
+  opacity: 1;
+  transition: opacity 220ms var(--ease-drawer);
+}
+
+@starting-style {
+  .dialog[open] {
+    opacity: 0;
+  }
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .dialog {
+    background: rgba(11, 11, 12, 0.98);
+  }
+}
+
+.dialog::backdrop {
+  background: rgba(11, 11, 12, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog,
+  .dialog[open] {
+    transition: opacity 120ms linear, display 120ms allow-discrete, overlay 120ms allow-discrete;
+  }
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 28px 24px 24px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--color-ink-500);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-ivory-dim);
+  cursor: pointer;
+  transition: color 220ms var(--ease-out), border-color 220ms var(--ease-out);
+}
+
+.closeButton:hover {
+  color: var(--color-ivory);
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.prompt {
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--text-body);
+  color: var(--color-ivory-dim);
+  margin: 0 0 8px;
+  padding-right: 28px;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  text-decoration: none;
+  color: var(--color-ivory);
+  background: transparent;
+  border: 1px solid var(--color-ink-500);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.option + .option {
+  margin-top: 8px;
+}
+
+.option:hover {
+  background-color: rgba(253, 255, 233, 0.05);
+  border-color: var(--color-ivory-dim);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}

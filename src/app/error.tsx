@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { TrackingWhatsAppLink } from '@/components/ui/TrackingWhatsAppLink'
+import { StartConversationCTA } from '@/components/ui/StartConversationCTA'
 import styles from './error-pages.module.css'
 
 export default function ErrorPage({
@@ -23,13 +23,13 @@ export default function ErrorPage({
         <Link href="/portfolio" className={styles.primary}>
           See the work
         </Link>
-        <TrackingWhatsAppLink 
+        <StartConversationCTA
           className={styles.secondary}
           trackingSource="error_page"
           trackingPage="/error"
         >
           Start a conversation
-        </TrackingWhatsAppLink>
+        </StartConversationCTA>
       </div>
     </main>
   )

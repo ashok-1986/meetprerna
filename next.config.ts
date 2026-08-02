@@ -9,7 +9,10 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // SPECIFIC redirects FIRST (before general trailing slash)
-      { source: '/consultation', destination: '/consulting', permanent: true },
+      // Both legacy paths go straight to /enquiry — /consultation used
+      // to chain through /consulting, updated here to avoid the extra hop.
+      { source: '/consultation', destination: '/enquiry', permanent: true },
+      { source: '/consulting', destination: '/enquiry', permanent: true },
       { source: '/contact/', destination: '/contact', permanent: true },
       { source: '/about/', destination: '/about', permanent: true },
       { source: '/portfolio/', destination: '/portfolio', permanent: true },
@@ -22,12 +25,37 @@ const nextConfig: NextConfig = {
   },
   headers: async () => [
     {
-      source: '/consulting',
+      source: '/enquiry',
       headers: [
         {
           key: 'Content-Security-Policy',
+          // Bug found and fixed while testing /schedule: the previous value
+          // (copied from the old /consulting header) only allowed
+          // server.fillout.com, but Fillout's actual iframe embed loads
+          // from embed.fillout.com — the form was being silently blocked.
+          // Also allowlists va.vercel-scripts.com so Vercel Analytics isn't
+          // blocked on these two pages the way it was before (every other
+          // route has no CSP override and loads it fine).
           value:
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' server.fillout.com; frame-src server.fillout.com; connect-src 'self' server.fillout.com us.i.posthog.com;",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' server.fillout.com embed.fillout.com va.vercel-scripts.com; frame-src server.fillout.com embed.fillout.com; connect-src 'self' server.fillout.com embed.fillout.com us.i.posthog.com;",
+        },
+      ],
+    },
+    {
+      // Also embeds Fillout — same CSP allowance as /enquiry.
+      source: '/schedule',
+      headers: [
+        {
+          key: 'Content-Security-Policy',
+          // Bug found and fixed while testing /schedule: the previous value
+          // (copied from the old /consulting header) only allowed
+          // server.fillout.com, but Fillout's actual iframe embed loads
+          // from embed.fillout.com — the form was being silently blocked.
+          // Also allowlists va.vercel-scripts.com so Vercel Analytics isn't
+          // blocked on these two pages the way it was before (every other
+          // route has no CSP override and loads it fine).
+          value:
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' server.fillout.com embed.fillout.com va.vercel-scripts.com; frame-src server.fillout.com embed.fillout.com; connect-src 'self' server.fillout.com embed.fillout.com us.i.posthog.com;",
         },
       ],
     },

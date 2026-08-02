@@ -3,6 +3,12 @@ export const site = {
   whatsapp: '917738147935',
   pincode: '410210',
   filloutId: 'gvnCVtzfz2us',
+  // TODO(owner): placeholder — Prerna needs to build a "Scheduling"-type
+  // form in her Fillout dashboard (date/time picker, Fillout supports
+  // this natively) and paste its real form ID here before /schedule
+  // goes live. This ID is a copy of the enquiry form and will render
+  // the WRONG form until replaced.
+  scheduleFilloutId: 'gvnCVtzfz2us',
   senjaCollectUrl: 'https://senja.io/p/meetprerna/r/collect',
   hero: {
     headingAria: 'Art that ages Beautifully.',

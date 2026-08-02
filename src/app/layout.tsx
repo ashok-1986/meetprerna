@@ -90,7 +90,7 @@ const serviceSchema = {
   ],
   availableChannel: {
     '@type': 'ServiceChannel',
-    serviceUrl: 'https://meetprerna.com/consulting',
+    serviceUrl: 'https://meetprerna.com/enquiry',
     servicePhone: `+${site.whatsapp}`,
     servicePostalCode: site.pincode,
     availableLanguage: ['English', 'Hindi', 'Marathi'],

@@ -2,9 +2,9 @@
 
 import { useRef, useLayoutEffect } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { StartConversationCTA } from '@/components/ui/StartConversationCTA'
 import styles from './AboutHero.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -87,9 +87,13 @@ export function AboutHero() {
               I am Prerna. An artist first.
             </h1>
             <div ref={ctaRef} className={styles.ctaWrap}>
-              <Link href="/consulting" className={styles.ctaPrimary}>
+              <StartConversationCTA
+                className={styles.ctaPrimary}
+                trackingSource="about_hero"
+                trackingPage="/about"
+              >
                 Start a conversation
-              </Link>
+              </StartConversationCTA>
             </div>
           </div>
         </div>

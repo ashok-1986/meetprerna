@@ -2,7 +2,7 @@
 
 import { useRef, useLayoutEffect } from 'react'
 import Image from 'next/image'
-import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
+import { StartConversationCTA } from '@/components/ui/StartConversationCTA'
 import { gsap } from 'gsap'
 import { CustomEase } from 'gsap/CustomEase'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -162,13 +162,13 @@ export function Hero() {
               {site.hero.subheadLines.join(' ')}
             </p>
             <div className="gs-cta opacity-0">
-              <InteractiveHoverButton
-                href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
+              <StartConversationCTA
+                variant="hoverButton"
                 trackingSource="home_hero"
                 trackingPage="home"
               >
                 {site.hero.cta}
-              </InteractiveHoverButton>
+              </StartConversationCTA>
             </div>
           </div>
 

@@ -30,11 +30,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: `${base}/consulting`,
+      url: `${base}/enquiry`,
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 1,
     },
+    // /schedule is deliberately excluded — unlisted, shared only via
+    // a direct link Prerna sends personally. Never add it here.
     {
       url: `${base}/contact`,
       lastModified: now,

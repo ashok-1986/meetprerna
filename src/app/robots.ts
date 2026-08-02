@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/consulting?source=sketchbook*'],
+      disallow: ['/api/', '/enquiry?source=sketchbook*'],
     },
     sitemap: 'https://meetprerna.com/sitemap.xml',
   }

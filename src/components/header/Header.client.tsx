@@ -7,8 +7,7 @@ import { NavPill } from './NavPill'
 import { MobileMenu } from './MobileMenu'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { recordInteraction } from '@/lib/behaviour'
-import { site } from '@/content/site'
+import { StartConversationCTA } from '@/components/ui/StartConversationCTA'
 import styles from './header.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -16,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 
 export function HeaderClient() {
-  const _pathname = usePathname()
+  const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const scrollYRef = useRef(0)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
@@ -52,13 +51,6 @@ export function HeaderClient() {
     })
   }, [])
 
-  const handleCTAClick = useCallback(() => {
-    recordInteraction('whatsapp_cta_clicked', {
-      page: window.location.pathname,
-      source: 'header',
-    })
-  }, [])
-
   return (
     <>
       <header 
@@ -72,23 +64,19 @@ export function HeaderClient() {
             <NavPill />
 
             <div className={styles.rightCluster}>
-              <a
-                href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <StartConversationCTA
                 className={styles.ctaDesktop}
-                onClick={handleCTAClick}
+                trackingSource="header"
+                trackingPage={pathname || 'header'}
               >
                 Start a conversation
-              </a>
+              </StartConversationCTA>
 
-              <a
-                href={`https://wa.me/${site.whatsapp}?text=Hello,%20I%20have%20a%20query%20regarding%20tattoo`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <StartConversationCTA
                 className={styles.ctaMobile}
-                onClick={handleCTAClick}
-                aria-label="Start a conversation"
+                trackingSource="header"
+                trackingPage={pathname || 'header'}
+                ariaLabel="Start a conversation"
               >
                 <svg
                   width="20"
@@ -104,7 +92,7 @@ export function HeaderClient() {
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-                </a>
+              </StartConversationCTA>
 
               {/* Mobile menu button — opens only */}
               <button

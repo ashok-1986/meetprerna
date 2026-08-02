@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { TrackingWhatsAppLink } from '@/components/ui/TrackingWhatsAppLink'
+import { StartConversationCTA } from '@/components/ui/StartConversationCTA'
 import styles from './error-pages.module.css'
 
 export default function NotFound() {
@@ -13,13 +13,13 @@ export default function NotFound() {
         <Link href="/portfolio" className={styles.primary}>
           See the work
         </Link>
-        <TrackingWhatsAppLink 
+        <StartConversationCTA
           className={styles.secondary}
           trackingSource="not_found_page"
           trackingPage="/not-found"
         >
           Start a conversation
-        </TrackingWhatsAppLink>
+        </StartConversationCTA>
       </div>
     </main>
   )

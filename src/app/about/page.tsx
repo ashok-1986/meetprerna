@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { M3Reveal } from '@/components/sanctuary/M3Reveal'
 import { AboutHero } from '@/components/about/AboutHero'
+import { HowThisStarted } from '@/components/about/HowThisStarted'
 import prernaHero from '@/../public/images/prerna-hero.jpg'
 import prernaWithWork from '@/../public/images/about/prerna-with-work.jpg'
 import { WhereToFindMe } from '@/components/about/WhereToFindMe'
@@ -17,32 +18,6 @@ export default function About() {
   return (
     <main id="main-content">
       <AboutHero />
-
-      {/* TODO(owner): tattooing start year unconfirmed — bio source says
-          Sept 2022, homepage stats say "Since 2021," needs Prerna's
-          confirmation before either is treated as correct. */}
-      <M3Reveal className={`${styles.section} ${styles.narrativeSection}`}>
-        <div className={styles.narrativeInner}>
-          <p className={styles.narrativeFragment}>
-            Art found me before I could explain it. Performing let me be seen without needing words.
-          </p>
-          <p className={styles.narrativeFragment}>
-            I chose commerce because it felt safe. A friend&rsquo;s courage showed me I&rsquo;d been ignoring my own calling.
-          </p>
-          <p className={styles.narrativeFragment}>
-            I moved to Mumbai chasing that feeling, then lockdown hit. Fine art kept me steady when nothing else did.
-          </p>
-          <p className={styles.narrativeFragment}>
-            Tattooing found me by accident, needles and all. My real material is people&rsquo;s stories, given a shape they can carry.
-          </p>
-          <p className={styles.narrativeFragment}>
-            People shape how I think. Alone is where the ideas actually finish.
-          </p>
-          <p className={styles.narrativeFragment}>
-            I still don&rsquo;t have it all figured out, and I&rsquo;ve stopped pretending I do. Every mistake teaches me something, one piece at a time.
-          </p>
-        </div>
-      </M3Reveal>
 
       <M3Reveal className={styles.section}>
         <section aria-labelledby="about-hero-heading">
@@ -66,27 +41,7 @@ export default function About() {
         </section>
       </M3Reveal>
 
-      <M3Reveal className={`${styles.section} ${styles.twoAnchorSection}`} aria-labelledby="how-started-heading">
-        <div className={styles.twoAnchorLeft}>
-          <h2 id="how-started-heading" className={styles.sectionHeading}>
-            How this started
-          </h2>
-        </div>
-        <div className={styles.twoAnchorRight}>
-          <p className={styles.bodyText}>
-            I started on someone else&rsquo;s studio floor in 2021. Five years later the work is under my own name.
-          </p>
-          <p className={styles.bodyText}>
-            I painted long before I tattooed. Abstract work, mostly on paper, mostly for myself.
-          </p>
-          <p className={styles.bodyText}>
-            At some point a canvas on a wall stopped being enough. People do not want to look at their life transitions from across a room. They want to carry them. Grief, a decision, something that finally went right. Those things want a place to live, and skin turned out to be the place.
-          </p>
-          <p className={styles.bodyText}>
-            So I brought the brush with me. The way I think about weight, and where a line thickens or thins, comes from painting, not from a tattoo apprenticeship. That is why my work looks the way it does.
-          </p>
-        </div>
-      </M3Reveal>
+      <HowThisStarted />
 
       <M3Reveal className={`${styles.section} ${styles.twoAnchorSection}`} aria-labelledby="training-heading">
         <div className={`${styles.twoAnchorLeft} ${styles.trainingLeft}`}>
