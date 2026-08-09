@@ -24,6 +24,37 @@ export default function RippleEffect({
   useEffect(() => {
     let active = true;
 
+    // Load the image with crossOrigin so it can be drawn to canvas without tainting.
+    // Resolves null when the origin does not send CORS headers.
+    const loadCorsImage = (url: string): Promise<HTMLImageElement | null> =>
+      new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = url;
+      });
+
+    const initRipples = (container: HTMLDivElement) => {
+      // @ts-ignore
+      if (!window.$ || typeof window.$.fn?.ripples !== "function") {
+        console.error("Ripples.js failed to load.");
+        return;
+      }
+
+      // @ts-ignore
+      const $el = window.$(container);
+      try {
+        $el.ripples("destroy");
+      } catch (_) {}
+
+      $el.ripples({
+        resolution: 512,
+        perturbance: 0.04, // Slightly increased perturbance for better cursor visibility
+        interactive: true,
+      });
+    };
+
     const loadRippleScript = (callback: () => void) => {
       // @ts-ignore
       if (!window.$) {
@@ -52,22 +83,36 @@ export default function RippleEffect({
 
     loadRippleScript(() => {
       if (!active || !containerRef.current) return;
-      // @ts-ignore
-      if (!window.$ || typeof window.$.fn?.ripples !== "function") {
-        console.error("Ripples.js failed to load.");
-        return;
-      }
 
-      // @ts-ignore
-      const $el = window.$(containerRef.current);
-      try {
-        $el.ripples("destroy");
-      } catch (_) {}
+      loadCorsImage(image).then((img) => {
+        if (!active || !containerRef.current) return;
 
-      $el.ripples({
-        resolution: 512,
-        perturbance: 0.04, // Slightly increased perturbance for better cursor visibility
-        interactive: true,
+        // If the origin does not send CORS headers, keep the plain background image
+        // instead of handing a tainted image to ripples.js (which renders black).
+        if (!img) {
+          containerRef.current.style.backgroundImage = `url(${image})`;
+          return;
+        }
+
+        // Draw to a canvas and export a same-origin data URL so ripples.js can
+        // read pixel data without the canvas being tainted by cross-origin data.
+        const canvas = document.createElement("canvas");
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        ctx.drawImage(img, 0, 0);
+
+        let dataUrl: string;
+        try {
+          dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+        } catch (_) {
+          containerRef.current.style.backgroundImage = `url(${image})`;
+          return;
+        }
+
+        containerRef.current.style.backgroundImage = `url(${dataUrl})`;
+        initRipples(containerRef.current);
       });
     });
 

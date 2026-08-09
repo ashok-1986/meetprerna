@@ -6,11 +6,8 @@ import gsap from "gsap";
 export default function Preloader() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isComplete, setIsComplete] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-    
     // Check if we've already seen the preloader this session or if reduced motion is on
     const hasSeenPreloader = sessionStorage.getItem('prerna_preloader_seen');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -52,7 +49,7 @@ export default function Preloader() {
     };
   }, []);
 
-  if (!isMounted || isComplete) return null;
+  if (isComplete) return null;
 
   return (
     <div 

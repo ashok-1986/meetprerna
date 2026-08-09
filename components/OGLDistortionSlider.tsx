@@ -69,6 +69,7 @@ const slides = [
 export default function OGLDistortionSlider() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
+  const [webglFailed, setWebglFailed] = useState(false);
   const isAnimating = useRef(false);
   const programRef = useRef<Program | null>(null);
   const texturesRef = useRef<Texture[]>([]);
@@ -94,7 +95,7 @@ export default function OGLDistortionSlider() {
     const loadTexture = (src: string) => {
       const texture = new Texture(gl, { generateMipmaps: false });
       const img = new window.Image();
-      img.src = src;
+      img.crossOrigin = "anonymous";
       img.onload = () => {
         texture.image = img;
         if (programRef.current) {
@@ -102,6 +103,12 @@ export default function OGLDistortionSlider() {
            programRef.current.uniforms.u_texRes2.value = [img.width, img.height];
         }
       };
+      img.onerror = () => {
+        // Textures can't be loaded cross-origin (bucket missing CORS headers).
+        // Fall back to plain DOM images so the section never renders black.
+        setWebglFailed(true);
+      };
+      img.src = src;
       return texture;
     };
 
@@ -240,10 +247,16 @@ export default function OGLDistortionSlider() {
   };
 
   return (
-    <div className="relative w-full h-[100vh] overflow-hidden bg-ink">
-      
-      {/* OGL Canvas Container */}
-      <div ref={containerRef} className="absolute inset-0 w-full h-full" />
+    <div
+      className="relative w-full h-[100vh] overflow-hidden bg-ink"
+      style={{
+        backgroundImage: `url(${slides[current].src})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* OGL Canvas Container (hidden if WebGL textures fail to load) */}
+      {!webglFailed && <div ref={containerRef} className="absolute inset-0 w-full h-full" />}
 
       {/* Dark Overlay for Text Legibility */}
       <div className="absolute inset-0 bg-ink/40 z-10 pointer-events-none" />
