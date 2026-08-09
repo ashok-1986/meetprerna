@@ -14,15 +14,14 @@ const nextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    // Uncomment and configure when migrating to Cloudflare R2 or other external buckets:
-    // remotePatterns: [
-    //   {
-    //     protocol: 'https',
-    //     hostname: 'images.meetprerna.com',
-    //     port: '',
-    //     pathname: '/**',
-    //   },
-    // ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
 

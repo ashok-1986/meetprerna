@@ -12,10 +12,10 @@ interface FullscreenMenuProps {
 }
 
 const navItems = [
-  { label: "01. Portfolio", href: "/portfolio", image: "/images/menu-portfolio.jpg" },
-  { label: "02. About", href: "/about", image: "/images/menu-about.jpg" },
-  { label: "03. Consultation", href: "https://meetprerna.fillout.com/book", image: "/images/menu-consultation.jpg", external: true },
-  { label: "04. Connect", href: "/connect", image: "/images/menu-connect.jpg" },
+  { label: "01. Portfolio", href: "/portfolio", image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/menu-portfolio.jpg" },
+  { label: "02. About", href: "/about", image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/menu-about.jpg" },
+  { label: "03. Consultation", href: "https://meetprerna.fillout.com/book", image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/menu-consultation.jpg", external: true },
+  { label: "04. Connect", href: "/connect", image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/menu-connect.jpg" },
 ];
 
 export default function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps) {

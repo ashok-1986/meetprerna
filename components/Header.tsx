@@ -163,7 +163,7 @@ export default function Header() {
             {/* Zone 1: Logo */}
             <div className="nav-brand flex items-center">
               <Link href="/" className="hover:opacity-80 transition-opacity duration-[150ms] ease-out flex items-center">
-                <Image src="/images/logo_main.png" alt="MeetPrerna" width={140} height={40} className="h-7 w-auto object-contain" priority />
+                <Image src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/logo_main.png`} alt="MeetPrerna" width={140} height={40} className="h-7 w-auto object-contain" priority />
               </Link>
             </div>
 

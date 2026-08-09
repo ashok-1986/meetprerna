@@ -22,8 +22,8 @@ const rawPortfolioData = [
     motif: 'Neo-traditional Floral & Skull',
     placement: 'Full Back',
     description: 'A study in impermanence. The skull serves not as a grim reminder of death, but as a striking prompt to live fully. Surrounded by blossoming florals, this piece contrasts the fragility of life with the enduring permanence of ink.',
-    coverImage: '/images/tattoo-neotraditional-2024-memento-vivere-main.jpg',
-    galleryImages: ['/images/tattoo-neotraditional-2024-memento-vivere-main.jpg']
+    coverImage: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/tattoo-neotraditional-2024-memento-vivere-main.jpg",
+    galleryImages: ["https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/tattoo-neotraditional-2024-memento-vivere-main.jpg"]
   },
   {
     slug: 'peony-back',
@@ -32,8 +32,8 @@ const rawPortfolioData = [
     motif: 'Botanical Illustration',
     placement: 'Upper Back & Shoulder',
     description: 'Designed to flow organically with the natural curvature of the spine and shoulder blade. The peony, a symbol of prosperity and honor, is rendered in delicate fine-lines with soft, deliberate shading to mimic charcoal on paper.',
-    coverImage: '/images/tattoo-botanical-2024-peony-sweep-main.jpg',
-    galleryImages: ['/images/tattoo-botanical-2024-peony-sweep-main.jpg']
+    coverImage: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/tattoo-botanical-2024-peony-sweep-main.jpg",
+    galleryImages: ["https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/tattoo-botanical-2024-peony-sweep-main.jpg"]
   },
   {
     slug: 'buddha-lotus',
@@ -42,8 +42,8 @@ const rawPortfolioData = [
     motif: 'Abstract Spiritual',
     size: '36" x 48" Canvas',
     description: 'An exploration of serenity amidst chaos. Thick impasto techniques were used to give the lotus physical depth, grounding the ethereal imagery of the Buddha in tangible, heavy texture.',
-    coverImage: '/images/canvas-abstract-2023-buddha-lotus-main.jpg',
-    galleryImages: ['/images/canvas-abstract-2023-buddha-lotus-main.jpg']
+    coverImage: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/canvas-abstract-2023-buddha-lotus-main.jpg",
+    galleryImages: ["https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/canvas-abstract-2023-buddha-lotus-main.jpg"]
   },
   {
     slug: 'category-canvas',
@@ -52,8 +52,8 @@ const rawPortfolioData = [
     motif: 'Abstract Floral',
     size: '24" x 36" Canvas',
     description: 'A visceral, moody approach to traditional floral motifs. Painted entirely during the monsoon, capturing the heavy, humid atmosphere of Mumbai nights.',
-    coverImage: '/images/canvas-floral-2023-midnight-bloom-main.jpg',
-    galleryImages: ['/images/canvas-floral-2023-midnight-bloom-main.jpg']
+    coverImage: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/canvas-floral-2023-midnight-bloom-main.jpg",
+    galleryImages: ["https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/canvas-floral-2023-midnight-bloom-main.jpg"]
   },
   {
     slug: 'orchid-watercolour',
@@ -62,8 +62,8 @@ const rawPortfolioData = [
     motif: 'Botanical Watercolor',
     size: 'A3 Cold-pressed Paper',
     description: 'A preparatory sketch that evolved into a standalone piece. Watercolors behave unpredictably, requiring a surrender of control—a philosophy that heavily influences my approach to tattooing.',
-    coverImage: '/images/sketch-botanical-2022-orchid-study-04-main.jpg',
-    galleryImages: ['/images/sketch-botanical-2022-orchid-study-04-main.jpg']
+    coverImage: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/sketch-botanical-2022-orchid-study-04-main.jpg",
+    galleryImages: ["https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/sketch-botanical-2022-orchid-study-04-main.jpg"]
   },
   {
     slug: 'brushstroke-butterfly',
@@ -72,8 +72,8 @@ const rawPortfolioData = [
     motif: 'Ink Wash & Charcoal',
     size: 'A4 Sketchbook',
     description: 'Captured in three continuous brush strokes. This piece emphasizes movement and brevity over detailed realism, serving as the foundational concept for a later collarbone piece.',
-    coverImage: '/images/sketch-inkwash-2022-ephemeral-wings-main.jpg',
-    galleryImages: ['/images/sketch-inkwash-2022-ephemeral-wings-main.jpg']
+    coverImage: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/sketch-inkwash-2022-ephemeral-wings-main.jpg",
+    galleryImages: ["https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/sketch-inkwash-2022-ephemeral-wings-main.jpg"]
   }
 ];
 

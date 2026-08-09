@@ -50,19 +50,34 @@ async function uploadFile(filePath, fileName) {
   }
 }
 
+function getFilesRecursive(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  for (const file of list) {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getFilesRecursive(filePath));
+    } else {
+      results.push(filePath);
+    }
+  }
+  return results;
+}
+
 async function main() {
   console.log(`Starting upload to R2 Bucket: ${R2_BUCKET_NAME}...`);
-  const files = fs.readdirSync(IMAGES_DIR);
+  const allFiles = getFilesRecursive(IMAGES_DIR);
 
-  const images = files.filter(f => f.match(/\.(jpg|jpeg|png|webp|avif)$/i));
+  const images = allFiles.filter(f => f.match(/\.(jpg|jpeg|png|webp|avif)$/i));
   
   if (images.length === 0) {
     console.log("No images found in public/images/");
     return;
   }
 
-  for (const file of images) {
-    const filePath = path.join(IMAGES_DIR, file);
+  for (const filePath of images) {
+    const file = path.relative(IMAGES_DIR, filePath).replace(/\\/g, '/');
     await uploadFile(filePath, file);
   }
 

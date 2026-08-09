@@ -81,7 +81,7 @@ export default function AboutHero() {
       <div className="absolute inset-0 z-0">
         <Image
           ref={imageRef}
-          src="/images/prerna-hero-about.jpg"
+          src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/prerna-hero-about.jpg`}
           alt="Prerna - Multidisciplinary Visual Artist"
           fill
           priority

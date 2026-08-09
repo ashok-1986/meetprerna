@@ -42,7 +42,7 @@ export default function ConsultationHero() {
       {/* Background Image Container */}
       <div className="hero-image-container absolute inset-0 z-0 overflow-hidden">
         <Image 
-          src="/images/consultation-hero.jpg"
+          src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/consultation-hero.jpg`}
           alt="Tattoo Consultation"
           fill
           className="hero-image object-cover object-center"

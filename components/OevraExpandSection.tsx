@@ -6,7 +6,9 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function OevraExpandSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -84,7 +86,7 @@ export default function OevraExpandSection() {
         style={{ clipPath: "inset(30% 35% 30% 35% round 16px)" }}
       >
         <Image
-          src="/images/prerna-hero.jpg"
+          src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/prerna-hero.jpg`}
           alt="Artistic Process"
           fill
           className="gs-expand-image object-cover object-center scale-125 will-change-transform"

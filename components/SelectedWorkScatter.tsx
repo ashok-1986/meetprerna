@@ -7,7 +7,9 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { createStaggeredReveal } from "@/lib/animations/factories";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ScatterPiece {
   id: number;
@@ -25,14 +27,14 @@ export default function SelectedWorkScatter() {
   // Generate random positions and sizes only on the client to avoid hydration mismatches
   useEffect(() => {
     const rawPieces = [
-      { id: 1, type: "image", src: "/images/portfolio/portfolio-1.jpg" },
-      { id: 2, type: "image", src: "/images/portfolio/portfolio-2.jpg" },
-      { id: 4, type: "image", src: "/images/portfolio/portfolio-4.jpg" },
-      { id: 5, type: "image", src: "/images/portfolio/portfolio-5.jpg" },
-      { id: 7, type: "image", src: "/images/portfolio/portfolio-7.jpg" },
-      { id: 8, type: "image", src: "/images/portfolio/portfolio-8.jpg" },
-      { id: 9, type: "image", src: "/images/prerna-hero-3.jpg" },
-      { id: 10, type: "image", src: "/images/perna-hero-2.jpeg" },
+      { id: 1, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-1.jpg" },
+      { id: 2, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-2.jpg" },
+      { id: 4, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-4.jpg" },
+      { id: 5, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-5.jpg" },
+      { id: 7, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-7.jpg" },
+      { id: 8, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-8.jpg" },
+      { id: 9, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/prerna-hero-3.jpg" },
+      { id: 10, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/perna-hero-2.jpeg" },
     ];
 
     const generateRandomLayout = () => {
