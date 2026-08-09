@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { createStaggeredReveal } from "@/lib/animations/factories";
+import TextMotion from "@/components/ui/TextMotion";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -73,8 +74,14 @@ export default function StatsGrid() {
           <span className="font-mono text-xs md:text-sm tracking-widest text-ivory/70 uppercase opacity-0 gs-reveal">
             Credibility
           </span>
-          <h2 className="font-display text-[clamp(2.5rem,4vw,3.5rem)] font-[400] leading-[1.15] max-w-4xl opacity-0 gs-reveal text-balance">
-            Art measured in patience, precision, and permanence.
+          <h2 className="font-display text-[clamp(2.5rem,4vw,3.5rem)] font-[400] leading-[1.15] max-w-4xl text-balance">
+            <TextMotion 
+              text="Art measured in patience, precision, and permanence." 
+              preset="dissolve" 
+              trigger="sectionInView" 
+              delay={0.2} 
+              duration={1.5} 
+            />
           </h2>
         </div>
       </div>

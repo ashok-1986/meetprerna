@@ -6,9 +6,10 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-import { createTextReveal } from "@/lib/animations/factories";
+import { createStaggeredReveal } from "@/lib/animations/factories";
 import RippleEffect from "@/components/RippleEffect";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+import TextMotion from "@/components/ui/TextMotion";
 
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -60,11 +61,6 @@ export default function Hero() {
       gsap.set(bgOverlay, { backgroundColor: "rgba(0,0,0,0.25)" });
     });
     
-    // Apply SplitText reveal
-    if (textRef.current) {
-      createTextReveal([textRef.current]);
-    }
-
     return () => mm.revert();
   }, { scope: containerRef });
 
@@ -106,10 +102,10 @@ export default function Hero() {
               </p>
               
               <h1 ref={textRef} className="font-display text-[clamp(2.5rem,8vw,8rem)] font-[400] leading-[0.9] m-0 p-0 text-ivory flex flex-col items-start md:items-end whitespace-nowrap">
-                 <span>VISUAL ARTIST</span>
+                 <TextMotion text="VISUAL ARTIST" preset="liquid" duration={2} delay={0.2} trigger="onMount" />
                  <span className="flex items-center gap-4">
                    <span className="text-[0.6em] font-sans font-light opacity-70">+</span> 
-                   <span>TATTOOIST</span>
+                   <TextMotion text="TATTOOIST" preset="liquid" duration={2} delay={0.4} trigger="onMount" />
                  </span>
               </h1>
            </div>
