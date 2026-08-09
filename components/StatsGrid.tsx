@@ -101,12 +101,12 @@ export default function StatsGrid() {
 
         {/* Cell 3: Image 1 (Align Right) */}
         <div className="flex items-center justify-end opacity-0 gs-reveal-img order-3 -mr-8 md:-mr-12 lg:-mr-16">
-          <div className="relative w-full max-w-[400px] aspect-[3/5] overflow-hidden">
+          <div className="relative w-full max-w-[300px] overflow-hidden">
             <img 
               src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/home-bento-image-1.jpg`} 
               alt="Prerna working"
               loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover" 
+              className="w-full h-auto block" 
             />
           </div>
         </div>
@@ -115,12 +115,12 @@ export default function StatsGrid() {
         {/* Row 2 */}
         {/* Cell 4: Image 2 (Align Left) */}
         <div className="flex items-center justify-start opacity-0 gs-reveal-img order-6 lg:order-4 mt-8 lg:mt-0 -ml-8 md:-ml-12 lg:-ml-16">
-          <div className="relative w-full max-w-[400px] aspect-[3/5] overflow-hidden">
+          <div className="relative w-full max-w-[300px] overflow-hidden">
             <img 
               src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/home-bento-image-2.jpg`} 
               alt="Prerna studio"
               loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover" 
+              className="w-full h-auto block" 
             />
           </div>
         </div>

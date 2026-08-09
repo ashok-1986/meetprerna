@@ -1,12 +1,19 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
     <footer className="bg-inchworm text-ink px-6 md:px-8 py-16 md:py-32 flex flex-col items-center">
       <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32">
         <div className="flex flex-col space-y-8">
-          <Link href="/" className="font-display text-4xl tracking-wide">
-            meetprerna
+          <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
+            <Image 
+              src="/images/logo_black.png" 
+              alt="MeetPrerna" 
+              width={140} 
+              height={40} 
+              className="h-10 md:h-12 w-auto object-contain" 
+            />
           </Link>
           <div className="font-mono text-sm max-w-xs uppercase">
             Multidisciplinary Visual Artist based in Mumbai

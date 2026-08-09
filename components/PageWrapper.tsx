@@ -16,12 +16,9 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
       { opacity: 0, filter: "contrast(1.2) brightness(0.8)" },
       { opacity: 1, filter: "contrast(1) brightness(1)", duration: 0.8, ease: "power2.out" }
     );
-    
-    // Select all section elements (except Hero and Preloader which handle their own entry)
-    const sections = containerRef.current.querySelectorAll('section:not(:first-child):not(.gs-hinge-section)');
-    if (sections.length > 0) {
-      createStaggeredReveal(sections);
-    }
+    // Note: We deliberately do NOT animate section blocks here. 
+    // Individual sections (like StatsGrid, SelectedWork) handle their own internal reveals 
+    // using useGSAP and ScrollTrigger.batch to ensure they trigger at the correct scroll positions.
   }, { scope: containerRef });
 
   return (

@@ -14,22 +14,24 @@ export const createStaggeredReveal = (elements: NodeListOf<Element> | Element[])
   const mm = gsap.matchMedia();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
-    gsap.fromTo(
-      elements,
-      { opacity: 0, y: 40, x: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        x: 0,
-        duration: 0.25,
-        ease: "power2.out",
-        stagger: 0.05,
-        scrollTrigger: {
-          trigger: elements[0],
-          start: "top 90%",
-        },
-      }
-    );
+    ScrollTrigger.batch(elements, {
+      start: "top 90%",
+      onEnter: (batch) => {
+        gsap.fromTo(
+          batch,
+          { opacity: 0, y: 40, x: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            x: 0,
+            duration: 0.6,
+            ease: "power3.out",
+            stagger: 0.1,
+            overwrite: "auto",
+          }
+        );
+      },
+    });
   });
 
   mm.add("(prefers-reduced-motion: reduce)", () => {
