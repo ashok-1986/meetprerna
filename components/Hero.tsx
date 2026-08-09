@@ -6,7 +6,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-import { createStickyStack, createTextReveal } from "@/lib/animations/factories";
+import { createTextReveal } from "@/lib/animations/factories";
 import RippleEffect from "@/components/RippleEffect";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
@@ -64,9 +64,6 @@ export default function Hero() {
     if (textRef.current) {
       createTextReveal([textRef.current]);
     }
-
-    // Apply Sticky Stack to the hero
-    createStickyStack(containerRef);
 
     return () => mm.revert();
   }, { scope: containerRef });
