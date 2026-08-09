@@ -61,9 +61,9 @@ const fragmentShader = `
 `;
 
 const slides = [
-  { id: 1, src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/prerna-hero-port 1.jpeg", alt: "Portfolio Hero 1", title: "Permanent", subtitle: "Art on skin" },
-  { id: 2, src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/prerna-hero-port 2.jpg", alt: "Portfolio Hero 2", title: "Deliberate", subtitle: "Mindful process" },
-  { id: 3, src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/prerna-hero-port 3.jpg", alt: "Portfolio Hero 3", title: "Narrative", subtitle: "Every piece tells a story" },
+  { id: 1, src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/portfolio/prerna-hero-port 1.jpeg", alt: "Portfolio Hero 1", title: "Permanent", subtitle: "Art on skin" },
+  { id: 2, src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/portfolio/prerna-hero-port 2.jpg", alt: "Portfolio Hero 2", title: "Deliberate", subtitle: "Mindful process" },
+  { id: 3, src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/portfolio/prerna-hero-port 3.jpg", alt: "Portfolio Hero 3", title: "Narrative", subtitle: "Every piece tells a story" },
 ];
 
 export default function OGLDistortionSlider() {

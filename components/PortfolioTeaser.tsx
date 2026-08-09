@@ -6,17 +6,17 @@ export default function PortfolioTeaser() {
     {
       title: "Paper & Charcoal Sketches",
       href: "/portfolio?category=sketch",
-      image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/category-sketch.jpg"
+      image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/category-sketch.jpg"
     },
     {
       title: "Canvas & Abstract Paintings",
       href: "/portfolio?category=canvas",
-      image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/category-canvas.jpg"
+      image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/category-canvas.jpg"
     },
     {
       title: "Living Ink",
       href: "/portfolio?category=ink",
-      image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/category-ink.jpg"
+      image: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/category-ink.jpg"
     }
   ];
 

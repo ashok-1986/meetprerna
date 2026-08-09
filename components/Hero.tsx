@@ -76,7 +76,7 @@ export default function Hero() {
       {/* Background Image with Ripple Effect */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <RippleEffect 
-          image={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/prerna-hero.jpg`}
+          image={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/prerna-hero.jpg`}
           className="absolute inset-0 w-full h-full gs-bg-image will-change-transform"
           intensity={3}
           rippleSize={40}

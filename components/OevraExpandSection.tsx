@@ -86,7 +86,7 @@ export default function OevraExpandSection() {
         style={{ clipPath: "inset(30% 35% 30% 35% round 16px)" }}
       >
         <Image
-          src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/prerna-hero.jpg`}
+          src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/prerna-hero.jpg`}
           alt="Artistic Process"
           fill
           className="gs-expand-image object-cover object-center scale-125 will-change-transform"

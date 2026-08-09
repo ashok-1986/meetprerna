@@ -79,7 +79,7 @@ export default function AboutShift() {
       <div className="absolute inset-0 z-0 bg-ink">
         <Image
           ref={imageRef}
-          src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/about.jpg`}
+          src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/about.jpg`}
           alt="The Living Canvas"
           fill
           className="object-cover object-center md:object-[center_30%] opacity-90 scale-110 will-change-transform"

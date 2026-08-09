@@ -17,14 +17,14 @@ export default function SelectedWork() {
   const railRef = useRef<HTMLDivElement>(null);
 
   const pieces = [
-    { id: 1, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-1.jpg" },
-    { id: 2, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-2.jpg" },
+    { id: 1, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/portfolio/portfolio-1.jpg" },
+    { id: 2, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/portfolio/portfolio-2.jpg" },
     { id: 3, type: "video", src: "/videos/portfolio-3.mp4" }, // placeholder for video
-    { id: 4, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-4.jpg" },
-    { id: 5, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-5.jpg" },
+    { id: 4, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/portfolio/portfolio-4.jpg" },
+    { id: 5, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/portfolio/portfolio-5.jpg" },
     { id: 6, type: "video", src: "/videos/portfolio-6.mp4" }, // placeholder for video
-    { id: 7, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-7.jpg" },
-    { id: 8, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/images/portfolio/portfolio-8.jpg" },
+    { id: 7, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/portfolio/portfolio-7.jpg" },
+    { id: 8, type: "image", src: "https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/portfolio/portfolio-8.jpg" },
   ];
 
   useGSAP(() => {
