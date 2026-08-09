@@ -19,17 +19,11 @@ const IMAGE_HOST = process.env.NEXT_PUBLIC_IMAGE_HOST || "https://pub-fc30457eaa
 
 export const siteImages = {
   home: {
-    // Target: site-home-hero-main.jpg
-    hero: `${IMAGE_HOST}prerna-hero.jpg`, 
-    
-    // Target: site-home-credibility-bento1.jpg
-    credibilityBento1: `${IMAGE_HOST}home-bento-image-1.jpg`, 
-    
-    // Target: site-home-credibility-bento2.jpg
-    credibilityBento2: `${IMAGE_HOST}home-bento-image-2.jpg`, 
+    hero: `${IMAGE_HOST}site-home-hero-main.jpg`, 
+    credibilityBento1: `${IMAGE_HOST}site-home-credibility-bento1.jpg`, 
+    credibilityBento2: `${IMAGE_HOST}site-home-credibility-bento2.jpg`, 
   },
   consultation: {
-    // Target: site-consultation-hero-main.jpg
-    hero: `${IMAGE_HOST}consultation-hero.jpg`, 
+    hero: `${IMAGE_HOST}site-consultation-hero-main.jpg`, 
   }
 };
