@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-nav="0">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>meetprerna — three-zone header, two-stage convergence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ---------------------------------------------------------------
+     TOKENS — DESIGN.md. Substitute --ink for the project's
+     --color-ink (#1A1A1A) when porting.
+     --------------------------------------------------------------- */
+  :root {
+    --ink:        #111111;
+    --ink-pill:   rgba(17, 17, 17, 0.94);
+    --neon:       #C4FF61;
+    --text:       #F5F2EA;
+    --text-muted: rgba(245, 242, 234, 0.62);
+
+    --pill-settled: 680px;
+
+    /* One curve for the whole header. Strong ease-out: fast departure,
+       long settle. Same curve family used by Vaul / Sonner. */
+    --ease: cubic-bezier(0.32, 0.72, 0, 1);
+    --dur:  280ms;
+  }
+
+  /* ---------------------------------------------------------------
+     THE THREE STATES
+     Each stage closes roughly half the remaining gap between the full
+     viewport width and the settled pill width.
+       state 0 — full bleed
+       state 1 — halfway in
+       state 2 — settled
+     Values live here and nowhere else, so retuning is one edit.
+     --------------------------------------------------------------- */
+  html[data-nav="0"] {
+    --pill-w: 100%;
+    --pill-h: 84px;
+    --pill-r: 0px;
+    --pill-t: 0px;
+    --pill-shadow: 0;
+  }
+  html[data-nav="1"] {
+    --pill-w: calc(var(--pill-settled) + (100% - var(--pill-settled)) * 0.5);
+    --pill-h: 68px;
+    --pill-r: 16px;
+    --pill-t: 10px;
+    --pill-shadow: 0.55;
+  }
+  html[data-nav="2"] {
+    --pill-w: var(--pill-settled);
+    --pill-h: 56px;
+    --pill-r: 22px;
+    --pill-t: 14px;
+    --pill-shadow: 1;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--ink);
+    color: var(--text);
+  }
+
+  .header-band {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    padding-top: env(safe-area-inset-top, 0px);
+    pointer-events: none;
+  }
+
+  .header-pill {
+    pointer-events: auto;
+    position: relative;
+    margin-inline: auto;
+    contain: layout paint style;
+
+    width: var(--pill-w);
+    height: var(--pill-h);
+    border-radius: var(--pill-r);
+    margin-top: var(--pill-t);
+
+    background: transparent;
+
+    /* Easing belongs HERE, on a discrete state change, because the
+       browser is the clock. It does not belong on a scroll scrub,
+       where the user's finger is the clock. Two different mechanisms. */
+    transition:
+      width         var(--dur) var(--ease),
+      height        var(--dur) var(--ease),
+      border-radius var(--dur) var(--ease),
+      margin-top    var(--dur) var(--ease);
+  }
+
+  .header-pill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* THREE ZONES. 1fr auto 1fr means the centre column is pinned to the
+     true centre of the pill no matter how wide the logo or CTA get.
+     The nav never moves. The logo and CTA travel inward toward it. */
+  .nav-grid {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding-inline: clamp(1rem, 3vw, 2rem);
+  }
+
+  /* Type sizes never change. Only the box moves. */
+  .brand {
+    justify-self: start;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-links {
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: color 160ms var(--ease);
+  }
+  .nav-links a[aria-current="page"] { color: var(--text); }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-links a:hover { color: var(--text); }
+  }
+
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--neon);
+    flex-shrink: 0;
+    opacity: 0;
+  }
+  .nav-links a[aria-current="page"] .dot { opacity: 1; }
+
+  .cta {
+    justify-self: end;
+    border: 1px solid var(--neon);
+    color: var(--neon);
+    background: transparent;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    transition: background-color 160ms var(--ease), color 160ms var(--ease);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .cta:hover { background: var(--neon); color: var(--ink); }
+  }
+
+  .cta:focus-visible, .brand:focus-visible,
+  .nav-links a:focus-visible, .menu-toggle:focus-visible {
+    outline: 2px solid var(--neon);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* MOBILE — no convergence. There is no gap to close on a phone. */
+  .menu-toggle {
+    display: none;
+    justify-self: end;
+    background: none; border: 0;
+    color: var(--text);
+    font: inherit; font-size: 0.82rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.5rem; cursor: pointer;
+  }
+  .mobile-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0; right: 0;
+    background: var(--ink-pill);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 18px;
+    padding: 1rem 1.25rem 1.25rem;
+    flex-direction: column;
+  }
+  .mobile-panel a {
+    color: var(--text); text-decoration: none;
+    font-size: 1rem; padding: 0.75rem 0;
+  }
+
+  @media (max-width: 720px) {
+    html[data-nav] { --pill-w: 100%; --pill-r: 0px; --pill-t: 0px; }
+    html[data-nav="0"] { --pill-h: 68px; }
+    html[data-nav="1"], html[data-nav="2"] { --pill-h: 56px; }
+    .nav-grid { grid-template-columns: 1fr auto; }
+    .nav-links, .cta { display: none; }
+    .menu-toggle { display: block; }
+    .mobile-panel[data-open="true"] { display: flex; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header-pill, .header-pill::after { transition: none; }
+  }
+
+  /* demo only */
+  section { min-height: 100vh; display: grid; place-items: center; padding: 6rem 2rem; text-align: center; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(2rem, 6vw, 3.6rem); max-width: 18ch; line-height: 1.08; margin: 0; }
+  .muted { color: var(--text-muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<header class="header-band">
+  <div class="header-pill">
+    <div class="nav-grid">
+      <a href="/" class="brand">meetprerna</a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/portfolio" aria-current="page"><span class="dot"></span>Portfolio</a>
+        <a href="/about">About</a>
+        <a href="/blog">Blog</a>
+      </nav>
+
+      <a href="/consulting" class="cta">Book a session</a>
+
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-panel">Menu</button>
+    </div>
+
+    <div class="mobile-panel" id="mobile-panel" data-open="false">
+      <a href="/portfolio">Portfolio</a>
+      <a href="/about">About</a>
+      <a href="/blog">Blog</a>
+      <a href="/consulting">Book a session</a>
+    </div>
+  </div>
+</header>
+
+<section><h1>Your story, translated into abstract art.</h1></section>
+<section><p class="muted">Scroll room.</p></section>
+<section><p class="muted">More scroll room.</p></section>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* Thresholds are SCROLL DISTANCE, not scroll events.
+     A trackpad fires dozens of events per gesture, a wheel fires
+     discrete notches, touch fires continuously. "the second scroll"
+     means something different on every device. Distance does not. */
+  var ENTER_1 =  80;
+  var ENTER_2 = 220;
+
+  /* Hysteresis. Without a deadzone, resting the page at exactly 80px
+     makes the header flicker between two states forever. */
+  var EXIT_1 =  50;
+  var EXIT_2 = 170;
+
+  var state = 0;
+  var queued = false;
+
+  function apply() {
+    queued = false;
+    var y = window.scrollY;
+    var next = state;
+
+    if (state === 0 && y >= ENTER_1) next = 1;
+    else if (state === 1 && y >= ENTER_2) next = 2;
+    else if (state === 1 && y <  EXIT_1)  next = 0;
+    else if (state === 2 && y <  EXIT_2)  next = 1;
+
+    if (next !== state) {
+      state = next;
+      root.setAttribute('data-nav', String(state));
+    }
+  }
+
+  function onScroll() {
+    if (!queued) { queued = true; requestAnimationFrame(apply); }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  /* Snap to the right state on load. A mid-page refresh must not
+     animate through the stages. */
+  (function initial() {
+    var y = window.scrollY;
+    state = y >= ENTER_2 ? 2 : y >= ENTER_1 ? 1 : 0;
+    root.setAttribute('data-nav', String(state));
+  })();
+
+  /* Mobile menu */
+  var toggle = document.querySelector('.menu-toggle');
+  var panel = document.getElementById('mobile-panel');
+  toggle.addEventListener('click', function () {
+    var open = panel.dataset.open === 'true';
+    panel.dataset.open = String(!open);
+    toggle.setAttribute('aria-expanded', String(!open));
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && panel.dataset.open === 'true') {
+      panel.dataset.open = 'false';
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.focus();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

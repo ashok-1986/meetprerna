@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #111111;
+  --color-ink-100: #212121;
+  --color-ink-200: #2a2a2a;
+  --color-ink-300: #363636;
+  --color-ink-500: #6b6b6b;
+  --color-ivory: #fdffe9;
+  --color-ivory-dim: #c9cbb6;
+  --color-inchworm: #c4ff61;
+  --color-inchworm-deep: #9fcc4a;
+  --color-inchworm-tint: rgb(196 255 97 / 0.12);
+  --color-danger: #ff6b6b;
+
+  /* Oevra Motion Tokens */
+  --duration-micro: 150ms;
+  --duration-short: 200ms;
+  --duration-standard: 300ms;
+  --duration-medium: 400ms;
+  --duration-long: 500ms;
+  --duration-page: 800ms;
+  --ease-default: cubic-bezier(.43,.195,.02,1);
+  --ease-enter: ease-out;
+  --ease-exit: ease-in;
+
+  --font-display: var(--next-font-display);
+  --font-body: var(--next-font-body);
+  --font-mono: var(--next-font-mono);
+  --font-quote: var(--next-font-quote);
+
+  --text-display-xl: clamp(3.25rem, 11vw, 10rem);
+  --text-display-l: clamp(2.25rem, 6vw, 5rem);
+  
+  --animate-marquee: marquee 40s linear infinite;
+  
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes noise {
+    0%, 100% { background-position: 0 0; }
+    10% { background-position: -5% -10%; }
+    20% { background-position: -15% 5%; }
+    30% { background-position: 7% -25%; }
+    40% { background-position: 20% 25%; }
+    50% { background-position: -25% 10%; }
+    60% { background-position: 15% 5%; }
+    70% { background-position: 0% 15%; }
+    80% { background-position: 25% 35%; }
+    90% { background-position: -10% 10%; }
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .mask-feather-top {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
+  }
+
+  .mask-feather-top-fixed {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 150px, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 150px, black 100%);
+  }
+
+  .mix-blend-double {
+    mix-blend-mode: soft-light;
+  }
+
+  .ambient-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+    animation: noise 0.5s steps(2) infinite;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.6;
+  }
+}
