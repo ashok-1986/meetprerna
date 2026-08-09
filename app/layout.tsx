@@ -34,7 +34,7 @@ const libreBaskerville = Libre_Baskerville({
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
-import WebGLCanvas from "@/components/WebGLCanvas";
+import DynamicWebGL from "@/components/DynamicWebGL";
 import { getShaders } from "@/lib/shaderParser";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -70,7 +70,7 @@ export default function RootLayout({
     <html lang="en" className={`${cormorant.variable} ${urbanist.variable} ${jetbrainsMono.variable} ${libreBaskerville.variable}`} suppressHydrationWarning>
       <body className="antialiased bg-ink text-ivory overflow-x-hidden relative" suppressHydrationWarning>
         {/* WebGL Background */}
-        <WebGLCanvas vertexShader={vertex} fragmentShader={fragment} />
+        <DynamicWebGL vertexShader={vertex} fragmentShader={fragment} />
         <div className="fixed inset-0 pointer-events-none ambient-noise" />
         <Preloader />
         <Header />
