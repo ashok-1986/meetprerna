@@ -10,6 +10,7 @@ import { createStaggeredReveal } from "@/lib/animations/factories";
 import RippleEffect from "@/components/RippleEffect";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import TextMotion from "@/components/ui/TextMotion";
+import { siteImages } from "@/lib/data/site";
 
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -69,7 +70,7 @@ export default function Hero() {
       {/* Background Image with Ripple Effect */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <RippleEffect 
-          image={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/prerna-hero.jpg`}
+          image={siteImages.home.hero}
           className="absolute inset-0 w-full h-full gs-bg-image will-change-transform"
           intensity={3}
           rippleSize={40}

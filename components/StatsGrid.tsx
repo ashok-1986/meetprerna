@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { createStaggeredReveal } from "@/lib/animations/factories";
 import TextMotion from "@/components/ui/TextMotion";
+import { siteImages } from "@/lib/data/site";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -110,7 +111,7 @@ export default function StatsGrid() {
         <div className="flex items-center justify-end opacity-0 gs-reveal-img order-3 -mr-8 md:-mr-12 lg:-mr-16">
           <div className="relative w-full max-w-[300px] overflow-hidden">
             <img 
-              src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/home-bento-image-1.jpg`} 
+              src={siteImages.home.credibilityBento1} 
               alt="Prerna working"
               loading="lazy"
               className="w-full h-auto block" 
@@ -124,7 +125,7 @@ export default function StatsGrid() {
         <div className="flex items-center justify-start opacity-0 gs-reveal-img order-6 lg:order-4 mt-8 lg:mt-0 -ml-8 md:-ml-12 lg:-ml-16">
           <div className="relative w-full max-w-[300px] overflow-hidden">
             <img 
-              src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/home-bento-image-2.jpg`} 
+              src={siteImages.home.credibilityBento2} 
               alt="Prerna studio"
               loading="lazy"
               className="w-full h-auto block" 

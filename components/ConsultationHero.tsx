@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import TextMotion from "@/components/ui/TextMotion";
+import { siteImages } from "@/lib/data/site";
 
 export default function ConsultationHero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -43,7 +44,7 @@ export default function ConsultationHero() {
       {/* Background Image Container */}
       <div className="hero-image-container absolute inset-0 z-0 overflow-hidden">
         <Image 
-          src={`https://pub-fc30457eaa7a478196bf63dff9cbf7d3.r2.dev/consultation-hero.jpg`}
+          src={siteImages.consultation.hero}
           alt="Tattoo Consultation"
           fill
           className="hero-image object-cover object-center"
