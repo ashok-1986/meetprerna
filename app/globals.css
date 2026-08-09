@@ -13,13 +13,12 @@
   --color-inchworm-tint: rgb(196 255 97 / 0.12);
   --color-danger: #ff6b6b;
 
-  /* Oevra Motion Tokens */
-  --duration-micro: 150ms;
-  --duration-short: 200ms;
-  --duration-standard: 300ms;
-  --duration-medium: 400ms;
-  --duration-long: 500ms;
-  --duration-page: 800ms;
+  /* Motion Tokens */
+  --duration-0: 0ms;
+  --duration-100: 100ms;
+  --duration-200: 200ms;
+  --duration-250: 250ms;
+  --duration-5000000: 5000000ms;
   --ease-default: cubic-bezier(.43,.195,.02,1);
   --ease-enter: ease-out;
   --ease-exit: ease-in;
@@ -54,6 +53,44 @@
     70% { background-position: 0% 15%; }
     80% { background-position: 25% 35%; }
     90% { background-position: -10% 10%; }
+  }
+
+  @keyframes slideInUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes rail {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+
+  @keyframes clock {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes pulsed {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.7; }
+  }
+
+  @keyframes dashoffsetMoving {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes dash-scroll {
+    from { stroke-dashoffset: 100; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes loading {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes l3 {
+    to { transform: rotate(1turn); }
   }
 }
 

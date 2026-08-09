@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { createFadeUpReveal } from "@/lib/animations/factories";
+import { createStaggeredReveal } from "@/lib/animations/factories";
 
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";

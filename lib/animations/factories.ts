@@ -1,88 +1,47 @@
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText"; // User confirmed this is available/free
 
-// Register ScrollTrigger, making sure it only happens on the client
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, SplitText);
 }
 
 /**
- * Hero Scrub Factory
- * Pins the hero container and scrubs the H1 text from y: 100% to 0
+ * Standard GSAP Staggered Reveal
+ * Enforces Spatial Rule: Enter from bottom/right.
  */
-export const createHeroScrub = (
-  containerRef: React.RefObject<HTMLElement | null>,
-  textRef: React.RefObject<HTMLElement | null>
-) => {
-  if (!containerRef.current || !textRef.current) return;
-
-  const mm = gsap.matchMedia();
-  const words = textRef.current.querySelectorAll(".word-inner");
-
-  mm.add("(prefers-reduced-motion: no-preference)", () => {
-    // Set initial hidden state dynamically (not in SSR markup)
-    gsap.set(words, { y: "100%" });
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=100%",
-        pin: true,
-        scrub: true,
-      },
-    });
-
-    tl.to(words, { y: "0%", ease: "none", stagger: 0.1 });
-
-    return () => tl.kill();
-  });
-
-  mm.add("(prefers-reduced-motion: reduce)", () => {
-    // Ensure text is fully visible
-    gsap.set(words, { y: "0%" });
-  });
-
-  return mm;
-};
-
-
-/**
- * Standard GSAP Fade Up Reveal
- */
-export const createFadeUpReveal = (elements: NodeListOf<Element> | Element[]) => {
+export const createStaggeredReveal = (elements: NodeListOf<Element> | Element[]) => {
   const mm = gsap.matchMedia();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
-    elements.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-          },
-        }
-      );
-    });
+    gsap.fromTo(
+      elements,
+      { opacity: 0, y: 40, x: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        x: 0,
+        duration: 0.25,
+        ease: "power2.out",
+        stagger: 0.05,
+        scrollTrigger: {
+          trigger: elements[0],
+          start: "top 90%",
+        },
+      }
+    );
   });
 
   mm.add("(prefers-reduced-motion: reduce)", () => {
-    // Instant reveal fallback
-    elements.forEach((el) => gsap.set(el, { opacity: 1, y: 0 }));
+    gsap.set(elements, { opacity: 1, y: 0, x: 0 });
   });
 
   return mm;
 };
 
 /**
- * Image Slide-In Reveal (fiddle.digital)
- * clip-path wipe with slight scale down
+ * Image Slide-In Reveal
+ * Uses left-to-right clip-path wipe and scale down (1.1 -> 1.0)
  */
 export const createImageReveal = (elements: NodeListOf<Element> | Element[]) => {
   const mm = gsap.matchMedia();
@@ -95,8 +54,8 @@ export const createImageReveal = (elements: NodeListOf<Element> | Element[]) => 
         {
           clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
           scale: 1,
-          duration: 0.8,
-          ease: "power2.out",
+          duration: 0.8, // Using a slower duration for full page wipes
+          ease: "power3.out",
           scrollTrigger: {
             trigger: el,
             start: "top 85%",
@@ -114,7 +73,43 @@ export const createImageReveal = (elements: NodeListOf<Element> | Element[]) => 
 };
 
 /**
- * Sticky Stacking Transition (athleticsnyc)
+ * Typography Reveal (Premium)
+ * Uses SplitText to reveal words emerging from the baseline with a clip-path.
+ */
+export const createTextReveal = (elements: NodeListOf<Element> | Element[]) => {
+  const mm = gsap.matchMedia();
+
+  mm.add("(prefers-reduced-motion: no-preference)", () => {
+    elements.forEach((el) => {
+      // Split text into lines and words
+      const split = new SplitText(el, { type: "lines,words", linesClass: "split-line overflow-hidden" });
+      
+      gsap.fromTo(
+        split.words,
+        { y: "100%" },
+        {
+          y: "0%",
+          duration: 0.8,
+          ease: "power4.out",
+          stagger: 0.05,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 90%",
+          },
+        }
+      );
+    });
+  });
+
+  mm.add("(prefers-reduced-motion: reduce)", () => {
+    elements.forEach((el) => gsap.set(el, { opacity: 1, y: 0 }));
+  });
+
+  return mm;
+};
+
+/**
+ * Sticky Stacking Transition
  * Incoming section wipes over the outgoing section which scales down and darkens
  */
 export const createStickyStack = (outgoingRef: React.RefObject<HTMLElement | null>) => {
@@ -123,19 +118,15 @@ export const createStickyStack = (outgoingRef: React.RefObject<HTMLElement | nul
   const mm = gsap.matchMedia();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
-    // We assume the outgoing section is position: sticky, top: 0
-    // As we scroll past it, it scales down. 
-    // Wait, typical Athletics sticky scroll has the section sticky, 
-    // and the *next* section scrolls *over* it.
-    
     const tl = gsap.to(outgoingRef.current, {
       scale: 0.95,
       filter: "brightness(0.5)",
+      y: -50,
       ease: "none",
       scrollTrigger: {
         trigger: outgoingRef.current,
-        start: "top top", // when it becomes sticky
-        end: "bottom top", // until the next section completely covers it
+        start: "top top", 
+        end: "bottom top", 
         scrub: true,
       },
     });
@@ -147,68 +138,15 @@ export const createStickyStack = (outgoingRef: React.RefObject<HTMLElement | nul
 };
 
 /**
- * Standard Section Transition (Slide-Up Fade)
- * Fades and slides a section up as it enters the viewport.
- */
-export const createSectionTransition = (elements: NodeListOf<Element> | Element[]) => {
-  const mm = gsap.matchMedia();
-
-  mm.add("(prefers-reduced-motion: no-preference)", () => {
-    elements.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-          },
-        }
-      );
-    });
-  });
-
-  mm.add("(prefers-reduced-motion: reduce)", () => {
-    elements.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.4,
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-          },
-        }
-      );
-    });
-  });
-
-  return mm;
-};
-
-/**
  * Double Exposure Section Transition
- * Scrubs a linear gradient mask and mix-blend-mode opacity to bleed sections together.
- * Best used when incoming section overlaps a sticky outgoing section.
  */
 export const createDoubleExposureTransition = (incomingRef: React.RefObject<HTMLElement | null>) => {
   if (!incomingRef.current) return;
   const mm = gsap.matchMedia();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
-    // Initial state: mask hides top, fully transparent
-    gsap.set(incomingRef.current, { 
-      opacity: 0,
-    });
+    gsap.set(incomingRef.current, { opacity: 0 });
 
-    // We animate the opacity while mix-blend-mode is active in CSS
     const tl = gsap.fromTo(incomingRef.current, 
       { opacity: 0 },
       {

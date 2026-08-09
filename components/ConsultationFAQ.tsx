@@ -3,7 +3,7 @@
 import React, { useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { createFadeUpReveal } from "@/lib/animations/factories";
+import { createStaggeredReveal } from "@/lib/animations/factories";
 
 const faqs = [
   {
@@ -31,7 +31,7 @@ export default function ConsultationFAQ() {
   useGSAP(() => {
     if (!containerRef.current) return;
     const revealElements = containerRef.current.querySelectorAll('.gs-reveal');
-    createFadeUpReveal(revealElements);
+    createStaggeredReveal(revealElements);
   }, { scope: containerRef });
 
   const toggle = (index: number) => {

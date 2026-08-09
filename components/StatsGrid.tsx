@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { createFadeUpReveal } from "@/lib/animations/factories";
+import { createStaggeredReveal } from "@/lib/animations/factories";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,7 +16,7 @@ export default function StatsGrid() {
     
     // Animate the text and stat elements natively
     const revealElements = containerRef.current.querySelectorAll('.gs-reveal, .gs-reveal-stat');
-    createFadeUpReveal(revealElements);
+    createStaggeredReveal(revealElements);
 
     // Scroll-Triggered Opacity Animation for the Images and mobile stat blocks
     const mm = gsap.matchMedia();
@@ -103,8 +103,8 @@ export default function StatsGrid() {
         </div>
 
         {/* Cell 3: Image 1 (Align Right) */}
-        <div className="flex items-center justify-end opacity-0 gs-reveal-img order-3">
-          <div className="relative w-full max-w-[350px] aspect-[4/5] overflow-hidden rounded-sm shadow-2xl">
+        <div className="flex items-center justify-end opacity-0 gs-reveal-img order-3 -mr-8 md:-mr-12 lg:-mr-16">
+          <div className="relative w-full aspect-[4/5] overflow-hidden">
             <img 
               src="/images/home-bento-image-1.jpg" 
               alt="Prerna working"
@@ -117,8 +117,8 @@ export default function StatsGrid() {
 
         {/* Row 2 */}
         {/* Cell 4: Image 2 (Align Left) */}
-        <div className="flex items-center justify-start opacity-0 gs-reveal-img order-6 lg:order-4 mt-8 lg:mt-0">
-          <div className="relative w-full max-w-[350px] aspect-[4/5] overflow-hidden rounded-sm shadow-2xl">
+        <div className="flex items-center justify-start opacity-0 gs-reveal-img order-6 lg:order-4 mt-8 lg:mt-0 -ml-8 md:-ml-12 lg:-ml-16">
+          <div className="relative w-full aspect-[4/5] overflow-hidden">
             <img 
               src="/images/home-bento-image-2.jpg" 
               alt="Prerna studio"

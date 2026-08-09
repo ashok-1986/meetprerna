@@ -5,7 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { createFadeUpReveal } from "@/lib/animations/factories";
+import { createStaggeredReveal } from "@/lib/animations/factories";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,7 +76,7 @@ export default function SelectedWorkScatter() {
 
     // Fade reveal for the title
     const revealElements = containerRef.current.querySelectorAll('.gs-reveal');
-    createFadeUpReveal(revealElements);
+    createStaggeredReveal(revealElements);
 
     // Staggered reveal for scattered images as they enter the viewport
     const mm = gsap.matchMedia();

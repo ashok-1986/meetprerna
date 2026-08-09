@@ -4,7 +4,13 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { createFadeUpReveal, createImageReveal } from "@/lib/animations/factories";
+import { Draggable } from "gsap/Draggable";
+
+// Register Draggable
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(Draggable);
+}
+import { createStaggeredReveal, createImageReveal } from "@/lib/animations/factories";
 
 export default function SelectedWork() {
   const containerRef = useRef<HTMLElement>(null);
@@ -26,25 +32,19 @@ export default function SelectedWork() {
 
     // Standard fade reveal for the title and rail
     const revealElements = containerRef.current.querySelectorAll('.gs-reveal');
-    createFadeUpReveal(revealElements);
+    createStaggeredReveal(revealElements);
 
     // Fiddle Digital dynamic image reveal (clip-path + scale)
     const imageReveals = containerRef.current.querySelectorAll('.gs-image-reveal');
     createImageReveal(imageReveals);
 
-    // Custom Drag & Skew physics (Framer ImageScroller style)
-    let isDown = false;
-    let startX: number;
-    let scrollLeft: number;
-    let lastX = 0;
-    
+    // Custom Drag & Skew physics using GSAP Draggable
     const skewSetter = gsap.quickSetter(
       railRef.current.querySelectorAll('.gs-skew-item'), 
       "skewX", 
       "deg"
     );
 
-    // Simple velocity tracker for skew
     let velocity = 0;
     const ticker = () => {
       // Decay the skew back to 0
@@ -59,53 +59,21 @@ export default function SelectedWork() {
       return () => gsap.ticker.remove(ticker);
     });
 
-    const handlePointerDown = (e: PointerEvent) => {
-      isDown = true;
-      if (railRef.current) {
-        railRef.current.classList.add('active');
-        startX = e.pageX - railRef.current.offsetLeft;
-        scrollLeft = railRef.current.scrollLeft;
-        lastX = e.pageX;
+    let lastX = 0;
+    
+    Draggable.create(railRef.current, {
+      type: "scrollLeft",
+      edgeResistance: 0.8,
+      onDragStart: function() {
+        lastX = this.pointerX;
+      },
+      onDrag: function() {
+        const delta = this.pointerX - lastX;
+        velocity = Math.min(Math.max(delta * 0.5, -15), 15); // cap skew at 15deg
+        lastX = this.pointerX;
       }
-    };
+    });
 
-    const handlePointerLeave = () => {
-      isDown = false;
-      if (railRef.current) railRef.current.classList.remove('active');
-    };
-
-    const handlePointerUp = () => {
-      isDown = false;
-      if (railRef.current) railRef.current.classList.remove('active');
-    };
-
-    const handlePointerMove = (e: PointerEvent) => {
-      if (!isDown || !railRef.current) return;
-      e.preventDefault();
-      const x = e.pageX - railRef.current.offsetLeft;
-      const walk = (x - startX) * 2; // scroll speed
-      railRef.current.scrollLeft = scrollLeft - walk;
-      
-      // Calculate velocity for skew
-      const delta = e.pageX - lastX;
-      velocity = Math.min(Math.max(delta * 0.5, -15), 15); // cap skew at 15deg
-      lastX = e.pageX;
-    };
-
-    const rail = railRef.current;
-    rail.addEventListener('pointerdown', handlePointerDown);
-    rail.addEventListener('pointerleave', handlePointerLeave);
-    rail.addEventListener('pointerup', handlePointerUp);
-    rail.addEventListener('pointercancel', handlePointerUp);
-    rail.addEventListener('pointermove', handlePointerMove);
-
-    return () => {
-      rail.removeEventListener('pointerdown', handlePointerDown);
-      rail.removeEventListener('pointerleave', handlePointerLeave);
-      rail.removeEventListener('pointerup', handlePointerUp);
-      rail.removeEventListener('pointercancel', handlePointerUp);
-      rail.removeEventListener('pointermove', handlePointerMove);
-    };
   }, { scope: containerRef });
 
   return (

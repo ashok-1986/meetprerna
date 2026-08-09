@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { createFadeUpReveal } from "@/lib/animations/factories";
+import { createStaggeredReveal } from "@/lib/animations/factories";
 
 export default function ClientVoices() {
   const containerRef = useRef<HTMLElement>(null);
@@ -25,7 +25,7 @@ export default function ClientVoices() {
   useGSAP(() => {
     if (!containerRef.current) return;
     const revealElements = containerRef.current.querySelectorAll('.gs-reveal, .gs-reveal-card');
-    createFadeUpReveal(revealElements);
+    createStaggeredReveal(revealElements);
   }, { scope: containerRef });
 
   return (

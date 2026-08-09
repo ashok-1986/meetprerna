@@ -6,6 +6,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
+import { createStickyStack, createTextReveal } from "@/lib/animations/factories";
 import RippleEffect from "@/components/RippleEffect";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
@@ -44,30 +45,28 @@ export default function Hero() {
         ease: "power2.out" 
       }, 0);
 
-      // Stagger H1 words up
-      tl.to(words, { 
-        y: "0%", 
-        opacity: 1, 
-        duration: 0.8, 
-        ease: "power3.out", 
-        stagger: 0.05 
-      }, 0.2);
-
-      // Fade in subhead and CTA
+      // Stagger subhead and CTA
       tl.to(reveals, { 
         opacity: 1, 
         y: 0, 
         duration: 0.5, 
         ease: "power2.out", 
         stagger: 0.1 
-      }, 0.4);
+      }, 0.2);
     });
 
     mm.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.set(words, { y: "0%", opacity: 1 });
       gsap.set(reveals, { opacity: 1, y: 0 });
       gsap.set(bgOverlay, { backgroundColor: "rgba(0,0,0,0.25)" });
     });
+    
+    // Apply SplitText reveal
+    if (textRef.current) {
+      createTextReveal([textRef.current]);
+    }
+
+    // Apply Sticky Stack to the hero
+    createStickyStack(containerRef);
 
     return () => mm.revert();
   }, { scope: containerRef });
@@ -110,10 +109,10 @@ export default function Hero() {
               </p>
               
               <h1 ref={textRef} className="font-display text-[clamp(2.5rem,8vw,8rem)] font-[400] leading-[0.9] m-0 p-0 text-ivory flex flex-col items-start md:items-end whitespace-nowrap">
-                 <HeroWord text="VISUAL ARTIST" />
+                 <span>VISUAL ARTIST</span>
                  <span className="flex items-center gap-4">
                    <span className="text-[0.6em] font-sans font-light opacity-70">+</span> 
-                   <HeroWord text="TATTOOIST" />
+                   <span>TATTOOIST</span>
                  </span>
               </h1>
            </div>
@@ -131,23 +130,4 @@ export default function Hero() {
   );
 }
 
-/** Inline word-split for the hero — no translate-y-full, GSAP sets that dynamically */
-function HeroWord({ text }: { text: string }) {
-  return (
-    <span aria-label={text} className="inline-block">
-      {text.split(" ").map((word, i) => (
-        <span
-          key={i}
-          aria-hidden="true"
-          className="inline-block overflow-hidden align-bottom"
-          style={{ marginRight: "0.25em" }}
-        >
-          <span className="word-inner inline-block will-change-transform opacity-0 translate-y-full">
-            {word}
-          </span>
-        </span>
-      ))}
-    </span>
-  );
-}
 

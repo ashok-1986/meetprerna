@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { createFadeUpReveal } from "@/lib/animations/factories";
+import { createStaggeredReveal } from "@/lib/animations/factories";
 
 export default function Hinge() {
   const containerRef = useRef<HTMLElement>(null);
@@ -13,7 +13,7 @@ export default function Hinge() {
     
     // Reveal the text inside
     const revealElements = containerRef.current.querySelectorAll('.gs-reveal');
-    createFadeUpReveal(revealElements);
+    createStaggeredReveal(revealElements);
   }, { scope: containerRef });
 
   return (

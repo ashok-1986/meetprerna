@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { createFadeUpReveal } from "@/lib/animations/factories";
+import { createStaggeredReveal } from "@/lib/animations/factories";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
 export default function ClosingCTA() {
@@ -11,7 +11,7 @@ export default function ClosingCTA() {
   useGSAP(() => {
     if (!containerRef.current) return;
     const revealElements = containerRef.current.querySelectorAll('.gs-reveal');
-    createFadeUpReveal(revealElements);
+    createStaggeredReveal(revealElements);
   }, { scope: containerRef });
 
   return (

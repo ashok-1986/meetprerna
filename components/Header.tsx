@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import FullscreenMenu from "./FullscreenMenu";
 
@@ -63,27 +64,22 @@ export default function Header() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: `
-        :root {
-          --ease: cubic-bezier(0.32, 0.72, 0, 1);
-          --dur: 280ms;
-        }
-
-        .header-wrapper[data-nav="0"] {
-          --pill-w: 1; /* Initial scale */
+        html[data-nav="0"] {
+          --pill-w: 100%;
           --pill-h: 84px;
           --pill-r: 0px;
           --pill-t: 0px;
           --pill-bg: transparent;
         }
-        .header-wrapper[data-nav="1"] {
-          --pill-w: 0.95;
+        html[data-nav="1"] {
+          --pill-w: calc(100% - ((100% - 680px) * 0.5));
           --pill-h: 68px;
           --pill-r: 16px;
           --pill-t: 10px;
           --pill-bg: var(--color-ink);
         }
-        .header-wrapper[data-nav="2"] {
-          --pill-w: 0.85; /* Settle scale */
+        html[data-nav="2"] {
+          --pill-w: 680px;
           --pill-h: 56px;
           --pill-r: 22px;
           --pill-t: 14px;
@@ -97,32 +93,54 @@ export default function Header() {
           padding-top: env(safe-area-inset-top, 0px);
           pointer-events: none;
         }
-        
+
         .header-pill {
-          margin: var(--pill-t) auto 0;
-          width: 100%;
-          max-width: 1200px;
+          pointer-events: auto;
+          position: relative;
+          margin-inline: auto;
+          contain: layout paint style;
+
+          width: var(--pill-w);
           height: var(--pill-h);
           border-radius: var(--pill-r);
-          background-color: var(--pill-bg);
-          transform: scaleX(var(--pill-w));
-          transition: 
-            height var(--dur) var(--ease),
-            border-radius var(--dur) var(--ease),
-            margin-top var(--dur) var(--ease),
-            background-color var(--dur) var(--ease),
-            transform var(--dur) var(--ease);
-          pointer-events: auto;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 24px;
+          margin-top: var(--pill-t);
+          background: var(--pill-bg);
+
+          transition:
+            width var(--duration-250) var(--ease-default),
+            height var(--duration-250) var(--ease-default),
+            border-radius var(--duration-250) var(--ease-default),
+            margin-top var(--duration-250) var(--ease-default),
+            background-color var(--duration-250) var(--ease-default);
         }
 
-        @media (max-width: 720px) {
-          .header-wrapper[data-nav] { --pill-w: 1; --pill-r: 0px; --pill-t: 0px; }
-          .header-wrapper[data-nav="0"] { --pill-h: 68px; }
-          .header-wrapper[data-nav="1"], .header-wrapper[data-nav="2"] { --pill-h: 56px; }
+        /* Nav Grid */
+        .nav-grid {
+          height: 100%;
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          align-items: center;
+          gap: 1rem;
+          padding-inline: clamp(1rem, 3vw, 2rem);
+        }
+
+        .nav-brand {
+          justify-self: start;
+        }
+
+        .nav-links {
+          justify-self: center;
+        }
+
+        .nav-menu-btn {
+          justify-self: end;
+        }
+
+        @media (max-width: 768px) {
+          html[data-nav] { --pill-w: 100%; --pill-r: 0px; --pill-t: 0px; }
+          html[data-nav="0"] { --pill-h: 68px; }
+          html[data-nav="1"], html[data-nav="2"] { --pill-h: 56px; }
+          .nav-grid { grid-template-columns: 1fr auto; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -130,16 +148,27 @@ export default function Header() {
         }
       `}} />
 
-      <div className="header-wrapper" data-nav={navState}>
-        <header className="header-band">
-          <div className="header-pill">
-          {/* We must apply inverse scale to children to avoid text stretching when using scaleX */}
-          <div className="w-full flex justify-between items-center" style={{ transform: 'scaleX(calc(1 / var(--pill-w)))', transition: 'transform var(--dur) var(--ease)' }}>
-            <Link href="/" className="font-display text-2xl tracking-wide text-ivory hover:text-ivory-dim transition-colors duration-[150ms] ease-out">
-              MeetPrerna
-            </Link>
+      {/* Force applying state to HTML so we can rely on standard media query logic without messy React inline styles */}
+      <style dangerouslySetInnerHTML={{ __html: `html { ${navState === 0 ? '--pill-w: 100%; --pill-h: 84px; --pill-r: 0px; --pill-t: 0px; --pill-bg: transparent;' : navState === 1 ? '--pill-w: calc(100% - ((100% - 680px) * 0.5)); --pill-h: 68px; --pill-r: 16px; --pill-t: 10px; --pill-bg: var(--color-ink);' : '--pill-w: 680px; --pill-h: 56px; --pill-r: 22px; --pill-t: 14px; --pill-bg: var(--color-ink-100);'} }
+      
+      @media (max-width: 768px) {
+          html { ${navState === 0 ? '--pill-w: 100%; --pill-h: 68px; --pill-r: 0px; --pill-t: 0px; --pill-bg: transparent;' : '--pill-w: 100%; --pill-h: 56px; --pill-r: 0px; --pill-t: 0px; --pill-bg: var(--color-ink);'} }
+      }
+      `}} />
 
-            <nav className="hidden md:flex items-center gap-8 font-mono text-sm uppercase tracking-widest">
+      <header className="header-band">
+        <div className="header-pill">
+          <div className="nav-grid w-full">
+            
+            {/* Zone 1: Logo */}
+            <div className="nav-brand flex items-center">
+              <Link href="/" className="hover:opacity-80 transition-opacity duration-[150ms] ease-out flex items-center">
+                <Image src="/images/logo_main.png" alt="MeetPrerna" width={140} height={40} className="h-7 w-auto object-contain" priority />
+              </Link>
+            </div>
+
+            {/* Zone 2: Links */}
+            <nav className="nav-links hidden md:flex items-center gap-8 font-mono text-sm uppercase tracking-widest">
               <Link href="/portfolio" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out">
                 Portfolio
               </Link>
@@ -149,20 +178,26 @@ export default function Header() {
               <Link href="/consultation" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out">
                 Consultation
               </Link>
+              <Link href="/connect" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out">
+                Connect
+              </Link>
             </nav>
 
-            <button 
-              className="group flex flex-col justify-center items-center w-8 h-8 z-[200]"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle Menu"
-            >
-              <span className={`block w-6 h-0.5 bg-ivory transition-transform duration-[300ms] ease-[cubic-bezier(.43,.195,.02,1)] ${isMenuOpen ? "rotate-45 translate-y-1.5" : "-translate-y-1"}`} />
-              <span className={`block w-6 h-0.5 bg-ivory transition-transform duration-[300ms] ease-[cubic-bezier(.43,.195,.02,1)] ${isMenuOpen ? "-rotate-45 -translate-y-0.5" : "translate-y-1"}`} />
-            </button>
+            {/* Zone 3: Mobile Menu / CTA (Currently just Hamburger) */}
+            <div className="nav-menu-btn flex items-center justify-end">
+              <button 
+                className="group flex flex-col justify-center items-center w-8 h-8 z-[200]"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle Menu"
+              >
+                <span className={`block w-6 h-0.5 bg-ivory transition-transform duration-[300ms] ease-[cubic-bezier(.43,.195,.02,1)] ${isMenuOpen ? "rotate-45 translate-y-1.5" : "-translate-y-1"}`} />
+                <span className={`block w-6 h-0.5 bg-ivory transition-transform duration-[300ms] ease-[cubic-bezier(.43,.195,.02,1)] ${isMenuOpen ? "-rotate-45 -translate-y-0.5" : "translate-y-1"}`} />
+              </button>
             </div>
+
           </div>
-        </header>
-      </div>
+        </div>
+      </header>
 
       <FullscreenMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </>
