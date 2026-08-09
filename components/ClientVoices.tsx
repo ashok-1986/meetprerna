@@ -10,15 +10,21 @@ export default function ClientVoices() {
   const testimonials = [
     {
       name: "Pramayee Bhaware",
-      text: "Totally indecisive, yet the experience was still a 10. I could not have asked for a better artist than Prerna for my first tattoo. She excelled at the customization of the design, made slight adjustments, and ensured a pain-free overall experience. Great precision. 10/10 recommended."
+      text: "Totally indecisive, yet the experience was still a 10. I could not have asked for a better artist than Prerna for my first tattoo. She excelled at the customization of the design, made slight adjustments, and ensured a pain-free overall experience. Great precision. 10/10 recommended.",
+      sourceName: "Google Reviews",
+      sourceLink: "https://g.co/kgs/test1"
     },
     {
       name: "Sambhav Chathly",
-      text: "I couldn't be happier with the result! Prerna's attention to detail and artistic skill truly shine through in their work. The entire process was comfortable, and they took the time to understand exactly what I wanted. I highly recommend Prerna for anyone looking for a talented and professional tattoo artist."
+      text: "I couldn't be happier with the result! Prerna's attention to detail and artistic skill truly shine through in their work. The entire process was comfortable, and they took the time to understand exactly what I wanted. I highly recommend Prerna for anyone looking for a talented and professional tattoo artist.",
+      sourceName: "Google Reviews",
+      sourceLink: "https://g.co/kgs/test2"
     },
     {
       name: "Amala James",
-      text: "This was my first tattoo and I was super nervous thinking about how much it was going to hurt. But Prerna did a great job - it didn't hurt as much as I had assumed. The tattoo came out exactly how I wanted and expected it."
+      text: "This was my first tattoo and I was super nervous thinking about how much it was going to hurt. But Prerna did a great job - it didn't hurt as much as I had assumed. The tattoo came out exactly how I wanted and expected it.",
+      sourceName: "Google Reviews",
+      sourceLink: "https://g.co/kgs/test3"
     }
   ];
 
@@ -53,8 +59,11 @@ export default function ClientVoices() {
               <p className="font-quote italic text-lg lg:text-xl text-ink leading-relaxed flex-grow">
                 &ldquo;{testimonial.text}&rdquo;
               </p>
-              <div className="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-ink/50">
-                — {testimonial.name}
+              <div className="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-ink/50 flex flex-col gap-2">
+                <span>— {testimonial.name}</span>
+                <a href={testimonial.sourceLink} target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors underline decoration-ink/30 underline-offset-4">
+                  Via {testimonial.sourceName}
+                </a>
               </div>
             </div>
           ))}
