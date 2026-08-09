@@ -1,5 +1,5 @@
 "use client";
-
+import TextMotion from "@/components/ui/TextMotion";
 
 export default function Connect() {
   return (
@@ -8,7 +8,7 @@ export default function Connect() {
         
         <header className="flex flex-col gap-6 text-center">
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light leading-none tracking-tight">
-            Let's talk.
+            <TextMotion text="Let's talk." preset="liquid" duration={1.5} trigger="onMount" />
           </h1>
           <p className="font-body text-xl text-ivory/70 max-w-xl mx-auto">
             Whether for a private tattoo commission, an abstract canvas, or a gallery exhibition.

@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import TextMotion from "@/components/ui/TextMotion";
 
 export default function ConsultationHero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -57,8 +58,14 @@ export default function ConsultationHero() {
         <p className="hero-text font-mono text-sm tracking-[0.2em] uppercase text-inchworm opacity-0">
           The Process
         </p>
-        <h1 className="hero-text font-display text-[clamp(3rem,8vw,6rem)] leading-[0.9] text-ivory opacity-0">
-          How we bring your vision to life
+        <h1 className="font-display text-[clamp(3rem,8vw,6rem)] leading-[0.9] text-ivory">
+          <TextMotion 
+            text="How we bring your vision to life" 
+            preset="liquid" 
+            duration={1.5} 
+            delay={0.6} 
+            trigger="onMount" 
+          />
         </h1>
         <p className="hero-text font-quote italic text-xl md:text-2xl text-ivory/90 max-w-2xl leading-relaxed opacity-0">
           "Every piece begins with a conversation. Here is what you can expect when booking a session."

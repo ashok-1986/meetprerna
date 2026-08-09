@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import TextMotion from "@/components/ui/TextMotion";
 import { getPortfolioItems, Medium } from "@/lib/data/portfolio";
 import OGLDistortionSlider from "@/components/OGLDistortionSlider";
 
@@ -22,7 +23,9 @@ export default function Portfolio() {
         {/* Header & Filter */}
         <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-ivory/20 pb-8">
           <div>
-            <h1 className="font-display text-5xl md:text-6xl leading-none">Portfolio</h1>
+            <h1 className="font-display text-5xl md:text-6xl leading-none">
+              <TextMotion text="Portfolio" preset="liquid" duration={1.5} trigger="onView" />
+            </h1>
             <p className="font-mono text-sm text-ivory-dim mt-4 uppercase tracking-widest">
               Selected Works
             </p>
