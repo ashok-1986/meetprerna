@@ -22,6 +22,16 @@ export const siteImages = {
     hero: `${IMAGE_HOST}site-home-hero-main.jpg`, 
     credibilityBento1: `${IMAGE_HOST}site-home-credibility-bento1.jpg`, 
     credibilityBento2: `${IMAGE_HOST}site-home-credibility-bento2.jpg`, 
+    scatter: [
+      `${IMAGE_HOST}site-home-scatter-1.jpg`,
+      `${IMAGE_HOST}site-home-scatter-2.jpg`,
+      `${IMAGE_HOST}site-home-scatter-3.jpg`,
+      `${IMAGE_HOST}site-home-scatter-4.jpg`,
+      `${IMAGE_HOST}site-home-scatter-5.jpg`,
+      `${IMAGE_HOST}site-home-scatter-6.jpg`,
+      `${IMAGE_HOST}site-home-scatter-7.jpg`,
+      `${IMAGE_HOST}site-home-scatter-8.jpg`,
+    ],
   },
   consultation: {
     hero: `${IMAGE_HOST}site-consultation-hero-main.jpg`, 
