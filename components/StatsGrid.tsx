@@ -20,57 +20,71 @@ export default function StatsGrid() {
     const mm = gsap.matchMedia();
     
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      // Create unified orchestrated timeline for the Bento grid
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 70%",
-          toggleActions: "play none none reverse"
+      // Create scroll triggers for the grid label
+      gsap.fromTo('.gs-grid-label', 
+        { opacity: 0, y: 20 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.6, 
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: '.gs-grid-label',
+            start: "top 85%"
+          }
         }
-      });
+      );
 
-      // Set initial states for clean SSR/hydration matching
-      gsap.set('.gs-grid-label', { opacity: 0, y: 20 });
+      // Set initial states
       gsap.set('.gs-grid-img-wrapper', { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" });
       gsap.set('.gs-grid-img', { scale: 1.15 });
       gsap.set('.gs-stat-word', { y: "110%" });
       gsap.set('.gs-stat-sub', { opacity: 0, y: 10 });
 
-      // Sequence
-      // 1. Label
-      tl.to('.gs-grid-label', { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
+      // Use ScrollTrigger.batch to stagger cells row by row as they scroll in
+      ScrollTrigger.batch('.bento-cell', {
+        start: "top 85%",
+        onEnter: (batch) => {
+          batch.forEach((cell, i) => {
+            const delay = i * 0.15; // stagger elements in the same batch
 
-      // 2. Image Wipes (Precision cut)
-      tl.to('.gs-grid-img-wrapper', {
-        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-        duration: 0.8,
-        ease: "power3.inOut",
-        stagger: 0.1
-      }, "-=0.3");
+            const imgWrapper = cell.querySelector('.gs-grid-img-wrapper');
+            const img = cell.querySelector('.gs-grid-img');
+            if (imgWrapper && img) {
+              gsap.to(imgWrapper, {
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                duration: 0.8,
+                ease: "power3.inOut",
+                delay: delay
+              });
+              gsap.to(img, {
+                scale: 1,
+                duration: 1.2,
+                ease: "power3.out",
+                delay: delay
+              });
+            }
 
-      tl.to('.gs-grid-img', {
-        scale: 1,
-        duration: 1.2,
-        ease: "power3.out",
-        stagger: 0.1
-      }, "<");
-
-      // 3. Stat Numbers (Heavy stamp)
-      tl.to('.gs-stat-word', {
-        y: "0%",
-        duration: 0.8,
-        ease: "power4.out",
-        stagger: 0.05
-      }, "-=0.8");
-
-      // 4. Stat Subtext
-      tl.to('.gs-stat-sub', {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power2.out",
-        stagger: 0.05
-      }, "-=0.6");
+            const statWord = cell.querySelector('.gs-stat-word');
+            const statSub = cell.querySelector('.gs-stat-sub');
+            if (statWord && statSub) {
+              gsap.to(statWord, {
+                y: "0%",
+                duration: 0.8,
+                ease: "power4.out",
+                delay: delay
+              });
+              gsap.to(statSub, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: "power2.out",
+                delay: delay + 0.2
+              });
+            }
+          });
+        }
+      });
       
     });
 
@@ -114,7 +128,7 @@ export default function StatsGrid() {
         
         {/* Row 1 */}
         {/* Cell 1: Fine Arts Diploma */}
-        <div className="flex flex-col justify-center gap-4 order-1">
+        <div className="bento-cell flex flex-col justify-center gap-4 order-1">
           <div className="overflow-hidden">
             <span className="gs-stat-word inline-block font-display text-[clamp(2.5rem,4vw,4.5rem)] text-ivory leading-[1.1]">Fine Arts</span>
           </div>
@@ -124,7 +138,7 @@ export default function StatsGrid() {
         </div>
 
         {/* Cell 2: 500+ Tattoos */}
-        <div className="flex flex-col justify-center gap-4 order-2">
+        <div className="bento-cell flex flex-col justify-center gap-4 order-2">
           <div className="overflow-hidden">
             <span className="gs-stat-word inline-block font-display text-[clamp(2.5rem,4vw,4.5rem)] text-ivory leading-[1.1]">500+</span>
           </div>
@@ -134,7 +148,7 @@ export default function StatsGrid() {
         </div>
 
         {/* Cell 3: Image 1 (Align Right) */}
-        <div className="flex items-center justify-end order-3 -mr-8 md:-mr-12 lg:-mr-16">
+        <div className="bento-cell flex items-center justify-end order-3 -mr-8 md:-mr-12 lg:-mr-16">
           <div className="gs-grid-img-wrapper relative w-full max-w-[300px] overflow-hidden">
             <img 
               src={siteImages.home.credibilityBento1} 
@@ -148,7 +162,7 @@ export default function StatsGrid() {
 
         {/* Row 2 */}
         {/* Cell 4: Image 2 (Align Left) */}
-        <div className="flex items-center justify-start order-6 lg:order-4 mt-8 lg:mt-0 -ml-8 md:-ml-12 lg:-ml-16">
+        <div className="bento-cell flex items-center justify-start order-6 lg:order-4 mt-8 lg:mt-0 -ml-8 md:-ml-12 lg:-ml-16">
           <div className="gs-grid-img-wrapper relative w-full max-w-[300px] overflow-hidden">
             <img 
               src={siteImages.home.credibilityBento2} 
@@ -160,7 +174,7 @@ export default function StatsGrid() {
         </div>
 
         {/* Cell 5: 100+ Custom designs */}
-        <div className="flex flex-col justify-center gap-4 order-4 lg:order-5 mt-8 lg:mt-0">
+        <div className="bento-cell flex flex-col justify-center gap-4 order-4 lg:order-5 mt-8 lg:mt-0">
           <div className="overflow-hidden">
             <span className="gs-stat-word inline-block font-display text-[clamp(2.5rem,4vw,4.5rem)] text-ivory leading-[1.1]">100+</span>
           </div>
@@ -170,7 +184,7 @@ export default function StatsGrid() {
         </div>
 
         {/* Cell 6: 10+ Years Artistry */}
-        <div className="flex flex-col justify-center gap-4 order-5 lg:order-6 mt-8 lg:mt-0">
+        <div className="bento-cell flex flex-col justify-center gap-4 order-5 lg:order-6 mt-8 lg:mt-0">
           <div className="overflow-hidden">
             <span className="gs-stat-word inline-block font-display text-[clamp(2.5rem,4vw,4.5rem)] text-ivory leading-[1.1]">10+ Years</span>
           </div>
