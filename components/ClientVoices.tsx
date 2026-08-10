@@ -1,67 +1,181 @@
 "use client";
 
 import React, { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { createStaggeredReveal } from "@/lib/animations/factories";
 import Image from "next/image";
-
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { Testimonial } from "@/lib/api/senja";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ClientVoicesProps {
   testimonials: Testimonial[];
 }
 
+// A helper to split text into words wrapped in hidden overflow spans
+const SplitWords = ({ text }: { text: string }) => {
+  return (
+    <>
+      {text.split(" ").map((word, i) => (
+        <span key={i} className="inline-flex overflow-hidden pb-[0.1em] -mb-[0.1em] mr-[0.25em] align-bottom">
+          <span className="gs-word-reveal translate-y-[110%] inline-block opacity-0">
+            {word}
+          </span>
+        </span>
+      ))}
+    </>
+  );
+};
+
 export default function ClientVoices({ testimonials }: ClientVoicesProps) {
   const containerRef = useRef<HTMLElement>(null);
 
+  useGSAP(
+    () => {
+      if (!containerRef.current) return;
 
-  useGSAP(() => {
-    if (!containerRef.current) return;
-    const revealElements = containerRef.current.querySelectorAll('.gs-reveal, .gs-reveal-card');
-    createStaggeredReveal(revealElements);
-  }, { scope: containerRef });
+      // 1. Text Reveal Animation (StringTune style)
+      const testimonialBlocks = gsap.utils.toArray<HTMLElement>('.testimonial-block');
+      
+      testimonialBlocks.forEach((block) => {
+        const words = block.querySelectorAll('.gs-word-reveal');
+        const meta = block.querySelector('.gs-meta-reveal');
+        
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: block,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        });
+
+        // Staggered reveal for words
+        if (words.length) {
+          tl.to(words, {
+            y: "0%",
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.015,
+            ease: "power3.out",
+          });
+        }
+        
+        // Fade in metadata after
+        if (meta) {
+          tl.to(meta, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out"
+          }, "-=0.4");
+        }
+      });
+
+      // 2. Image Parallax
+      const images = gsap.utils.toArray<HTMLElement>('.gs-parallax-image');
+      images.forEach((img) => {
+        // Start the image translated up, and scrub it down
+        gsap.fromTo(img, 
+          { yPercent: -10 },
+          {
+            yPercent: 10,
+            ease: "none",
+            scrollTrigger: {
+              trigger: img.parentElement,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            }
+          }
+        );
+      });
+      
+      // Header reveal
+      gsap.fromTo('.gs-header-reveal', 
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, 
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: '.gs-header-reveal',
+            start: "top 90%",
+          }
+        }
+      );
+
+    },
+    { scope: containerRef }
+  );
 
   return (
-    <section ref={containerRef} className="relative z-10 w-full bg-ivory text-ink py-24 md:py-48 border-b border-ink/20">
-      <div className="flex flex-col w-full px-6 md:px-12">
+    <section 
+      ref={containerRef} 
+      className="relative w-full bg-ivory text-ink py-24 md:py-48 overflow-hidden"
+    >
+      <div className="flex flex-col w-full px-6 md:px-12 xl:px-24 max-w-[2000px] mx-auto">
         
-        <div className="pb-12 md:pb-24 border-b border-ink/20 opacity-0 gs-reveal">
-          <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-ink/50 uppercase mb-6">
+        <div className="pb-16 md:pb-32 gs-header-reveal border-b border-ink/20 mb-16 md:pb-0 md:border-b-0">
+          <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-ink/50 uppercase mb-8">
             IN THEIR OWN WORDS
           </p>
-          <h2 className="font-display text-[clamp(2.5rem,4vw,3.5rem)] font-[400] leading-none max-w-[900px]">
+          <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] font-[400] leading-[1.1] max-w-[900px]">
             Some earlier clients<br className="hidden md:block" /> knew her as Alza.
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 lg:gap-24 w-full items-start">
           {testimonials.map((testimonial, i) => (
             <div 
-              key={i} 
-              className={`flex flex-col gap-8 py-12 md:py-16 opacity-0 gs-reveal-card border-b md:border-b-0
-                ${i < testimonials.length - 1 ? 'md:border-r border-ink/20 md:pr-12' : 'md:pl-12'}
-                ${i === 1 ? 'md:px-12' : ''}
+              key={testimonial.id} 
+              className={`testimonial-block flex flex-col w-full
+                ${i === 1 ? 'md:mt-48' : ''} 
+                ${i === 2 ? 'md:mt-24' : ''}
               `}
             >
-              {testimonial.imageUrl && (
-                  <div className="relative w-full aspect-square mb-6 overflow-hidden bg-ink/5">
-                    <Image 
-                      src={testimonial.imageUrl} 
-                      alt={`Tattoo work for ${testimonial.name}`} 
-                      fill 
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
+              {testimonial.imageUrls && testimonial.imageUrls.length > 0 && (
+                <div className="relative w-full mb-8 group/rail">
+                  {/* Indicator for multiple images */}
+                  {testimonial.imageUrls.length > 1 && (
+                    <div className="absolute top-4 right-4 z-10 bg-ink/80 backdrop-blur-md text-ivory px-3 py-1.5 rounded-full font-mono text-[10px] tracking-widest pointer-events-none transition-opacity opacity-100 md:opacity-0 md:group-hover/rail:opacity-100">
+                      {testimonial.imageUrls.length} PHOTOS — SWIPE
+                    </div>
+                  )}
+                  
+                  <div className="flex w-full overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-4 pb-4 -mb-4">
+                    {testimonial.imageUrls.map((url, imgIndex) => (
+                      <div 
+                        key={imgIndex} 
+                        className="relative min-w-[90%] md:min-w-[100%] aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-ink/5 group snap-center shrink-0"
+                      >
+                        <Image 
+                          src={url} 
+                          alt={`Tattoo work for ${testimonial.name} - Photo ${imgIndex + 1}`} 
+                          fill 
+                          className="gs-parallax-image object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out scale-125"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                      </div>
+                    ))}
                   </div>
-                )}
-              <p className="font-quote italic text-lg lg:text-xl text-ink leading-relaxed flex-grow">
-                &ldquo;{testimonial.text}&rdquo;
-              </p>
-              <div className="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-ink/50 flex flex-col gap-2">
-                <span>— {testimonial.name}</span>
-                <a href={testimonial.sourceLink} target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors underline decoration-ink/30 underline-offset-4">
-                  Via {testimonial.sourceName}
-                </a>
+                </div>
+              )}
+              
+              <div className="flex-grow flex flex-col gap-10">
+                <p className="font-quote italic text-[clamp(1.75rem,2.5vw,3rem)] text-ink leading-[1.25]">
+                  <SplitWords text={`"${testimonial.text}"`} />
+                </p>
+                
+                <div className="gs-meta-reveal opacity-0 translate-y-4 font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-ink/50 flex flex-col gap-3 mt-auto">
+                  <span className="text-ink font-bold">— {testimonial.name}</span>
+                  <a href={testimonial.sourceLink} target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors underline decoration-ink/30 hover:decoration-ink/60 underline-offset-4 w-max">
+                    Via {testimonial.sourceName}
+                  </a>
+                </div>
               </div>
             </div>
           ))}
@@ -71,4 +185,3 @@ export default function ClientVoices({ testimonials }: ClientVoicesProps) {
     </section>
   );
 }
-
