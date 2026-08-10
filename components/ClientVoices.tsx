@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { createStaggeredReveal } from "@/lib/animations/factories";
+import Image from "next/image";
 
 import { Testimonial } from "@/lib/api/senja";
 
@@ -42,6 +43,17 @@ export default function ClientVoices({ testimonials }: ClientVoicesProps) {
                 ${i === 1 ? 'md:px-12' : ''}
               `}
             >
+              {testimonial.imageUrl && (
+                  <div className="relative w-full aspect-square mb-6 overflow-hidden bg-ink/5">
+                    <Image 
+                      src={testimonial.imageUrl} 
+                      alt={`Tattoo work for ${testimonial.name}`} 
+                      fill 
+                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
+                )}
               <p className="font-quote italic text-lg lg:text-xl text-ink leading-relaxed flex-grow">
                 &ldquo;{testimonial.text}&rdquo;
               </p>

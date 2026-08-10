@@ -21,6 +21,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.senja.io',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

@@ -4,6 +4,7 @@ export interface Testimonial {
   text: string;
   sourceName: string;
   sourceLink: string;
+  imageUrl?: string;
 }
 
 export async function fetchSenjaTestimonials(): Promise<Testimonial[]> {
@@ -35,6 +36,9 @@ export async function fetchSenjaTestimonials(): Promise<Testimonial[]> {
       .map((t: any) => {
         // Replace outdated name "Alza" with "Prerna" to satisfy quality gates
         const sanitizedText = (t.text || "").replace(/\bAlza\b/gi, "Prerna");
+        
+        // Extract the first image from the media array if available
+        const imageMedia = t.media?.find((m: any) => m.type === "image");
 
         return {
           id: t.id,
@@ -42,6 +46,7 @@ export async function fetchSenjaTestimonials(): Promise<Testimonial[]> {
           text: sanitizedText,
           sourceName: "Senja Verified",
           sourceLink: t.links?.public || "#",
+          imageUrl: imageMedia?.url,
         };
       })
       .slice(0, 3); // Grab only top 3 for the grid layout
