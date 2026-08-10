@@ -4,29 +4,15 @@ import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { createStaggeredReveal } from "@/lib/animations/factories";
 
-export default function ClientVoices() {
+import { Testimonial } from "@/lib/api/senja";
+
+interface ClientVoicesProps {
+  testimonials: Testimonial[];
+}
+
+export default function ClientVoices({ testimonials }: ClientVoicesProps) {
   const containerRef = useRef<HTMLElement>(null);
 
-  const testimonials = [
-    {
-      name: "Pramayee Bhaware",
-      text: "Totally indecisive, yet the experience was still a 10. I could not have asked for a better artist than Prerna for my first tattoo. She excelled at the customization of the design, made slight adjustments, and ensured a pain-free overall experience. Great precision. 10/10 recommended.",
-      sourceName: "Google Reviews",
-      sourceLink: "https://g.co/kgs/test1"
-    },
-    {
-      name: "Sambhav Chathly",
-      text: "I couldn't be happier with the result! Prerna's attention to detail and artistic skill truly shine through in their work. The entire process was comfortable, and they took the time to understand exactly what I wanted. I highly recommend Prerna for anyone looking for a talented and professional tattoo artist.",
-      sourceName: "Google Reviews",
-      sourceLink: "https://g.co/kgs/test2"
-    },
-    {
-      name: "Amala James",
-      text: "This was my first tattoo and I was super nervous thinking about how much it was going to hurt. But Prerna did a great job - it didn't hurt as much as I had assumed. The tattoo came out exactly how I wanted and expected it.",
-      sourceName: "Google Reviews",
-      sourceLink: "https://g.co/kgs/test3"
-    }
-  ];
 
   useGSAP(() => {
     if (!containerRef.current) return;

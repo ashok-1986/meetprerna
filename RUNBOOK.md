@@ -19,7 +19,7 @@ Adding a new portfolio piece requires a code change by Ashok (the human maintain
 1. **Prerna** sends her dedicated Senja collection link to clients.
 2. The client submits a testimonial (text or video).
 3. The new testimonial is captured in the Senja dashboard.
-4. (Optional) If we are syncing testimonials via API, they will appear dynamically or on the next site build. Since we are hardcoding a curated list currently in `ClientVoices.tsx` to ensure verify-ability, **Ashok** will manually select the best reviews, verify their source link, and add them to `components/ClientVoices.tsx`.
+4. If a text testimonial is marked as **Approved** in the Senja dashboard, it will automatically be fetched during the next site build (or within 1 hour via Next.js ISR) and displayed in the `ClientVoices` grid on the home page. No code changes are required by Ashok.
 
 ## 3. Form Enquiries (Fillout)
 

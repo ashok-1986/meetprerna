@@ -7,8 +7,11 @@ import Hinge from "@/components/Hinge";
 import Philosophy from "@/components/Philosophy";
 import ClientVoices from "@/components/ClientVoices";
 import ClosingCTA from "@/components/ClosingCTA";
+import { fetchSenjaTestimonials } from "@/lib/api/senja";
 
-export default function Home() {
+export default async function Home() {
+  const testimonials = await fetchSenjaTestimonials();
+
   return (
     <PageWrapper>
       <Hero />
@@ -17,7 +20,7 @@ export default function Home() {
       <SelectedWorkScatter />
       <Hinge />
       <Philosophy />
-      <ClientVoices />
+      {testimonials.length > 0 && <ClientVoices testimonials={testimonials} />}
       <ClosingCTA />
     </PageWrapper>
   );
