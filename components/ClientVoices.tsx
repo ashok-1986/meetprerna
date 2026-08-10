@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -30,6 +30,68 @@ const SplitWords = ({ text }: { text: string }) => {
   );
 };
 
+// Extracted card component to manage active image state per testimonial
+function TestimonialCard({ testimonial, index }: { testimonial: Testimonial; index: number }) {
+  const [activeImageIdx, setActiveImageIdx] = useState(0);
+
+  return (
+    <div 
+      className={`testimonial-block flex flex-col w-full
+        ${index === 1 ? 'md:mt-48' : ''} 
+        ${index === 2 ? 'md:mt-24' : ''}
+      `}
+    >
+      {testimonial.imageUrls && testimonial.imageUrls.length > 0 && (
+        <div className="flex flex-col gap-2 mb-8">
+          {/* Main Image */}
+          <div className="relative w-full aspect-square overflow-hidden bg-ink/5 group">
+            <Image 
+              src={testimonial.imageUrls[activeImageIdx]} 
+              alt={`Tattoo work for ${testimonial.name} - Photo ${activeImageIdx + 1}`} 
+              fill 
+              className="gs-parallax-image object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out scale-125"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </div>
+          
+          {/* Thumbnails Row */}
+          {testimonial.imageUrls.length > 1 && (
+            <div className="flex gap-2 w-full overflow-x-auto scrollbar-hide py-1">
+              {testimonial.imageUrls.map((url, imgIndex) => (
+                <button
+                  key={imgIndex}
+                  onClick={() => setActiveImageIdx(imgIndex)}
+                  className={`relative w-16 h-16 shrink-0 overflow-hidden transition-all duration-300 rounded-[2px] ${
+                    imgIndex === activeImageIdx 
+                      ? 'opacity-100 ring-2 ring-ink ring-offset-2 ring-offset-ivory grayscale-0' 
+                      : 'opacity-40 hover:opacity-100 grayscale'
+                  }`}
+                  aria-label={`View photo ${imgIndex + 1}`}
+                >
+                  <Image src={url} alt="" fill className="object-cover" sizes="64px" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      
+      <div className="flex-grow flex flex-col gap-6">
+        <p className="font-quote italic text-xl md:text-2xl lg:text-[1.75rem] text-ink leading-snug">
+          <SplitWords text={`"${testimonial.text}"`} />
+        </p>
+        
+        <div className="gs-meta-reveal opacity-0 translate-y-4 font-mono text-xs tracking-[0.2em] uppercase text-ink/50 flex flex-col gap-2 mt-auto">
+          <span className="text-ink font-bold">— {testimonial.name}</span>
+          <a href={testimonial.sourceLink} target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors underline decoration-ink/30 hover:decoration-ink/60 underline-offset-4 w-max">
+            Via {testimonial.sourceName}
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ClientVoices({ testimonials }: ClientVoicesProps) {
   const containerRef = useRef<HTMLElement>(null);
 
@@ -37,7 +99,7 @@ export default function ClientVoices({ testimonials }: ClientVoicesProps) {
     () => {
       if (!containerRef.current) return;
 
-      // 1. Text Reveal Animation (StringTune style)
+      // 1. Text Reveal Animation
       const testimonialBlocks = gsap.utils.toArray<HTMLElement>('.testimonial-block');
       
       testimonialBlocks.forEach((block) => {
@@ -52,7 +114,6 @@ export default function ClientVoices({ testimonials }: ClientVoicesProps) {
           }
         });
 
-        // Staggered reveal for words
         if (words.length) {
           tl.to(words, {
             y: "0%",
@@ -63,7 +124,6 @@ export default function ClientVoices({ testimonials }: ClientVoicesProps) {
           });
         }
         
-        // Fade in metadata after
         if (meta) {
           tl.to(meta, {
             opacity: 1,
@@ -77,7 +137,6 @@ export default function ClientVoices({ testimonials }: ClientVoicesProps) {
       // 2. Image Parallax
       const images = gsap.utils.toArray<HTMLElement>('.gs-parallax-image');
       images.forEach((img) => {
-        // Start the image translated up, and scrub it down
         gsap.fromTo(img, 
           { yPercent: -10 },
           {
@@ -130,54 +189,7 @@ export default function ClientVoices({ testimonials }: ClientVoicesProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 lg:gap-24 w-full items-start">
           {testimonials.map((testimonial, i) => (
-            <div 
-              key={testimonial.id} 
-              className={`testimonial-block flex flex-col w-full
-                ${i === 1 ? 'md:mt-48' : ''} 
-                ${i === 2 ? 'md:mt-24' : ''}
-              `}
-            >
-              {testimonial.imageUrls && testimonial.imageUrls.length > 0 && (
-                <div className="relative w-full mb-8 group/rail">
-                  {/* Indicator for multiple images */}
-                  {testimonial.imageUrls.length > 1 && (
-                    <div className="absolute top-4 right-4 z-10 bg-ink/80 backdrop-blur-md text-ivory px-3 py-1.5 rounded-full font-mono text-[10px] tracking-widest pointer-events-none transition-opacity opacity-100 md:opacity-0 md:group-hover/rail:opacity-100">
-                      {testimonial.imageUrls.length} PHOTOS — SWIPE
-                    </div>
-                  )}
-                  
-                  <div className="flex w-full overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-4 pb-4 -mb-4">
-                    {testimonial.imageUrls.map((url, imgIndex) => (
-                      <div 
-                        key={imgIndex} 
-                        className="relative min-w-[90%] md:min-w-[100%] aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-ink/5 group snap-center shrink-0"
-                      >
-                        <Image 
-                          src={url} 
-                          alt={`Tattoo work for ${testimonial.name} - Photo ${imgIndex + 1}`} 
-                          fill 
-                          className="gs-parallax-image object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out scale-125"
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              <div className="flex-grow flex flex-col gap-10">
-                <p className="font-quote italic text-[clamp(1.75rem,2.5vw,3rem)] text-ink leading-[1.25]">
-                  <SplitWords text={`"${testimonial.text}"`} />
-                </p>
-                
-                <div className="gs-meta-reveal opacity-0 translate-y-4 font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-ink/50 flex flex-col gap-3 mt-auto">
-                  <span className="text-ink font-bold">— {testimonial.name}</span>
-                  <a href={testimonial.sourceLink} target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors underline decoration-ink/30 hover:decoration-ink/60 underline-offset-4 w-max">
-                    Via {testimonial.sourceName}
-                  </a>
-                </div>
-              </div>
-            </div>
+            <TestimonialCard key={testimonial.id} testimonial={testimonial} index={i} />
           ))}
         </div>
 
