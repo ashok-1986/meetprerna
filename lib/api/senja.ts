@@ -27,7 +27,7 @@ export async function fetchSenjaTestimonials(): Promise<Testimonial[]> {
     }
 
     const json = await res.json();
-    const data = json.data || [];
+    const data = json.testimonials || [];
 
     // Filter to only approved text testimonials and map to our structure
     return data
