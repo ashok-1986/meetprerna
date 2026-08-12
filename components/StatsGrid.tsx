@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TextMotion from "@/components/ui/TextMotion";
 import { siteImages } from "@/lib/data/site";
+import Image from "next/image";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -150,11 +151,12 @@ export default function StatsGrid() {
         {/* Cell 3: Image 1 (Align Right) */}
         <div className="bento-cell flex items-center justify-end order-3 -mr-8 md:-mr-12 lg:-mr-16">
           <div className="gs-grid-img-wrapper relative w-full max-w-[300px] overflow-hidden">
-            <img 
+            <Image 
               src={siteImages.home.credibilityBento1} 
               alt="Prerna working"
-              loading="lazy"
-              className="gs-grid-img w-full h-auto block" 
+              width={300}
+              height={450}
+              className="gs-grid-img w-full h-auto block object-cover" 
             />
           </div>
         </div>
@@ -164,11 +166,12 @@ export default function StatsGrid() {
         {/* Cell 4: Image 2 (Align Left) */}
         <div className="bento-cell flex items-center justify-start order-6 lg:order-4 mt-8 lg:mt-0 -ml-8 md:-ml-12 lg:-ml-16">
           <div className="gs-grid-img-wrapper relative w-full max-w-[300px] overflow-hidden">
-            <img 
+            <Image 
               src={siteImages.home.credibilityBento2} 
               alt="Prerna studio"
-              loading="lazy"
-              className="gs-grid-img w-full h-auto block" 
+              width={300}
+              height={450}
+              className="gs-grid-img w-full h-auto block object-cover" 
             />
           </div>
         </div>
