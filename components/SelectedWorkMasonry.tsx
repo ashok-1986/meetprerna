@@ -14,15 +14,29 @@ if (typeof window !== "undefined") {
 export default function SelectedWorkMasonry() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Split the 9 images into 3 arrays so we can physically stagger the columns.
-  // This guarantees the staggered "Image 2" look even if the images have the exact same dimensions.
+  // Split the 9 images exactly into 2, 4, 3 distribution as requested
   const columns = useMemo(() => {
-    const cols: string[][] = [[], [], []];
-    siteImages.home.scatter.forEach((src, i) => {
-      cols[i % 3].push(src);
-    });
-    return cols;
+    const images = siteImages.home.scatter;
+    return [
+      // Column 1: 2 images
+      [images[0], images[1]],
+      // Column 2: 4 images
+      [images[2], images[3], images[4], images[5]],
+      // Column 3: 3 images
+      [images[6], images[7], images[8]]
+    ];
   }, []);
+
+  // Predefine beautiful, varied aspect ratios for each image index to create 
+  // the ultimate editorial masonry feel, ignoring the source image crop.
+  const aspectRatios = [
+    // Column 1 (2 images)
+    ["aspect-[3/4]", "aspect-square"],
+    // Column 2 (4 images)
+    ["aspect-[4/3]", "aspect-[4/5]", "aspect-square", "aspect-[3/2]"],
+    // Column 3 (3 images)
+    ["aspect-[4/5]", "aspect-square", "aspect-[3/4]"]
+  ];
 
   useGSAP(
     () => {
@@ -47,18 +61,19 @@ export default function SelectedWorkMasonry() {
         );
       });
 
-      // Subtle parallax effect on the columns to enhance the staggered feel
+      // Enhanced vertical scroll parallax on the columns
       const colElements = gsap.utils.toArray<HTMLElement>('.masonry-column');
       colElements.forEach((col, index) => {
+        // Only apply parallax to columns 2 and 3 so they move at different speeds
         if (index > 0) {
            gsap.to(col, {
-              yPercent: index === 1 ? -5 : -2,
+              yPercent: index === 1 ? -18 : -8, // Pronounced staggered scroll effect
               ease: "none",
               scrollTrigger: {
                 trigger: containerRef.current,
                 start: "top bottom",
                 end: "bottom top",
-                scrub: true,
+                scrub: 1, // Added 1s scrub for buttery smooth easing
               }
            });
         }
@@ -71,7 +86,7 @@ export default function SelectedWorkMasonry() {
     <section ref={containerRef} className="relative w-full bg-ink text-ivory py-24 md:py-48 overflow-hidden">
       
       <div className="flex flex-col w-full px-6 md:px-12 xl:px-24 max-w-[2000px] mx-auto">
-        <div className="pb-16 md:pb-24 gs-header-reveal flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="pb-16 md:pb-32 gs-header-reveal flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
             <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-ivory/50 uppercase mb-8">
               SELECTED WORK
@@ -88,21 +103,20 @@ export default function SelectedWorkMasonry() {
             <div 
               key={colIndex} 
               className={`masonry-column flex flex-col gap-6 md:gap-8 lg:gap-12 w-full md:w-1/3
-                ${colIndex === 1 ? 'md:mt-24 lg:mt-32' : ''} 
-                ${colIndex === 2 ? 'md:mt-12 lg:mt-16' : ''}
+                ${colIndex === 1 ? 'md:mt-32 lg:mt-48' : ''} 
+                ${colIndex === 2 ? 'md:mt-16 lg:mt-24' : ''}
               `}
             >
               {colImages.map((src, imgIndex) => (
                 <div 
                   key={imgIndex} 
-                  className="masonry-item relative w-full rounded-[2px] overflow-hidden bg-white/5"
+                  className={`masonry-item relative w-full rounded-[2px] overflow-hidden bg-white/5 ${aspectRatios[colIndex][imgIndex]}`}
                 >
                   <Image 
                     src={src}
-                    alt={`Tattoo Work ${colIndex * 3 + imgIndex + 1}`}
-                    width={800}
-                    height={1200}
-                    className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-700 ease-out"
+                    alt={`Tattoo Work ${colIndex}-${imgIndex}`}
+                    fill
+                    className="object-cover hover:scale-[1.03] transition-transform duration-700 ease-out"
                     sizes="(max-width: 768px) 100vw, 33vw"
                     priority={colIndex === 0 && imgIndex === 0}
                   />
