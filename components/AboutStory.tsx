@@ -15,24 +15,33 @@ export default function AboutStory() {
   useGSAP(() => {
     if (!containerRef.current) return;
     
-    // Fade in text blocks as they scroll into view
+    const mm = gsap.matchMedia();
     const textBlocks = gsap.utils.toArray<HTMLElement>('.story-block');
-    textBlocks.forEach((block) => {
-      gsap.fromTo(block, 
-        { y: 40, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 1, 
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: block,
-            start: "top 85%",
-          }
-        }
-      );
+
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(textBlocks, { y: 0, opacity: 1 });
     });
-  }, []);
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      textBlocks.forEach((block) => {
+        gsap.fromTo(block, 
+          { y: 40, opacity: 0 },
+          { 
+            y: 0, 
+            opacity: 1, 
+            duration: 1, 
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: block,
+              start: "top 85%",
+            }
+          }
+        );
+      });
+    });
+
+    return () => mm.revert();
+  }, { scope: containerRef });
 
   return (
     <section ref={containerRef} className="w-full bg-ink text-ivory pt-24 pb-32 overflow-hidden">

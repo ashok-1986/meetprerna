@@ -87,6 +87,18 @@ export default function StatsGrid() {
         }
       });
       
+      // Mobile-only active state toggle (acts like hover when in center of screen)
+      mm.add("(max-width: 767px)", () => {
+        gsap.utils.toArray('.bento-cell').forEach((cell: any) => {
+          ScrollTrigger.create({
+            trigger: cell,
+            start: "top 60%",
+            end: "bottom 40%",
+            toggleClass: "active-bento"
+          });
+        });
+      });
+      
     });
 
     mm.add("(prefers-reduced-motion: reduce)", () => {
@@ -129,7 +141,7 @@ export default function StatsGrid() {
         
         {/* Row 1 */}
         {/* Cell 1: Fine Arts Diploma */}
-        <div className="bento-cell flex flex-col justify-center gap-4 order-1">
+        <div className="bento-cell flex flex-col justify-center gap-4 order-1 transition-all duration-300 rounded-md p-4 -m-4 md:p-6 md:-m-6 md:hover:bg-ivory/5 md:hover:-translate-y-1 [&.active-bento]:bg-ivory/5 [&.active-bento]:-translate-y-1">
           <div className="overflow-hidden">
             <span className="gs-stat-word inline-block font-display text-[clamp(2.5rem,4vw,4.5rem)] text-ivory leading-[1.1]">Fine Arts</span>
           </div>
@@ -139,7 +151,7 @@ export default function StatsGrid() {
         </div>
 
         {/* Cell 2: 500+ Tattoos */}
-        <div className="bento-cell flex flex-col justify-center gap-4 order-2">
+        <div className="bento-cell flex flex-col justify-center gap-4 order-2 transition-all duration-300 rounded-md p-4 -m-4 md:p-6 md:-m-6 md:hover:bg-ivory/5 md:hover:-translate-y-1 [&.active-bento]:bg-ivory/5 [&.active-bento]:-translate-y-1">
           <div className="overflow-hidden">
             <span className="gs-stat-word inline-block font-display text-[clamp(2.5rem,4vw,4.5rem)] text-ivory leading-[1.1]">500+</span>
           </div>
@@ -149,7 +161,7 @@ export default function StatsGrid() {
         </div>
 
         {/* Cell 3: Image 1 (Align Right) */}
-        <div className="bento-cell flex items-center justify-end order-3 -mr-8 md:-mr-12 lg:-mr-16">
+        <div className="bento-cell flex items-center justify-end order-3 -mr-8 md:-mr-12 lg:-mr-16 transition-all duration-300 rounded-md p-4 -m-4 md:p-6 md:-m-6 md:hover:bg-ivory/5 md:hover:-translate-y-1 [&.active-bento]:bg-ivory/5 [&.active-bento]:-translate-y-1">
           <div className="gs-grid-img-wrapper relative w-full max-w-[300px] overflow-hidden">
             <Image 
               src={siteImages.home.credibilityBento1} 
@@ -164,7 +176,7 @@ export default function StatsGrid() {
 
         {/* Row 2 */}
         {/* Cell 4: Image 2 (Align Left) */}
-        <div className="bento-cell flex items-center justify-start order-6 lg:order-4 mt-8 lg:mt-0 -ml-8 md:-ml-12 lg:-ml-16">
+        <div className="bento-cell flex items-center justify-start order-6 lg:order-4 mt-8 lg:mt-0 -ml-8 md:-ml-12 lg:-ml-16 transition-all duration-300 rounded-md p-4 -m-4 md:p-6 md:-m-6 md:hover:bg-ivory/5 md:hover:-translate-y-1 [&.active-bento]:bg-ivory/5 [&.active-bento]:-translate-y-1">
           <div className="gs-grid-img-wrapper relative w-full max-w-[300px] overflow-hidden">
             <Image 
               src={siteImages.home.credibilityBento2} 
@@ -177,7 +189,7 @@ export default function StatsGrid() {
         </div>
 
         {/* Cell 5: 100+ Custom designs */}
-        <div className="bento-cell flex flex-col justify-center gap-4 order-4 lg:order-5 mt-8 lg:mt-0">
+        <div className="bento-cell flex flex-col justify-center gap-4 order-4 lg:order-5 mt-8 lg:mt-0 transition-all duration-300 rounded-md p-4 -m-4 md:p-6 md:-m-6 md:hover:bg-ivory/5 md:hover:-translate-y-1 [&.active-bento]:bg-ivory/5 [&.active-bento]:-translate-y-1">
           <div className="overflow-hidden">
             <span className="gs-stat-word inline-block font-display text-[clamp(2.5rem,4vw,4.5rem)] text-ivory leading-[1.1]">100+</span>
           </div>
@@ -187,7 +199,7 @@ export default function StatsGrid() {
         </div>
 
         {/* Cell 6: 10+ Years Artistry */}
-        <div className="bento-cell flex flex-col justify-center gap-4 order-5 lg:order-6 mt-8 lg:mt-0">
+        <div className="bento-cell flex flex-col justify-center gap-4 order-5 lg:order-6 mt-8 lg:mt-0 transition-all duration-300 rounded-md p-4 -m-4 md:p-6 md:-m-6 md:hover:bg-ivory/5 md:hover:-translate-y-1 [&.active-bento]:bg-ivory/5 [&.active-bento]:-translate-y-1">
           <div className="overflow-hidden">
             <span className="gs-stat-word inline-block font-display text-[clamp(2.5rem,4vw,4.5rem)] text-ivory leading-[1.1]">10+ Years</span>
           </div>

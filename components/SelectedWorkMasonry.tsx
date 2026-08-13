@@ -42,44 +42,57 @@ export default function SelectedWorkMasonry() {
     () => {
       if (!containerRef.current) return;
 
+      const mm = gsap.matchMedia();
       const items = gsap.utils.toArray<HTMLElement>('.masonry-item');
+      const colElements = gsap.utils.toArray<HTMLElement>('.masonry-column');
       
-      items.forEach((item, index) => {
-        gsap.fromTo(
-          item,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 85%",
-            }
-          }
-        );
+      // 1. Reduced Motion: Instant reveal, no parallax
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(items, { opacity: 1, y: 0 });
+        gsap.set(colElements, { yPercent: 0 });
       });
 
-      // Enhanced vertical scroll parallax on ALL columns
-      const colElements = gsap.utils.toArray<HTMLElement>('.masonry-column');
-      colElements.forEach((col, index) => {
-        // Significantly amplified speeds for maximum visual impact
-        let ySpeed = -20; // Col 1 (changed to -20 as requested)
-        if (index === 1) ySpeed = -40; // Col 2 (fast)
-        if (index === 2) ySpeed = -25; // Col 3 (medium)
-
-        gsap.to(col, {
-          yPercent: ySpeed,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5, // Silky smooth 1.5s scrub duration
-          }
+      // 2. Normal Motion (All screen sizes): Fade up reveal
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        items.forEach((item) => {
+          gsap.fromTo(
+            item,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: item,
+                start: "top 85%",
+              }
+            }
+          );
         });
       });
+
+      // 3. Desktop Only + Normal Motion: Scroll Parallax
+      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+        colElements.forEach((col, index) => {
+          let ySpeed = -20;
+          if (index === 1) ySpeed = -40;
+          if (index === 2) ySpeed = -25;
+
+          gsap.to(col, {
+            yPercent: ySpeed,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,
+            }
+          });
+        });
+      });
+
+      return () => mm.revert();
     },
     { scope: containerRef }
   );

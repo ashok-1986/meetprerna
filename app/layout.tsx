@@ -58,6 +58,15 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: import("next").Viewport = {
+  themeColor: "#111111",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+};
+
+
 export default function RootLayout({
   children,
 }: Readonly<{

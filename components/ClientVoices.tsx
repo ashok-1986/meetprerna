@@ -99,74 +99,91 @@ export default function ClientVoices({ testimonials }: ClientVoicesProps) {
     () => {
       if (!containerRef.current) return;
 
-      // 1. Text Reveal Animation
-      const testimonialBlocks = gsap.utils.toArray<HTMLElement>('.testimonial-block');
-      
-      testimonialBlocks.forEach((block) => {
-        const words = block.querySelectorAll('.gs-word-reveal');
-        const meta = block.querySelector('.gs-meta-reveal');
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        const words = gsap.utils.toArray('.gs-word-reveal');
+        const meta = gsap.utils.toArray('.gs-meta-reveal');
+        const images = gsap.utils.toArray('.gs-parallax-image');
+        const headers = gsap.utils.toArray('.gs-header-reveal');
         
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: block,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
+        gsap.set(words, { y: "0%", opacity: 1 });
+        gsap.set(meta, { y: 0, opacity: 1 });
+        gsap.set(images, { yPercent: 0 });
+        gsap.set(headers, { y: 0, opacity: 1 });
+      });
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // 1. Text Reveal Animation
+        const testimonialBlocks = gsap.utils.toArray<HTMLElement>('.testimonial-block');
+        
+        testimonialBlocks.forEach((block) => {
+          const words = block.querySelectorAll('.gs-word-reveal');
+          const meta = block.querySelector('.gs-meta-reveal');
+          
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: block,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            }
+          });
+
+          if (words.length) {
+            tl.to(words, {
+              y: "0%",
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.015,
+              ease: "power3.out",
+            });
+          }
+          
+          if (meta) {
+            tl.to(meta, {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: "power2.out"
+            }, "-=0.4");
           }
         });
 
-        if (words.length) {
-          tl.to(words, {
-            y: "0%",
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.015,
-            ease: "power3.out",
-          });
-        }
+        // 2. Image Parallax
+        const images = gsap.utils.toArray<HTMLElement>('.gs-parallax-image');
+        images.forEach((img) => {
+          gsap.fromTo(img, 
+            { yPercent: -10 },
+            {
+              yPercent: 10,
+              ease: "none",
+              scrollTrigger: {
+                trigger: img.parentElement,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+              }
+            }
+          );
+        });
         
-        if (meta) {
-          tl.to(meta, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out"
-          }, "-=0.4");
-        }
-      });
-
-      // 2. Image Parallax
-      const images = gsap.utils.toArray<HTMLElement>('.gs-parallax-image');
-      images.forEach((img) => {
-        gsap.fromTo(img, 
-          { yPercent: -10 },
+        // Header reveal
+        gsap.fromTo('.gs-header-reveal', 
+          { opacity: 0, y: 30 },
           {
-            yPercent: 10,
-            ease: "none",
+            opacity: 1, 
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
             scrollTrigger: {
-              trigger: img.parentElement,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
+              trigger: '.gs-header-reveal',
+              start: "top 90%",
             }
           }
         );
       });
-      
-      // Header reveal
-      gsap.fromTo('.gs-header-reveal', 
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1, 
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: '.gs-header-reveal',
-            start: "top 90%",
-          }
-        }
-      );
 
+      return () => mm.revert();
     },
     { scope: containerRef }
   );

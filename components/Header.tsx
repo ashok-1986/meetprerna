@@ -180,17 +180,17 @@ export default function Header() {
             </div>
 
             {/* Zone 2: Links */}
-            <nav className="nav-links hidden md:flex items-center gap-8 font-mono text-sm uppercase tracking-widest">
-              <Link href="/portfolio" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out">
+            <nav className="nav-links hidden md:flex items-center gap-4 font-mono text-sm uppercase tracking-widest">
+              <Link href="/portfolio" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out p-3">
                 Portfolio
               </Link>
-              <Link href="/about" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out">
+              <Link href="/about" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out p-3">
                 About
               </Link>
-              <Link href="/consultation" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out">
+              <Link href="/consultation" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out p-3">
                 Consultation
               </Link>
-              <Link href="/connect" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out">
+              <Link href="/connect" className="text-ivory/70 hover:text-inchworm transition-colors duration-[150ms] ease-out p-3">
                 Connect
               </Link>
             </nav>
@@ -198,7 +198,7 @@ export default function Header() {
             {/* Zone 3: Mobile Menu / CTA (Currently just Hamburger) */}
             <div className="nav-menu-btn flex items-center justify-end">
               <button 
-                className="group flex flex-col justify-center items-center w-8 h-8 z-[200]"
+                className="group flex flex-col justify-center items-center w-12 h-12 -mr-2 z-[200]"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label="Toggle Menu"
               >
