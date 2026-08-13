@@ -64,10 +64,10 @@ export default function SelectedWorkMasonry() {
       // Enhanced vertical scroll parallax on ALL columns
       const colElements = gsap.utils.toArray<HTMLElement>('.masonry-column');
       colElements.forEach((col, index) => {
-        // Different speeds for each column: Col 1 (slow), Col 2 (fast), Col 3 (medium)
-        let ySpeed = -5; // default col 1
-        if (index === 1) ySpeed = -25;
-        if (index === 2) ySpeed = -15;
+        // Significantly amplified speeds for maximum visual impact
+        let ySpeed = -15; // Col 1 (slow, but now visible)
+        if (index === 1) ySpeed = -40; // Col 2 (fast)
+        if (index === 2) ySpeed = -25; // Col 3 (medium)
 
         gsap.to(col, {
           yPercent: ySpeed,
@@ -106,9 +106,11 @@ export default function SelectedWorkMasonry() {
             <div 
               key={colIndex} 
               // Massive vertical gaps so images don't feel crowded together
+              // Col 1 gets mt-12 so it has room to parallax upwards without hitting the title immediately
               className={`masonry-column flex flex-col gap-16 md:gap-24 lg:gap-32 w-full md:w-1/3
-                ${colIndex === 1 ? 'md:mt-48 lg:mt-64' : ''} 
-                ${colIndex === 2 ? 'md:mt-24 lg:mt-32' : ''}
+                ${colIndex === 0 ? 'md:mt-12 lg:mt-16' : ''}
+                ${colIndex === 1 ? 'md:mt-64 lg:mt-80' : ''} 
+                ${colIndex === 2 ? 'md:mt-32 lg:mt-48' : ''}
               `}
             >
               {colImages.map((src, imgIndex) => (
