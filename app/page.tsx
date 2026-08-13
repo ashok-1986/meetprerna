@@ -1,13 +1,15 @@
+import dynamic from 'next/dynamic';
 import PageWrapper from "@/components/PageWrapper";
 import Hero from "@/components/Hero";
 import LocationMarquee from "@/components/LocationMarquee";
 import StatsGrid from "@/components/StatsGrid";
-import SelectedWorkMasonry from "@/components/SelectedWorkMasonry";
-import Hinge from "@/components/Hinge";
-import Philosophy from "@/components/Philosophy";
-import ClientVoices from "@/components/ClientVoices";
-import ClosingCTA from "@/components/ClosingCTA";
 import { fetchSenjaTestimonials } from "@/lib/api/senja";
+
+const SelectedWorkMasonry = dynamic(() => import("@/components/SelectedWorkMasonry"), { ssr: true });
+const Hinge = dynamic(() => import("@/components/Hinge"), { ssr: true });
+const Philosophy = dynamic(() => import("@/components/Philosophy"), { ssr: true });
+const ClientVoices = dynamic(() => import("@/components/ClientVoices"), { ssr: true });
+const ClosingCTA = dynamic(() => import("@/components/ClosingCTA"), { ssr: true });
 
 export default async function Home() {
   const testimonials = await fetchSenjaTestimonials();

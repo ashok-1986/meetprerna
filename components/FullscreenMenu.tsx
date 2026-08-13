@@ -165,7 +165,7 @@ export default function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps)
               activeIndex === index ? "opacity-100" : "opacity-0"
             }`}
             priority
-            unoptimized={true}
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         ))}
         <div className="absolute inset-0 bg-ink/60 md:bg-ink/20 mix-blend-multiply md:mix-blend-normal" />

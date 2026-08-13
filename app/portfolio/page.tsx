@@ -4,8 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import TextMotion from "@/components/ui/TextMotion";
+import dynamic from "next/dynamic";
 import { getPortfolioItems, Medium } from "@/lib/data/portfolio";
-import OGLDistortionSlider from "@/components/OGLDistortionSlider";
+
+const OGLDistortionSlider = dynamic(() => import("@/components/OGLDistortionSlider"), { ssr: false });
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState<Medium | "All">("All");

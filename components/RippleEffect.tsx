@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 interface RippleEffectProps {
   image: string;
@@ -20,15 +21,22 @@ export default function RippleEffect({
   className = "",
 }: RippleEffectProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
 
   useEffect(() => {
+    setIsDesktop(window.innerWidth > 768);
+  }, []);
+
+  useEffect(() => {
+    if (isDesktop === false || isDesktop === null) return;
+
     let active = true;
 
     // Load the image with crossOrigin so it can be drawn to canvas without tainting.
     // Resolves null when the origin does not send CORS headers.
     const loadCorsImage = (url: string): Promise<HTMLImageElement | null> =>
       new Promise((resolve) => {
-        const img = new Image();
+        const img = new window.Image();
         img.crossOrigin = "anonymous";
         img.onload = () => resolve(img);
         img.onerror = () => resolve(null);
@@ -126,18 +134,30 @@ export default function RippleEffect({
         } catch (_) {}
       }
     };
-  }, [intensity, rippleCount, rippleInterval, rippleSize, image]);
+  }, [intensity, rippleCount, rippleInterval, rippleSize, image, isDesktop]);
 
   return (
     <div
       ref={containerRef}
       className={className}
       style={{
-        backgroundImage: `url(${image})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
+        ...(isDesktop ? {
+          backgroundImage: `url(${image})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        } : {})
       }}
-    />
+    >
+      {isDesktop !== true && (
+        <Image 
+          src={image} 
+          alt="Background" 
+          fill 
+          priority 
+          className="object-cover"
+        />
+      )}
+    </div>
   );
 }
