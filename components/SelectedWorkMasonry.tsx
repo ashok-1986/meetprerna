@@ -30,8 +30,8 @@ export default function SelectedWorkMasonry() {
   // Predefine beautiful, varied aspect ratios for each image index to create 
   // the ultimate editorial masonry feel, ignoring the source image crop.
   const aspectRatios = [
-    // Column 1 (2 images)
-    ["aspect-[3/4]", "aspect-square"],
+    // Column 1 (2 images) - Updated 2nd image to 4:5
+    ["aspect-[3/4]", "aspect-[4/5]"],
     // Column 2 (4 images)
     ["aspect-[4/3]", "aspect-[4/5]", "aspect-square", "aspect-[3/2]"],
     // Column 3 (3 images)
@@ -61,22 +61,24 @@ export default function SelectedWorkMasonry() {
         );
       });
 
-      // Enhanced vertical scroll parallax on the columns
+      // Enhanced vertical scroll parallax on ALL columns
       const colElements = gsap.utils.toArray<HTMLElement>('.masonry-column');
       colElements.forEach((col, index) => {
-        // Only apply parallax to columns 2 and 3 so they move at different speeds
-        if (index > 0) {
-           gsap.to(col, {
-              yPercent: index === 1 ? -18 : -8, // Pronounced staggered scroll effect
-              ease: "none",
-              scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1, // Added 1s scrub for buttery smooth easing
-              }
-           });
-        }
+        // Different speeds for each column: Col 1 (slow), Col 2 (fast), Col 3 (medium)
+        let ySpeed = -5; // default col 1
+        if (index === 1) ySpeed = -25;
+        if (index === 2) ySpeed = -15;
+
+        gsap.to(col, {
+          yPercent: ySpeed,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.5, // Silky smooth 1.5s scrub duration
+          }
+        });
       });
     },
     { scope: containerRef }
@@ -98,13 +100,15 @@ export default function SelectedWorkMasonry() {
         </div>
 
         {/* Staggered Masonry Grid via Flex Columns */}
-        <div className="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-12 w-full items-start">
+        {/* Massive horizontal gaps for gallery-like negative space */}
+        <div className="flex flex-col md:flex-row gap-12 md:gap-16 lg:gap-24 w-full items-start">
           {columns.map((colImages, colIndex) => (
             <div 
               key={colIndex} 
-              className={`masonry-column flex flex-col gap-6 md:gap-8 lg:gap-12 w-full md:w-1/3
-                ${colIndex === 1 ? 'md:mt-32 lg:mt-48' : ''} 
-                ${colIndex === 2 ? 'md:mt-16 lg:mt-24' : ''}
+              // Massive vertical gaps so images don't feel crowded together
+              className={`masonry-column flex flex-col gap-16 md:gap-24 lg:gap-32 w-full md:w-1/3
+                ${colIndex === 1 ? 'md:mt-48 lg:mt-64' : ''} 
+                ${colIndex === 2 ? 'md:mt-24 lg:mt-32' : ''}
               `}
             >
               {colImages.map((src, imgIndex) => (
