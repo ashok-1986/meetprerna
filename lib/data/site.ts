@@ -31,6 +31,7 @@ export const siteImages = {
       `${IMAGE_HOST}home/scatter/6.jpg`,
       `${IMAGE_HOST}home/scatter/7.jpg`,
       `${IMAGE_HOST}home/scatter/8.jpg`,
+      `${IMAGE_HOST}home/scatter/9.jpg`,
     ],
   },
   consultation: {
