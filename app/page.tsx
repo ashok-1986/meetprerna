@@ -2,7 +2,7 @@ import PageWrapper from "@/components/PageWrapper";
 import Hero from "@/components/Hero";
 import LocationMarquee from "@/components/LocationMarquee";
 import StatsGrid from "@/components/StatsGrid";
-import SelectedWorkScatter from "@/components/SelectedWorkScatter";
+import SelectedWork from "@/components/SelectedWork";
 import Hinge from "@/components/Hinge";
 import Philosophy from "@/components/Philosophy";
 import ClientVoices from "@/components/ClientVoices";
@@ -17,7 +17,7 @@ export default async function Home() {
       <Hero />
       <LocationMarquee />
       <StatsGrid />
-      <SelectedWorkScatter />
+      <SelectedWork />
       <Hinge />
       <Philosophy />
       {testimonials.length > 0 && <ClientVoices testimonials={testimonials} />}
