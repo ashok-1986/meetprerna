@@ -65,7 +65,7 @@ export default function SelectedWorkMasonry() {
       const colElements = gsap.utils.toArray<HTMLElement>('.masonry-column');
       colElements.forEach((col, index) => {
         // Significantly amplified speeds for maximum visual impact
-        let ySpeed = -15; // Col 1 (slow, but now visible)
+        let ySpeed = -20; // Col 1 (changed to -20 as requested)
         if (index === 1) ySpeed = -40; // Col 2 (fast)
         if (index === 2) ySpeed = -25; // Col 3 (medium)
 
@@ -120,7 +120,7 @@ export default function SelectedWorkMasonry() {
                 >
                   <Image 
                     src={src}
-                    alt={`Tattoo Work ${colIndex}-${imgIndex}`}
+                    alt={`Selected tattoo artwork from Prerna's portfolio (${colIndex + 1}-${imgIndex + 1})`}
                     fill
                     className="object-cover hover:scale-[1.03] transition-transform duration-700 ease-out"
                     sizes="(max-width: 768px) 100vw, 33vw"
