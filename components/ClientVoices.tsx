@@ -77,7 +77,7 @@ function TestimonialCard({ testimonial, index }: { testimonial: Testimonial; ind
       )}
       
       <div className="flex-grow flex flex-col gap-6">
-        <p className="font-quote italic text-xl md:text-2xl lg:text-[1.75rem] text-ink leading-snug">
+        <p className="font-quote italic text-lg md:text-xl lg:text-2xl text-ink leading-snug">
           <SplitWords text={`"${testimonial.text}"`} />
         </p>
         
