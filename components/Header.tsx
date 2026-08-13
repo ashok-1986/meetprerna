@@ -121,7 +121,8 @@ export default function Header() {
           grid-template-columns: 1fr auto 1fr;
           align-items: center;
           gap: 1rem;
-          padding-inline: clamp(1rem, 3vw, 2rem);
+          padding-inline: var(--pill-px, 2rem);
+          transition: padding-inline var(--duration-250) var(--ease-default);
         }
 
         .nav-brand {
@@ -137,22 +138,33 @@ export default function Header() {
         }
 
         @media (max-width: 768px) {
-          html[data-nav] { --pill-w: 100%; --pill-r: 0px; --pill-t: 0px; }
-          html[data-nav="0"] { --pill-h: 68px; }
-          html[data-nav="1"], html[data-nav="2"] { --pill-h: 56px; }
           .nav-grid { grid-template-columns: 1fr auto; }
         }
 
         @media (prefers-reduced-motion: reduce) {
           .header-pill { transition: none; }
+          .nav-grid { transition: none; }
         }
       `}} />
 
       {/* Force applying state to HTML so we can rely on standard media query logic without messy React inline styles */}
-      <style dangerouslySetInnerHTML={{ __html: `html { ${navState === 0 ? '--pill-w: 100%; --pill-h: 84px; --pill-r: 0px; --pill-t: 0px; --pill-bg: transparent;' : navState === 1 ? '--pill-w: calc(100% - ((100% - 680px) * 0.5)); --pill-h: 68px; --pill-r: 16px; --pill-t: 10px; --pill-bg: var(--color-ink);' : '--pill-w: 680px; --pill-h: 56px; --pill-r: 22px; --pill-t: 14px; --pill-bg: var(--color-ink-100);'} }
+      <style dangerouslySetInnerHTML={{ __html: `
+      html { 
+        ${navState === 0 
+          ? '--pill-w: 100%; --pill-h: 84px; --pill-r: 0px; --pill-t: 0px; --pill-bg: transparent; --pill-px: max(2rem, min(5vw, 4rem));' 
+          : navState === 1 
+          ? '--pill-w: calc(100% - ((100% - 680px) * 0.5)); --pill-h: 68px; --pill-r: 16px; --pill-t: 10px; --pill-bg: var(--color-ink); --pill-px: clamp(1rem, 3vw, 2rem);' 
+          : '--pill-w: 680px; --pill-h: 56px; --pill-r: 22px; --pill-t: 14px; --pill-bg: var(--color-ink-100); --pill-px: clamp(1.25rem, 3vw, 1.5rem);'
+        } 
+      }
       
       @media (max-width: 768px) {
-          html { ${navState === 0 ? '--pill-w: 100%; --pill-h: 68px; --pill-r: 0px; --pill-t: 0px; --pill-bg: transparent;' : '--pill-w: 100%; --pill-h: 56px; --pill-r: 0px; --pill-t: 0px; --pill-bg: var(--color-ink);'} }
+          html { 
+            ${navState === 0 
+              ? '--pill-w: 100%; --pill-h: 68px; --pill-r: 0px; --pill-t: 0px; --pill-bg: transparent; --pill-px: 2rem;' 
+              : '--pill-w: 100%; --pill-h: 56px; --pill-r: 0px; --pill-t: 0px; --pill-bg: var(--color-ink); --pill-px: 1.5rem;'
+            } 
+          }
       }
       `}} />
 
