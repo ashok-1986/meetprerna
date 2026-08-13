@@ -77,7 +77,7 @@ export default function SelectedWorkMasonry() {
               SELECTED WORK
             </p>
             <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] font-[400] leading-[1.1] max-w-[900px]">
-              Explore The Most Beautiful<br className="hidden md:block" /> Tattoos In The World
+              Discover A Mindful Approach<br className="hidden md:block" /> To Art & Healing
             </h2>
           </div>
         </div>
