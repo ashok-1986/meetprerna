@@ -36,7 +36,6 @@ import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
 import DynamicWebGL from "@/components/DynamicWebGL";
 import { getShaders } from "@/lib/shaderParser";
-import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "MeetPrerna | Mumbai Tattoo Artist",
@@ -87,7 +86,6 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <Analytics />
       </body>
     </html>
   );
