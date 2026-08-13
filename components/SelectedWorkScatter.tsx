@@ -12,65 +12,28 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-interface ScatterPiece {
-  id: number;
-  type: string;
-  src: string;
-  width: number;
-  left: string;
-  top: string;
-}
+const SCATTER_CONFIG = [
+  { left: "15%", top: "5%", width: "clamp(120px, 25vw, 250px)" },
+  { left: "75%", top: "15%", width: "clamp(150px, 30vw, 350px)" },
+  { left: "45%", top: "28%", width: "clamp(180px, 35vw, 420px)" },
+  { left: "12%", top: "42%", width: "clamp(140px, 28vw, 300px)" },
+  { left: "82%", top: "55%", width: "clamp(160px, 32vw, 380px)" },
+  { left: "35%", top: "70%", width: "clamp(170px, 34vw, 400px)" },
+  { left: "75%", top: "85%", width: "clamp(130px, 26vw, 280px)" },
+  { left: "25%", top: "95%", width: "clamp(140px, 28vw, 320px)" },
+];
 
 export default function SelectedWorkScatter() {
   const containerRef = useRef<HTMLElement>(null);
-  const [pieces, setPieces] = useState<ScatterPiece[]>([]);
-
-  // Generate random positions and sizes only on the client to avoid hydration mismatches
-  useEffect(() => {
-    const rawPieces = siteImages.home.scatter.map((src, index) => ({
-      id: index + 1,
-      type: "image",
-      src,
-    }));
-
-    const generateRandomLayout = () => {
-      // Divide into roughly 3 vertical zones (top, middle, bottom) and 3 horizontal zones to ensure spread
-      return rawPieces.map((piece, index) => {
-        // Random width between 150px and 400px (smaller on mobile)
-        const isMobile = window.innerWidth < 768;
-        const minWidth = isMobile ? 120 : 200;
-        const maxWidth = isMobile ? 250 : 450;
-        const width = Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth;
-        
-        // Vertical distribution: Spread across 200vh
-        // We'll use percentages for top positioning, spaced out based on index
-        const verticalZone = index / rawPieces.length; 
-        const top = `${(verticalZone * 80) + Math.random() * 15}%`;
-
-        // Horizontal distribution: alternate left, center, right to prevent overlap
-        const horizontalZone = index % 3;
-        let leftMin, leftMax;
-        if (horizontalZone === 0) { leftMin = 5; leftMax = 25; }       // Left
-        else if (horizontalZone === 1) { leftMin = 35; leftMax = 55; }  // Center
-        else { leftMin = 65; leftMax = 85; }                            // Right
-        
-        // Adjust constraints based on width to not overflow screen
-        const left = `${Math.floor(Math.random() * (leftMax - leftMin + 1)) + leftMin}%`;
-
-        return {
-          ...piece,
-          width,
-          left,
-          top
-        };
-      });
-    };
-
-    setPieces(generateRandomLayout());
-  }, []);
+  
+  const pieces = siteImages.home.scatter.map((src, index) => ({
+    id: index + 1,
+    src,
+    ...SCATTER_CONFIG[index % SCATTER_CONFIG.length]
+  }));
 
   useGSAP(() => {
-    if (!containerRef.current || pieces.length === 0) return;
+    if (!containerRef.current) return;
 
     // Fade reveal for the title
     const revealElements = containerRef.current.querySelectorAll('.gs-reveal');
@@ -108,7 +71,7 @@ export default function SelectedWorkScatter() {
     });
 
     return () => mm.revert();
-  }, { scope: containerRef, dependencies: [pieces] });
+  }, { scope: containerRef });
 
   return (
     <section ref={containerRef} className="relative w-full bg-ink py-24 md:py-48 gs-reveal-container h-[250svh] overflow-hidden">
@@ -127,7 +90,7 @@ export default function SelectedWorkScatter() {
             key={piece.id} 
             className="gs-scatter-item absolute opacity-0 will-change-transform"
             style={{ 
-              width: `${piece.width}px`, 
+              width: piece.width, 
               left: piece.left, 
               top: piece.top,
               transform: `translateX(-50%)` // Center align based on left %
